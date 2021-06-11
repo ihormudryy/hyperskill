@@ -1,0 +1,25 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    import java.util.*;
+
+    public class Main {
+
+        public static void main(String[] args) {
+
+
+            //write your code here
+
+
+            System.out.println(list);
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/2321#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Mon, 07 Dec 2020 15:47:55 UTC
+record: -1

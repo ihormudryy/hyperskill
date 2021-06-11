@@ -1,0 +1,37 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    class User {
+        private String firstName;
+        private String lastName;
+
+        public User() {
+            this.firstName = "";
+            this.lastName = "";
+        }
+
+        public void setFirstName(String firstName) {
+            // write your code here
+        }
+
+        public void setLastName(String lastName) {
+            // write your code here
+        }
+
+        public String getFullName() {
+            return ""; // write your code here
+        }
+    }
+  learner_created: false
+- name: src/UserTest.java
+  visible: true
+  learner_created: true
+feedback_link: https://hyperskill.org/learn/step/8261#comment
+status: Solved
+feedback:
+  message: <html>Correct solution<br/><br/>Continue on <a href="https://hyperskill.org/learn/step/8261#comment">JetBrains
+    Academy</a></html>
+  time: Tue, 17 Nov 2020 15:15:59 UTC
+record: -1

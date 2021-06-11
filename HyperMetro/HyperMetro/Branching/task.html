@@ -1,0 +1,44 @@
+<h2 style="text-align: center;">Description</h2>
+
+<p>Your program can help effectively navigate the metro; at least, if the metro lines have one beginning and one end. However, not all metro systems are like that: take a look at the London Underground, for example. Its metro lines are divided into two of even three looped sections. This system is difficult for a person to understand, let alone a computer program.</p>
+
+<p>There's a solution: let's change the presentation of the information. Each station will now have the fields "next", "past", and "transfer" that contain arrays because these fields can hold multiple objects.</p>
+
+<h2 style="text-align: center;">Objective</h2>
+
+<ul>
+	<li>Add branching.</li>
+	<li>Add the possibility of a looped line.</li>
+	<li>Line output is not checked in this stage, but you can work on it on your own.</li>
+</ul>
+
+<p>To test your improved program, use the <a target="_blank" href="https://stepik.org/media/attachments/lesson/373079/london_underground.json" rel="noopener noreferrer nofollow">file with real London Underground</a> stations.</p>
+
+<p><div class="alert alert-primary">For the <code class="java">/route</code> command, transactions between lines should not be considered as moving around the nodes of the graph.</div></p>
+
+<h2 style="text-align: center;">Example</h2>
+
+<p>The greater-than symbol followed by a space <code class="java">&gt; </code> represents the user input. Note that it's not part of the input.</p>
+
+<pre><code class="language-no-highlight">&gt; java Main london_underground.json
+&gt; /route "Piccadilly line" Ickenham "Central line" "North Action"
+Ickenham
+Ruislip
+Ruislip Manor
+Eastcote
+Rayners Lane
+South Harrow
+Sudbury Hill
+Sudbury Town
+Alperton
+Park Royal
+North Ealing
+Ealing Common
+Transition to District line
+Ealing Common
+Ealing Broadway
+Transition to Central line
+Ealing Broadway
+West Acton
+North Acton
+</code></pre>

@@ -1,0 +1,26 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    class MessageNotifier extends Thread {
+
+        // write fields to store variables here
+
+        public MessageNotifier(String msg, int repeats) {
+            // implement the constructor
+        }
+
+        @Override
+        public void run() {
+            // implement the method to print the message stored in a field
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/2527#comment
+status: Solved
+feedback:
+  message: <html>Correct solution<br/><br/>Continue on <a href="https://hyperskill.org/learn/step/2527#comment">JetBrains
+    Academy</a></html>
+  time: Wed, 02 Dec 2020 11:44:19 UTC
+record: -1

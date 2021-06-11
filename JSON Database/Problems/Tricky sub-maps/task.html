@@ -1,0 +1,25 @@
+<h2>Tricky sub-maps</h2>
+<html>
+ <head></head>
+ <body>
+  <p></p>
+  <div class="alert alert-primary">
+   Wow! This problem is kind of tricky. If you're ready to put your thinking cap on, brace yourself and good luck! Otherwise, you can skip it for now and return any time later
+  </div>
+  <p></p> 
+  <p>Modify and return the given map as follows:</p> 
+  <ul> 
+   <li>if the first key % 2 != 0, return sub-map from <strong>firstKey</strong> inclusive to <strong>firstKey + 4</strong> inclusive in descending order;</li> 
+   <li>else return sub-map from <strong>lastKey – 4</strong> inclusive to the <strong>lastKey </strong>inclusive in descending order.</li> 
+  </ul> 
+  <p><button class="btn-sm btn-outline-secondary" onclick="getElementById('hint-581').style.display='inline'"> Hint </button> </p>
+  <div id="hint-581" style="display:none;">
+   <p></p> 
+   <p>To make <code class="java">TreeMap</code> store elements in descending order you can create it this way: <code class="java">new TreeMap&lt;&gt;(Collections.reverseOrder());</code></p> 
+   <p>To put all elements from one map to another map you can do <code class="java">anotherMap.putAll(map)</code> </p> 
+   <p></p>
+  </div>
+  <p></p>
+ </body>
+</html><br><b>Sample Input:</b><br><pre><code class="language-no-highlight">1:one 2:two 3:three 4:four 5:five 6:six 7:seven</code></pre><br><b>Sample Output:</b><br><pre><code class="language-no-highlight">5 : five<br>4 : four<br>3 : three<br>2 : two<br>1 : one</code></pre><br><br><b>Sample Input:</b><br><pre><code class="language-no-highlight">2:two 4:four 6:six 8:eight 10:ten 12:twelve 14:fourteen</code></pre><br><b>Sample Output:</b><br><pre><code class="language-no-highlight">14 : fourteen<br>12 : twelve<br>10 : ten</code></pre><br><br><br><font color="gray">Memory limit: 256 MB</font><br><font color="gray">Time limit: 8 seconds</font><br><br>
+<a href="https://hyperskill.org/learn/step/3558">Show topic summary</a>

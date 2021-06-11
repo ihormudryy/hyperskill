@@ -1,0 +1,22 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    class Clock {
+
+        int hours = 12;
+        int minutes = 0;
+
+        void next() {
+            // implement me
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/2989#comment
+status: Solved
+feedback:
+  message: <html>Correct solution<br/><br/>Continue on <a href="https://hyperskill.org/learn/step/2989#comment">JetBrains
+    Academy</a></html>
+  time: Tue, 17 Nov 2020 10:54:07 UTC
+record: -1

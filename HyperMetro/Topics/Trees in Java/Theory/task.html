@@ -1,0 +1,76 @@
+<h2>Trees in Java</h2>
+<html>
+ <head></head>
+ <body>
+  <p>Earlier, we considered in detail what trees are. Briefly, a <strong>tree </strong>is a data structure that allows storing data with a <strong>"parent-child"</strong> relationship. For example, the ‘boss-subordinate’ structure of a company can be represented as a tree. Recall that every tree is a connected graph that does not contain any cycles.</p> 
+  <p>In this topic, we will learn how trees can be stored in computer memory and implement these approaches in Java.</p> 
+  <h2 style="text-align: center;">Implementing trees in Java</h2> 
+  <p>Often, a <strong>tree </strong>means a <strong>binary tree</strong> since many algorithms are made specifically for them. But first, let’s take a look at the data structure for a non-binary tree where nodes can have more than two children:</p> 
+  <pre><code class="language-java language-language-java">public class TreeNode&lt;T&gt; {
+    public T data;
+    public TreeNode&lt;T&gt; parent;
+    public List&lt;TreeNode&lt;T&gt;&gt; children;
+
+    public TreeNode(T data) {
+        this.data = data;
+        this.parent = null;
+        this.children = new ArrayList&lt;&gt;();
+    }
+}</code></pre> 
+  <p>Having a pointer to the root gives us access to the whole tree. Using the “children” list allows us to assign more than two children to the node.</p> 
+  <p>If we were implementing a<strong> binary tree</strong>, then instead of a list we would have just two children – left and right. This is how <code class="java">TreeNode</code> class would look for a binary tree:</p> 
+  <pre><code class="language-java language-language-java">public class TreeNode&lt;T&gt; {
+    public T data;
+    public TreeNode&lt;T&gt; parent;
+    public TreeNode&lt;T&gt; left;
+    public TreeNode&lt;T&gt; right;
+
+    public TreeNode(T data) {
+        this.data = data;
+        this.parent = null;
+        this.left = null;
+        this.right = null;
+    }
+}</code></pre> 
+  <p>Using the generic programming approach in implementing the classes above allows us to use different data types for the values of tree nodes. We can store both numeric and symbolic values as well as more complex ones like strings or objects. For instance, in the family tree, each node is an object of the type ‘Human’, with parameters such as Name, Birthdate, Gender, etc.</p> 
+  <p>To use this data structure, we need to learn how to add elements to our tree. First, let’s implement the “Add” function. This function adds a child with a specified value to the current node. As you can see, this method is also a generic method:</p> 
+  <pre><code class="language-java language-language-java">public TreeNode&lt;T&gt; add(T value) {
+    TreeNode&lt;T&gt; newVertex = new TreeNode&lt;&gt;(value);
+    newVertex.parent = this;
+    this.children.add(newVertex);
+    return newVertex;
+}</code></pre> 
+  <p>Now let’s use this class in practice and create some tree:</p> 
+  <pre><code class="language-java language-language-java">TreeNode&lt;String&gt; root = new TreeNode&lt;&gt;("root");
+{
+    TreeNode&lt;String&gt; node0 = root.add("node0");
+    TreeNode&lt;String&gt; node1 = root.add("node1");
+    TreeNode&lt;String&gt; node2 = root.add("node2");
+    {
+        TreeNode&lt;String&gt; node20 = node2.add("node20");
+        TreeNode&lt;String&gt; node21 = node2.add("node21");
+        {
+            TreeNode&lt;String&gt; node210 = node21.add("node210");
+            TreeNode&lt;String&gt; node211 = node21.add("node211");
+        }
+    }
+    TreeNode&lt;String&gt; node3 = root.add("node3");
+    {
+        TreeNode&lt;String&gt; node30 = node3.add("node30");
+    }
+}</code></pre> 
+  <p>The code above builds the following tree:</p> 
+  <p style="text-align: center;"><img alt="" src="https://ucarecdn.com/b9481a62-2fe1-4f2e-8e83-e6734ddf0231/"></p> 
+  <p>As you may have guessed, curly brackets are not required: they were added as visual clues to reveal the tree’s structure.</p> 
+  <h2 style="text-align: center;">Another way to store trees in memory</h2> 
+  <p>Common ways of describing graphs (connectivity matrix, connectivity list, and incidence matrix) can also be used for describing trees since any tree is by definition a graph.</p> 
+  <p>However, there is an even easier option for binary trees: they can be stored in arrays. If the node is numbered as $i$, then its children will have numbers $2 \cdot i$ and $2 \cdot i + 1$. Consider the following example:</p> 
+  <p style="text-align: center;"><img alt="" src="https://ucarecdn.com/804bb4f5-477e-41b8-a83a-51f3e3e1653c/"></p> 
+  <p>An array representing this binary tree looks like this:</p> 
+  <pre><code class="java">1 2 3 4 5 6 7 8 9 10 11 12</code></pre> 
+  <p>Let’s take node 5, for example. If we apply the above formula, its children will have numbers $10 = 5 \cdot 2$ and $11 = 5 \cdot 2+1$, which is exactly what we see in the picture.</p> 
+  <h2 style="text-align: center;"><strong>Conclusion</strong></h2> 
+  <p>In this topic, we have learned several ways of how trees can be stored in computer memory and implemented one of these methods in Java. Now, you should be able to apply these methods to efficiently solve problems connected with processing trees. Move on to the practice exercises of this topic and try to solve some of such problems!</p>
+ </body>
+</html>
+<a href="https://hyperskill.org/learn/step/5671">Show topic summary</a>

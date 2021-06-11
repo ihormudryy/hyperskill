@@ -1,0 +1,21 @@
+<h2>The height of a tree (v2)</h2>
+<html>
+ <head></head>
+ <body>
+  <p></p>
+  <div class="alert alert-primary">
+   Wow! This problem is kind of tricky. If you're ready to put your thinking cap on, brace yourself, and good luck! If, however, you find the problem too difficult, you may try to solve its 
+   <a target="_blank" href="https://hyperskill.org/learn/step/9825" rel="noopener noreferrer nofollow">simpler version</a> first, and then return to this one.
+  </div>
+  <p></p> 
+  <p>One more way to represent a tree in computer memory is to store it as an array of parents. For example, for the tree below</p> 
+  <p style="text-align: center;"><img alt="" height="255" src="https://ucarecdn.com/19b8e9b5-eec2-4db9-bafb-cdb91fb32350/" width="326"></p> 
+  <p>an array of parents is as follows:</p> 
+  <p style="text-align: center;"><img alt="" src="https://ucarecdn.com/abd5f97d-7a95-4812-80d0-81b40f38c61e/"></p> 
+  <p>The node's $3$ parent is $1$, thus $parent[3] = 1$. The node $1$ is a root, hence $parent[1] = -1$.</p> 
+  <p>Your task here is to write a program that finds the height of a tree represented in the described format. The expected time complexity of your algorithm is $O(k)$, where $k$ is the number of nodes in a tree.</p> 
+  <p><strong>Input</strong>: the first line contains an integer $k$ — the number of nodes of a tree. The next line contains $k$ integers corresponding to an array of parents. It is guaranteed that an array represents a correct tree.</p> 
+  <p><strong>Output</strong>: the height of the input tree.</p>
+ </body>
+</html><br><b>Sample Input:</b><br><pre><code class="language-no-highlight">7<br>1 -1 5 1 0 1 5<br></code></pre><br><b>Sample Output:</b><br><pre><code class="language-no-highlight">3<br></code></pre><br><br><b>Sample Input:</b><br><pre><code class="language-no-highlight">5<br>3 0 3 -1 0<br></code></pre><br><b>Sample Output:</b><br><pre><code class="language-no-highlight">3</code></pre><br><br><br><font color="gray">Memory limit: 256 MB</font><br><font color="gray">Time limit: 2 seconds</font><br><br>
+<a href="https://hyperskill.org/learn/step/5671">Show topic summary</a>

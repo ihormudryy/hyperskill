@@ -1,0 +1,19 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    import java.math.BigDecimal;
+
+    class Main {
+        public static void main(String[] args) {
+            // write your code here
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/13515#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Tue, 08 Jun 2021 17:50:56 UTC
+record: -1

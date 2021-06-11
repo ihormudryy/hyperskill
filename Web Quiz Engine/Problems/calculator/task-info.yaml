@@ -1,0 +1,213 @@
+type: edu
+files:
+- name: resources/application.properties
+  visible: false
+  text: |-
+    server.port=8889
+    management.endpoints.web.exposure.include=*
+    management.endpoint.shutdown.enabled=true
+  learner_created: false
+- name: build.gradle
+  visible: false
+  text: |
+    plugins {
+        id 'java'
+        id 'org.springframework.boot' version '2.3.1.RELEASE'
+        id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+    }
+
+    sourceCompatibility = 11
+
+    repositories {
+        mavenCentral()
+        maven { url "https://jitpack.io" }
+    }
+
+    sourceSets.main.resources.srcDirs = ["resources"]
+
+    dependencies {
+        implementation 'org.springframework.boot:spring-boot-starter'
+        implementation 'org.springframework.boot:spring-boot-starter-actuator'
+        implementation 'org.springframework.boot:spring-boot-starter-web'
+        testImplementation 'com.github.hyperskill:hs-test:v7.1'
+    }
+  learner_created: false
+- name: test/WebCalculatorApplicationTest.java
+  visible: false
+  text: |-
+    import calculator.WebCalculatorApplication;
+    import org.hyperskill.hstest.dynamic.input.DynamicTesting;
+    import org.hyperskill.hstest.dynamic.input.DynamicTestingMethod;
+    import org.hyperskill.hstest.stage.SpringTest;
+    import org.hyperskill.hstest.testcase.CheckResult;
+
+    import java.util.List;
+
+    public class WebCalculatorApplicationTest extends SpringTest {
+
+        public WebCalculatorApplicationTest() {
+            super(WebCalculatorApplication.class, 8889);
+        }
+
+        @DynamicTestingMethod
+        DynamicTesting[] dt = new DynamicTesting[] {
+                this::testAddNumbers,
+                this::testSubtractNumbers,
+                this::testMultNumbers,
+                this::testUnknownOperation,
+        };
+
+        private List<List<Integer>> dataProvider = List.of(
+                List.of(20, 5),
+                List.of(100, 10),
+                List.of(0, 2),
+                List.of(-15, 3),
+                List.of(-20, -10)
+        );
+
+        private CheckResult testAddNumbers() {
+            for (var pair : dataProvider) {
+                var response = get("/add")
+                        .addParam("a", String.valueOf(pair.get(0)))
+                        .addParam("b", String.valueOf(pair.get(1)))
+                        .send();
+
+                if (response.getStatusCode() != 200) {
+                    return CheckResult.wrong("GET /add should respond with " +
+                            "status code 200, responded: " + response.getStatusCode() + "\n\n" +
+                            "Response body:\n" + response.getContent());
+                }
+
+
+                int result;
+                try {
+                    result = Integer.parseInt(response.getContent());
+                } catch (NumberFormatException e) {
+                    return CheckResult.wrong("Your program didn't output a number");
+                }
+
+                if (result != pair.get(0) + pair.get(1)) {
+                    return CheckResult.wrong("Wrong result of adding numbers");
+                }
+            }
+
+            return CheckResult.correct();
+        }
+
+        private CheckResult testSubtractNumbers() {
+            for (var pair : dataProvider) {
+                var response = get("/subtract")
+                        .addParam("a", String.valueOf(pair.get(0)))
+                        .addParam("b", String.valueOf(pair.get(1)))
+                        .send();
+
+                if (response.getStatusCode() != 200) {
+                    return CheckResult.wrong("GET /subtract should respond with " +
+                            "status code 200, responded: " + response.getStatusCode() + "\n\n" +
+                            "Response body:\n" + response.getContent());
+                }
+
+                int result;
+                try {
+                    result = Integer.parseInt(response.getContent());
+                } catch (NumberFormatException e) {
+                    return CheckResult.wrong("Your program didn't output a number");
+                }
+
+                if (result != pair.get(0) - pair.get(1)) {
+                    return CheckResult.wrong("Wrong result of subtracting numbers");
+                }
+            }
+
+            return CheckResult.correct();
+        }
+
+        private CheckResult testMultNumbers() {
+            for (var pair : dataProvider) {
+                var response = get("/mult")
+                        .addParam("a", String.valueOf(pair.get(0)))
+                        .addParam("b", String.valueOf(pair.get(1)))
+                        .send();
+
+                if (response.getStatusCode() != 200) {
+                    return CheckResult.wrong("GET /mult should respond with " +
+                            "status code 200, responded: " + response.getStatusCode() + "\n\n" +
+                            "Response body:\n" + response.getContent());
+                }
+
+                int result;
+                try {
+                    result = Integer.parseInt(response.getContent());
+                } catch (NumberFormatException e) {
+                    return CheckResult.wrong("Your program didn't output a number");
+                }
+
+                if (result != pair.get(0) * pair.get(1)) {
+                    return CheckResult.wrong("Wrong result of multiplying numbers");
+                }
+            }
+
+            return CheckResult.correct();
+        }
+
+        private CheckResult testUnknownOperation() {
+            var operations = List.of("/divide", "/ad", "/q");
+            final var expectedResult = "Unknown operation";
+
+            for (var operation : operations) {
+                var response = get(operation)
+                        .addParam("a", "1")
+                        .addParam("b", "2")
+                        .send();
+
+                if (response.getStatusCode() != 200) {
+                    return CheckResult.wrong("GET /divide should respond with " +
+                            "status code 200, responded: " + response.getStatusCode() + "\n\n" +
+                            "Response body:\n" + response.getContent());
+                }
+
+                if (!response.getContent().equalsIgnoreCase(expectedResult)) {
+                    return CheckResult.wrong("Wrong result of multiplying numbers");
+                }
+            }
+
+            return CheckResult.correct();
+        }
+    }
+  learner_created: false
+- name: src/calculator/ArithmeticRestController.java
+  visible: true
+  text: |-
+    package calculator;
+
+    import org.springframework.web.bind.annotation.*;
+
+    class ArithmeticRestController {
+        public String calculate(String operation, int a, int b) {
+            return "Unknown operation";
+        }
+    }
+  learner_created: false
+- name: src/calculator/WebCalculatorApplication.java
+  visible: false
+  text: |-
+    package calculator;
+
+    import org.springframework.boot.SpringApplication;
+    import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+
+    @SpringBootApplication
+    public class WebCalculatorApplication {
+
+        public static void main(String[] args) {
+            SpringApplication.run(WebCalculatorApplication.class, args);
+        }
+
+    }
+  learner_created: false
+status: Solved
+feedback:
+  message: Congratulations!
+  time: Sat, 12 Dec 2020 21:14:42 UTC
+record: -1

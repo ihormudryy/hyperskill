@@ -1,0 +1,51 @@
+<h2>About</h2>
+
+<p>In the Internet, you can often find sites where you need to answer questions: educational sites, sites with psychological tests, job search services, or just entertaining sites like web quests. Something they all have in common is that they permit to answer questions (or quizzes) and then see the results.</p>
+
+<p>In this project, you will develop a multi-user web service for creating and solving quizzes using<strong> </strong>REST API, an embedded database, security, and other technologies. Here we will concentrate on the server side ("engine") without a user interface at all. The project stages are described in terms of the <strong>client-server model</strong>, where the client can be a <strong>browser</strong>, the <strong>curl</strong> tool, a REST client (like <strong>postman</strong>) or something else.</p>
+
+<p>During the development of the web service, you will probably have to do some Google searching and additional reading. This is a normal situation, just read a few articles when implementing stages.</p>
+
+<p>After you complete this project, you will have a clear understanding of <strong>backend</strong> development. You'll also know how to combine various modern technologies to get a great result. If you continue the work on the project, you can also develop a web/mobile client for this web service.</p>
+
+<h2>Description</h2>
+
+<p>At the first stage, you need to develop a simple JSON API that always returns the same quiz to be solved. The API should support only two operations: getting the quiz and solving it by passing an answer. Each operation is described in more detail below.</p>
+
+<p>Once the stage is completed, you will have a working web service with an comprehensive API.</p>
+
+<p>To test your API, you may write Spring Boot tests, or use a rest client like <a target="_blank" href="https://www.getpostman.com/product/api-client" rel="noopener noreferrer nofollow">postman</a> or <a target="_blank" href="https://gist.github.com/subfuzion/08c5d85437d5d4f00e58" rel="noopener noreferrer nofollow">the curl tool</a>. GET requests can be tested by accessing the URL in your browser. You can also check your application in the browser using <a target="_blank" href="https://reqbin.com/" rel="noopener noreferrer nofollow">reqbin</a>.</p>
+
+<h2>Get the quiz</h2>
+
+<p>The quiz has exactly three fields: <code class="java">title</code> (string) <code class="java">text</code> (string) and <code class="java">options</code> (array). To get the quiz, the client sends the <code class="java">GET</code> request to <code class="java">/api/quiz</code>. The server should return the following JSON structure:</p>
+
+<pre><code class="java">{
+  "title": "The Java Logo",
+  "text": "What is depicted on the Java logo?",
+  "options": ["Robot","Tea leaf","Cup of coffee","Bug"]
+}</code></pre>
+
+<p>In your API, the names of attributes must be exactly the same (<code class="java">title</code>, <code class="java">text</code>, <code class="java">options</code>), but you can assign any values to them. The quiz should contain four items in the <code class="java">options</code> array. The correct answer must be the <strong>third option</strong>, but since the indexes start from zero, <strong>its index is 2</strong>.</p>
+
+<p><div class="alert alert-primary">There is no need to force your server to respond a JSON with line breaks and additional spaces. This is used only to demonstrate the response in a human-readable format. Actually, your server returns a long single-line JSON: <code class="java">{"title":"The Java Logo","text":"What is depicted on the Java logo?","options":["Robot","Tea leaf","Cup of coffee","Bug"]}</code>.</div></p>
+
+<h2>Solve the quiz</h2>
+
+<p>To solve the quiz, the client need to pass the <code class="java">answer</code> parameter using the <code class="java">POST</code> request to <code class="java">/api/quiz</code> with content as parameter <code class="java">answer</code> and value. This parameter is the index of a chosen option from <code class="java">options</code> array. We suppose that in our service indexes start from zero.</p>
+
+<p>The server should return JSON with two fields: <code class="java">success</code> (<code class="java">true</code> or <code class="java">false</code>) and <code class="java">feedback</code> (just a string). There are two possible responses from the server:</p>
+
+<ul>
+	<li>If the passed answer is correct (<code class="java">POST</code> to <code class="java">/api/quiz</code> with content <code class="java">answer=2</code>):</li>
+</ul>
+
+<pre><code class="java">{"success":true,"feedback":"Congratulations, you're right!"}</code></pre>
+
+<ul>
+	<li>If the answer is incorrect (e.g., <code class="java">POST</code> to <code class="java">/api/quiz</code> with content <code class="java">answer=1</code>):</li>
+</ul>
+
+<pre><code class="java">{"success":false,"feedback":"Wrong answer! Please, try again."}</code></pre>
+
+<p>You can write any other strings in the <code class="java">feedback</code> field, but the names of the fields and the <code class="java">true</code>/<code class="java">false</code> values must match this example.</p>

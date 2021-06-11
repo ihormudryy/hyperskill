@@ -18,6 +18,25 @@
 *.zip
 *.tar.gz
 *.rar
+*.class
+.idea/
+*.iml
+*.db
+**/build/
+**/.gradle/
+**/out/
+gradle/
+target/
+unitTestOutput/
+logs/
 
+# Mac
+.DS_Store
+# Test Files
+.vscode/
+.test-data/
+.project
+.settings/
+.classpath
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*

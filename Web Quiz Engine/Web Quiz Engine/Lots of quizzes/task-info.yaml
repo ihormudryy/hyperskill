@@ -1,0 +1,331 @@
+type: edu
+custom_name: stage2
+files:
+- name: build.gradle
+  visible: true
+  text: |
+    plugins {
+        id 'org.springframework.boot' version '2.2.2.RELEASE'
+        id 'java'
+    }
+
+    apply plugin: 'io.spring.dependency-management'
+
+    sourceCompatibility = 11
+
+    repositories {
+        mavenCentral()
+    }
+
+    sourceSets.main.resources.srcDirs = ["src/resources"]
+
+    dependencies {
+        implementation 'org.springframework.boot:spring-boot-starter'
+        implementation 'org.springframework.boot:spring-boot-starter-actuator'
+        compile("org.springframework.boot:spring-boot-starter-web")
+    }
+  learner_created: false
+- name: src/engine/WebQuizEngine.java
+  visible: true
+  text: |
+    package engine;
+
+    import org.springframework.boot.SpringApplication;
+    import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+    @SpringBootApplication
+    public class WebQuizEngine {
+
+        public static void main(String[] args) {
+            SpringApplication.run(WebQuizEngine.class, args);
+        }
+
+    }
+  learner_created: false
+- name: src/resources/application.properties
+  visible: true
+  text: |
+    server.port=8889
+    management.endpoints.web.exposure.include=*
+    management.endpoint.shutdown.enabled=true
+  learner_created: false
+- name: test/tests/WebQuizEngineTest.java
+  visible: false
+  text: |
+    package tests;
+
+    import com.google.gson.JsonElement;
+    import com.google.gson.JsonObject;
+    import engine.WebQuizEngine;
+    import org.hyperskill.hstest.dynamic.input.DynamicTesting;
+    import org.hyperskill.hstest.dynamic.input.DynamicTestingMethod;
+    import org.hyperskill.hstest.exception.outcomes.WrongAnswer;
+    import org.hyperskill.hstest.mocks.web.request.HttpRequest;
+    import org.hyperskill.hstest.mocks.web.response.HttpResponse;
+    import org.hyperskill.hstest.stage.SpringTest;
+    import org.hyperskill.hstest.testcase.CheckResult;
+
+    import java.util.Map;
+
+    import static org.hyperskill.hstest.common.JsonUtils.getJson;
+    import static org.hyperskill.hstest.common.JsonUtils.getPrettyJson;
+    import static org.hyperskill.hstest.testing.expect.Expectation.expect;
+    import static org.hyperskill.hstest.testing.expect.json.JsonChecker.*;
+
+    public class WebQuizEngineTest extends SpringTest {
+        public WebQuizEngineTest() {
+            super(WebQuizEngine.class);
+        }
+
+        static void checkStatusCode(HttpResponse resp, int status) {
+            if (resp.getStatusCode() != status) {
+                throw new WrongAnswer(
+                    resp.getRequest().getMethod() + " " +
+                        resp.getRequest().getLocalUri() +
+                        " should respond with status code " + status + ", " +
+                        "responded: " + resp.getStatusCode() + "\n\n" +
+                        "Response body:\n\n" + resp.getContent()
+                );
+            }
+        }
+
+        private static int quizId1 = 0;
+        private static int quizId2 = 0;
+
+        private static String quiz1 =
+            "{\n" +
+                "  \"title\": \"The Java Logo\",\n" +
+                "  \"text\": \"What is depicted on the Java logo?\",\n" +
+                "  \"options\": [\"Robot\",\"Tea leaf\",\"Cup of coffee\",\"Bug\"],\n" +
+                "  \"answer\": 2\n" +
+                "}";
+
+        private static String quiz2 =
+            "{\n" +
+                "  \"title\": \"The Ultimate Question\",\n" +
+                "  \"text\": \"What is the answer to the Ultimate Question of Life, the Universe and Everything?\",\n" +
+                "  \"options\": [\"Everything goes right\",\"42\",\"2+2=4\",\"11011100\"],\n" +
+                "  \"answer\": 1\n" +
+                "}";
+
+        @DynamicTestingMethod
+        public DynamicTesting[] dt = new DynamicTesting[]{
+            () -> testAllQuizzes(0),
+
+            () -> testCreateQuiz(1),
+            () -> testQuizExists(1),
+            () -> testQuizNotExists(1),
+
+            () -> testAllQuizzes(1),
+
+            () -> testCreateQuiz(2),
+            () -> testQuizExists(2),
+            () -> testQuizNotExists(2),
+
+            () -> testAllQuizzes(2),
+
+            () -> checkQuizSuccess(quizId1, "0", false),
+            () -> checkQuizSuccess(quizId1, "1", false),
+            () -> checkQuizSuccess(quizId1, "2", true),
+            () -> checkQuizSuccess(quizId1, "3", false),
+
+            () -> checkQuizSuccess(quizId2, "0", false),
+            () -> checkQuizSuccess(quizId2, "1", true),
+            () -> checkQuizSuccess(quizId2, "2", false),
+            () -> checkQuizSuccess(quizId2, "3", false),
+        };
+
+        private CheckResult testCreateQuiz(int quizNum) {
+            String url = "/api/quizzes";
+            HttpResponse resp = post(url, quizNum == 1 ? quiz1 : quiz2).send();
+
+            checkStatusCode(resp, 200);
+
+            expect(resp.getContent()).asJson().check(
+                isObject()
+                    .value("id", isInteger(i -> {
+                        if (quizNum == 1) {
+                            quizId1 = i;
+                        } else {
+                            quizId2 = i;
+                        }
+                        return true;
+                    }))
+                    .anyOtherValues()
+            );
+
+            return CheckResult.correct();
+        }
+
+        private CheckResult testQuizExists(int quizNum) {
+            int quizId = quizNum == 1 ? quizId1 : quizId2;
+            String quiz = quizNum == 1 ? quiz1 : quiz2;
+
+            String url = "/api/quizzes/" + quizId;
+
+            HttpResponse resp = get(url).send();
+            checkStatusCode(resp, 200);
+
+            JsonObject rightQuiz = getJson(quiz).getAsJsonObject();
+            rightQuiz.remove("answer");
+            rightQuiz.addProperty("id", quizId);
+
+            expect(getPrettyJson(rightQuiz)).asJson().check(
+                isObject()
+                    .value("id", quizId)
+                    .value("title", isString())
+                    .value("text", isString())
+                    .value("options", isArray(any()))
+            );
+
+            JsonElement json = resp.getJson();
+
+            CheckResult wrongResponse = CheckResult.wrong(
+                "The quiz sent to the program looked like this:\n" +
+                    getPrettyJson(rightQuiz) + "\n\n" +
+                    "But the received quiz looks like that:\n" +
+                    getPrettyJson(json)
+            );
+
+            if (!json.isJsonObject()) {
+                return wrongResponse;
+            }
+
+            JsonObject obj = json.getAsJsonObject();
+
+            if (!rightQuiz.equals(obj)) {
+                return wrongResponse;
+            }
+
+            return CheckResult.correct();
+        }
+
+        private CheckResult testQuizNotExists(int quizNum) {
+            int quizId = quizNum == 1 ? quizId1 : quizId2;
+
+            String url = "/api/quizzes/" + (quizId + 125);
+
+            HttpResponse resp = get(url).send();
+            checkStatusCode(resp, 404);
+
+            return CheckResult.correct();
+        }
+
+        private CheckResult testAllQuizzes(int count) {
+            String url = "/api/quizzes";
+            HttpResponse resp = get(url).send();
+
+            checkStatusCode(resp, 200);
+
+            expect(resp.getContent()).asJson().check(
+                isArray(count, isObject().anyOtherValues())
+            );
+
+            return CheckResult.correct();
+        }
+
+        private CheckResult checkQuizSuccess(int quizNum, String answerSent, boolean shouldResponse) {
+            String url = "/api/quizzes/" + quizNum + "/solve";
+
+            HttpRequest req = post(url, Map.of("answer", answerSent));
+            HttpResponse resp = req.send();
+            checkStatusCode(resp, 200);
+
+            expect(resp.getContent()).asJson().check(
+                isObject()
+                    .value("success", shouldResponse)
+                    .value("feedback", isString())
+            );
+
+            return CheckResult.correct();
+        }
+    }
+  learner_created: false
+- name: src/model/Quiz.java
+  visible: true
+  text: |
+    package model;
+
+    public class Quiz {
+        private String title;
+        private String text;
+        private String[] options;
+
+        public Quiz(String title, String text, String[] options) {
+            this.title = title;
+            this.text = text;
+            this.options = options;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public String getText() {
+            return text;
+        }
+
+        public String[] getOptions() {
+            return options;
+        }
+    }
+  learner_created: true
+- name: src/engine/QuizController.java
+  visible: true
+  text: |
+    package engine;
+
+    import java.util.Map;
+    import model.Quiz;
+    import org.slf4j.Logger;
+    import org.slf4j.LoggerFactory;
+    import org.springframework.http.HttpStatus;
+    import org.springframework.http.ResponseEntity;
+    import org.springframework.web.bind.annotation.GetMapping;
+    import org.springframework.web.bind.annotation.PostMapping;
+    import org.springframework.web.bind.annotation.RequestBody;
+    import org.springframework.web.bind.annotation.RequestParam;
+    import org.springframework.web.bind.annotation.RestController;
+    import com.google.gson.Gson;
+    import com.google.gson.GsonBuilder;
+
+    @RestController
+    public class QuizController {
+        private Gson gson = new GsonBuilder().create();
+        private static final Logger logger = LoggerFactory.getLogger(QuizController.class);
+
+        @GetMapping(value="api/quiz")
+        public ResponseEntity getQuiz(){
+            Quiz newQuiz = new Quiz("The Java Logo",
+                "What is depicted on the Java logo?",
+                    new String[] {"Robot", "Tea leaf", "Cup of coffee", "Bug"});
+
+            return new ResponseEntity<String>(gson.toJson(newQuiz), HttpStatus.OK);
+        }
+
+        @PostMapping(value="api/quiz")
+        public ResponseEntity checkAnswer(@RequestParam Map<String, String> body) {
+            if (body.get("answer").equals("2")) {
+                Response response = new Response(true, ResponseMessages.getCorrectMessage());
+                return new ResponseEntity<String>(gson.toJson(response), HttpStatus.OK);
+            } else {
+                Response response = new Response(false, ResponseMessages.getWrongMessageMessage());
+                logger.info(gson.toJson(response));
+                System.out.println(gson.toJson(response));
+                return new ResponseEntity<String>(gson.toJson(response), HttpStatus.OK);
+            }
+        }
+    }
+  learner_created: true
+- name: test/engine/QuizControllerTest.java
+  visible: true
+  learner_created: false
+- name: src/model/AnswerMessage.java
+  visible: true
+  learner_created: true
+feedback_link: https://hyperskill.org/projects/91/stages/505/implement#comment
+status: Solved
+feedback:
+  message: Congratulations!
+  time: Mon, 14 Dec 2020 20:32:01 UTC
+record: 2

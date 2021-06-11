@@ -1,0 +1,39 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    // Don't delete this import statement
+    import java.util.Scanner;
+
+    class SimpleCalculator {
+
+        public static void main(String[] args) {
+
+            Scanner scanner = new Scanner(System.in);
+            long num1 = scanner.nextLong();
+            String operator = scanner.next();
+            long num2 = scanner.nextLong();
+
+        }
+
+        // Implement your methods here
+        public static void subtractTwoNumbers...
+
+
+        public static void sumTwoNumbers...
+
+
+        public static void divideTwoNumbers...
+
+
+        public static void multiplyTwoNumbers...
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/10576#comment
+status: Solved
+feedback:
+  message: <html>Correct solution<br/><br/>Continue on <a href="https://hyperskill.org/learn/step/10576#comment">JetBrains
+    Academy</a></html>
+  time: Fri, 13 Nov 2020 09:39:14 UTC
+record: -1

@@ -1,0 +1,190 @@
+type: edu
+files:
+- name: src/Main.java
+  visible: true
+  text: |
+    public class Main {
+
+        public static void main(String[] args) {
+            System.out.println("Hello, world!");
+        }
+    }
+  learner_created: false
+- name: test/baltimore.txt
+  visible: false
+  text: |-
+    Owings Mills
+    Old Court
+    Milford Mill
+    Reiserstown Plaza
+    Rogers Avenue
+    West Cold Spring
+    Mondawmin
+    Penn North
+    Uptown
+    State Center
+    Lexington Market
+    Charles Center
+    Shot Tower/Market Place
+    Johns Hopkins Hospital
+  learner_created: false
+- name: test/empty.txt
+  visible: false
+  learner_created: false
+- name: test/samara.txt
+  visible: false
+  text: |-
+    Alabinskaya
+    Rossiyskaya
+    Moskovskaya
+    Gagarinskaya
+    Sportivnaya
+    Sovetskaya
+    Pobeda
+    Bezymyanka
+    Kirovskaya
+    Yungorodok
+  learner_created: false
+- name: test/Tests.java
+  visible: false
+  text: |-
+    import org.hyperskill.hstest.dynamic.DynamicTest;
+    import org.hyperskill.hstest.exception.outcomes.WrongAnswer;
+    import org.hyperskill.hstest.stage.StageTest;
+    import org.hyperskill.hstest.testcase.CheckResult;
+    import org.hyperskill.hstest.testing.TestedProgram;
+
+
+    public class Tests extends StageTest<String> {
+        // testing a case from example
+        @DynamicTest(order = 1)
+        CheckResult test1() {
+
+            TestedProgram main = new TestedProgram();
+
+            String output = main.start("./test/baltimore.txt").trim();
+
+            checkDepots(output);
+            checkOutputLength(output, 14);
+
+            assertStations(output, new String[]{"Owings Mills", "Old Court", "Milford Mill", "Reiserstown Plaza",
+                "Rogers Avenue", "West Cold Spring", "Mondawmin", "Penn North", "Uptown", "State Center",
+                "Lexington Market", "Charles Center", "Shot Tower/Market Place", "Johns Hopkins Hospital"});
+
+            return CheckResult.correct();
+        }
+
+        // empty file test
+        @DynamicTest(order = 2)
+        CheckResult test2() {
+
+            TestedProgram main = new TestedProgram();
+
+            String output = main.start("./test/empty.txt");
+            if (output.trim().length() != 0) {
+                return CheckResult.wrong("Your program should not print anything if the file is empty.");
+            }
+
+            return CheckResult.correct();
+        }
+
+        // not existing file check
+        @DynamicTest(order = 3)
+        CheckResult test3() {
+
+            TestedProgram main = new TestedProgram();
+            String output = main.start("tHiS_fIlE_DoEs_nOt_ExIsT.txt").toLowerCase();
+
+            if (output.trim().length() == 0) {
+                return CheckResult.wrong("The program did not print anything when the file that doesn't exist was passed.");
+            }
+            if (output.startsWith("depot") || output.endsWith("depot") || !output.contains("error")) {
+                return CheckResult.wrong("It looks like the program did not print an error message when the file that doesn't exist was passed.\n" +
+                    "Your output should contain 'error'.");
+            }
+
+            return CheckResult.correct();
+        }
+
+        // positive test with another metro
+        @DynamicTest(order = 4)
+        CheckResult test4() {
+
+            TestedProgram main = new TestedProgram();
+            String output = main.start("./test/samara.txt").trim();
+
+            checkDepots(output);
+            checkOutputLength(output, 10);
+
+            assertStations(output, new String[]{"Alabinskaya", "Rossiyskaya", "Moskovskaya", "Gagarinskaya",
+                "Sportivnaya", "Sovetskaya", "Pobeda", "Bezymyanka", "Kirovskaya", "Yungorodok"});
+
+            return CheckResult.correct();
+        }
+
+        // checks for "depot" at the start and at the end
+        void checkDepots(String output) {
+            output = output.trim().toLowerCase();
+            if (!output.startsWith("depot")) {
+                throw new WrongAnswer("Your output should start with 'depot'.");
+            } else if (!output.endsWith("depot")) {
+                throw new WrongAnswer("Your output should end with 'depot'.");
+            }
+        }
+
+
+        // checks number of stations in output
+        void checkOutputLength(String output, int correctLength) {
+            int length = output.trim().split("\n").length;
+            if (length != correctLength) {
+                throw new WrongAnswer("You output contains wrong number of lines.\n" +
+                    "Expected: " + correctLength + " lines\n" +
+                    "Your output: " + length + " lines");
+            }
+        }
+
+        // checks stations
+        void assertStations(String output, String[] stations) {
+
+            String[] sOutput = output.trim().split("\n");
+
+            for (int i = 0; i < stations.length; i++) {
+
+                String currentLine = sOutput[i].trim();
+                if (currentLine.split("-").length != 3) {
+                    throw new WrongAnswer("There is should be 3 stations in one line.\n" +
+                        "Treat 'depot' as a station name");
+                }
+
+                // Checking the first line
+                if (i == 0) {
+                    for (int j = 0; j < 2; j++) {
+                        if (!currentLine.contains(stations[i + j])) {
+                            throw new WrongAnswer("Can't find station '" + stations[i + j] + "' in the line number " + (i + 1));
+                        }
+                    }
+                    // Checking the last line
+                } else if (i == stations.length - 1) {
+                    for (int j = 0; j < 2; j++) {
+                        if (!currentLine.contains(stations[i + j - 1])) {
+                            throw new WrongAnswer("Can't find station '" + stations[i + j - 1] + "' in the line number " + (i + 1));
+                        }
+                    }
+                    // Checking the rest lines
+                } else {
+                    for (int j = 0; j < 3; j++) {
+                        if (!currentLine.contains(stations[i + j - 1])) {
+                            throw new WrongAnswer("Can't find station '" + stations[i + j - 1] + "' in the line number " + (i + 1));
+                        }
+                    }
+                }
+            }
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/projects/120/stages/648/implement#comment
+status: Solved
+feedback:
+  message: Congratulations!
+  time: Sun, 16 May 2021 20:07:56 UTC
+record: 1

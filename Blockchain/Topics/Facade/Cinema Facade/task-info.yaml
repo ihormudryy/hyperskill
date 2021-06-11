@@ -1,0 +1,35 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: "class CinemaFacadeTestDrive {\n    public static void main(String[] args)\
+    \ throws InterruptedException {\n        PopcornPopper popcorn = new PopcornPopper();\n\
+    \        Lights lights = new Lights();\n        Projector projector = new Projector();\n\
+    \n        CinemaFacade cinemaFacade = new CinemaFacade(popcorn, lights, projector);\n\
+    \n        cinemaFacade.watchMovie();\n        System.out.println(\"We are watching\
+    \ a movie\");\n        Thread.sleep(5000);\n        System.out.println(\"The End\"\
+    );\n        cinemaFacade.endMovie();\n    }\n}\n\nclass CinemaFacade {\n    private\
+    \ PopcornPopper popcorn;\n    private Lights lights;\n    private Projector projector;\n\
+    \n    public CinemaFacade(PopcornPopper popcorn, Lights lights, Projector projector)\
+    \ {\n        this.popcorn = popcorn;\n        this.lights = lights;\n        this.projector\
+    \ = projector;\n    }\n\n    public void watchMovie() {\n        /* write your\
+    \ code here */\n    }\n\n    public void endMovie() {\n        /* write your code\
+    \ here */\n    }\n}\n\nclass PopcornPopper {\n\tString description = \"PopcornPopper\"\
+    ;\n\n\tpublic void on() {\n\t\tSystem.out.println(description + \" on\");\n\t\
+    }\n\n\tpublic void off() {\n\t\tSystem.out.println(description + \" off\");\n\t\
+    }\n\n\tpublic void pop() {\n\t\tSystem.out.println(description + \" popping popcorn!\"\
+    );\n\t}\n}\n\nclass Projector {\n\tString description = \"Projector\";\n\n\tpublic\
+    \ void on() {\n\t\tSystem.out.println(description + \" on\");\n\t}\n\n\tpublic\
+    \ void off() {\n\t\tSystem.out.println(description + \" off\");\n\t}\n}\n\nclass\
+    \ Lights {\n\tString description = \"Lights\";\n\n\tpublic void on() {\n\t\tSystem.out.println(description\
+    \ + \" on\");\n\t}\n\n\tpublic void off() {\n\t\tSystem.out.println(description\
+    \ + \" off\");\n\t}\n\n\tpublic void dim(int level) {\n\t\tSystem.out.println(description\
+    \ + \" dimming to \" + level  + \"%\");\n\t}\n\n\tpublic String toString() {\n\
+    \t\treturn description;\n\t}\n}"
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/5530#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Fri, 26 Mar 2021 12:20:59 UTC
+record: -1

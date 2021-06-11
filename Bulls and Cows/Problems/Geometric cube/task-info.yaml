@@ -1,0 +1,23 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: "import java.util.Scanner;\n\npublic class Main {\n\n    public static void\
+    \ main(String[] args) {\n\n        Scanner scanner = new Scanner(System.in);\n\
+    \n        int width = scanner.nextInt();\n        int height = scanner.nextInt();\n\
+    \        int length = scanner.nextInt(); \n\n        // creating an instance\n\
+    \n        System.out.println(cuboid.toString());\n    }\n}\n\nclass GeometricCuboid\
+    \ {\n    private int width;\n    private int height;\n    private int length;\n\
+    \n    public GeometricCuboid(int width, int height, int length) {\n        this.width\
+    \ = width;\n        this.height = height;\n        this.length = length;\n   \
+    \ }\n\n    @Override\n    public String toString() {\n        return \"Cuboid(\"\
+    \ +\n                \"w=\" + width +\n                \", h=\" + height +\n \
+    \               \", l=\" + length + ')';\n    }\n}"
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/2159#comment
+status: Solved
+feedback:
+  message: <html>Correct solution<br/><br/>Continue on <a href="https://hyperskill.org/learn/step/2159#comment">JetBrains
+    Academy</a></html>
+  time: Mon, 16 Nov 2020 16:47:50 UTC
+record: -1

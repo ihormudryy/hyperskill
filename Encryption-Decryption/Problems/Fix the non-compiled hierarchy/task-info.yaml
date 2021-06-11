@@ -1,0 +1,46 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    class Employee {
+
+        protected String name;
+        protected String birthDate;
+
+        public Employee(String name, String birthDate) {
+            super.name = name;
+            super.birthDate = birthDate;
+        }
+    }
+
+    class RegularEmployee extends Employee {
+
+        protected long salary;
+        protected String hireDate;
+
+        public RegularEmployee(String name, String birthDate, long salary, String hireDate) {
+            this(name, birthDate);
+            super.salary = salary;
+            this.hireDate = hireDate;
+        }
+    }
+
+    class ContractEmployee extends Employee {
+
+        protected long payPerHour;
+        protected String contractPeriod;
+
+        public ContractEmployee(String name, String birthDate, long payPerHour, String contractPeriod) {
+            this.payPerHour = payPerHour;
+            super.contractPeriod = contractPeriod;
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/3041#comment
+status: Solved
+feedback:
+  message: <html>Correct solution<br/><br/>Continue on <a href="https://hyperskill.org/learn/step/3041#comment">JetBrains
+    Academy</a></html>
+  time: Fri, 20 Nov 2020 10:05:02 UTC
+record: -1

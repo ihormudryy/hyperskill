@@ -1,0 +1,24 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    import java.util.List;
+
+    /**
+     Get sorted list of private fields the object declares (inherited fields should be skipped).
+     */
+    class FieldGetter {
+
+        public List<String> getPrivateFields(Object object) {
+            // Add implementation here
+        }
+
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/2883#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Wed, 26 May 2021 20:50:57 UTC
+record: -1

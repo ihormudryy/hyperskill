@@ -1,0 +1,16 @@
+content:
+- Facade
+- Standard functional interfaces
+- Function composition
+- Optional
+- Functional data processing with streams
+- Comparator
+- Stream filtering
+- Map and flatMap
+- Reduction methods
+- Collectors
+- Taking elements
+- Stream pipelines
+- Parallel streams
+- Grouping collectors
+- Currying

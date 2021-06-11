@@ -1,0 +1,20 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    import java.io.InputStream;
+
+    class Main {
+        public static void main(String[] args) throws Exception {
+            InputStream inputStream = System.in;
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/9097#comment
+status: Solved
+feedback:
+  message: <html>Correct solution<br/><br/>Continue on <a href="https://hyperskill.org/learn/step/9097#comment">JetBrains
+    Academy</a></html>
+  time: Tue, 01 Dec 2020 14:24:44 UTC
+record: -1

@@ -1,0 +1,53 @@
+<html>
+ <head></head>
+ <body>
+  <p>The <code class="language-java">java.lang.Class</code> takes a central place in the reflection package. It represents a structure of classes and interfaces by aggregating information on constructors, fields, methods, superclasses, interfaces, and so on. In other words, if you have an instance of the class of a specific type, you can obtain all about the type. That's why <code class="language-java">java.lang.Class</code> is so important. There are several ways to get an object representing a <code class="language-java">java.lang.Class</code> depending on whether the code has access to an instance of the class, the name of the class, the type, or an existing <code class="language-java">Class</code>. Let's take a closer look at them!</p> 
+  <h2 style="text-align: center;">The .class Syntax</h2> 
+  <p>To retrieve a <code class="language-java">Class</code> instance for a given type we can use <code class="language-java">.class</code> construction:</p> 
+  <pre><code class="language-java">Class stringClass = String.class;</code></pre> 
+  <p>The <code class="language-java">.class</code> is simply added to the name of the type. This way of obtaining a <code class="language-java">Class</code> object is useful if we don't have any instances of the class available.</p> 
+  <p>This is also the easiest way to obtain the <code class="language-java">Class</code> for a primitive type and even <code class="language-java">void</code>:</p> 
+  <pre><code class="language-java">Class intClass = int.class;
+Class voidClass = void.class;</code></pre> 
+  <h2 style="text-align: center;">Retrieve Class from an object instance</h2> 
+  <p>The class <code class="language-java">Object</code>, the base class for any reference type, has a getClass method. To get <code class="language-java">Class</code> of a given instance, it's enough to call this method:</p> 
+  <pre><code class="language-java">Class instanceClass = "abc".getClass();</code></pre> 
+  <p>Don't forget that this only works for reference types since they inherit from <code class="language-java">Object</code>! For primitive types, you might want to use other methods.</p> 
+  <h2 style="text-align: center;">Retrieve Class with a given name</h2> 
+  <p>If we have access to a fully qualified type name, we can obtain the corresponding <code class="language-java">Class</code> using the static method <code class="language-java">Class.forName</code>. Keep in mind that this method cannot be used for primitive types!</p> 
+  <pre><code class="language-java">Class forName = Class.forName("java.lang.String");</code></pre> 
+  <p>This method can also be used to retrieve <code class="language-java">Class</code> objects for array classes. In this case, the name consists of the name of the element type preceded by one or more <strong>[</strong> characters representing the depth of the array nesting. The element types are encoded in the following way:</p> 
+  <ul> 
+   <li>boolean – Z</li> 
+   <li>byte – B</li> 
+   <li>char – C</li> 
+   <li>class or interface – L<em>classname;</em></li> 
+   <li>double – D</li> 
+   <li>float – F</li> 
+   <li>int – I</li> 
+   <li>long – J</li> 
+   <li>short – S</li> 
+  </ul> 
+  <pre><code class="language-java">Class floatArrayClass = Class.forName("[F");
+Class objectArrayClass = Class.forName("[[Ljava.lang.Object;");
+Class scannerArrayClass = Class.forName("[Ljava.util.Scanner;");</code></pre> 
+  <p>The variable <code class="language-java">floatArrayClass</code> will contain the <code class="language-java">Class</code> corresponding to a one-dimensional array of primitive type float (the same as <code class="language-java">float[].class</code>). The variable <code class="language-java">objectArrayClass</code> in its turn will contain the <code class="language-java">Class</code> corresponding to a two-dimensional array of <code class="language-java">Object</code>. Note, that there should be a semicolon <code class="language-java">;</code> after an array of any objects.</p> 
+  <h2 style="text-align: center;">Methods that Return Classes</h2> 
+  <p>In addition to the methods we've described above, we can use some Reflection APIs to get classes. However, you should keep in mind that they can be used only if a <code class="language-java">Class</code> has already been obtained. </p> 
+  <p>Here are some examples:</p> 
+  <pre><code class="language-java">// Returns the super class for the given class
+String.class.getSuperclass();
+
+// Returns all the public classes, interfaces, and enums that are members of the class
+String.class.getClasses();
+
+// Returns all of the classes, interfaces, and enums that are explicitly declared in this class.
+String.class.getDeclaredClasses();</code></pre> 
+  <h2 style="text-align: center;">Getting class by name</h2> 
+  <p>We have covered the two methods for obtaining a class by name. Let's sum up their pros and cons.</p> 
+  <p>The first way is getting a class directly, for instance <code class="language-java">String.class</code>. It looks simple but means that we're aware of a class at the compile time.</p> 
+  <p>The second way is by using the method <code class="language-java">forName</code> of <code class="language-java">Class</code>, for instance <code class="language-java">Class.forName("java.lang.String")</code>. This way works at runtime as well as it can be used when a target class name is resolved dynamically, for example, retrieved from a config.</p> 
+  <h2 style="text-align: center;">Conclusion</h2> 
+  <p><code class="language-java">java.lang.Class</code> aggregates all the information that describes a given type. That is the reason why it is important to know ways of getting an instance of the class. If a class name is known, there are two ways of getting an instance of <code class="language-java">java.lang.Class</code>: calling <code class="language-java">ClassName.class</code> directly or getting <code class="language-java">Class.forName("package.ClassName")</code>. The alternative ways are based on having a reference to a class. For example, if you have an object, you can obtain its class as well.</p>
+ </body>
+</html>

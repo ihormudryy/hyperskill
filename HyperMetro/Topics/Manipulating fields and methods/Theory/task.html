@@ -1,0 +1,95 @@
+<html>
+ <head></head>
+ <body>
+  <p>For now, you must already have a basic understanding of the reflection. However, what we did in the previous topics was just a small part of what is possible. In this topic, we will learn how to get fields and their values, write data into fields and call methods by using reflection.</p> 
+  <h2>Getting fields values</h2> 
+  <p>We will start by explaining how to get the values of particular fields. Let's revise such a class:</p> 
+  <pre><code class="language-java">class Item {
+    public static final int maxItems = 100;
+    public static int inStock = 19;
+
+    private String name;
+    protected int basePrice;
+
+    public Item(String name, int basePrice) {
+        this.name = name;
+        this.basePrice = basePrice;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getPrice() {
+        return (int) (basePrice * getMarkUp());
+    }
+
+    protected double getMarkUp() {
+        double markUp = 0.1;
+        // ... connecting to the remote server
+        return 1 + markUp;
+    }
+}</code></pre> 
+  <p>With the help of the <code class="language-java">Field</code> object we can find out the value of some field of the object. Basically, this is the main purpose of this class. It has a <code class="language-java">get</code> method that takes one argument, which is an object whose field's value we want to get. Note that the <code class="language-java">Field</code> object is not bound to any object of the <code class="language-java">Item</code> class. That's why we need to pass the object directly as an argument. To get the value of the static field you can pass <code class="language-java">null</code> as an argument.</p> 
+  <p>Let's try to output the values of all fields of an <code class="language-java">Item</code> object. At first, we create an object and get a <code class="language-java">Class</code> object for it.</p> 
+  <pre><code class="language-java">Item item = new Item("apples", 500);
+Class itemClass = item.getClass();
+Field[] fields = itemClass.getDeclaredFields();</code></pre> 
+  <p>Now let's try to use the <code class="language-java">get</code> method for all its fields:</p> 
+  <pre><code class="language-java">for (Field field : fields) {
+    System.out.println(field.getName() + " " + field.get(item));
+}</code></pre> 
+  <p>And we get... </p> 
+  <pre><code class="language-no-highlight">java.lang.IllegalAccessException: cannot access a member with modifiers "private"</code></pre> 
+  <p>Oops. Java is definitely right, you can't access private fields. Luckily, there's a very simple way around. Java checks if you can access this field, but you can change the accessibility just by calling <code class="language-java">setAccessible(true)</code> method.</p> 
+  <p>Let's improve the code a little:</p> 
+  <pre><code class="language-java">for (Field field : fields) {
+    field.setAccessible(true);
+    System.out.println(field.getName() + " " + field.get(item));
+}</code></pre> 
+  <p>And now we've got what we expected:</p> 
+  <pre><code class="language-no-highlight">maxItems 100
+inStock 19
+name apples
+basePrice 500</code></pre> 
+  <h2>Setting values to the fields</h2> 
+  <p><code class="language-java">Field</code>'s <code class="language-java">set</code> method works the same way. It takes two arguments: an object and a new value for the field. Again, if you want to set a static field you can pass <code class="language-java">null</code> as the first argument. Below is an example of calling the <code class="language-java">set</code> method. What we try to do here is to set the value to itself:</p> 
+  <pre><code class="language-java">for (Field field : fields) {
+    field.setAccessible(true);
+    field.set(item, field.get(item));
+    System.out.println(field.getName() + " " + field.get(item));
+}</code></pre> 
+  <p>And there is another exception...</p> 
+  <pre><code class="language-no-highlight">java.lang.IllegalAccessException: Can not set static final int field to java.lang.Integer</code></pre> 
+  <p>The <code class="language-java">final</code> fields in Java cannot be changed, it is true. But now there is no workaround for this: it would be an even bigger crime in the world of Java if someone changed a final field of an object. </p> 
+  <p>To correct the code, we should make sure that the field is not final by checking it's modifier with <code class="language-java">isFinal()</code> method. Since the example above is somewhat useless, we'll also make it more sensible:</p> 
+  <pre><code class="language-java">for (Field field : fields) {
+    field.setAccessible(true);
+    if (field.getType() == int.class &amp;&amp; !Modifier.isFinal(field.getModifiers()) {
+        field.set(item, 0);
+    }
+}</code></pre> 
+  <p>This code resets all non-final integer fields in the instance of some class to 0. </p> 
+  <h2>Invoking methods</h2> 
+  <p>Invoking methods is similar, but this time the <code class="language-java">invoke</code> method of the <code class="language-java">Method</code> object is used. This method can take a different number of arguments: one more than the called method has. The first argument is the object whose method we want to call or, as you might expect, in case of static methods it's <code class="language-java">null</code>. Take a look at the example:</p> 
+  <pre><code class="language-java">Method[] methods = itemClass.getDeclaredMethods();
+for (Method method : methods) {
+    method.setAccessible(true);
+    System.out.println(method.invoke(item));
+}</code></pre> 
+  <p>All three methods had zero arguments, so <code class="language-java">invoke</code> was called with only one argument. The output may differ because the elements in the returned array are not sorted and are not in any particular order. Here's one of the possible outputs:</p> 
+  <pre><code class="language-no-highlight">apples
+1.1
+550</code></pre> 
+  <p></p>
+  <div class="alert alert-primary">
+   If you want to invoke a static method, you need to pass the class to the 
+   <code class="language-java">invoke</code> method: 
+   <code class="language-java">method.invoke(YourClass.class, ...)</code>.
+  </div>
+  <p></p> 
+  <h2>When it works</h2> 
+  <p>We have covered a way of accessing information about methods and fields at runtime via reflection. After reading that you may have a question: why do you need to get methods and fields of a class while executing the program if you know all of them at the moment of compiling a program?</p> 
+  <p>One of the typical problems that can be solved by using reflection is the <strong>serialization</strong> of objects. If some class does not implement the <code class="language-java">Serializable</code> interface, it cannot be serialized without using reflection. With reflection, however, all the class fields, even private ones, become visible, so you can write them into an external file. When deserializing, you can read this file and restore all the fields, including private, in it. <strong>Never change the values of private fields in all cases except for deserialization</strong>, because this way there is a high probability to crash the program. To deserialize an object, you must first create an instance of it. You will learn how to do this in the following topics.</p>
+ </body>
+</html>

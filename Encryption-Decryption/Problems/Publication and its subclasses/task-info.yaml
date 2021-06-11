@@ -1,0 +1,73 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    class Publication {
+
+        private String title;
+
+        public Publication(String title) {
+            this.title = title;
+        }
+
+        public final String getInfo() {
+            // write your code here
+        }
+
+        public String getType() {
+            return "Publication";
+        }
+
+        public String getDetails() {
+            return "";
+        }
+
+    }
+
+    class Newspaper extends Publication {
+
+        private String source;
+
+        public Newspaper(String title, String source) {
+            super(title);
+            this.source = source;
+        }
+
+        // write your code here
+
+    }
+
+    class Article extends Publication {
+
+        private String author;
+
+        public Article(String title, String author) {
+            super(title);
+            this.author = author;
+        }
+
+        // write your code here
+
+    }
+
+    class Announcement extends Publication {
+
+        private int daysToExpire;
+
+        public Announcement(String title, int daysToExpire) {
+            super(title);
+            this.daysToExpire = daysToExpire;
+        }
+
+        // write your code here
+
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/4331#comment
+status: Solved
+feedback:
+  message: <html>Correct solution<br/><br/>Continue on <a href="https://hyperskill.org/learn/step/4331#comment">JetBrains
+    Academy</a></html>
+  time: Fri, 20 Nov 2020 16:08:08 UTC
+record: -1

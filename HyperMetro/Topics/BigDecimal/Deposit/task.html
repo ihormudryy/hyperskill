@@ -1,0 +1,14 @@
+<h2>Deposit</h2>
+<html>
+ <head></head>
+ <body>
+  <p>Write a program to calculate the deposit. </p> 
+  <p>In the input the accepted 3 values are in the following order: starting amount of money, interest rate, and the number of years during which the deposit is accrued. </p> 
+  <p>The bank increases the deposit by the specified percentages every year. This can be described with the following formula:</p> 
+  <p> <span class="math-tex">\(finalAmount=startingAmount \cdot \left(1 + \frac{yearlyPercent}{100}\right)^{years}\)</span></p> 
+  <p>The program should convert the entered strings to <code class="java">BigDecimal</code> and calculate how much money there will be in the account after the given number years. The result should be rounded upwards, to positive infinity (<em>CEILING</em> mode), up to 2 (two) digits after the point.</p> 
+  <p>The program should output the following string: <code class="java">"Amount of money in the account: &lt;&gt;"</code>. Instead of <code class="java">&lt;&gt;</code> there must be the total amount of money. </p> 
+  <p>It is guaranteed that all numbers are positive and the number of years is an integer.</p>
+ </body>
+</html><br><b>Sample Input:</b><br><pre><code class="language-no-highlight">100000.2<br>20<br>1</code></pre><br><b>Sample Output:</b><br><pre><code class="language-no-highlight">Amount of money in the account: 120000.24</code></pre><br><br><b>Sample Input:</b><br><pre><code class="language-no-highlight">589456.67<br>15<br>5</code></pre><br><b>Sample Output:</b><br><pre><code class="language-no-highlight">Amount of money in the account: 1185607.91</code></pre><br><br><br><font color="gray">Memory limit: 256 MB</font><br><font color="gray">Time limit: 8 seconds</font><br><br>
+<a href="https://hyperskill.org/learn/step/13511">Show topic summary</a>

@@ -1,0 +1,26 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    // do not change code below
+    class Main {
+        public static void main(String... args) {
+            Printer printer = new ConsolePrinter();
+            printer.print(); // prints: This is a default message
+        }
+    }
+
+    class ConsolePrinter implements Printer {
+    }
+
+    interface Printer {
+        // define and implement default method print to make code above print the message: "This is a default message"
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/11359#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Mon, 21 Dec 2020 12:07:46 UTC
+record: -1

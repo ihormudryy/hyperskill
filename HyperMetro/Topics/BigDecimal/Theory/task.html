@@ -1,0 +1,285 @@
+<h2>BigDecimal</h2>
+<html>
+ <head></head>
+ <body>
+  <h2>Large numbers in Java</h2> 
+  <p>Sometimes programmers have to work with extremely large numbers. Since standard primitive types cannot store them, there are two special classes for this purpose: <strong>BigInteger</strong> for integer numbers and <strong>BigDecimal</strong> for floating-point numbers.</p> 
+  <p>You're already familiar with <code class="language-java">BigInteger</code>, and in this topic, we are going to look at <code class="language-java">BigDecimal</code>.</p> 
+  <p>The size of numbers isn't limited by anything but the physical memory of your computer. In the case of <code class="language-java">BigDecimal</code>, you can have as many digits after the decimal point as you want, which is important for accurate calculations. There are programs where the accuracy of computation is crucial, for example, aircraft or medical software, or the ones for storing and processing finances.</p> 
+  <h2>Creating objects of BigDecimal</h2> 
+  <p>To create an instance of <code class="language-java">BigDecimal</code>, the first thing you need to do is import this class from <code class="language-java">java.math</code> package using the following statement:</p> 
+  <pre><code class="language-java">import java.math.BigDecimal;</code></pre> 
+  <p>The recommended way is to create an instance of <code class="language-java">BigDecimal</code> from the <code class="language-java">String</code> object and specify the desired number in double quotes.</p> 
+  <pre><code class="language-java">BigDecimal firstBigDecimal = new BigDecimal("10000000000000.5897654329");</code></pre> 
+  <p>As you can see, the syntax is consistent and pretty simple. </p> 
+  <p>It is worth mentioning that<code class="language-java">BigDecimal</code> has several useful constants, just like <code class="language-java">BigInteger</code>:</p> 
+  <pre><code class="language-java">BigDecimal zero = BigDecimal.ZERO; // 0
+BigDecimal one = BigDecimal.ONE;   // 1
+BigDecimal ten = BigDecimal.TEN;   // 10</code></pre> 
+  <h2>Arithmetic operations</h2> 
+  <p>It is extremely important to keep in mind that <code class="language-java">BigDecimal</code> is an <strong>immutable</strong> class. Immutability implies that you cannot change an existing instance of <code class="language-java">BigDecimal</code>. If you try to modify an existing object, it is created again.</p> 
+  <p></p>
+  <div class="alert alert-warning">
+   Remember: 
+   <code class="language-java">BigDecimal</code> numbers are immutable.
+  </div>
+  <p></p> 
+  <p>You might remember that in the case of <code class="language-java">double</code> and <code class="language-java">float</code>, there are a few potential problems with the floating-point representation. For instance, the result of adding <code class="language-java">0.2</code> to <code class="language-java">0.1</code> won't be <code class="language-java">0.3</code>, which affects the accuracy of further calculations:</p> 
+  <pre><code class="language-java">System.out.println(0.1 + 0.2); // 0.30000000000000004</code></pre> 
+  <p><code class="language-java">BigDecimal</code> has no such problem: the results of all operations will be absolutely correct.</p> 
+  <p>In the code snippet below, you can see some examples of binary methods with <code class="language-java">BigDecimal</code>: </p> 
+  <pre><code class="language-java">BigDecimal first = new BigDecimal("0.2");
+BigDecimal second = new BigDecimal("0.1");
+
+BigDecimal addition = first.add(second);            // 0.3
+BigDecimal subtraction = first.subtract(second);    // 0.1
+BigDecimal multiplication = first.multiply(second); // 0.02
+BigDecimal division = first.divide(second);         // 2
+BigDecimal remainder = first.remainder(second);     // 0.0</code></pre> 
+  <p>Now, let's take a look at some unary methods:</p> 
+  <pre><code class="language-java">BigDecimal first = new BigDecimal("0.2");
+
+// absolute value
+BigDecimal module = first.abs();  //  0.2
+// raise to the power
+BigDecimal power = first.pow(3); // 0.008</code></pre> 
+  <h2>Rounding control</h2> 
+  <p>When we need to tweak the accuracy by specifying the number of digits after the point, <code class="language-java">setScale()</code> method comes to the rescue. It allows us to adjust the precision of large fractional numbers:</p> 
+  <pre><code class="language-java">bigDecimal.setScale(newScale, RoundingMode);</code></pre> 
+  <p>The first parameter is <code class="language-java">newScale</code>. It sets the number of digits after the decimal point. Here is how you may receive the scale of your number:</p> 
+  <pre><code class="language-java">BigDecimal fractionalNumber = new BigDecimal("123.4567");
+System.out.println(fractionalNumber.scale()); // 4</code></pre> 
+  <p>The second parameter — <code class="language-java">roundingMode</code>— allows us to specify the way your number will be rounded. To use it, you need to perform the import:</p> 
+  <pre><code class="language-java">import java.math.RoundingMode;</code></pre> 
+  <p>You can find the list of all the possible <code class="language-java">BigDecimal</code> rounding modes along with their brief descriptions in the table below: </p> 
+  <table border="1" cellpadding="1" cellspacing="1"> 
+   <tbody> 
+    <tr> 
+     <td><strong>Mode</strong></td> 
+     <td><strong>Description</strong></td> 
+    </tr> 
+    <tr> 
+     <td>CEILING</td> 
+     <td>Rounds upwards, to positive infinity. That is, if the number is positive, it will be equivalent to ROUND_UP; if negative, to ROUND_DOWN.</td> 
+    </tr> 
+    <tr> 
+     <td>DOWN</td> 
+     <td>Rounds with discarding digits.</td> 
+    </tr> 
+    <tr> 
+     <td>FLOOR</td> 
+     <td>Rounds down, to negative infinity. That is, if the number is positive, it will be equivalent to ROUND_DOWN; if negative, to ROUND_UP.</td> 
+    </tr> 
+    <tr> 
+     <td>HALF_DOWN </td> 
+     <td>Rounds towards the "nearest neighbor"; if both neighbors are equidistant, rounds down.</td> 
+    </tr> 
+    <tr> 
+     <td>HALF_EVEN</td> 
+     <td>Rounding depends on the number to the left of the point. If the number on the left is even, then the rounding will be down. If it is odd, it will be up.</td> 
+    </tr> 
+    <tr> 
+     <td>HALF_UP</td> 
+     <td>Rounds towards the "nearest neighbor"; if both neighbors are equidistant, rounds up.</td> 
+    </tr> 
+    <tr> 
+     <td>UNNECESSARY </td> 
+     <td>Used when the number does not need rounding, but a rounding mode is expected.</td> 
+    </tr> 
+    <tr> 
+     <td>UP</td> 
+     <td>Rounds up, away from zero.</td> 
+    </tr> 
+   </tbody> 
+  </table> 
+  <p>This might seem a little abstract, so let's look at some examples that will help us sort things out.</p> 
+  <h2>Rounding mode examples</h2> 
+  <p>As you now know, you can adjust the accuracy of your large numbers and choose the rules by which they will be rounded. The following code snippet shows some examples of using <code class="language-java">BigDecimal</code> rounding with different rounding modes: </p> 
+  <pre><code class="language-java">BigDecimal bigDecimal = new BigDecimal("100.5649");
+System.out.println(bigDecimal.setScale(3, RoundingMode.CEILING));     // 100.565
+
+bigDecimal = new BigDecimal("0.55");
+System.out.println(bigDecimal.setScale(1, RoundingMode.HALF_DOWN));   // 0.5
+System.out.println(bigDecimal.setScale(3, RoundingMode.UNNECESSARY)); // 0.550</code></pre> 
+  <p>Remember that <code class="language-java">BigDecimal</code> numbers are immutable, so it is not enough to simply apply <code class="language-java">setScale()</code> in order for your number to retain the new value after rounding. You need to assign:</p> 
+  <pre><code class="language-java">BigDecimal bigDecimal = new BigDecimal("999999999999999999.99999999999999");
+bigDecimal.setScale(3, RoundingMode.HALF_UP);
+System.out.println(bigDecimal); // 999999999999999999.99999999999999
+
+bigDecimal = bigDecimal.setScale(3, RoundingMode.HALF_UP);
+System.out.println(bigDecimal); // 1000000000000000000.000</code></pre> 
+  <p>You can easily compare the difference in behavior depending on rounding modes using the table below:</p> 
+  <table align="center" border="1" cellpadding="1" cellspacing="1"> 
+   <caption>
+    <em>Examples of Different Rounding Modes, precision set to 0.</em>
+   </caption> 
+   <tbody> 
+    <tr> 
+    </tr> 
+    <tr> 
+     <td>Input Number</td> 
+     <td><strong>CEILING</strong></td> 
+     <td><strong>DOWN</strong></td> 
+     <td><strong>FLOOR</strong></td> 
+     <td><strong>HALF_DOWN</strong></td> 
+     <td><strong>HALF_EVEN</strong></td> 
+     <td><strong>HALF_UP</strong></td> 
+     <td><strong>UP</strong></td> 
+     <td><strong>UNNECESSARY</strong></td> 
+    </tr> 
+    <tr> 
+     <td><strong>3.5</strong></td> 
+     <td>4</td> 
+     <td>3</td> 
+     <td>3</td> 
+     <td>3</td> 
+     <td>4</td> 
+     <td>4</td> 
+     <td>4</td> 
+     <td>error</td> 
+    </tr> 
+    <tr> 
+     <td><strong>2.5</strong></td> 
+     <td>3</td> 
+     <td>2</td> 
+     <td>2</td> 
+     <td>2</td> 
+     <td>2</td> 
+     <td>3</td> 
+     <td>3</td> 
+     <td>error</td> 
+    </tr> 
+    <tr> 
+     <td><strong>1.6</strong></td> 
+     <td>2</td> 
+     <td>1</td> 
+     <td>1</td> 
+     <td>2</td> 
+     <td>2</td> 
+     <td>2</td> 
+     <td>2</td> 
+     <td>error</td> 
+    </tr> 
+    <tr> 
+     <td><strong>1.1</strong></td> 
+     <td>2</td> 
+     <td>1</td> 
+     <td>1</td> 
+     <td>1</td> 
+     <td>1</td> 
+     <td>1</td> 
+     <td>2</td> 
+     <td>error</td> 
+    </tr> 
+    <tr> 
+     <td><strong>1.0</strong></td> 
+     <td>1</td> 
+     <td>1</td> 
+     <td>1</td> 
+     <td>1</td> 
+     <td>1</td> 
+     <td>1</td> 
+     <td>1</td> 
+     <td>1</td> 
+    </tr> 
+    <tr> 
+     <td><strong>-1.0</strong></td> 
+     <td>-1</td> 
+     <td>-1</td> 
+     <td>-1</td> 
+     <td>-1</td> 
+     <td>-1</td> 
+     <td>-1</td> 
+     <td>-1</td> 
+     <td>-1</td> 
+    </tr> 
+    <tr> 
+     <td><strong>-1.1</strong></td> 
+     <td>-2</td> 
+     <td>-1</td> 
+     <td>-2</td> 
+     <td>-1</td> 
+     <td>-1</td> 
+     <td>-1</td> 
+     <td>-2</td> 
+     <td>error</td> 
+    </tr> 
+    <tr> 
+     <td><strong>-1.6</strong></td> 
+     <td>-2</td> 
+     <td>-1</td> 
+     <td>-2</td> 
+     <td>-2</td> 
+     <td>-2</td> 
+     <td>-2</td> 
+     <td>-2</td> 
+     <td>error</td> 
+    </tr> 
+    <tr> 
+     <td><strong>-2.5</strong></td> 
+     <td>-2</td> 
+     <td>-2</td> 
+     <td>-3</td> 
+     <td>-2</td> 
+     <td>-2</td> 
+     <td>-3</td> 
+     <td>-3</td> 
+     <td>error</td> 
+    </tr> 
+    <tr> 
+     <td><strong>-3.5</strong></td> 
+     <td>-3</td> 
+     <td>-3</td> 
+     <td>-4</td> 
+     <td>-3</td> 
+     <td>-4</td> 
+     <td>-4</td> 
+     <td>-4</td> 
+     <td>error</td> 
+    </tr> 
+   </tbody> 
+  </table> 
+  <p></p>
+  <div class="alert alert-warning">
+    Note that 
+   <code class="language-java">UNNECESSARY</code> will add insignificant zeros to the number if you specify too many digits in 
+   <code class="language-java">setScale()</code>. Then again, if you specify too few digits, an error will occur. 
+  </div>
+  <p></p> 
+  <h2>Rounding in arithmetic operations</h2> 
+  <p>Finally, let's discuss something a bit more advanced: at this point, you should have enough background knowledge for that.</p> 
+  <p>If the result of a division has a non-terminating decimal expansion, it cannot be represented as a <code class="language-java">BigDecimal</code> and <code class="language-java">ArithmeticException</code> happens:</p> 
+  <pre><code class="language-java">BigDecimal dividend = new BigDecimal("1");
+BigDecimal divisor = new BigDecimal("3");
+
+// java.lang.ArithmeticException: Non-terminating decimal expansion; no exact representable decimal result
+BigDecimal quotient = dividend.divide(divisor);</code></pre> 
+  <p>To avoid it, you need to determine the accuracy of the division result.</p> 
+  <pre><code class="language-java">BigDecimal dividend = new BigDecimal("1");
+BigDecimal divisor = new BigDecimal("3");
+
+BigDecimal quotient = dividend.divide(divisor, 2, RoundingMode.HALF_EVEN); // 0.33</code></pre> 
+  <p>An exact scale is used if the result can be represented by a finite decimal expansion:</p> 
+  <pre><code class="language-java">BigDecimal first = new BigDecimal("20.002");
+BigDecimal second = new BigDecimal("10");
+
+BigDecimal division = first.divide(second);   // 2.0002</code></pre> 
+  <p>Addition, subtraction, and multiplication have no such peculiarities. Even though<span style="color: #ff4363;"> </span>precision also matters there and is used in arithmetic operations, it's quite intuitive:</p> 
+  <pre><code class="language-java">BigDecimal first = new BigDecimal("7.7777");
+BigDecimal second = new BigDecimal("3.3");
+
+BigDecimal addition = first.add(second);   // 11.0777; The result scale is 4 (max of the scales)
+BigDecimal subtraction = first.subtract(second);   // 4.4777; The result scale is 4 (max of the scales)
+BigDecimal multiplication = first.multiply(second); // 25.66641; The result scale is 5 (sum of the scales)</code></pre> 
+  <p>Here is how we can describe the accuracy of the result:</p> 
+  <ul> 
+   <li><strong>Addition</strong>: the maximum scale of the addends;</li> 
+   <li><strong>Subtraction</strong>: the maximum scale of the minuend and subtrahend;</li> 
+   <li><strong>Multiplication</strong>: the sum of the multiplier and multiplicand scales;</li> 
+   <li><strong>Division</strong>: the resulting scale, or set manually in the case of the non-terminating decimal expansion.</li> 
+  </ul> 
+  <h2>Conclusion</h2> 
+  <p>The <code class="language-java">BigDecimal</code> class is useful for storing large fractional numbers. Standard arithmetic operations are also available for <code class="language-java">BigDecimal</code> numbers. You can manage the rounding behavior of the objects of this class with <code class="language-java">setScale()</code>indicating the desired number of digits as the first parameter and the rounding mode as the second parameter.</p>
+ </body>
+</html>
+<a href="https://hyperskill.org/learn/step/13511">Show topic summary</a>

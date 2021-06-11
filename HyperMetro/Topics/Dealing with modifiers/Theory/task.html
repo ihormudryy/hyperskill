@@ -1,0 +1,141 @@
+<html>
+ <head></head>
+ <body>
+  <p>Previously, you've learned how to find all the constructors, methods and fields that were declared in the class by using reflection, even if some of them are private. But what is the point of <code class="language-java">Method</code>, <code class="language-java">Field</code> and <code class="language-java">Constructor</code> classes if you don't know how to use them for more complex actions, that are more difficult than finding out the name of the method? Actually, these classes can do a lot more, and you'll find it out in the following topics.</p> 
+  <p>We will start by learning how to deal with modifiers. As you probably have guessed, reflection allows us to find out what modifiers the fields and methods have as well.</p> 
+  <h2>Checking modifiers</h2> 
+  <p>Let's consider such a class:</p> 
+  <pre><code class="language-java">class Item {
+    public static final int maxItems = 100;
+    public static int inStock = 19;
+
+    private String name;
+    protected int basePrice;
+
+    public Item(String name, int basePrice) {
+        this.name = name;
+        this.basePrice = basePrice;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getPrice() {
+        return (int) (basePrice * getMarkUp());
+    }
+
+    protected double getMarkUp() {
+        double markUp = 0.1;
+        // ... connecting to the remote server
+        return 1 + markUp;
+    }
+}</code></pre> 
+  <p>As you can see, this class contains different types of fields: <code class="language-java">private</code>, <code class="language-java">protected</code>, <code class="language-java">public</code>, <code class="language-java">static</code> and <code class="language-java">final</code>. </p> 
+  <p>The <code class="language-java">Modifier</code> class is designed to work with such modifiers.</p> 
+  <p>You can get all modifiers by calling the <code class="language-java">getModifiers()</code> method on a <code class="language-java">Field</code>, <code class="language-java">Method</code> or <code class="language-java">Constructor</code> object.</p> 
+  <p>In fact, this method returns a simple <code class="language-java">int</code> value that represents all the modifiers: the information on them is contained inside the single number. To understand how this works, look at the table below. Each number can be viewed in binary as 32 different bits, each of them being either 0 or 1. Each bit's position is responsible for its own modifier, either being <code class="language-java">true</code> or <code class="language-java">false</code> to indicate the presence or absence of the modifier. The most right bit is for <code class="language-java">public</code>, the second on the right is for <code class="language-java">private</code>, the fourth on the right is for <code class="language-java">static</code>and so on. Don't try to remember it, the table just illustrates the idea:</p> 
+  <table border="1" cellpadding="1" cellspacing="1" style="width: 500px;"> 
+   <tbody> 
+    <tr> 
+     <td><strong>Modifiers in source code</strong></td> 
+     <td><strong>Modifiers as an integer</strong></td> 
+    </tr> 
+    <tr> 
+     <td>public</td> 
+     <td>00000000 ... 00000001 = 1</td> 
+    </tr> 
+    <tr> 
+     <td>private</td> 
+     <td>00000000 ... 00000010 = 2</td> 
+    </tr> 
+    <tr> 
+     <td>protected</td> 
+     <td>00000000 ... 00000100 = 4</td> 
+    </tr> 
+    <tr> 
+     <td>static</td> 
+     <td>00000000 ... 00001000 = 8</td> 
+    </tr> 
+    <tr> 
+     <td>final</td> 
+     <td>00000000 ... 00010000 = 16</td> 
+    </tr> 
+    <tr> 
+     <td>other modifiers</td> 
+     <td>other bits</td> 
+    </tr> 
+   </tbody> 
+  </table> 
+  <p>The combination of the bits results in a combination of the modifiers. Look at the table below for an example:</p> 
+  <table border="1" cellpadding="1" cellspacing="1" style="width: 500px;"> 
+   <tbody> 
+    <tr> 
+     <td><strong>Modifiers in source code</strong></td> 
+     <td><strong>Modifiers as an integer</strong></td> 
+    </tr> 
+    <tr> 
+     <td>public static</td> 
+     <td>00000000 ... 00001001 = 9</td> 
+    </tr> 
+    <tr> 
+     <td>private final</td> 
+     <td>00000000 ... 00010010 = 18</td> 
+    </tr> 
+    <tr> 
+     <td>protected static final</td> 
+     <td>00000000 ... 00011100 = 28</td> 
+    </tr> 
+   </tbody> 
+  </table> 
+  <p>You don't really need to extract these bits to gather information about a particular modifier. The <code class="language-java">Modifier</code> class has special static methods, such as <code class="language-java">isPublic</code> or <code class="language-java">isStatic</code>, which can check whether a field, method or constructor has a specific modifier.</p> 
+  <p></p>
+  <div class="alert alert-primary">
+   There is also the zero modifier (00000000 ... 00000000 = 0) which is used for default constructors or package-private (or default) access modifier. Please, do not forget about it!
+  </div>
+  <p></p> 
+  <p>Apart from access modifiers we have learned, Java has many other modifiers: <code class="language-java">synchronized</code>, <code class="language-java">volatile</code>, <code class="language-java">transient</code>, <code class="language-java">native</code>, <code class="language-java">interface</code>, <code class="language-java">abstract</code>, <code class="language-java">strictfp</code>. Some of them are quite rarely used. In this topic, we will confine ourselves to modifiers from the table above.</p> 
+  <h2>Code example</h2> 
+  <p>Let's look at the following code:</p> 
+  <pre><code class="language-java">Item item = new Item("apples", 500);
+
+Class itemClass = item.getClass();
+Field[] fields = itemClass.getDeclaredFields();
+
+for (Field field : fields) {
+    int modifiers = field.getModifiers();
+    if (Modifier.isPublic(modifiers)) {
+        System.out.print("public ");
+    }
+    if (Modifier.isProtected(modifiers)) {
+        System.out.print("protected ");
+    }
+    if (Modifier.isPrivate(modifiers)) {
+        System.out.print("private ");
+    }
+    if (Modifier.isStatic(modifiers)) {
+        System.out.print("static ");
+    }
+    if (Modifier.isFinal(modifiers)) {
+        System.out.print("final ");
+    }
+
+    System.out.print(field.getType() + " ");
+    System.out.println(field.getName());
+}</code></pre> 
+  <p>This code outputs modifiers of all the fields of the <code class="language-java">Item</code> class, as well as the types of these fields and field names. The output is here:</p> 
+  <pre><code class="language-no-highlight">public static final int maxItems
+public static int inStock
+private class java.lang.String name
+protected int basePrice</code></pre> 
+  <p>As you can see, the output is as expected. You can also do the same with methods and constructors.</p> 
+  <p>In this topic, we have learned how to get information about the modifiers of any object's fields, methods, and constructors while using reflection. We'll start applying it when dealing with fields and methods in the next topic.</p> 
+  <h2>Conclusion</h2> 
+  <p>In this topic you've learned:</p> 
+  <ul> 
+   <li>how to test if a method, field, or constructor has a specific modifier. For example, to test if it is <code class="language-java">public</code> or not;</li> 
+   <li>how modifiers are stored internally.</li> 
+  </ul> 
+  <p>You will need this knowledge at a higher level of using reflection like getting access to the fields of the object, as well as calling any of the object's methods.</p>
+ </body>
+</html>
