@@ -1,0 +1,196 @@
+<html>
+ <head></head>
+ <body>
+  <p><strong>Doubly linked list</strong> is an extension of a linked list. Aside from pointers to the next elements, a doubly linked list also has pointers to previous elements. As you may recall, while going through a linked list we can’t turn back since we don’t have a pointer to the previous element. In this structure there's no such problem as we can go either direction, <strong>forward</strong> or <strong>backward</strong>.</p> 
+  <p>In this topic, we will see how doubly linked list works.</p> 
+  <h2>Implementation</h2> 
+  <p>We will consider the following methods for doubly linked lists:</p> 
+  <ul> 
+   <li><code class="language-java">addFirst()</code> – add an element to the beginning of the list;</li> 
+   <li><code class="language-java">addLast()</code> – add an element to the end of the list;</li> 
+   <li><code class="language-java">add(elem)</code> – add an element before the element ‘elem’;</li> 
+   <li><code class="language-java">removeFirst()</code> – remove an element at the beginning of the list;</li> 
+   <li><code class="language-java">removeLast()</code> – remove an element at the end of the list;</li> 
+   <li><code class="language-java">remove(elem)</code> – remove an element ‘elem’.</li> 
+  </ul> 
+  <p>Apart from the main methods, we will also discuss some less important ones: <code class="language-java">size()</code>, <code class="language-java">isEmpty()</code>, <code class="language-java">toString()</code>.</p> 
+  <p>The main class<em> </em><code class="language-java">DoublyLinkedList&lt;E&gt;</code> has a nested class <code class="language-java">Node&lt;E&gt;</code>:</p> 
+  <pre><code class="language-java">public static class Node&lt;E&gt; {
+
+    private E value;
+    private Node&lt;E&gt; next;
+    private Node&lt;E&gt; prev;
+
+    Node(E element, Node&lt;E&gt; next, Node&lt;E&gt; prev) {
+        this.value = element;
+        this.next = next;
+        this.prev = prev;
+    }
+
+    Node&lt;E&gt; getNext() {
+        return next;
+    }
+
+    Node&lt;E&gt; getPrev() {
+        return prev;
+    }
+}</code></pre> 
+  <p>Class <code class="language-java">Node&lt;E&gt;</code> shapes the node of the list. It contains the value of generic type and two pointers: to the next and the previous elements. Getters for pointers are set for the manual search through the list, which is required sometimes.</p> 
+  <p>As you probably noticed, the variable <code class="language-java">value</code> has generic type. It means that the value of elements in the list can be anything based on which type is passed to the list's constructor.</p> 
+  <p>The main class that we are going to create:</p> 
+  <pre><code class="language-java">public static class DoublyLinkedList&lt;E&gt;</code></pre> 
+  <p>Class <code class="language-java">DoublyLinkedList&lt;&gt;</code> has the following fields:</p> 
+  <pre><code class="language-java">private Node&lt;E&gt; head;
+private Node&lt;E&gt; tail;
+private int size;
+
+public DoublyLinkedList() {
+    size = 0;
+}</code></pre> 
+  <p>Pointers' head and tail point to the beginning and the end of the list respectively. The variable size keeps the number of elements in the list.</p> 
+  <p>Let’s start with the extra methods since they are simpler compared to addition and removal.</p> 
+  <pre><code class="language-java">public Node&lt;E&gt; getHead() {
+    return head;
+}
+
+public Node&lt;E&gt; getTail() {
+    return tail;
+}
+
+public int getSize() {
+    return size;
+}
+
+public boolean isEmpty() {
+    return size == 0;
+}
+
+public String toString() {
+    Node&lt;E&gt; tmp = head;
+    StringBuilder result = new StringBuilder();
+
+    while (tmp != null) {
+        result.append(tmp.value).append(" ");
+        tmp = tmp.next;
+    }
+    return result.toString();
+}</code></pre> 
+  <p>Getters for receiving pointers to the start and the end of the list, as well as getters for the next and previous elements are required for manual management of the list. Methods <code class="language-java">getSize()</code> and <code class="language-java">isEmpty()</code> are obvious. Method <code class="language-java">toString()</code> goes through the list from left to right and prints values to console. It’s not difficult to modify it to go through the list in the opposite direction.</p> 
+  <h2>Addition</h2> 
+  <pre><code class="language-java">public void addFirst(E elem) {
+    Node&lt;E&gt; tmp = new Node&lt;&gt;(elem, head, null);
+
+    if (size == 0) {
+        head = tail = tmp;
+    } else {
+        head.prev = tmp;
+        head = tmp;
+    }
+    size++;
+}
+
+public void addLast(E elem) {
+    Node&lt;E&gt; tmp = new Node&lt;&gt;(elem, null, tail);
+
+    if (size == 0) {
+        head = tail = tmp;
+    } else {
+        tail.next = tmp;
+        tail = tmp;
+    }
+    size++;
+}
+
+public void add(E elem, Node&lt;E&gt; curr) {
+    if (curr == null) {
+        throw new NoSuchElementException();
+    }
+    if (curr.prev == null) {
+        addFirst(elem);
+        return;
+    }
+
+    Node&lt;E&gt; tmp = new Node&lt;&gt;(elem, curr, curr.prev);
+
+    curr.prev.next = tmp;
+    curr.prev = tmp;
+    size++;
+}</code></pre> 
+  <p>The first two methods are very similar. Let's look at the <code class="language-java">addFirst()</code> method. We create a new node and specify its neighbors. If the list is empty, then the created node will be both its head and tail. Otherwise, we create a link from the current head to the new node and then make the created node a new head.</p> 
+  <p>The <code class="language-java">add()</code> method is also not difficult. If <code class="language-java">curr</code> is the head of our list, we can use our first method. If not, we should insert the new node between <code class="language-java">curr.prev</code> and <code class="language-java">curr</code>. To do this we redirect their links to the new node.</p> 
+  <p>Since all methods have only conditional operators and assignment operations, it has <span class="math-tex">\(O(1)\)</span> asymptotic, which is very good.</p> 
+  <h2>Removal</h2> 
+  <pre><code class="language-java">public void removeFirst() {
+    if (size == 0) {
+        throw new NoSuchElementException();
+    }
+
+    if (size == 1) {
+        head = tail = null;
+    } else {
+        head = head.next;
+        head.prev = null;
+    }
+    size--;
+}
+
+public void removeLast() {
+    if (size == 0) {
+        throw new NoSuchElementException();
+    }
+
+    if (size == 1) {
+        head = tail = null;
+    } else {
+        tail = tail.prev;
+        tail.next = null;
+    }
+    size--;
+}
+
+public void remove(Node&lt;E&gt; curr) {
+    if (curr == null) {
+        throw new NoSuchElementException();
+    }
+
+    if (curr.prev == null) {
+        removeFirst();
+        return;
+    }
+    if (curr.next == null) {
+        removeLast();
+        return;
+    }
+
+    curr.prev.next = curr.next;
+    curr.next.prev = curr.prev;
+    size--;
+}</code></pre> 
+  <p>To remove the first element we move the head pointer to <code class="language-java">head.next</code>. We should also clear the <code class="language-java">prev</code> field of the new head. However, this will cause the NullPointerException if the deleted element was the only element in our list. So, we check this case separately. The <code class="language-java">removeLast()</code> method is very similar.</p> 
+  <p>In the <code class="language-java">remove()</code> method we first check if the node that we want to remove is the head or the tail of our list. In these cases, we can call our previous methods in order to avoid duplicating the code. The general case is when the element has both neighbors. We can redirect their links from <code class="language-java">curr</code> to each other.</p> 
+  <p>The methods have the same asymptotic as addition: <span class="math-tex">\(O(1)\)</span>.</p> 
+  <h2>Usage</h2> 
+  <p>Let's see how we could use the class we got. Make an instance of the class and apply various operations to it:</p> 
+  <pre><code class="language-java">DoublyLinkedList&lt;Integer&gt; dll = new DoublyLinkedList&lt;&gt;();
+dll.addFirst(10);
+dll.addFirst(34);
+dll.addLast(56);
+dll.addLast(364);
+dll.add(1, dll.getHead().getNext());
+dll.add(2, dll.getHead());
+System.out.println(dll.toString());
+dll.remove(dll.getHead().getNext().getNext());
+System.out.println(dll.toString());
+dll.remove(dll.getHead());
+System.out.println(dll.toString());
+dll.remove(dll.getTail());
+System.out.println(dll.toString());</code></pre> 
+  <p>The result of executing that code should be as follows:</p> 
+  <pre><code class="language-java">2 34 1 10 56 364 
+2 34 10 56 364 
+34 10 56 364 
+34 10 56</code></pre> 
+  <h2>Conclusion</h2> 
+  <p>A big advantage of double linked lists in comparison to arrays is that all addition and removal operations have <span class="math-tex">\(O(1)\)</span> asymptotic and you don’t need any relocation or data copying. But with this advantage comes a disadvantage: it is impossible to access elements via index in such lists, unlike in arrays. Therefore, to find any element you’ll need to go through the list, which can take <span class="math-tex">\(O(n)\)</span> time in the worst case. Considering all pros and cons, we can conclude that each data structure is appropriate for different tasks. That is why, when you think about ways to solve a particular task, you’ll need to understand which operations suit the situation better.</p>
+ </body>
+</html>

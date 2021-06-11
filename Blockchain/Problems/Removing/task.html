@@ -1,0 +1,10 @@
+<h2>Removing</h2>
+<html>
+ <head></head>
+ <body>
+  <p>Another limitation of the described hash table is that it does not support removing data. Your task here is to implement a <code class="java">remove</code> method that removes an element with a specified key from a hash table.</p> 
+  <p><strong>Input</strong>: the first line contains two numbers $n$ and $m$ separated by a space. Each of the next $n$ lines contains an entry: an integer key and a string value. Each of the following $m$ lines contains an integer key to remove.</p> 
+  <p><strong>Output</strong>: A state of a hash table after $n$ insertions and $m$ removings. Assume that the initial size of a table is 5, the scaling factor is 2. Use the <code class="java">toString</code> method to produce an output.</p>
+ </body>
+</html><br><b>Sample Input:</b><br><pre><code class="language-no-highlight">5 2<br>10 John<br>20 Alice<br>30 Kate<br>40 Ann<br>50 Bob<br>10<br>40<br></code></pre><br><b>Sample Output:</b><br><pre><code class="language-no-highlight">0: key=10, value=John, removed=true<br>1: key=20, value=Alice, removed=false<br>2: key=30, value=Kate, removed=false<br>3: key=40, value=Ann, removed=true<br>4: key=50, value=Bob, removed=false</code></pre><br><br><br><font color="gray">Memory limit: 64 MB</font><br><font color="gray">Time limit: 3 seconds</font><br><br>
+<a href="https://hyperskill.org/learn/step/6945">Show topic summary</a>

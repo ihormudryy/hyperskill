@@ -1,0 +1,10 @@
+<h2>Rehashing</h2>
+<html>
+ <head></head>
+ <body>
+  <p>One limitation of the described hash table is that it can store only a fixed number of entries. Your task here is to address the limitation and implement a <code class="java">rehash</code> method. It should work as follows: when a current table is full, it allocates a new array of a larger size, iterates through the old array and puts each element to the new array. Then, the new array is used to insert new entries. Assume that the initial size of a table is 5 and the scaling factor is 2.</p> 
+  <p><strong>Input: </strong>the first line contains an integer $n$, the number of insertions. Each of the following lines contains an entry: an integer key and a string value.</p> 
+  <p><strong>Output: </strong>the state of the table after all insertions. Use the <code class="java">toString</code> method to produce an output.</p>
+ </body>
+</html><br><b>Sample Input:</b><br><pre><code class="language-no-highlight">7<br>33 John<br>12 Alice<br>13 Kate<br>44 Tom<br>21 Ann<br>17 Steve<br>18 Brown<br></code></pre><br><b>Sample Output:</b><br><pre><code class="language-no-highlight">0: null<br>1: key=21, value=Ann<br>2: key=12, value=Alice<br>3: key=33, value=John<br>4: key=44, value=Tom<br>5: key=13, value=Kate<br>6: null<br>7: key=17, value=Steve<br>8: key=18, value=Brown<br>9: null</code></pre><br><br><br><font color="gray">Memory limit: 64 MB</font><br><font color="gray">Time limit: 3 seconds</font><br><br>
+<a href="https://hyperskill.org/learn/step/6945">Show topic summary</a>

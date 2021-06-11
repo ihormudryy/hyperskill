@@ -1,0 +1,6994 @@
+{
+  "Bakerloo line": [
+    {
+      "name": "Harrow & Wealdstone",
+      "prev": [],
+      "next": [
+        "Kenton"
+      ],
+      "transfer": [],
+      "time": 5
+    },
+    {
+      "name": "Kenton",
+      "prev": [
+        "Harrow & Wealdstone"
+      ],
+      "next": [
+        "South Kenton"
+      ],
+      "transfer": [],
+      "time": 6
+    },
+    {
+      "name": "South Kenton",
+      "prev": [
+        "Kenton"
+      ],
+      "next": [
+        "North Wembley"
+      ],
+      "transfer": [],
+      "time": 1
+    },
+    {
+      "name": "North Wembley",
+      "prev": [
+        "South Kenton"
+      ],
+      "next": [
+        "Wembley Central"
+      ],
+      "transfer": [],
+      "time": 2
+    },
+    {
+      "name": "Wembley Central",
+      "prev": [
+        "North Wembley"
+      ],
+      "next": [
+        "Stonebridge Park"
+      ],
+      "transfer": [],
+      "time": 2
+    },
+    {
+      "name": "Stonebridge Park",
+      "prev": [
+        "Wembley Central"
+      ],
+      "next": [
+        "Harlesden"
+      ],
+      "transfer": [],
+      "time": 6
+    },
+    {
+      "name": "Harlesden",
+      "prev": [
+        "Stonebridge Park"
+      ],
+      "next": [
+        "Willesden Junction"
+      ],
+      "transfer":    [],
+      "time": 4
+    },
+    {
+      "name": "Willesden Junction",
+      "prev": [
+        "Harlesden"
+      ],
+      "next": [
+        "Kensal Green"
+      ],
+      "transfer": [],
+      "time": 5
+    },
+    {
+      "name": "Kensal Green",
+      "prev": [
+        "Willesden Junction"
+      ],
+      "next": [
+        "Queen's Park"
+      ],
+      "transfer": [],
+      "time": 1
+    },
+    {
+      "name": "Queen's Park",
+      "prev": [
+        "Kensal Green"
+      ],
+      "next": [
+        "Kilburn Park"
+      ],
+      "transfer": [],
+      "time": 4
+    },
+    {
+      "name": "Kilburn Park",
+      "prev": [
+        "Queen's Park"
+      ],
+      "next": [
+        "Maida Vale"
+      ],
+      "transfer": [],
+      "time": 5
+    },
+    {
+      "name": "Maida Vale",
+      "prev": [
+        "Kilburn Park"
+      ],
+      "next": [
+        "Warwick Avenue"
+      ],
+      "transfer": [],
+      "time": 1
+    },
+    {
+      "name": "Warwick Avenue",
+      "prev": [
+        "Maida Vale"
+      ],
+      "next": [
+        "Paddington"
+      ],
+      "transfer": [],
+      "time": 6
+    },
+    {
+      "name": "Paddington",
+      "prev": [
+        "Warwick Avenue"
+      ],
+      "next": [
+        "Edgware Road"
+      ],
+      "transfer": [
+        {
+          "line": "Hammersmith & City line",
+          "station": "Paddington"
+        },
+        {
+          "line": "Circle line",
+          "station": "Paddington"
+        },
+        {
+          "line": "District line",
+          "station": "Paddington"
+        }
+      ],
+      "time": 5
+    },
+    {
+      "name": "Edgware Road",
+      "prev": [
+        "Paddington"
+      ],
+      "next": [
+        "Marylebone"
+      ],
+      "transfer": [],
+      "time": 3
+    },
+    {
+      "name": "Marylebone",
+      "prev": [
+        "Edgware Road"
+      ],
+      "next": [
+        "Baker Street"
+      ],
+      "transfer": [],
+      "time": 1
+    },
+    {
+      "name": "Baker Street",
+      "prev": [
+        "Marylebone"
+      ],
+      "next": [
+        "Regent's Park"
+      ],
+      "transfer": [
+        {
+          "line": "Hammersmith & City line",
+          "station": "Baker Street"
+        },
+        {
+          "line": "Circle line",
+          "station": "Baker Street"
+        },
+        {
+          "line": "Metropolitan line",
+          "station": "Baker Street"
+        },
+        {
+          "line": "Jubilee line",
+          "station": "Baker Street"
+        }
+      ],
+      "time": 6
+    },
+    {
+      "name": "Regent's Park",
+      "prev": [
+        "Baker Street"
+      ],
+      "next": [
+        "Oxford Circus"
+      ],
+      "transfer": [],
+      "time": 5
+    },
+    {
+      "name": "Oxford Circus",
+      "prev": [
+        "Regent's Park"
+      ],
+      "next": [
+        "Piccadilly Circus"
+      ],
+      "transfer": [
+        {
+          "line": "Victoria line",
+          "station": "Oxford Circus"
+        },
+        {
+          "line": "Central line",
+          "station": "Oxford Circus"
+        }
+      ],
+      "time": 3
+    },
+    {
+      "name": "Piccadilly Circus",
+      "prev": [
+        "Oxford Circus"
+      ],
+      "next": [
+        "Charing Cross"
+      ],
+      "transfer": [
+        {
+          "line": "Piccadilly line",
+          "station": "Piccadilly Circus"
+        }
+      ],
+      "time": 2
+    },
+    {
+      "name": "Charing Cross",
+      "prev": [
+        "Piccadilly Circus"
+      ],
+      "next": [
+        "Embankment"
+      ],
+      "transfer": [
+        {
+          "line": "Northern line",
+          "station": "Charing Cross"
+        }
+      ],
+      "time": 4
+    },
+    {
+      "name": "Embankment",
+      "prev": [
+        "Charing Cross"
+      ],
+      "next": [
+        "Waterloo"
+      ],
+      "transfer": [
+        {
+          "line": "Northern line",
+          "station": "Embankment"
+        },
+        {
+          "line": "Circle line",
+          "station": "Embankment"
+        },
+        {
+          "line": "District line",
+          "station": "Embankment"
+        }
+      ],
+      "time": 5
+    },
+    {
+      "name": "Waterloo",
+      "prev": [
+        "Embankment"
+      ],
+      "next": [
+        "Lambeth North"
+      ],
+      "transfer": [
+        {
+          "line": "Northern line",
+          "station": "Waterloo"
+        },
+        {
+          "line": "Jubilee line",
+          "station": "Waterloo"
+        },
+        {
+          "line": "Waterloo & City line",
+          "station": "Waterloo"
+        }
+      ],
+      "time": 3
+    },
+    {
+      "name": "Lambeth North",
+      "prev": [
+        "Waterloo"
+      ],
+      "next": [
+        "Elephant & Castle"
+      ],
+      "transfer": [],
+      "time": 5
+    },
+    {
+      "name": "Elephant & Castle",
+      "prev": [
+        "Lambeth North"
+      ],
+      "next": [],
+      "transfer": [
+        {
+          "line": "Northern line",
+          "station": "Elephant & Castle"
+        }
+      ],
+      "time": 7
+    }
+  ],
+  "Central line": [
+    {
+      "name": "North Acton",
+      "prev": [
+        "Hanger Lane",
+        "West Action"
+      ],
+      "next": [
+        "East Acton"
+      ],
+      "transfer": [],
+      "time": 7
+    },
+    {
+      "name": "East Acton",
+      "prev": [
+        "North Acton"
+      ],
+      "next": [
+        "White City"
+      ],
+      "transfer": [],
+      "time": 6
+    },
+    {
+      "name": "White City",
+      "prev": [
+        "East Acton"
+      ],
+      "next": [
+        "Shepherd's Bush"
+      ],
+      "transfer": [
+        {
+          "line": "Circle line",
+          "station": "Wood Lane"
+        },
+        {
+          "line": "Hammersmith & City line",
+          "station": "Wood Lane"
+        }
+      ],
+      "time": 6
+    },
+    {
+      "name": "Shepherd's Bush",
+      "prev": [
+        "White City"
+      ],
+      "next": [
+        "Holland Park"
+      ],
+      "transfer": [],
+      "time": 3
+    },
+    {
+      "name": "Holland Park",
+      "prev": [
+        "Shepherd's Bush"
+      ],
+      "next": [
+        "Notting Hill Gate"
+      ],
+      "transfer": [],
+      "time": 5
+    },
+    {
+      "name": "Notting Hill Gate",
+      "prev": [
+        "Holland Park"
+      ],
+      "next": [
+        "Queensway"
+      ],
+      "transfer": [
+        {
+          "line": "District line",
+          "station": "Notting Hill Gate"
+        },
+        {
+          "line": "Circle line",
+          "station": "Notting Hill Gate"
+        }
+      ],
+      "time": 2
+    },
+    {
+      "name": "Queensway",
+      "prev": [
+        "Notting Hill Gate"
+      ],
+      "next": [
+        "Lancaster Gate"
+      ],
+      "transfer": [],
+      "time": 5
+    },
+    {
+      "name": "Lancaster Gate",
+      "prev": [
+        "Queensway"
+      ],
+      "next": [
+        "Marble Arch"
+      ],
+      "transfer": [],
+      "time": 4
+    },
+    {
+      "name": "Marble Arch",
+      "prev": [
+        "Lancaster Gate"
+      ],
+      "next": [
+        "Bond Street"
+      ],
+      "transfer": [],
+      "time": 1
+    },
+    {
+      "name": "Bond Street",
+      "prev": [
+        "Marble Arch"
+      ],
+      "next": [
+        "Oxford Circus"
+      ],
+      "transfer": [
+        {
+          "line": "Jubilee line",
+          "station": "Bond Street"
+        }
+      ],
+      "time": 6
+    },
+    {
+      "name": "Oxford Circus",
+      "prev": [
+        "Bond Street"
+      ],
+      "next": [
+        "Tottenham Court Road"
+      ],
+      "transfer": [
+        {
+          "line": "Victoria line",
+          "station": "Oxford Circus"
+        },
+        {
+          "line": "Bakerloo line",
+          "station": "Oxford Circus"
+        }
+      ],
+      "time": 5
+    },
+    {
+      "name": "Tottenham Court Road",
+      "prev": [
+        "Oxford Circus"
+      ],
+      "next": [
+        "Holborn"
+      ],
+      "transfer": [
+        {
+          "line": "Northern line",
+          "station": "Tottenham Court Road"
+        }
+      ],
+      "time": 4
+    },
+    {
+      "name": "Holborn",
+      "prev": [
+        "Tottenham Court Road"
+      ],
+      "next": [
+        "Chancery Lane"
+      ],
+      "transfer": [
+        {
+          "line": "Piccadilly line",
+          "station": "Holborn"
+        }
+      ],
+      "time": 6
+    },
+    {
+      "name": "Chancery Lane",
+      "prev": [
+        "Holborn"
+      ],
+      "next": [
+        "St. Paul's"
+      ],
+      "transfer": [],
+      "time": 7
+    },
+    {
+      "name": "St. Paul's",
+      "prev": [
+        "Chancery Lane"
+      ],
+      "next": [
+        "Bank"
+      ],
+      "transfer": [],
+      "time": 7
+    },
+    {
+      "name": "Bank",
+      "prev": [
+        "St. Paul's"
+      ],
+      "next": [
+        "Liverpool Street"
+      ],
+      "transfer": [
+        {
+          "line": "Northern line",
+          "station": "Bank"
+        },
+        {
+          "line": "Waterloo & City line",
+          "station": "Bank"
+        },
+        {
+          "line": "DLR 1",
+          "station": "Bank"
+        }
+      ],
+      "time": 7
+    },
+    {
+      "name": "Liverpool Street",
+      "prev": [
+        "Bank"
+      ],
+      "next": [
+        "Bethnal Green"
+      ],
+      "transfer": [
+        {
+          "line": "Circle line",
+          "station": "Liverpool Street"
+        },
+        {
+          "line": "Hammersmith & City line",
+          "station": "Liverpool Street"
+        },
+        {
+          "line": "Metropolitan line",
+          "station": "Liverpool Street"
+        }
+      ],
+      "time": 4
+    },
+    {
+      "name": "Bethnal Green",
+      "prev": [
+        "Liverpool Street"
+      ],
+      "next": [
+        "Mile End"
+      ],
+      "transfer": [],
+      "time": 4
+    },
+    {
+      "name": "Mile End",
+      "prev": [
+        "Bethnal Green"
+      ],
+      "next": [
+        "Stratford"
+      ],
+      "transfer": [
+        {
+          "line": "Hammersmith & City line",
+          "station": "Mile End"
+        },
+        {
+          "line": "District line",
+          "station": "Mile End"
+        }
+      ],
+      "time": 6
+    },
+    {
+      "name": "Stratford",
+      "prev": [
+        "Mile End"
+      ],
+      "next": [
+        "Leyton"
+      ],
+      "transfer": [
+        {
+          "line": "Jubilee line",
+          "station": "Stratford"
+        },
+        {
+          "line": "DLR 3",
+          "station": "Stratford"
+        }
+      ],
+      "time": 1
+    },
+    {
+      "name": "Leyton",
+      "prev": [
+        "Stratford"
+      ],
+      "next": [
+        "Leytonstone"
+      ],
+      "transfer": [],
+      "time": 6
+    },
+    {
+      "name": "Leytonstone",
+      "prev": [
+        "Leyton"
+      ],
+      "next": [],
+      "transfer": [],
+      "time": 7
+    },
+    {
+      "name": "West Ruislip",
+      "prev": [],
+      "next": [
+        "Ruislip Gardens"
+      ],
+      "transfer": [],
+      "time": 5
+    },
+    {
+      "name": "Ruislip Gardens",
+      "prev": [
+        "West Ruislip"
+      ],
+      "next": [
+        "South Ruislip"
+      ],
+      "transfer": [],
+      "time": 5
+    },
+    {
+      "name": "South Ruislip",
+      "prev": [
+        "Ruislip Gardens"
+      ],
+      "next": [
+        "Northolt"
+      ],
+      "transfer": [],
+      "time": 6
+    },
+    {
+      "name": "Northolt",
+      "prev": [
+        "South Ruislip"
+      ],
+      "next": [
+        "Greenford"
+      ],
+      "transfer": [],
+      "time": 5
+    },
+    {
+      "name": "Greenford",
+      "prev": [
+        "Northolt"
+      ],
+      "next": [
+        "Perivale"
+      ],
+      "transfer": [],
+      "time": 6
+    },
+    {
+      "name": "Perivale",
+      "prev": [
+        "Greenford"
+      ],
+      "next": [
+        "Hanger Lane"
+      ],
+      "transfer": [],
+      "time": 5
+    },
+    {
+      "name": "Hanger Lane",
+      "prev": [
+        "Perivale"
+      ],
+      "next": [
+        "North Acton"
+      ],
+      "transfer": [],
+      "time": 2
+    },
+    {
+      "name": "Ealing Broadway",
+      "prev": [],
+      "next": [
+        "West Acton"
+      ],
+      "transfer": [],
+      "time": 6
+    },
+    {
+      "name": "West Acton",
+      "prev": [
+        "Ealing Broadway"
+      ],
+      "next": [
+        "North Acton"
+      ],
+      "transfer": [],
+      "time": 6
+    },
+    {
+      "name": "Snaresbrook",
+      "prev": [
+        "Leytonstone"
+      ],
+      "next": [
+        "South Woodford"
+      ],
+      "transfer": [],
+      "time": 4
+    },
+    {
+      "name": "South Woodford",
+      "prev": [
+        "Snaresbrook"
+      ],
+      "next": [
+        "Woodford"
+      ],
+      "transfer": [],
+      "time": 5
+    },
+    {
+      "name": "Woodford",
+      "prev": [
+        "South Woodford"
+      ],
+      "next": [
+        "Buckhurst Hill"
+      ],
+      "transfer": [],
+      "time": 4
+    },
+    {
+      "name": "Buckhurst Hill",
+      "prev": [
+        "Woodford"
+      ],
+      "next": [
+        "Loughton"
+      ],
+      "transfer": [],
+      "time": 2
+    },
+    {
+      "name": "Loughton",
+      "prev": [
+        "Buckhurst Hill"
+      ],
+      "next": [
+        "Debden"
+      ],
+      "transfer": [],
+      "time": 5
+    },
+    {
+      "name": "Debden",
+      "prev": [
+        "Loughton"
+      ],
+      "next": [
+        "Theydon Bois"
+      ],
+      "transfer": [],
+      "time": 6
+    },
+    {
+      "name": "Theydon Bois",
+      "prev": [
+        "Debden"
+      ],
+      "next": [
+        "Epping"
+      ],
+      "transfer": [],
+      "time": 1
+    },
+    {
+      "name": "Epping",
+      "prev": [
+        "Theydon Bois"
+      ],
+      "next": [
+      ],
+      "transfer": [],
+      "time": 4
+    },
+    {
+      "name": "Wanstead",
+      "prev": [
+        "Leytonstone"
+      ],
+      "next": [
+        "Redbridge"
+      ],
+      "transfer": [],
+      "time": 3
+    },
+    {
+      "name": "Redbridge",
+      "prev": [
+        "Wanstead"
+      ],
+      "next": [
+        "Gants Hill"
+      ],
+      "transfer": [],
+      "time": 6
+    },
+    {
+      "name": "Gants Hill",
+      "prev": [
+        "Redbridge"
+      ],
+      "next": [
+        "Newbury Park"
+      ],
+      "transfer": [],
+      "time": 3
+    },
+    {
+      "name": "Newbury Park",
+      "prev": [
+        "Gants Hill"
+      ],
+      "next": [
+        "Barkingside"
+      ],
+      "transfer": [],
+      "time": 2
+    },
+    {
+      "name": "Barkingside",
+      "prev": [
+        "Newbury Park"
+      ],
+      "next": [
+        "Fairlop"
+      ],
+      "transfer": [],
+      "time": 2
+    },
+    {
+      "name": "Fairlop",
+      "prev": [
+        "Barkingside"
+      ],
+      "next": [
+        "Hainault"
+      ],
+      "transfer": [],
+      "time": 7
+    },
+    {
+      "name": "Hainault",
+      "prev": [
+        "Fairlop"
+      ],
+      "next": [
+        "Grange Hill"
+      ],
+      "transfer": [],
+      "time": 7
+    },
+    {
+      "name": "Grange Hill",
+      "prev": [
+        "Hainault"
+      ],
+      "next": [
+        "Chigwell"
+      ],
+      "transfer": [],
+      "time": 5
+    },
+    {
+      "name": "Chigwell",
+      "prev": [
+        "Grange Hill"
+      ],
+      "next": [
+        "Roding Valley"
+      ],
+      "transfer": [],
+      "time": 2
+    },
+    {
+      "name": "Roding Valley",
+      "prev": [
+        "Chigwell"
+      ],
+      "next": [
+        "Woodford"
+      ],
+      "transfer": [],
+      "time": 4
+    }
+  ],
+  "Circle line": [
+    {
+      "name": "Hammersmith",
+      "prev": [],
+      "next": [
+        "Goldhawk Road"
+      ],
+      "transfer": [
+        {
+          "line": "Hammersmith & City line",
+          "station": "Hammersmith"
+        },
+        {
+          "line": "Piccadilly line",
+          "station": "Hammersmith"
+        },
+        {
+          "line": "District line",
+          "station": "Hammersmith"
+        }
+      ],
+      "time": 1
+    },
+    {
+      "name": "Goldhawk Road",
+      "prev": [
+        "Hammersmith"
+      ],
+      "next": [
+        "Shepherd's Bush Market"
+      ],
+      "transfer": [
+        {
+          "line": "Hammersmith & City line",
+          "station": "Goldhawk Road"
+        }
+      ],
+      "time": 7
+    },
+    {
+      "name": "Shepherd's Bush Market",
+      "prev": [
+        "Goldhawk Road"
+      ],
+      "next": [
+        "Wood Lane"
+      ],
+      "transfer": [
+        {
+          "line": "Hammersmith & City line",
+          "station": "Shepherd's Bush Market"
+        }
+      ],
+      "time": 7
+    },
+    {
+      "name": "Wood Lane",
+      "prev": [
+        "Shepherd's Bush Market"
+      ],
+      "next": [
+        "Latimer Road"
+      ],
+      "transfer": [
+        {
+          "line": "Hammersmith & City line",
+          "station": "Wood Lane"
+        },
+        {
+          "line": "Central line",
+          "station": "White City"
+        }
+      ],
+      "time": 2
+    },
+    {
+      "name": "Latimer Road",
+      "prev": [
+        "Wood Lane"
+      ],
+      "next": [
+        "Ladbroke Grove"
+      ],
+      "transfer": [
+        {
+          "line": "Hammersmith & City line",
+          "station": "Latimer Road"
+        }
+      ],
+      "time": 3
+    },
+    {
+      "name": "Ladbroke Grove",
+      "prev": [
+        "Latimer Road"
+      ],
+      "next": [
+        "Westbourne Park"
+      ],
+      "transfer": [
+        {
+          "line": "Hammersmith & City line",
+          "station": "Ladbroke Grove"
+        }
+      ],
+      "time": 4
+    },
+    {
+      "name": "Westbourne Park",
+      "prev": [
+        "Ladbroke Grove"
+      ],
+      "next": [
+        "Royal Oak"
+      ],
+      "transfer": [
+        {
+          "line": "Hammersmith & City line",
+          "station": "Westbourne Park"
+        }
+      ],
+      "time": 2
+    },
+    {
+      "name": "Royal Oak",
+      "prev": [
+        "Westbourne Park"
+      ],
+      "next": [
+        "Paddington"
+      ],
+      "transfer": [
+        {
+          "line": "Hammersmith & City line",
+          "station": "Royal Oak"
+        }
+      ],
+      "time": 6
+    },
+    {
+      "name": "Paddington",
+      "prev": [
+        "Royal Oak"
+      ],
+      "next": [
+        "Edgware Road"
+      ],
+      "transfer": [
+        {
+          "line": "Hammersmith & City line",
+          "station": "Paddington"
+        },
+        {
+          "line": "District line",
+          "station": "Paddington"
+        },
+        {
+          "line": "Bakerloo line",
+          "station": "Paddington"
+        }
+      ],
+      "time": 4
+    },
+    {
+      "name": "Edgware Road",
+      "prev": [
+        "Paddington",
+        "Bayswater"
+      ],
+      "next": [
+        "Baker Street"
+      ],
+      "transfer": [
+        {
+          "line": "Hammersmith & City line",
+          "station": "Edgware Road"
+        },
+        {
+          "line": "District line",
+          "station": "Edgware Road"
+        }
+      ],
+      "time": 2
+    },
+    {
+      "name": "Baker Street",
+      "prev": [
+        "Edgware Road"
+      ],
+      "next": [
+        "Great Portland Street"
+      ],
+      "transfer": [
+        {
+          "line": "Hammersmith & City line",
+          "station": "Baker Street"
+        },
+        {
+          "line": "Metropolitan line",
+          "station": "Baker Street"
+        },
+        {
+          "line": "Jubilee line",
+          "station": "Baker Street"
+        },
+        {
+          "line": "Bakerloo line",
+          "station": "Baker Street"
+        }
+      ],
+      "time": 5
+    },
+    {
+      "name": "Great Portland Street",
+      "prev": [
+        "Baker Street"
+      ],
+      "next": [
+        "Euston Square"
+      ],
+      "transfer": [
+        {
+          "line": "Hammersmith & City line",
+          "station": "Great Portland Street"
+        },
+        {
+          "line": "Metropolitan line",
+          "station": "Great Portland Street"
+        }
+      ],
+      "time": 4
+    },
+    {
+      "name": "Euston Square",
+      "prev": [
+        "Great Portland Street"
+      ],
+      "next": [
+        "King's Cross St. Pancras"
+      ],
+      "transfer": [
+        {
+          "line": "Hammersmith & City line",
+          "station": "Euston Square"
+        },
+        {
+          "line": "Metropolitan line",
+          "station": "Euston Square"
+        }
+      ],
+      "time": 5
+    },
+    {
+      "name": "King's Cross St. Pancras",
+      "prev": [
+        "Euston Square"
+      ],
+      "next": [
+        "Farringdon"
+      ],
+      "transfer": [
+        {
+          "line": "Metropolitan line",
+          "station": "King's Cross St. Pancras"
+        },
+        {
+          "line": "Victoria line",
+          "station": "King's Cross St. Pancras"
+        },
+        {
+          "line": "Piccadilly line",
+          "station": "King's Cross St. Pancras"
+        },
+        {
+          "line": "Northern line",
+          "station": "King's Cross St. Pancras"
+        },
+        {
+          "line": "Hammersmith & City line",
+          "station": "Euston Square"
+        }
+      ],
+      "time": 2
+    },
+    {
+      "name": "Farringdon",
+      "prev": [
+        "King's Cross St. Pancras"
+      ],
+      "next": [
+        "Barbican"
+      ],
+      "transfer": [
+        {
+          "line": "Metropolitan line",
+          "station": "Farringdon"
+        },
+        {
+          "line": "Hammersmith & City line",
+          "station": "Farringdon"
+        }
+      ],
+      "time": 6
+    },
+    {
+      "name": "Barbican",
+      "prev": [
+        "Farringdon"
+      ],
+      "next": [
+        "Moorgate"
+      ],
+      "transfer": [
+        {
+          "line": "Metropolitan line",
+          "station": "Barbican"
+        },
+        {
+          "line": "Hammersmith & City line",
+          "station": "Barbican"
+        }
+      ],
+      "time": 1
+    },
+    {
+      "name": "Moorgate",
+      "prev": [
+        "Barbican"
+      ],
+      "next": [
+        "Liverpool Street"
+      ],
+      "transfer": [
+        {
+          "line": "Metropolitan line",
+          "station": "Moorgate"
+        },
+        {
+          "line": "Hammersmith & City line",
+          "station": "Moorgate"
+        },
+        {
+          "line": "Northern line",
+          "station": "Moorgate"
+        }
+      ],
+      "time": 7
+    },
+    {
+      "name": "Liverpool Street",
+      "prev": [
+        "Moorgate"
+      ],
+      "next": [
+        "Aldgate"
+      ],
+      "transfer": [
+        {
+          "line": "Metropolitan line",
+          "station": "Liverpool Street"
+        },
+        {
+          "line": "Hammersmith & City line",
+          "station": "Liverpool Street"
+        },
+        {
+          "line": "Central line",
+          "station": "Liverpool Street"
+        }
+      ],
+      "time": 4
+    },
+    {
+      "name": "Aldgate",
+      "prev": [
+        "Liverpool Street"
+      ],
+      "next": [
+        "Tower Hill"
+      ],
+      "transfer": [
+        {
+          "line": "Metropolitan line",
+          "station": "Aldgate"
+        },
+        {
+          "line": "Hammersmith & City line",
+          "station": "Aldgate"
+        }
+      ],
+      "time": 5
+    },
+    {
+      "name": "Tower Hill",
+      "prev": [
+        "Aldgate"
+      ],
+      "next": [
+        "Monument"
+      ],
+      "transfer": [
+        {
+          "line": "District line",
+          "station": "Tower Hill"
+        },
+        {
+          "line": "DLR 2",
+          "station": "Tower Gateway"
+        }
+      ],
+      "time": 4
+    },
+    {
+      "name": "Monument",
+      "prev": [
+        "Tower Hill"
+      ],
+      "next": [
+        "Cannon Street"
+      ],
+      "transfer": [
+        {
+          "line": "District line",
+          "station": "Monument"
+        }
+      ],
+      "time": 7
+    },
+    {
+      "name": "Cannon Street",
+      "prev": [
+        "Monument"
+      ],
+      "next": [
+        "Mansion House"
+      ],
+      "transfer": [
+        {
+          "line": "District line",
+          "station": "Cannon Street"
+        }
+      ],
+      "time": 4
+    },
+    {
+      "name": "Mansion House",
+      "prev": [
+        "Cannon Street"
+      ],
+      "next": [
+        "Blackfriars"
+      ],
+      "transfer": [
+        {
+          "line": "District line",
+          "station": "Mansion House"
+        }
+      ],
+      "time": 7
+    },
+    {
+      "name": "Blackfriars",
+      "prev": [
+        "Mansion House"
+      ],
+      "next": [
+        "Temple"
+      ],
+      "transfer": [
+        {
+          "line": "District line",
+          "station": "Blackfriars"
+        }
+      ],
+      "time": 2
+    },
+    {
+      "name": "Temple",
+      "prev": [
+        "Blackfriars"
+      ],
+      "next": [
+        "Embankment"
+      ],
+      "transfer": [
+        {
+          "line": "District line",
+          "station": "Temple"
+        }
+      ],
+      "time": 6
+    },
+    {
+      "name": "Embankment",
+      "prev": [
+        "Temple"
+      ],
+      "next": [
+        "Westminster"
+      ],
+      "transfer": [
+        {
+          "line": "District line",
+          "station": "Embankment"
+        },
+        {
+          "line": "Northern line",
+          "station": "Embankment"
+        },
+        {
+          "line": "Bakerloo line",
+          "station": "Embankment"
+        }
+      ],
+      "time": 6
+    },
+    {
+      "name": "Westminster",
+      "prev": [
+        "Embankment"
+      ],
+      "next": [
+        "St James's Park"
+      ],
+      "transfer": [
+        {
+          "line": "District line",
+          "station": "Westminster"
+        },
+        {
+          "line": "Jubilee line",
+          "station": "Westminster"
+        }
+      ],
+      "time": 7
+    },
+    {
+      "name": "St James's Park",
+      "prev": [
+        "Westminster"
+      ],
+      "next": [
+        "Victoria"
+      ],
+      "transfer": [
+        {
+          "line": "District line",
+          "station": "St James's Park"
+        }
+      ],
+      "time": 7
+    },
+    {
+      "name": "Victoria",
+      "prev": [
+        "St James's Park"
+      ],
+      "next": [
+        "Sloane Square"
+      ],
+      "transfer": [
+        {
+          "line": "District line",
+          "station": "Victoria"
+        },
+        {
+          "line": "Victoria line",
+          "station": "Victoria"
+        }
+      ],
+      "time": 3
+    },
+    {
+      "name": "Sloane Square",
+      "prev": [
+        "Victoria"
+      ],
+      "next": [
+        "South Kensington"
+      ],
+      "transfer": [
+        {
+          "line": "District line",
+          "station": "Sloane Square"
+        }
+      ],
+      "time": 2
+    },
+    {
+      "name": "South Kensington",
+      "prev": [
+        "Sloane Square"
+      ],
+      "next": [
+        "Gloucester Road"
+      ],
+      "transfer": [
+        {
+          "line": "District line",
+          "station": "South Kensington"
+        },
+        {
+          "line": "Piccadilly line",
+          "station": "South Kensington"
+        }
+      ],
+      "time": 2
+    },
+    {
+      "name": "Gloucester Road",
+      "prev": [
+        "South Kensington"
+      ],
+      "next": [
+        "High Street Kensington"
+      ],
+      "transfer": [
+        {
+          "line": "District line",
+          "station": "Gloucester Road"
+        },
+        {
+          "line": "Piccadilly line",
+          "station": "Gloucester Road"
+        }
+      ],
+      "time": 2
+    },
+    {
+      "name": "High Street Kensington",
+      "prev": [
+        "Gloucester Road"
+      ],
+      "next": [
+        "Notting Hill Gate"
+      ],
+      "transfer": [
+        {
+          "line": "District line",
+          "station": "High Street Kensington"
+        }
+      ],
+      "time": 2
+    },
+    {
+      "name": "Notting Hill Gate",
+      "prev": [
+        "High Street Kensington"
+      ],
+      "next": [
+        "Bayswater"
+      ],
+      "transfer": [
+        {
+          "line": "District line",
+          "station": "Notting Hill Gate"
+        },
+        {
+          "line": "Central line",
+          "station": "Notting Hill Gate"
+        }
+      ],
+      "time": 4
+    },
+    {
+      "name": "Bayswater",
+      "prev": [
+        "Notting Hill Gate"
+      ],
+      "next": [
+        "Paddington"
+      ],
+      "transfer": [
+        {
+          "line": "District line",
+          "station": "Bayswater"
+        }
+      ],
+      "time": 2
+    }
+  ],
+  "District line": [
+    {
+      "name": "Turnham Green",
+      "prev": [
+        "Gunnersbury",
+        "Chiswick Park"
+      ],
+      "next": [
+        "Stamford Brook",
+        "Gunnersbury"
+      ],
+      "transfer": [
+        {
+          "line": "Piccadilly line",
+          "station": "Turnhum Green"
+        }
+      ],
+      "time": 2
+    },
+    {
+      "name": "Stamford Brook",
+      "prev": [
+        "Turnham Green"
+      ],
+      "next": [
+        "Ravenscourt Park"
+      ],
+      "transfer": [],
+      "time": 5
+    },
+    {
+      "name": "Ravenscourt Park",
+      "prev": [
+        "Stamford Brook"
+      ],
+      "next": [
+        "Hammersmith"
+      ],
+      "transfer": [],
+      "time": 5
+    },
+    {
+      "name": "Hammersmith",
+      "prev": [
+        "Ravenscourt Park"
+      ],
+      "next": [
+        "Barons Court"
+      ],
+      "transfer": [
+        {
+          "line": "Circle line",
+          "station": "Hammersmith"
+        },
+        {
+          "line": "Piccadilly line",
+          "station": "Hammersmith"
+        },
+        {
+          "line": "Hammersmith & City line",
+          "station": "Hammersmith"
+        }
+      ],
+      "time": 2
+    },
+    {
+      "name": "Barons Court",
+      "prev": [
+        "Hammersmith"
+      ],
+      "next": [
+        "West Kensington"
+      ],
+      "transfer": [
+        {
+          "line": "Piccadilly line",
+          "station": "Barons Court"
+        }
+      ],
+      "time": 5
+    },
+    {
+      "name": "West Kensington",
+      "prev": [
+        "Barons Court"
+      ],
+      "next": [
+        "Earl's Court"
+      ],
+      "transfer": [],
+      "time": 2
+    },
+    {
+      "name": "Earl's Court",
+      "prev": [
+        "West Kensington",
+        "High Street Kensington",
+        "West Brompton"
+      ],
+      "next": [
+        "Gloucester Road",
+        "High Street Kensington",
+        "West Brompton"
+      ],
+      "transfer": [
+        {
+          "line": "Piccadilly line",
+          "station": "Earl's Court"
+        }
+      ],
+      "time": 2
+    },
+    {
+      "name": "Gloucester Road",
+      "prev": [
+        "Earl's Court"
+      ],
+      "next": [
+        "South Kensington"
+      ],
+      "transfer": [
+        {
+          "line": "Piccadilly line",
+          "station": "Gloucester Road"
+        },
+        {
+          "line": "Circle line",
+          "station": "Gloucester Road"
+        }
+      ],
+      "time": 6
+    },
+    {
+      "name": "South Kensington",
+      "prev": [
+        "Gloucester Road"
+      ],
+      "next": [
+        "Sloane Square"
+      ],
+      "transfer": [
+        {
+          "line": "Piccadilly line",
+          "station": "South Kensington"
+        },
+        {
+          "line": "Circle line",
+          "station": "South Kensington"
+        }
+      ],
+      "time": 7
+    },
+    {
+      "name": "Sloane Square",
+      "prev": [
+        "South Kensington"
+      ],
+      "next": [
+        "Victoria"
+      ],
+      "transfer": [
+        {
+          "line": "Circle line",
+          "station": "Sloane Square"
+        }
+      ],
+      "time": 2
+    },
+    {
+      "name": "Victoria",
+      "prev": [
+        "Sloane Square"
+      ],
+      "next": [
+        "St James's Park"
+      ],
+      "transfer": [
+        {
+          "line": "Circle line",
+          "station": "Victoria"
+        },
+        {
+          "line": "Victoria line",
+          "station": "Victoria"
+        }
+      ],
+      "time": 4
+    },
+    {
+      "name": "St James's Park",
+      "prev": [
+        "Victoria"
+      ],
+      "next": [
+        "Westminster"
+      ],
+      "transfer": [
+        {
+          "line": "Circle line",
+          "station": "St James's Park"
+        }
+      ],
+      "time": 2
+    },
+    {
+      "name": "Westminster",
+      "prev": [
+        "St James's Park"
+      ],
+      "next": [
+        "Embankment"
+      ],
+      "transfer": [
+        {
+          "line": "Circle line",
+          "station": "Westminster"
+        },
+        {
+          "line": "Jubilee line",
+          "station": "Westminster"
+        }
+      ],
+      "time": 3
+    },
+    {
+      "name": "Embankment",
+      "prev": [
+        "Westminster"
+      ],
+      "next": [
+        "Temple"
+      ],
+      "transfer": [
+        {
+          "line": "Northern line",
+          "station": "Embankment"
+        },
+        {
+          "line": "Circle line",
+          "station": "Embankment"
+        },
+        {
+          "line": "Bakerloo line",
+          "station": "Embankment"
+        }
+      ],
+      "time": 6
+    },
+    {
+      "name": "Temple",
+      "prev": [
+        "Embankment"
+      ],
+      "next": [
+        "Blackfriars"
+      ],
+      "transfer": [
+        {
+          "line": "Circle line",
+          "station": "Temple"
+        }
+      ],
+      "time": 4
+    },
+    {
+      "name": "Blackfriars",
+      "prev": [
+        "Temple"
+      ],
+      "next": [
+        "Mansion House"
+      ],
+      "transfer": [
+        {
+          "line": "Circle line",
+          "station": "Blackfriars"
+        }
+      ],
+      "time": 3
+    },
+    {
+      "name": "Mansion House",
+      "prev": [
+        "Blackfriars"
+      ],
+      "next": [
+        "Cannon Street"
+      ],
+      "transfer": [
+        {
+          "line": "Circle line",
+          "station": "Mansion House"
+        }
+      ],
+      "time": 7
+    },
+    {
+      "name": "Cannon Street",
+      "prev": [
+        "Mansion House"
+      ],
+      "next": [
+        "Monument"
+      ],
+      "transfer": [
+        {
+          "line": "Circle line",
+          "station": "Cannon Street"
+        }
+      ],
+      "time": 7
+    },
+    {
+      "name": "Monument",
+      "prev": [
+        "Cannon Street"
+      ],
+      "next": [
+        "Tower Hill"
+      ],
+      "transfer": [
+        {
+          "line": "Circle line",
+          "station": "Monument"
+        }
+      ],
+      "time": 5
+    },
+    {
+      "name": "Tower Hill",
+      "prev": [
+        "Monument"
+      ],
+      "next": [
+        "Aldgate East"
+      ],
+      "transfer": [
+        {
+          "line": "Circle line",
+          "station": "Tower Hill"
+        },
+        {
+          "line": "DLR 2",
+          "station": "Tower Gateway"
+        }
+      ],
+      "time": 5
+    },
+    {
+      "name": "Aldgate East",
+      "prev": [
+        "Tower Hill"
+      ],
+      "next": [
+        "Whitechapel"
+      ],
+      "transfer": [
+        {
+          "line": "Hammersmith & City line",
+          "station": "Aldgate East"
+        }
+      ],
+      "time": 4
+    },
+    {
+      "name": "Whitechapel",
+      "prev": [
+        "Aldgate East"
+      ],
+      "next": [
+        "Stepney Green"
+      ],
+      "transfer": [
+        {
+          "line": "Hammersmith & City line",
+          "station": "Whitechapel"
+        }
+      ],
+      "time": 3
+    },
+    {
+      "name": "Stepney Green",
+      "prev": [
+        "Whitechapel"
+      ],
+      "next": [
+        "Mile End"
+      ],
+      "transfer": [
+        {
+          "line": "Hammersmith & City line",
+          "station": "Stepney Green"
+        }
+      ],
+      "time": 4
+    },
+    {
+      "name": "Mile End",
+      "prev": [
+        "Stepney Green"
+      ],
+      "next": [
+        "Bow Road"
+      ],
+      "transfer": [
+        {
+          "line": "Hammersmith & City line",
+          "station": "Mile End"
+        },
+        {
+          "line": "Central line",
+          "station": "Mile End"
+        }
+      ],
+      "time": 4
+    },
+    {
+      "name": "Bow Road",
+      "prev": [
+        "Mile End"
+      ],
+      "next": [
+        "Bromley—by—Bow"
+      ],
+      "transfer": [
+        {
+          "line": "Hammersmith & City line",
+          "station": "Bow Road"
+        },
+        {
+          "line": "DLR 3",
+          "station": "Bow Church"
+        }
+      ],
+      "time": 4
+    },
+    {
+      "name": "Bromley—by—Bow",
+      "prev": [
+        "Bow Road"
+      ],
+      "next": [
+        "West Ham"
+      ],
+      "transfer": [
+        {
+          "line": "Hammersmith & City line",
+          "station": "Bromley—by—Bow"
+        }
+      ],
+      "time": 6
+    },
+    {
+      "name": "West Ham",
+      "prev": [
+        "Bromley—by—Bow"
+      ],
+      "next": [
+        "Plaistow"
+      ],
+      "transfer": [
+        {
+          "line": "Hammersmith & City line",
+          "station": "West Ham"
+        },
+        {
+          "line": "Jubilee line",
+          "station": "West Ham"
+        },
+        {
+          "line": "DLR 3",
+          "station": "West Ham"
+        }
+      ],
+      "time": 3
+    },
+    {
+      "name": "Plaistow",
+      "prev": [
+        "West Ham"
+      ],
+      "next": [
+        "Upton Park"
+      ],
+      "transfer": [
+        {
+          "line": "Hammersmith & City line",
+          "station": "Plainstow"
+        }
+      ],
+      "time": 6
+    },
+    {
+      "name": "Upton Park",
+      "prev": [
+        "Plaistow"
+      ],
+      "next": [
+        "East Ham"
+      ],
+      "transfer": [
+        {
+          "line": "Hammersmith & City line",
+          "station": "Upton Park"
+        }
+      ],
+      "time": 4
+    },
+    {
+      "name": "East Ham",
+      "prev": [
+        "Upton Park"
+      ],
+      "next": [
+        "Barking"
+      ],
+      "transfer": [
+        {
+          "line": "Hammersmith & City line",
+          "station": "East Ham"
+        }
+      ],
+      "time": 6
+    },
+    {
+      "name": "Barking",
+      "prev": [
+        "East Ham"
+      ],
+      "next": [
+        "Upney"
+      ],
+      "transfer": [
+        {
+          "line": "Hammersmith & City line",
+          "station": "Barking"
+        }
+      ],
+      "time": 2
+    },
+    {
+      "name": "Upney",
+      "prev": [
+        "Barking"
+      ],
+      "next": [
+        "Becontree"
+      ],
+      "transfer": [],
+      "time": 1
+    },
+    {
+      "name": "Becontree",
+      "prev": [
+        "Upney"
+      ],
+      "next": [
+        "Dagenham Heathway"
+      ],
+      "transfer": [],
+      "time": 5
+    },
+    {
+      "name": "Dagenham Heathway",
+      "prev": [
+        "Becontree"
+      ],
+      "next": [
+        "Dagenham East"
+      ],
+      "transfer": [],
+      "time": 4
+    },
+    {
+      "name": "Dagenham East",
+      "prev": [
+        "Dagenham Heathway"
+      ],
+      "next": [
+        "Elm Park"
+      ],
+      "transfer": [],
+      "time": 5
+    },
+    {
+      "name": "Elm Park",
+      "prev": [
+        "Dagenham East"
+      ],
+      "next": [
+        "Hornchurch"
+      ],
+      "transfer": [],
+      "time": 7
+    },
+    {
+      "name": "Hornchurch",
+      "prev": [
+        "Elm Park"
+      ],
+      "next": [
+        "Upminster Bridge"
+      ],
+      "transfer": [],
+      "time": 5
+    },
+    {
+      "name": "Upminster Bridge",
+      "prev": [
+        "Hornchurch"
+      ],
+      "next": [
+        "Upminster"
+      ],
+      "transfer": [],
+      "time": 3
+    },
+    {
+      "name": "Upminster",
+      "prev": [
+        "Upminster Bridge"
+      ],
+      "next": [],
+      "transfer": [],
+      "time": 5
+    },
+    {
+      "name": "Ealing Broadway",
+      "prev": [],
+      "next": [
+        "Ealing Common"
+      ],
+      "transfer": [
+        {
+          "line": "Central line",
+          "station": "Ealing Broadway"
+        }
+      ],
+      "time": 2
+    },
+    {
+      "name": "Ealing Common",
+      "prev": [
+        "Ealing Broadway"
+      ],
+      "next": [
+        "Acton Town"
+      ],
+      "transfer": [
+        {
+          "line": "Piccadilly line",
+          "station": "Ealing Common"
+        }
+      ],
+      "time": 5
+    },
+    {
+      "name": "Acton Town",
+      "prev": [
+        "Ealing Common"
+      ],
+      "next": [
+        "Chiswick Park"
+      ],
+      "transfer": [
+        {
+          "line": "Piccadilly line",
+          "station": "ACtion Town"
+        }
+      ],
+      "time": 4
+    },
+    {
+      "name": "Chiswick Park",
+      "prev": [
+        "Acton Town"
+      ],
+      "next": [
+        "Turnham Green"
+      ],
+      "transfer": [],
+      "time": 2
+    },
+    {
+      "name": "Richmond",
+      "prev": [],
+      "next": [
+        "Kew Gardens"
+      ],
+      "transfer": [],
+      "time": 7
+    },
+    {
+      "name": "Kew Gardens",
+      "prev": [
+        "Richmond"
+      ],
+      "next": [
+        "Gunnersbury"
+      ],
+      "transfer": [],
+      "time": 5
+    },
+    {
+      "name": "Gunnersbury",
+      "prev": [
+        "Kew Gardens"
+      ],
+      "next": [
+        "Turnham Green"
+      ],
+      "transfer": [],
+      "time": 2
+    },
+    {
+      "name": "Edgware Road",
+      "prev": [
+      ],
+      "next": [
+        "Paddington"
+      ],
+      "transfer": [
+        {
+          "line": "Circle line",
+          "station": "Edgware Road"
+        },
+        {
+          "line": "Hammersmith & City line",
+          "station": "Edgware Road"
+        }
+      ],
+      "time": 5
+    },
+    {
+      "name": "Paddington",
+      "prev": [
+        "Edgware Road"
+      ],
+      "next": [
+        "Bayswater"
+      ],
+      "transfer": [
+        {
+          "line": "Circle line",
+          "station": "Paddington"
+        },
+        {
+          "line": "Hammersmith & City line",
+          "station": "Paddington"
+        },
+        {
+          "line": "Bakerloo line",
+          "station": "Paddington"
+        }
+      ],
+      "time": 5
+    },
+    {
+      "name": "Bayswater",
+      "prev": [
+        "Paddington"
+      ],
+      "next": [
+        "Notting Hill Gate"
+      ],
+      "transfer": [
+        {
+          "line": "Circle line",
+          "station": "Bayswater"
+        }
+      ],
+      "time": 7
+    },
+    {
+      "name": "Notting Hill Gate",
+      "prev": [
+        "Bayswater"
+      ],
+      "next": [
+        "High Street Kensington"
+      ],
+      "transfer": [
+        {
+          "line": "Circle line",
+          "station": "Notting Hill Gate"
+        },
+        {
+          "line": "Central line",
+          "station": "Notting Hill Gate"
+        }
+      ],
+      "time": 6
+    },
+    {
+      "name": "High Street Kensington",
+      "prev": [
+        "Notting Hill Gate"
+      ],
+      "next": [
+        "Earl's Court"
+      ],
+      "transfer": [
+        {
+          "line": "Circle line",
+          "station": "High Street Kensington"
+        }
+      ],
+      "time": 1
+    },
+    {
+      "name": "West Brompton",
+      "prev": [
+        "Earl's Court"
+      ],
+      "next": [
+        "Fulham Broadway"
+      ],
+      "transfer": [],
+      "time": 1
+    },
+    {
+      "name": "Fulham Broadway",
+      "prev": [
+        "West Brompton"
+      ],
+      "next": [
+        "Parsons Green"
+      ],
+      "transfer": [],
+      "time": 7
+    },
+    {
+      "name": "Parsons Green",
+      "prev": [
+        "Fulham Broadway"
+      ],
+      "next": [
+        "Putney Bridge"
+      ],
+      "transfer": [],
+      "time": 6
+    },
+    {
+      "name": "Putney Bridge",
+      "prev": [
+        "Parsons Green"
+      ],
+      "next": [
+        "East Putney"
+      ],
+      "transfer": [],
+      "time": 7
+    },
+    {
+      "name": "East Putney",
+      "prev": [
+        "Putney Bridge"
+      ],
+      "next": [
+        "Southfields"
+      ],
+      "transfer": [],
+      "time": 2
+    },
+    {
+      "name": "Southfields",
+      "prev": [
+        "East Putney"
+      ],
+      "next": [
+        "Wimbledon Park"
+      ],
+      "transfer": [],
+      "time": 7
+    },
+    {
+      "name": "Wimbledon Park",
+      "prev": [
+        "Southfields"
+      ],
+      "next": [
+        "Wimbledon"
+      ],
+      "transfer": [],
+      "time": 3
+    },
+    {
+      "name": "Wimbledon",
+      "prev": [
+        "Wimbledon Park"
+      ],
+      "next": [],
+      "transfer": [],
+      "time": 3
+    }
+  ],
+  "Hammersmith & City line": [
+    {
+      "name": "Hammersmith",
+      "prev": [],
+      "next": [
+        "Goldhawk Road"
+      ],
+      "transfer": [
+        {
+          "line": "Circle line",
+          "station": "Hammersmith"
+        },
+        {
+          "line": "District line",
+          "station": "Hammersmith"
+        },
+        {
+          "line": "Piccadilly line",
+          "station": "Hammersmith"
+        }
+      ],
+      "time": 5
+    },
+    {
+      "name": "Goldhawk Road",
+      "prev": [
+        "Hammersmith"
+      ],
+      "next": [
+        "Shepherd's Bush Market"
+      ],
+      "transfer": [
+        {
+          "line": "Circle line",
+          "station": "Goldhawk Road"
+        }
+      ],
+      "time": 3
+    },
+    {
+      "name": "Shepherd's Bush Market",
+      "prev": [
+        "Goldhawk Road"
+      ],
+      "next": [
+        "Wood Lane"
+      ],
+      "transfer": [
+        {
+          "line": "Circle line",
+          "station": "Shepherd's Bush Market"
+        }
+      ],
+      "time": 6
+    },
+    {
+      "name": "Wood Lane",
+      "prev": [
+        "Shepherd's Bush Market"
+      ],
+      "next": [
+        "Latimer Road"
+      ],
+      "transfer": [
+        {
+          "line": "Circle line",
+          "station": "Wood Lane"
+        },
+        {
+          "line": "Central line",
+          "station": "White City"
+        }
+      ],
+      "time": 3
+    },
+    {
+      "name": "Latimer Road",
+      "prev": [
+        "Wood Lane"
+      ],
+      "next": [
+        "Ladbroke Grove"
+      ],
+      "transfer": [
+        {
+          "line": "Circle line",
+          "station": "Latimer Road"
+        }
+      ],
+      "time": 4
+    },
+    {
+      "name": "Ladbroke Grove",
+      "prev": [
+        "Latimer Road"
+      ],
+      "next": [
+        "Westbourne Park"
+      ],
+      "transfer": [
+        {
+          "line": "Circle line",
+          "station": "Ladbroke Grove"
+        }
+      ],
+      "time": 4
+    },
+    {
+      "name": "Westbourne Park",
+      "prev": [
+        "Ladbroke Grove"
+      ],
+      "next": [
+        "Royal Oak"
+      ],
+      "transfer": [
+        {
+          "line": "Circle line",
+          "station": "westbourne Park"
+        }
+      ],
+      "time": 3
+    },
+    {
+      "name": "Royal Oak",
+      "prev": [
+        "Westbourne Park"
+      ],
+      "next": [
+        "Paddington"
+      ],
+      "transfer": [
+        {
+          "line": "Circle line",
+          "station": "Royal Oak"
+        }
+      ],
+      "time": 3
+    },
+    {
+      "name": "Paddington",
+      "prev": [
+        "Royal Oak"
+      ],
+      "next": [
+        "Edgware Road"
+      ],
+      "transfer": [
+        {
+          "line": "Circle line",
+          "station": "Paddington"
+        },
+        {
+          "line": "Bakerloo line",
+          "station": "Paddington"
+        },
+        {
+          "line": "District line",
+          "station": "Paddington"
+        }
+      ],
+      "time": 6
+    },
+    {
+      "name": "Edgware Road",
+      "prev": [
+        "Paddington"
+      ],
+      "next": [
+        "Baker Street"
+      ],
+      "transfer": [
+        {
+          "line": "Circle line",
+          "station": "Edgware Road"
+        },
+        {
+          "line": "District line",
+          "station": "Edgware Road"
+        }
+      ],
+      "time": 6
+    },
+    {
+      "name": "Baker Street",
+      "prev": [
+        "Edgware Road"
+      ],
+      "next": [
+        "Great Portland Street"
+      ],
+      "transfer": [
+        {
+          "line": "Circle line",
+          "station": "Baker Street"
+        },
+        {
+          "line": "Metropolitan line",
+          "station": "Baker Street"
+        },
+        {
+          "line": "Jubilee line",
+          "station": "Baker Street"
+        },
+        {
+          "line": "Bakerloo line",
+          "station": "Baker Street"
+        }
+      ],
+      "time": 6
+    },
+    {
+      "name": "Great Portland Street",
+      "prev": [
+        "Baker Street"
+      ],
+      "next": [
+        "Euston Square"
+      ],
+      "transfer": [
+        {
+          "line": "Circle line",
+          "station": "Great Portland Street"
+        },
+        {
+          "line": "Metropolitan line",
+          "station": "Great Portland Street"
+        }
+      ],
+      "time": 7
+    },
+    {
+      "name": "Euston Square",
+      "prev": [
+        "Great Portland Street"
+      ],
+      "next": [
+        "King's Cross St. Pancras"
+      ],
+      "transfer": [
+        {
+          "line": "Circle line",
+          "station": "Euston Square"
+        },
+        {
+          "line": "Metropolitan line",
+          "station": "Euston Square"
+        }
+      ],
+      "time": 1
+    },
+    {
+      "name": "King's Cross St. Pancras",
+      "prev": [
+        "Euston Square"
+      ],
+      "next": [
+        "Farringdon"
+      ],
+      "transfer": [
+        {
+          "line": "Victoria line",
+          "station": "King's Cross St. Pancras"
+        },
+        {
+          "line": "Piccadilly line",
+          "station": "King's Cross St. Pancras"
+        },
+        {
+          "line": "Northern line",
+          "station": "King's Cross St. Pancras"
+        },
+        {
+          "line": "Circle line",
+          "station": "King's Cross St. Pancras"
+        },
+        {
+          "line": "Metropolitan line",
+          "station": "King's Cross St. Pancras"
+        }
+      ],
+      "time": 4
+    },
+    {
+      "name": "Farringdon",
+      "prev": [
+        "King's Cross St. Pancras"
+      ],
+      "next": [
+        "Barbican"
+      ],
+      "transfer": [
+        {
+          "line": "Circle line",
+          "station": "Farringdon"
+        },
+        {
+          "line": "Metropolitan line",
+          "station": "Farringdon"
+        }
+      ],
+      "time": 2
+    },
+    {
+      "name": "Barbican",
+      "prev": [
+        "Farringdon"
+      ],
+      "next": [
+        "Moorgate"
+      ],
+      "transfer": [
+        {
+          "line": "Circle line",
+          "station": "Barbican"
+        },
+        {
+          "line": "Metropolitan line",
+          "station": "Barbican"
+        }
+      ],
+      "time": 1
+    },
+    {
+      "name": "Moorgate",
+      "prev": [
+        "Barbican"
+      ],
+      "next": [
+        "Liverpool Street"
+      ],
+      "transfer": [
+        {
+          "line": "Circle line",
+          "station": "Moorgate"
+        },
+        {
+          "line": "Northern line",
+          "station": "Moorgate"
+        },
+        {
+          "line": "Metropolitan line",
+          "station": "Moorgate"
+        }
+      ],
+      "time": 5
+    },
+    {
+      "name": "Liverpool Street",
+      "prev": [
+        "Moorgate"
+      ],
+      "next": [
+        "Aldgate East"
+      ],
+      "transfer": [
+        {
+          "line": "Circle line",
+          "station": "Liverpool Street"
+        },
+        {
+          "line": "Metropolitan line",
+          "station": "Liverpool Street"
+        },
+        {
+          "line": "Central line",
+          "station": "Liverpool Street"
+        }
+      ],
+      "time": 4
+    },
+    {
+      "name": "Aldgate East",
+      "prev": [
+        "Liverpool Street"
+      ],
+      "next": [
+        "Whitechapel"
+      ],
+      "transfer": [
+        {
+          "line": "District line",
+          "station": "Aldgate East"
+        }
+      ],
+      "time": 1
+    },
+    {
+      "name": "Whitechapel",
+      "prev": [
+        "Aldgate East"
+      ],
+      "next": [
+        "Stepney Green"
+      ],
+      "transfer": [
+        {
+          "line": "District line",
+          "station": "Whitechapel"
+        }
+      ],
+      "time": 5
+    },
+    {
+      "name": "Stepney Green",
+      "prev": [
+        "Whitechapel"
+      ],
+      "next": [
+        "Mile End"
+      ],
+      "transfer": [
+        {
+          "line": "District line",
+          "station": "Stepney Green"
+        }
+      ],
+      "time": 6
+    },
+    {
+      "name": "Mile End",
+      "prev": [
+        "Stepney Green"
+      ],
+      "next": [
+        "Bow Road"
+      ],
+      "transfer": [
+        {
+          "line": "District line",
+          "station": "Mile End"
+        },
+        {
+          "line": "Central line",
+          "station": "Mile End"
+        }
+      ],
+      "time": 3
+    },
+    {
+      "name": "Bow Road",
+      "prev": [
+        "Mile End"
+      ],
+      "next": [
+        "Bromley—by—Bow"
+      ],
+      "transfer": [
+        {
+          "line": "District line",
+          "station": "Bow Road"
+        },
+        {
+          "line": "DLR 3",
+          "station": "Bow Church"
+        }
+      ],
+      "time": 5
+    },
+    {
+      "name": "Bromley—by—Bow",
+      "prev": [
+        "Bow Road"
+      ],
+      "next": [
+        "West Ham"
+      ],
+      "transfer": [
+        {
+          "line": "District line",
+          "station": "Bromley—by—Bow"
+        }
+      ],
+      "time": 4
+    },
+    {
+      "name": "West Ham",
+      "prev": [
+        "Bromley—by—Bow"
+      ],
+      "next": [
+        "Plaistow"
+      ],
+      "transfer": [
+        {
+          "line": "District line",
+          "station": "West Ham"
+        },
+        {
+          "line": "Jubilee line",
+          "station": "West Ham"
+        },
+        {
+          "line": "DLR 3",
+          "station": "West Ham"
+        }
+      ],
+      "time": 3
+    },
+    {
+      "name": "Plaistow",
+      "prev": [
+        "West Ham"
+      ],
+      "next": [
+        "Upton Park"
+      ],
+      "transfer": [
+        {
+          "line": "District line",
+          "station": "Plaistow"
+        }
+      ],
+      "time": 5
+    },
+    {
+      "name": "Upton Park",
+      "prev": [
+        "Plaistow"
+      ],
+      "next": [
+        "East Ham"
+      ],
+      "transfer": [
+        {
+          "line": "District line",
+          "station": "Upton Park"
+        }
+      ],
+      "time": 4
+    },
+    {
+      "name": "East Ham",
+      "prev": [
+        "Upton Park"
+      ],
+      "next": [
+        "Barking"
+      ],
+      "transfer": [
+        {
+          "line": "District line",
+          "station": "East Ham"
+        }
+      ],
+      "time": 2
+    },
+    {
+      "name": "Barking",
+      "prev": [
+        "East Ham"
+      ],
+      "next": [
+        "Upney"
+      ],
+      "transfer": [
+        {
+          "line": "District line",
+          "station": "Barking"
+        }
+      ],
+      "time": 6
+    }
+  ],
+  "Jubilee line": [
+    {
+      "name": "Stanmore",
+      "prev": [],
+      "next": [
+        "Canons Park"
+      ],
+      "transfer": [],
+      "time": 5
+    },
+    {
+      "name": "Canons Park",
+      "prev": [
+        "Stanmore"
+      ],
+      "next": [
+        "Queensbury"
+      ],
+      "transfer": [],
+      "time": 3
+    },
+    {
+      "name": "Queensbury",
+      "prev": [
+        "Canons Park"
+      ],
+      "next": [
+        "Kingsbury"
+      ],
+      "transfer": [],
+      "time": 4
+    },
+    {
+      "name": "Kingsbury",
+      "prev": [
+        "Queensbury"
+      ],
+      "next": [
+        "Wembley Park"
+      ],
+      "transfer": [],
+      "time": 7
+    },
+    {
+      "name": "Wembley Park",
+      "prev": [
+        "Kingsbury"
+      ],
+      "next": [
+        "Neasden"
+      ],
+      "transfer": [
+        {
+          "line": "Metropolitan line",
+          "station": "Wembley Park"
+        }
+      ],
+      "time": 3
+    },
+    {
+      "name": "Neasden",
+      "prev": [
+        "Wembley Park"
+      ],
+      "next": [
+        "Dollis Hill"
+      ],
+      "transfer": [],
+      "time": 6
+    },
+    {
+      "name": "Dollis Hill",
+      "prev": [
+        "Neasden"
+      ],
+      "next": [
+        "Willesden Green"
+      ],
+      "transfer": [],
+      "time": 3
+    },
+    {
+      "name": "Willesden Green",
+      "prev": [
+        "Dollis Hill"
+      ],
+      "next": [
+        "Kilburn"
+      ],
+      "transfer": [],
+      "time": 6
+    },
+    {
+      "name": "Kilburn",
+      "prev": [
+        "Willesden Green"
+      ],
+      "next": [
+        "West Hampstead"
+      ],
+      "transfer": [],
+      "time": 5
+    },
+    {
+      "name": "West Hampstead",
+      "prev": [
+        "Kilburn"
+      ],
+      "next": [
+        "Finchley Road"
+      ],
+      "transfer": [],
+      "time": 6
+    },
+    {
+      "name": "Finchley Road",
+      "prev": [
+        "West Hampstead"
+      ],
+      "next": [
+        "Swiss Cottage"
+      ],
+      "transfer": [
+        {
+          "line": "Metropolitan line",
+          "station": "Finchley Road"
+        }
+      ],
+      "time": 4
+    },
+    {
+      "name": "Swiss Cottage",
+      "prev": [
+        "Finchley Road"
+      ],
+      "next": [
+        "St. John's Wood"
+      ],
+      "transfer": [],
+      "time": 6
+    },
+    {
+      "name": "St. John's Wood",
+      "prev": [
+        "Swiss Cottage"
+      ],
+      "next": [
+        "Baker Street"
+      ],
+      "transfer": [],
+      "time": 5
+    },
+    {
+      "name": "Baker Street",
+      "prev": [
+        "St. John's Wood"
+      ],
+      "next": [
+        "Bond Street"
+      ],
+      "transfer": [
+        {
+          "line": "Hammersmith & City line",
+          "station": "Baker Street"
+        },
+        {
+          "line": "Circle line",
+          "station": "Baker Street"
+        },
+        {
+          "line": "Metropolitan line",
+          "station": "Baker Street"
+        },
+        {
+          "line": "Bakerloo line",
+          "station": "Baker Street"
+        }
+      ],
+      "time": 1
+    },
+    {
+      "name": "Bond Street",
+      "prev": [
+        "Baker Street"
+      ],
+      "next": [
+        "Green Park"
+      ],
+      "transfer": [
+        {
+          "line": "Central line",
+          "station": "Bond Street"
+        }
+      ],
+      "time": 5
+    },
+    {
+      "name": "Green Park",
+      "prev": [
+        "Bond Street"
+      ],
+      "next": [
+        "Westminster"
+      ],
+      "transfer": [
+        {
+          "line": "Victoria line",
+          "station": "Green Park"
+        },
+        {
+          "line": "Piccadilly line",
+          "station": "Green Park"
+        }
+      ],
+      "time": 6
+    },
+    {
+      "name": "Westminster",
+      "prev": [
+        "Green Park"
+      ],
+      "next": [
+        "Waterloo"
+      ],
+      "transfer": [
+        {
+          "line": "District line",
+          "station": "Westminster"
+        },
+        {
+          "line": "Circle line",
+          "station": "Westminster"
+        }
+      ],
+      "time": 7
+    },
+    {
+      "name": "Waterloo",
+      "prev": [
+        "Westminster"
+      ],
+      "next": [
+        "Southwark"
+      ],
+      "transfer": [
+        {
+          "line": "Northern line",
+          "station": "Waterloo"
+        },
+        {
+          "line": "Bakerloo line",
+          "station": "Waterloo"
+        },
+        {
+          "line": "Waterloo & City line",
+          "station": "Waterloo"
+        }
+      ],
+      "time": 2
+    },
+    {
+      "name": "Southwark",
+      "prev": [
+        "Waterloo"
+      ],
+      "next": [
+        "London Bridge"
+      ],
+      "transfer": [],
+      "time": 5
+    },
+    {
+      "name": "London Bridge",
+      "prev": [
+        "Southwark"
+      ],
+      "next": [
+        "Bermondsey"
+      ],
+      "transfer": [
+        {
+          "line": "Northern line",
+          "station": "London Bridge"
+        }
+      ],
+      "time": 1
+    },
+    {
+      "name": "Bermondsey",
+      "prev": [
+        "London Bridge"
+      ],
+      "next": [
+        "Canada Water"
+      ],
+      "transfer": [],
+      "time": 3
+    },
+    {
+      "name": "Canada Water",
+      "prev": [
+        "Bermondsey"
+      ],
+      "next": [
+        "Canary Wharf"
+      ],
+      "transfer": [],
+      "time": 3
+    },
+    {
+      "name": "Canary Wharf",
+      "prev": [
+        "Canada Water"
+      ],
+      "next": [
+        "North Greenwich"
+      ],
+      "transfer": [
+        {
+          "line": "DLR 1",
+          "station": "Canary Wharf"
+        },
+        {
+          "line": "DLR 3",
+          "station": "Canary Wharf"
+        }
+      ],
+      "time": 2
+    },
+    {
+      "name": "North Greenwich",
+      "prev": [
+        "Canary Wharf"
+      ],
+      "next": [
+        "Canning Town"
+      ],
+      "transfer": [],
+      "time": 1
+    },
+    {
+      "name": "Canning Town",
+      "prev": [
+        "North Greenwich"
+      ],
+      "next": [
+        "West Ham"
+      ],
+      "transfer": [
+        {
+          "line": "DLR 1",
+          "station": "Canning Town"
+        },
+        {
+          "line": "DLR 2",
+          "station": "Canning Town"
+        },
+        {
+          "line": "DLR 3",
+          "station": "Canning Town"
+        }
+      ],
+      "time": 2
+    },
+    {
+      "name": "West Ham",
+      "prev": [
+        "Canning Town"
+      ],
+      "next": [
+        "Stratford"
+      ],
+      "transfer": [
+        {
+          "line": "Hammersmith & City line",
+          "station": "West Ham"
+        },
+        {
+          "line": "District line",
+          "station": "West Ham"
+        },
+        {
+          "line": "DLR 3",
+          "station": "West Ham"
+        }
+      ],
+      "time": 4
+    },
+    {
+      "name": "Stratford",
+      "prev": [
+        "West Ham"
+      ],
+      "next": [],
+      "transfer": [
+        {
+          "line": "DLR 3",
+          "station": "Stratford"
+        },
+        {
+          "line": "Central line",
+          "station": "Stratford"
+        }
+      ],
+      "time": 5
+    }
+  ],
+  "Metropolitan line": [
+    {
+      "name": "Harrow—on—the—Hill",
+      "prev": [
+        "North Harrow",
+        "West Harrow"
+      ],
+      "next": [
+        "Northwick Park"
+      ],
+      "transfer": [],
+      "time": 5
+    },
+    {
+      "name": "Northwick Park",
+      "prev": [
+        "Harrow—on—the—Hill"
+      ],
+      "next": [
+        "Preston Road"
+      ],
+      "transfer": [],
+      "time": 6
+    },
+    {
+      "name": "Preston Road",
+      "prev": [
+        "Northwick Park"
+      ],
+      "next": [
+        "Wembley Park"
+      ],
+      "transfer": [],
+      "time": 1
+    },
+    {
+      "name": "Wembley Park",
+      "prev": [
+        "Preston Road"
+      ],
+      "next": [
+        "Finchley Road"
+      ],
+      "transfer": [
+        {
+          "line": "Jubilee line",
+          "station": "Wembley Park"
+        }
+      ],
+      "time": 5
+    },
+    {
+      "name": "Finchley Road",
+      "prev": [
+        "Wembley Park"
+      ],
+      "next": [
+        "Baker Street"
+      ],
+      "transfer": [
+        {
+          "line": "Jubilee line",
+          "station": "Finchley Road"
+        }
+      ],
+      "time": 7
+    },
+    {
+      "name": "Baker Street",
+      "prev": [
+        "Finchley Road"
+      ],
+      "next": [
+        "Great Portland Street"
+      ],
+      "transfer": [
+        {
+          "line": "Hammersmith & City line",
+          "station": "Baker Street"
+        },
+        {
+          "line": "Circle line",
+          "station": "Baker Street"
+        },
+        {
+          "line": "Jubilee line",
+          "station": "Baker Street"
+        },
+        {
+          "line": "Bakerloo line",
+          "station": "Baker Street"
+        }
+      ],
+      "time": 4
+    },
+    {
+      "name": "Great Portland Street",
+      "prev": [
+        "Baker Street"
+      ],
+      "next": [
+        "Euston Square"
+      ],
+      "transfer": [
+        {
+          "line": "Hammersmith & City line",
+          "station": "Great Portland Street"
+        },
+        {
+          "line": "Circle line",
+          "station": "Great Portland Street"
+        }
+      ],
+      "time": 7
+    },
+    {
+      "name": "Euston Square",
+      "prev": [
+        "Great Portland Street"
+      ],
+      "next": [
+        "King's Cross St. Pancras"
+      ],
+      "transfer": [
+        {
+          "line": "Hammersmith & City line",
+          "station": "Euston Square"
+        },
+        {
+          "line": "Circle line",
+          "station": "Euston Square"
+        }
+      ],
+      "time": 1
+    },
+    {
+      "name": "King's Cross St. Pancras",
+      "prev": [
+        "Euston Square"
+      ],
+      "next": [
+        "Farringdon"
+      ],
+      "transfer": [
+        {
+          "line": "Hammersmith & City line",
+          "station": "King's Cross St. Pancras"
+        },
+        {
+          "line": "Circle line",
+          "station": "King's Cross St. Pancras"
+        },
+        {
+          "line": "Northern line",
+          "station": "King's Cross St. Pancras"
+        },
+        {
+          "line": "Piccadilly line",
+          "station": "King's Cross St. Pancras"
+        },
+        {
+          "line": "Victoria line",
+          "station": "King's Cross St. Pancras"
+        }
+      ],
+      "time": 2
+    },
+    {
+      "name": "Farringdon",
+      "prev": [
+        "King's Cross St. Pancras"
+      ],
+      "next": [
+        "Barbican"
+      ],
+      "transfer": [
+        {
+          "line": "Circle line",
+          "station": "Farringdon"
+        },
+        {
+          "line": "Hammersmith & City line",
+          "station": "Farringdon"
+        }
+      ],
+      "time": 3
+    },
+    {
+      "name": "Barbican",
+      "prev": [
+        "Farringdon"
+      ],
+      "next": [
+        "Moorgate"
+      ],
+      "transfer": [
+        {
+          "line": "Circle line",
+          "station": "Barbican"
+        },
+        {
+          "line": "Hammersmith & City line",
+          "station": "Barbican"
+        }
+      ],
+      "time": 7
+    },
+    {
+      "name": "Moorgate",
+      "prev": [
+        "Barbican"
+      ],
+      "next": [
+        "Liverpool Street"
+      ],
+      "transfer": [
+        {
+          "line": "Hammersmith & City line",
+          "station": "Moorgate"
+        },
+        {
+          "line": "Circle line",
+          "station": "Moorgate"
+        },
+        {
+          "line": "Northern line",
+          "station": "Moorgate"
+        }
+      ],
+      "time": 3
+    },
+    {
+      "name": "Liverpool Street",
+      "prev": [
+        "Moorgate"
+      ],
+      "next": [
+        "Aldgate"
+      ],
+      "transfer": [
+        {
+          "line": "Hammersmith & City line",
+          "station": "Liverpool Street"
+        },
+        {
+          "line": "Circle line",
+          "station": "Liverpool Street"
+        },
+        {
+          "line": "Central line",
+          "station": "Liverpool Street"
+        }
+      ],
+      "time": 3
+    },
+    {
+      "name": "Aldgate",
+      "prev": [
+        "Liverpool Street"
+      ],
+      "next": [],
+      "transfer": [
+        {
+          "line": "Central line",
+          "station": "Aldgate"
+        }
+      ],
+      "time": 7
+    },
+    {
+      "name": "Uxbridge",
+      "prev": [],
+      "next": [
+        "Hillingdon"
+      ],
+      "transfer": [
+        {
+          "line": "Piccadilly line",
+          "station": "Uxbridge"
+        }
+      ],
+      "time": 5
+    },
+    {
+      "name": "Hillingdon",
+      "prev": [
+        "Uxbridge"
+      ],
+      "next": [
+        "Ickenham"
+      ],
+      "transfer": [
+        {
+          "line": "Piccadilly line",
+          "station": "Hillingdon"
+        }
+      ],
+      "time": 7
+    },
+    {
+      "name": "Ickenham",
+      "prev": [
+        "Hillingdon"
+      ],
+      "next": [
+        "Ruislip"
+      ],
+      "transfer": [
+        {
+          "line": "Piccadilly line",
+          "station": "Ickenham"
+        }
+      ],
+      "time": 5
+    },
+    {
+      "name": "Ruislip",
+      "prev": [
+        "Ickenham"
+      ],
+      "next": [
+        "Ruislip Manor"
+      ],
+      "transfer": [
+        {
+          "line": "Piccadilly line",
+          "station": "Ruislip"
+        }
+      ],
+      "time": 5
+    },
+    {
+      "name": "Ruislip Manor",
+      "prev": [
+        "Ruislip"
+      ],
+      "next": [
+        "Eastcote"
+      ],
+      "transfer": [
+        {
+          "line": "Piccadilly line",
+          "station": "Ruislip Manor"
+        }
+      ],
+      "time": 6
+    },
+    {
+      "name": "Eastcote",
+      "prev": [
+        "Ruislip Manor"
+      ],
+      "next": [
+        "Rayners Lane"
+      ],
+      "transfer": [
+        {
+          "line": "Piccadilly line",
+          "station": "Eastcote"
+        }
+      ],
+      "time": 3
+    },
+    {
+      "name": "Rayners Lane",
+      "prev": [
+        "Eastcote"
+      ],
+      "next": [
+        "West Harrow"
+      ],
+      "transfer": [
+        {
+          "line": "Piccadilly line",
+          "station": "Rayners Lane"
+        }
+      ],
+      "time": 1
+    },
+    {
+      "name": "West Harrow",
+      "prev": [
+        "Rayners Lane"
+      ],
+      "next": [
+        "Harrow—on—the—Hill"
+      ],
+      "transfer": [],
+      "time": 4
+    },
+    {
+      "name": "Moor Park",
+      "prev": [
+        "Rickmansworth",
+        "Croxley"
+      ],
+      "next": [
+        "Northwood"
+      ],
+      "transfer": [],
+      "time": 5
+    },
+    {
+      "name": "Northwood",
+      "prev": [
+        "Moor Park"
+      ],
+      "next": [
+        "Northwood Hills"
+      ],
+      "transfer": [],
+      "time": 2
+    },
+    {
+      "name": "Northwood Hills",
+      "prev": [
+        "Northwood"
+      ],
+      "next": [
+        "Pinner"
+      ],
+      "transfer": [],
+      "time": 5
+    },
+    {
+      "name": "Pinner",
+      "prev": [
+        "Northwood Hills"
+      ],
+      "next": [
+        "North Harrow"
+      ],
+      "transfer": [],
+      "time": 3
+    },
+    {
+      "name": "North Harrow",
+      "prev": [
+        "Pinner"
+      ],
+      "next": [
+        "Harrow—on—the—Hill"
+      ],
+      "transfer": [],
+      "time": 6
+    },
+    {
+      "name": "Watford",
+      "prev": [],
+      "next": [
+        "Croxley"
+      ],
+      "transfer": [],
+      "time": 3
+    },
+    {
+      "name": "Croxley",
+      "prev": [
+        "Watford"
+      ],
+      "next": [
+        "Moor Park"
+      ],
+      "transfer": [],
+      "time": 2
+    },
+    {
+      "name": "Chalfont & Latimer",
+      "prev": [
+        "Chesham",
+        "Amsterham"
+      ],
+      "next": [
+        "Chorleywood"
+      ],
+      "transfer": [],
+      "time": 4
+    },
+    {
+      "name": "Chorleywood",
+      "prev": [
+        "Chalfont & Latimer"
+      ],
+      "next": [
+        "Rickmansworth"
+      ],
+      "transfer": [],
+      "time": 2
+    },
+    {
+      "name": "Rickmansworth",
+      "prev": [
+        "Chorleywood"
+      ],
+      "next": [
+        "Moor Park"
+      ],
+      "transfer": [],
+      "time": 4
+    },
+    {
+      "name": "Amersham",
+      "prev": [],
+      "next": [
+        "Chalfont & Latimer"
+      ],
+      "transfer": [],
+      "time": 5
+    },
+    {
+      "name": "Chesham",
+      "prev": [],
+      "next": [
+        "Chalfont & Latimer"
+      ],
+      "transfer": [],
+      "time": 6
+    }
+  ],
+  "Northern line": [
+    {
+      "name": "Kennington",
+      "prev": [
+        "Waterloo",
+        "Elephant & Castle"
+      ],
+      "next": [
+        "Oval"
+      ],
+      "transfer": [],
+      "time": 5
+    },
+    {
+      "name": "Oval",
+      "prev": [
+        "Kennington"
+      ],
+      "next": [
+        "Stockwell"
+      ],
+      "transfer": [],
+      "time": 7
+    },
+    {
+      "name": "Stockwell",
+      "prev": [
+        "Oval"
+      ],
+      "next": [
+        "Clapham North"
+      ],
+      "transfer": [
+        {
+          "line": "Victoria line",
+          "station": "Stockwell"
+        }
+      ],
+      "time": 1
+    },
+    {
+      "name": "Clapham North",
+      "prev": [
+        "Stockwell"
+      ],
+      "next": [
+        "Clapham Common"
+      ],
+      "transfer": [],
+      "time": 3
+    },
+    {
+      "name": "Clapham Common",
+      "prev": [
+        "Clapham North"
+      ],
+      "next": [
+        "Clapham South"
+      ],
+      "transfer": [],
+      "time": 5
+    },
+    {
+      "name": "Clapham South",
+      "prev": [
+        "Clapham Common"
+      ],
+      "next": [
+        "Balham"
+      ],
+      "transfer": [],
+      "time": 3
+    },
+    {
+      "name": "Balham",
+      "prev": [
+        "Clapham South"
+      ],
+      "next": [
+        "Tooting Bec"
+      ],
+      "transfer": [],
+      "time": 5
+    },
+    {
+      "name": "Tooting Bec",
+      "prev": [
+        "Balham"
+      ],
+      "next": [
+        "Tooting Broadway"
+      ],
+      "transfer": [],
+      "time": 6
+    },
+    {
+      "name": "Tooting Broadway",
+      "prev": [
+        "Tooting Bec"
+      ],
+      "next": [
+        "Colliers Wood"
+      ],
+      "transfer": [],
+      "time": 5
+    },
+    {
+      "name": "Colliers Wood",
+      "prev": [
+        "Tooting Broadway"
+      ],
+      "next": [
+        "South Wimbledon"
+      ],
+      "transfer": [],
+      "time": 6
+    },
+    {
+      "name": "South Wimbledon",
+      "prev": [
+        "Colliers Wood"
+      ],
+      "next": [
+        "Morden"
+      ],
+      "transfer": [],
+      "time": 6
+    },
+    {
+      "name": "Morden",
+      "prev": [
+        "South Wimbledon"
+      ],
+      "next": [],
+      "transfer": [],
+      "time": 1
+    },
+    {
+      "name": "Edgware",
+      "prev": [],
+      "next": [
+        "Burnt Oak"
+      ],
+      "transfer": [],
+      "time": 6
+    },
+    {
+      "name": "Burnt Oak",
+      "prev": [
+        "Edgware"
+      ],
+      "next": [
+        "Colindale"
+      ],
+      "transfer": [],
+      "time": 3
+    },
+    {
+      "name": "Colindale",
+      "prev": [
+        "Burnt Oak"
+      ],
+      "next": [
+        "Hendon Central"
+      ],
+      "transfer": [],
+      "time": 3
+    },
+    {
+      "name": "Hendon Central",
+      "prev": [
+        "Colindale"
+      ],
+      "next": [
+        "Brent Cross"
+      ],
+      "transfer": [],
+      "time": 7
+    },
+    {
+      "name": "Brent Cross",
+      "prev": [
+        "Hendon Central"
+      ],
+      "next": [
+        "Golders Green"
+      ],
+      "transfer": [],
+      "time": 4
+    },
+    {
+      "name": "Golders Green",
+      "prev": [
+        "Brent Cross"
+      ],
+      "next": [
+        "Hampstead"
+      ],
+      "transfer": [],
+      "time": 2
+    },
+    {
+      "name": "Hampstead",
+      "prev": [
+        "Golders Green"
+      ],
+      "next": [
+        "Belsize Park"
+      ],
+      "transfer": [],
+      "time": 2
+    },
+    {
+      "name": "Belsize Park",
+      "prev": [
+        "Hampstead"
+      ],
+      "next": [
+        "Chalk Farm"
+      ],
+      "transfer": [],
+      "time": 4
+    },
+    {
+      "name": "Chalk Farm",
+      "prev": [
+        "Belsize Park"
+      ],
+      "next": [
+        "Camden Town"
+      ],
+      "transfer": [],
+      "time": 2
+    },
+    {
+      "name": "Camden Town",
+      "prev": [
+        "Chalk Farm"
+      ],
+      "next": [
+        "Mornington Crescent"
+      ],
+      "transfer": [],
+      "time": 2
+    },
+    {
+      "name": "Mornington Crescent",
+      "prev": [
+        "Camden Town"
+      ],
+      "next": [
+        "Euston"
+      ],
+      "transfer": [],
+      "time": 6
+    },
+    {
+      "name": "Euston",
+      "prev": [
+        "Mornington Crescent"
+      ],
+      "next": [
+        "Warren Street"
+      ],
+      "transfer": [
+        {
+          "line": "Victoria line",
+          "station": "Euston"
+        }
+      ],
+      "time": 2
+    },
+    {
+      "name": "Warren Street",
+      "prev": [
+        "Euston"
+      ],
+      "next": [
+        "Goodge Street"
+      ],
+      "transfer": [
+        {
+          "line": "Victoria line",
+          "station": "Warren Street"
+        }
+      ],
+      "time": 1
+    },
+    {
+      "name": "Goodge Street",
+      "prev": [
+        "Warren Street"
+      ],
+      "next": [
+        "Tottenham Court Road"
+      ],
+      "transfer": [],
+      "time": 3
+    },
+    {
+      "name": "Tottenham Court Road",
+      "prev": [
+        "Goodge Street"
+      ],
+      "next": [
+        "Leicester Square"
+      ],
+      "transfer": [
+        {
+          "line": "Central line",
+          "station": "Tottenham Court Road"
+        }
+      ],
+      "time": 6
+    },
+    {
+      "name": "Leicester Square",
+      "prev": [
+        "Tottenham Court Road"
+      ],
+      "next": [
+        "Charing Cross"
+      ],
+      "transfer": [
+        {
+          "line": "Piccadilly line",
+          "station": "Leicester Square"
+        }
+      ],
+      "time": 5
+    },
+    {
+      "name": "Charing Cross",
+      "prev": [
+        "Leicester Square"
+      ],
+      "next": [
+        "Embankment"
+      ],
+      "transfer": [
+        {
+          "line": "Bakerloo line",
+          "station": "Charing Cross"
+        }
+      ],
+      "time": 4
+    },
+    {
+      "name": "Embankment",
+      "prev": [
+        "Charing Cross"
+      ],
+      "next": [
+        "Waterloo"
+      ],
+      "transfer": [
+        {
+          "line": "Circle line",
+          "station": "Embankment"
+        },
+        {
+          "line": "District line",
+          "station": "Embankment"
+        },
+        {
+          "line": "Bakerloo line",
+          "station": "Embankment"
+        }
+      ],
+      "time": 7
+    },
+    {
+      "name": "Waterloo",
+      "prev": [
+        "Embankment"
+      ],
+      "next": [
+        "Kennington"
+      ],
+      "transfer": [
+        {
+          "line": "Waterloo & City line",
+          "station": "Waterloo"
+        },
+        {
+          "line": "Bakerloo line",
+          "station": "Waterloo"
+        },
+        {
+          "line": "Jubilee line",
+          "station": "Waterloo"
+        }
+      ],
+      "time": 3
+    },
+    {
+      "name": "Finchley Central",
+      "prev": [
+        "Mill Hill East",
+        "West Finchley"
+      ],
+      "next": [
+        "East Finchley"
+      ],
+      "transfer": [],
+      "time": 1
+    },
+    {
+      "name": "East Finchley",
+      "prev": [
+        "Finchley Central"
+      ],
+      "next": [
+        "Highgate"
+      ],
+      "transfer": [],
+      "time": 4
+    },
+    {
+      "name": "Highgate",
+      "prev": [
+        "East Finchley"
+      ],
+      "next": [
+        "Archway"
+      ],
+      "transfer": [],
+      "time": 7
+    },
+    {
+      "name": "Archway",
+      "prev": [
+        "Highgate"
+      ],
+      "next": [
+        "Tufnell Park"
+      ],
+      "transfer": [],
+      "time": 4
+    },
+    {
+      "name": "Tufnell Park",
+      "prev": [
+        "Archway"
+      ],
+      "next": [
+        "Kentish Town"
+      ],
+      "transfer": [],
+      "time": 3
+    },
+    {
+      "name": "Kentish Town",
+      "prev": [
+        "Tufnell Park"
+      ],
+      "next": [
+        "Camden Town"
+      ],
+      "transfer": [],
+      "time": 6
+    },
+    {
+      "name": "King's Cross St. Pancras",
+      "prev": [
+        "Euston"
+      ],
+      "next": [
+        "Angel"
+      ],
+      "transfer": [
+        {
+          "line": "Victoria line",
+          "station": "King's Cross St, Pancras"
+        },
+        {
+          "line": "Piccadilly line",
+          "station": "King's Cross St, Pancras"
+        },
+        {
+          "line": "Hammersmith & City line",
+          "station": "King's Cross St, Pancras"
+        },
+        {
+          "line": "Circle line",
+          "station": "King's Cross St, Pancras"
+        },
+        {
+          "line": "Metropolitan line",
+          "station": "King's Cross St, Pancras"
+        }
+      ],
+      "time": 3
+    },
+    {
+      "name": "Angel",
+      "prev": [
+        "King's Cross St. Pancras"
+      ],
+      "next": [
+        "Old Street"
+      ],
+      "transfer": [],
+      "time": 1
+    },
+    {
+      "name": "Old Street",
+      "prev": [
+        "Angel"
+      ],
+      "next": [
+        "Moorgate"
+      ],
+      "transfer": [],
+      "time": 6
+    },
+    {
+      "name": "Moorgate",
+      "prev": [
+        "Old Street"
+      ],
+      "next": [
+        "Bank"
+      ],
+      "transfer": [
+        {
+          "line": "Hammersmith & City line",
+          "station": "Moorgate"
+        },
+        {
+          "line": "Circle line",
+          "station": "Moorgate"
+        },
+        {
+          "line": "Metropolitan line",
+          "station": "Moorgate"
+        }
+      ],
+      "time": 5
+    },
+    {
+      "name": "Bank",
+      "prev": [
+        "Moorgate"
+      ],
+      "next": [
+        "London Bridge"
+      ],
+      "transfer": [
+        {
+          "line": "DLR 1",
+          "station": "Bank"
+        },
+        {
+          "line": "Waterloo & City line",
+          "station": "Bank"
+        },
+        {
+          "line": "Central line",
+          "station": "Bank"
+        }
+      ],
+      "time": 2
+    },
+    {
+      "name": "London Bridge",
+      "prev": [
+        "Bank"
+      ],
+      "next": [
+        "Borough"
+      ],
+      "transfer": [
+        {
+          "line": "Jubilee line",
+          "station": "London Bridge"
+        }
+      ],
+      "time": 7
+    },
+    {
+      "name": "Borough",
+      "prev": [
+        "London Bridge"
+      ],
+      "next": [
+        "Elephant & Castle"
+      ],
+      "transfer": [],
+      "time": 7
+    },
+    {
+      "name": "Elephant & Castle",
+      "prev": [
+        "Borough"
+      ],
+      "next": [
+        "Kennington"
+      ],
+      "transfer": [
+        {
+          "line": "Bakerloo line",
+          "station": "Elephant & Castle"
+        }
+      ],
+      "time": 6
+    },
+    {
+      "name": "High Barnet",
+      "prev": [],
+      "next": [
+        "Totteridge & Whetstone"
+      ],
+      "transfer": [],
+      "time": 4
+    },
+    {
+      "name": "Totteridge & Whetstone",
+      "prev": [
+        "High Barnet"
+      ],
+      "next": [
+        "Woodside Park"
+      ],
+      "transfer": [],
+      "time": 3
+    },
+    {
+      "name": "Woodside Park",
+      "prev": [
+        "Totteridge & Whetstone"
+      ],
+      "next": [
+        "West Finchley"
+      ],
+      "transfer": [],
+      "time": 5
+    },
+    {
+      "name": "West Finchley",
+      "prev": [
+        "Woodside Park"
+      ],
+      "next": [
+        "Finchley Central"
+      ],
+      "transfer": [],
+      "time": 3
+    },
+    {
+      "name": "Mill Hill East",
+      "prev": [
+        "Finchley Central"
+      ],
+      "next": [
+        "Finchley Central"
+      ],
+      "transfer": [],
+      "time": 4
+    }
+  ],
+  "Piccadilly line": [
+    {
+      "name": "Cockfosters",
+      "prev": [],
+      "next": [
+        "Oakwood"
+      ],
+      "transfer": [],
+      "time": 3
+    },
+    {
+      "name": "Oakwood",
+      "prev": [
+        "Cockfosters"
+      ],
+      "next": [
+        "Southgate"
+      ],
+      "transfer": [],
+      "time": 2
+    },
+    {
+      "name": "Southgate",
+      "prev": [
+        "Oakwood"
+      ],
+      "next": [
+        "Arnos Grove"
+      ],
+      "transfer": [],
+      "time": 4
+    },
+    {
+      "name": "Arnos Grove",
+      "prev": [
+        "Southgate"
+      ],
+      "next": [
+        "Bounds Green"
+      ],
+      "transfer": [],
+      "time": 4
+    },
+    {
+      "name": "Bounds Green",
+      "prev": [
+        "Arnos Grove"
+      ],
+      "next": [
+        "Wood Green"
+      ],
+      "transfer": [],
+      "time": 3
+    },
+    {
+      "name": "Wood Green",
+      "prev": [
+        "Bounds Green"
+      ],
+      "next": [
+        "Turnpike Lane"
+      ],
+      "transfer": [],
+      "time": 2
+    },
+    {
+      "name": "Turnpike Lane",
+      "prev": [
+        "Wood Green"
+      ],
+      "next": [
+        "Manor House"
+      ],
+      "transfer": [],
+      "time": 4
+    },
+    {
+      "name": "Manor House",
+      "prev": [
+        "Turnpike Lane"
+      ],
+      "next": [
+        "Finsbury Park"
+      ],
+      "transfer": [],
+      "time": 2
+    },
+    {
+      "name": "Finsbury Park",
+      "prev": [
+        "Manor House"
+      ],
+      "next": [
+        "Arsenal"
+      ],
+      "transfer": [
+        {
+          "line": "Victoria line",
+          "station": "Finsbury Park"
+        }
+      ],
+      "time": 5
+    },
+    {
+      "name": "Arsenal",
+      "prev": [
+        "Finsbury Park"
+      ],
+      "next": [
+        "Holloway Road"
+      ],
+      "transfer": [],
+      "time": 5
+    },
+    {
+      "name": "Holloway Road",
+      "prev": [
+        "Arsenal"
+      ],
+      "next": [
+        "Caledonian Road"
+      ],
+      "transfer": [],
+      "time": 5
+    },
+    {
+      "name": "Caledonian Road",
+      "prev": [
+        "Holloway Road"
+      ],
+      "next": [
+        "King's Cross St. Pancras"
+      ],
+      "transfer": [],
+      "time": 4
+    },
+    {
+      "name": "King's Cross St. Pancras",
+      "prev": [
+        "Caledonian Road"
+      ],
+      "next": [
+        "Russell Square"
+      ],
+      "transfer": [
+        {
+          "line": "Victoria line",
+          "station": "King's Cross St, Pancras"
+        },
+        {
+          "line": "Northern line",
+          "station": "King's Cross St, Pancras"
+        },
+        {
+          "line": "Hammersmith & City line",
+          "station": "King's Cross St, Pancras"
+        },
+        {
+          "line": "Circle line",
+          "station": "King's Cross St, Pancras"
+        },
+        {
+          "line": "Metropolitan line",
+          "station": "King's Cross St, Pancras"
+        }
+      ],
+      "time": 5
+    },
+    {
+      "name": "Russell Square",
+      "prev": [
+        "King's Cross St. Pancras"
+      ],
+      "next": [
+        "Holborn"
+      ],
+      "transfer": [],
+      "time": 5
+    },
+    {
+      "name": "Holborn",
+      "prev": [
+        "Russell Square"
+      ],
+      "next": [
+        "Covent Garden"
+      ],
+      "transfer": [
+        {
+          "line": "Central line",
+          "station": "Holborn"
+        }
+      ],
+      "time": 7
+    },
+    {
+      "name": "Covent Garden",
+      "prev": [
+        "Holborn"
+      ],
+      "next": [
+        "Leicester Square"
+      ],
+      "transfer": [],
+      "time": 5
+    },
+    {
+      "name": "Leicester Square",
+      "prev": [
+        "Covent Garden"
+      ],
+      "next": [
+        "Piccadilly Circus"
+      ],
+      "transfer": [
+        {
+          "line": "Northern line",
+          "station": "Leicester Square"
+        }
+      ],
+      "time": 4
+    },
+    {
+      "name": "Piccadilly Circus",
+      "prev": [
+        "Leicester Square"
+      ],
+      "next": [
+        "Green Park"
+      ],
+      "transfer": [
+        {
+          "line": "Bakerloo line",
+          "station": "Piccadilly Circus"
+        }
+      ],
+      "time": 2
+    },
+    {
+      "name": "Green Park",
+      "prev": [
+        "Piccadilly Circus"
+      ],
+      "next": [
+        "Hyde Park Corner"
+      ],
+      "transfer": [
+        {
+          "line": "Victoria line",
+          "station": "Green Park"
+        },
+        {
+          "line": "Jubilee line",
+          "station": "Green Park"
+        }
+      ],
+      "time": 2
+    },
+    {
+      "name": "Hyde Park Corner",
+      "prev": [
+        "Green Park"
+      ],
+      "next": [
+        "Knightsbridge"
+      ],
+      "transfer": [],
+      "time": 3
+    },
+    {
+      "name": "Knightsbridge",
+      "prev": [
+        "Hyde Park Corner"
+      ],
+      "next": [
+        "South Kensington"
+      ],
+      "transfer": [],
+      "time": 6
+    },
+    {
+      "name": "South Kensington",
+      "prev": [
+        "Knightsbridge"
+      ],
+      "next": [
+        "Gloucester Road"
+      ],
+      "transfer": [
+        {
+          "line": "Circle line",
+          "station": "South Kensington"
+        },
+        {
+          "line": "District line",
+          "station": "South Kensington"
+        }
+      ],
+      "time": 7
+    },
+    {
+      "name": "Gloucester Road",
+      "prev": [
+        "South Kensington"
+      ],
+      "next": [
+        "Earl's Court"
+      ],
+      "transfer": [
+        {
+          "line": "Circle line",
+          "station": "Gloucester Road"
+        },
+        {
+          "line": "District line",
+          "station": "Gloucester Road"
+        }
+      ],
+      "time": 7
+    },
+    {
+      "name": "Earl's Court",
+      "prev": [
+        "Gloucester Road"
+      ],
+      "next": [
+        "Barons Court"
+      ],
+      "transfer": [
+        {
+          "line": "District line",
+          "station": "Earl's Court"
+        }
+      ],
+      "time": 6
+    },
+    {
+      "name": "Barons Court",
+      "prev": [
+        "Earl's Court"
+      ],
+      "next": [
+        "Hammersmith"
+      ],
+      "transfer": [
+        {
+          "line": "District line",
+          "station": "Barons Court"
+        }
+      ],
+      "time": 5
+    },
+    {
+      "name": "Hammersmith",
+      "prev": [
+        "Barons Court"
+      ],
+      "next": [
+        "Turnham Green"
+      ],
+      "transfer": [
+        {
+          "line": "Hammersmith & City line",
+          "station": "Hammersmith"
+        },
+        {
+          "line": "Circle line",
+          "station": "Hammersmith"
+        },
+        {
+          "line": "District line",
+          "station": "Hammersmith"
+        }
+      ],
+      "time": 4
+    },
+    {
+      "name": "Turnham Green",
+      "prev": [
+        "Hammersmith"
+      ],
+      "next": [
+        "Acton Town"
+      ],
+      "transfer": [
+        {
+          "line": "District line",
+          "station": "Turnham Green"
+        }
+      ],
+      "time": 7
+    },
+    {
+      "name": "Acton Town",
+      "prev": [
+        "Turnham Green",
+        "Ealing Common"
+      ],
+      "next": [
+        "South Ealing"
+      ],
+      "transfer": [
+        {
+          "line": "District line",
+          "station": "Action Town"
+        }
+      ],
+      "time": 5
+    },
+    {
+      "name": "Uxbridge",
+      "prev": [],
+      "next": [
+        "Hillingdon"
+      ],
+      "transfer": [
+        {
+          "line": "Metropolitan line",
+          "station": "Uxbridge"
+        }
+      ],
+      "time": 4
+    },
+    {
+      "name": "Hillingdon",
+      "prev": [
+        "Uxbridge"
+      ],
+      "next": [
+        "Ickenham"
+      ],
+      "transfer": [
+        {
+          "line": "Metropolitan line",
+          "station": "Hillingdon"
+        }
+      ],
+      "time": 5
+    },
+    {
+      "name": "Ickenham",
+      "prev": [
+        "Hillingdon"
+      ],
+      "next": [
+        "Ruislip"
+      ],
+      "transfer": [
+        {
+          "line": "Metropolitan line",
+          "station": "Ickenham"
+        }
+      ],
+      "time": 3
+    },
+    {
+      "name": "Ruislip",
+      "prev": [
+        "Ickenham"
+      ],
+      "next": [
+        "Ruislip Manor"
+      ],
+      "transfer": [
+        {
+          "line": "Metropolitan line",
+          "station": "Ruislip"
+        }
+      ],
+      "time": 4
+    },
+    {
+      "name": "Ruislip Manor",
+      "prev": [
+        "Ruislip"
+      ],
+      "next": [
+        "Eastcote"
+      ],
+      "transfer": [
+        {
+          "line": "Metropolitan line",
+          "station": "Ruislip Manor"
+        }
+      ],
+      "time": 5
+    },
+    {
+      "name": "Eastcote",
+      "prev": [
+        "Ruislip Manor"
+      ],
+      "next": [
+        "Rayners Lane"
+      ],
+      "transfer": [
+        {
+          "line": "Metropolitan line",
+          "station": "Eastcote"
+        }
+      ],
+      "time": 6
+    },
+    {
+      "name": "Rayners Lane",
+      "prev": [
+        "Eastcote"
+      ],
+      "next": [
+        "South Harrow"
+      ],
+      "transfer": [
+        {
+          "line": "Metropolitan line",
+          "station": "Rayners Lane"
+        }
+      ],
+      "time": 2
+    },
+    {
+      "name": "South Harrow",
+      "prev": [
+        "Rayners Lane"
+      ],
+      "next": [
+        "Sudbury Hill"
+      ],
+      "transfer": [],
+      "time": 1
+    },
+    {
+      "name": "Sudbury Hill",
+      "prev": [
+        "South Harrow"
+      ],
+      "next": [
+        "Sudbury Town"
+      ],
+      "transfer": [],
+      "time": 1
+    },
+    {
+      "name": "Sudbury Town",
+      "prev": [
+        "Sudbury Hill"
+      ],
+      "next": [
+        "Alperton"
+      ],
+      "transfer": [],
+      "time": 6
+    },
+    {
+      "name": "Alperton",
+      "prev": [
+        "Sudbury Town"
+      ],
+      "next": [
+        "Park Royal"
+      ],
+      "transfer": [],
+      "time": 1
+    },
+    {
+      "name": "Park Royal",
+      "prev": [
+        "Alperton"
+      ],
+      "next": [
+        "North Ealing"
+      ],
+      "transfer": [],
+      "time": 1
+    },
+    {
+      "name": "North Ealing",
+      "prev": [
+        "Park Royal"
+      ],
+      "next": [
+        "Ealing Common"
+      ],
+      "transfer": [],
+      "time": 3
+    },
+    {
+      "name": "Ealing Common",
+      "prev": [
+        "North Ealing"
+      ],
+      "next": [
+        "Acton Town"
+      ],
+      "transfer": [
+        {
+          "line": "District line",
+          "station": "Ealing Common"
+        }
+      ],
+      "time": 6
+    },
+    {
+      "name": "South Ealing",
+      "prev": [
+        "Acton Town"
+      ],
+      "next": [
+        "Northfields"
+      ],
+      "transfer": [],
+      "time": 7
+    },
+    {
+      "name": "Northfields",
+      "prev": [
+        "South Ealing"
+      ],
+      "next": [
+        "Boston Manor"
+      ],
+      "transfer": [],
+      "time": 2
+    },
+    {
+      "name": "Boston Manor",
+      "prev": [
+        "Northfields"
+      ],
+      "next": [
+        "Osterley"
+      ],
+      "transfer": [],
+      "time": 2
+    },
+    {
+      "name": "Osterley",
+      "prev": [
+        "Boston Manor"
+      ],
+      "next": [
+        "Hounslow East"
+      ],
+      "transfer": [],
+      "time": 4
+    },
+    {
+      "name": "Hounslow East",
+      "prev": [
+        "Osterley"
+      ],
+      "next": [
+        "Hounslow Central"
+      ],
+      "transfer": [],
+      "time": 3
+    },
+    {
+      "name": "Hounslow Central",
+      "prev": [
+        "Hounslow East"
+      ],
+      "next": [
+        "Hounslow West"
+      ],
+      "transfer": [],
+      "time": 7
+    },
+    {
+      "name": "Hounslow West",
+      "prev": [
+        "Hounslow Central"
+      ],
+      "next": [
+        "Hatton Cross"
+      ],
+      "transfer": [],
+      "time": 6
+    },
+    {
+      "name": "Hatton Cross",
+      "prev": [
+        "Hounslow West"
+      ],
+      "next": [
+        "Heathrow Terminals 1—2—3",
+        "Heathrow Terminal 4"
+      ],
+      "transfer": [],
+      "time": 4
+    },
+    {
+      "name": "Heathrow Terminals 1—2—3",
+      "prev": [
+        "Hatton Cross",
+        "Heathrow Terminal 4"
+      ],
+      "next": [
+        "Heathrow Terminal 5"
+      ],
+      "transfer": [],
+      "time": 1
+    },
+    {
+      "name": "Heathrow Terminal 5",
+      "prev": [
+        "Heathrow Terminals 1—2—3"
+      ],
+      "next": [],
+      "transfer": [],
+      "time": 5
+    },
+    {
+      "name": "Heathrow Terminal 4",
+      "prev": [
+        "Hatton Cross"
+      ],
+      "next": [
+        "Heathrow Terminals 1—2—3"
+      ],
+      "transfer": [],
+      "time": 4
+    }
+  ],
+  "Victoria line": [
+    {
+      "name": "Walthamstow Central",
+      "prev": [],
+      "next": [
+        "Blackhorse Road"
+      ],
+      "transfer": [],
+      "time": 5
+    },
+    {
+      "name": "Blackhorse Road",
+      "prev": [
+        "Walthamstow Central"
+      ],
+      "next": [
+        "Tottenham Hale"
+      ],
+      "transfer": [],
+      "time": 1
+    },
+    {
+      "name": "Tottenham Hale",
+      "prev": [
+        "Blackhorse Road"
+      ],
+      "next": [
+        "Seven Sisters"
+      ],
+      "transfer": [],
+      "time": 5
+    },
+    {
+      "name": "Seven Sisters",
+      "prev": [
+        "Tottenham Hale"
+      ],
+      "next": [
+        "Finsbury Park"
+      ],
+      "transfer": [],
+      "time": 2
+    },
+    {
+      "name": "Finsbury Park",
+      "prev": [
+        "Seven Sisters"
+      ],
+      "next": [
+        "Highbury & Islington"
+      ],
+      "transfer": [
+        {
+          "line": "Piccadilly line",
+          "station": "Finsbury Park"
+        }
+      ],
+      "time": 2
+    },
+    {
+      "name": "Highbury & Islington",
+      "prev": [
+        "Finsbury Park"
+      ],
+      "next": [
+        "King's Cross St. Pancras"
+      ],
+      "transfer": [],
+      "time": 5
+    },
+    {
+      "name": "King's Cross St. Pancras",
+      "prev": [
+        "Highbury & Islington"
+      ],
+      "next": [
+        "Euston"
+      ],
+      "transfer": [
+        {
+          "line": "Piccadilly line",
+          "station": "King's Cross St. Pancras"
+        },
+        {
+          "line": "Northern line",
+          "station": "King's Cross St. Pancras"
+        },
+        {
+          "line": "Hammersmith & City line",
+          "station": "King's Cross St. Pancras"
+        },
+        {
+          "line": "Circle line",
+          "station": "King's Cross St. Pancras"
+        },
+        {
+          "line": "Metropolitan line",
+          "station": "King's Cross St. Pancras"
+        }
+      ],
+      "time": 4
+    },
+    {
+      "name": "Euston",
+      "prev": [
+        "King's Cross St. Pancras"
+      ],
+      "next": [
+        "Warren Street"
+      ],
+      "transfer": [
+        {
+          "line": "Northern line",
+          "station": "Euston"
+        }
+      ],
+      "time": 3
+    },
+    {
+      "name": "Warren Street",
+      "prev": [
+        "Euston"
+      ],
+      "next": [
+        "Oxford Circus"
+      ],
+      "transfer": [
+        {
+          "line": "Northern line",
+          "station": "Warren Street"
+        }
+      ],
+      "time": 5
+    },
+    {
+      "name": "Oxford Circus",
+      "prev": [
+        "Warren Street"
+      ],
+      "next": [
+        "Green Park"
+      ],
+      "transfer": [
+        {
+          "line": "Bakerloo line",
+          "station": "Oxford Circus"
+        },
+        {
+          "line": "Central line",
+          "station": "Oxford Circus"
+        }
+      ],
+      "time": 5
+    },
+    {
+      "name": "Green Park",
+      "prev": [
+        "Oxford Circus"
+      ],
+      "next": [
+        "Victoria"
+      ],
+      "transfer": [
+        {
+          "line": "Piccadilly line",
+          "station": "Green Park"
+        },
+        {
+          "line": "Jubilee line",
+          "station": "Green Park"
+        }
+      ],
+      "time": 7
+    },
+    {
+      "name": "Victoria",
+      "prev": [
+        "Green Park"
+      ],
+      "next": [
+        "Pimlico"
+      ],
+      "transfer": [
+        {
+          "line": "Circle line",
+          "station": "Victoria"
+        },
+        {
+          "line": "District line",
+          "station": "Victoria"
+        }
+      ],
+      "time": 4
+    },
+    {
+      "name": "Pimlico",
+      "prev": [
+        "Victoria"
+      ],
+      "next": [
+        "Vauxhall"
+      ],
+      "transfer": [],
+      "time": 7
+    },
+    {
+      "name": "Vauxhall",
+      "prev": [
+        "Pimlico"
+      ],
+      "next": [
+        "Stockwell"
+      ],
+      "transfer": [],
+      "time": 6
+    },
+    {
+      "name": "Stockwell",
+      "prev": [
+        "Vauxhall"
+      ],
+      "next": [
+        "Brixton"
+      ],
+      "transfer": [
+        {
+          "line": "Northern line",
+          "station": "Stockwell"
+        }
+      ],
+      "time": 3
+    },
+    {
+      "name": "Brixton",
+      "prev": [
+        "Stockwell"
+      ],
+      "next": [],
+      "transfer": [],
+      "time": 5
+    }
+  ],
+  "Waterloo & City line": [
+    {
+      "name": "Bank",
+      "prev": [],
+      "next": [
+        "Waterloo"
+      ],
+      "transfer": [
+        {
+          "line": "Northern line",
+          "station": "Bank"
+        },
+        {
+          "line": "Central line",
+          "station": "Bank"
+        },
+        {
+          "line": "DLR 1",
+          "station": "Bank"
+        }
+      ],
+      "time": 2
+    },
+    {
+      "name": "Waterloo",
+      "prev": [
+        "Bank"
+      ],
+      "next": [],
+      "transfer": [
+        {
+          "line": "Northern line",
+          "station": "Waterloo"
+        },
+        {
+          "line": "Jubilee line",
+          "station": "Waterloo"
+        },
+        {
+          "line": "Bakerloo line",
+          "station": "Waterloo"
+        }
+      ],
+      "time": 7
+    }
+  ],
+  "DLR 1": [
+    {
+      "name": "Bank",
+      "prev": [],
+      "next": [
+        "Shadwell"
+      ],
+      "transfer": [
+        {
+          "line": "Northern line",
+          "station": "Bank"
+        },
+        {
+          "line": "Waterloo & City line",
+          "station": "Bank"
+        },
+        {
+          "line": "Central line",
+          "station": "Bank"
+        }
+      ],
+      "time": 3
+    },
+    {
+      "name": "Shadwell",
+      "prev": [
+        "Bank"
+      ],
+      "next": [
+        "Limehouse"
+      ],
+      "transfer": [
+        {
+          "line": "DLR 2",
+          "station": "Shadwell"
+        }
+      ],
+      "time": 3
+    },
+    {
+      "name": "Limehouse",
+      "prev": [
+        "Shadwell"
+      ],
+      "next": [
+        "Westferry"
+      ],
+      "transfer": [
+        {
+          "line": "DLR 2",
+          "station": "Limehouse"
+        }
+      ],
+      "time": 4
+    },
+    {
+      "name": "Westferry",
+      "prev": [
+        "Limehouse"
+      ],
+      "next": [
+        "Poplar",
+        "West India Quay"
+      ],
+      "transfer": [
+        {
+          "line": "DLR 2",
+          "station": "Westferry"
+        }
+      ],
+      "time": 5
+    },
+    {
+      "name": "Poplar",
+      "prev": [
+        "Westferry"
+      ],
+      "next": [
+        "Blackwall"
+      ],
+      "transfer": [
+        {
+          "line": "DLR 2",
+          "station": "Poplar"
+        },
+        {
+          "line": "DLR 3",
+          "station": "Poplar"
+        }
+      ],
+      "time": 1
+    },
+    {
+      "name": "Blackwall",
+      "prev": [
+        "Poplar"
+      ],
+      "next": [
+        "East India"
+      ],
+      "transfer": [
+        {
+          "line": "DLR 2",
+          "station": "Blackwall"
+        }
+      ],
+      "time": 2
+    },
+    {
+      "name": "East India",
+      "prev": [
+        "Blackwall"
+      ],
+      "next": [
+        "Canning Town"
+      ],
+      "transfer": [
+        {
+          "line": "DLR 2",
+          "station": "East India"
+        }
+      ],
+      "time": 3
+    },
+    {
+      "name": "Canning Town",
+      "prev": [
+        "East India"
+      ],
+      "next": [
+        "West Silvertown"
+      ],
+      "transfer": [
+        {
+          "line": "Jubilee line",
+          "station": "Canning Town"
+        },
+        {
+          "line": "DLR 2",
+          "station": "Canning Town"
+        }
+      ],
+      "time": 6
+    },
+    {
+      "name": "West Silvertown",
+      "prev": [
+        "Canning Town"
+      ],
+      "next": [
+        "Pontoon Dock"
+      ],
+      "transfer": [
+        {
+          "line": "DLR 3",
+          "station": "West Silvertown"
+        }
+      ],
+      "time": 4
+    },
+    {
+      "name": "Pontoon Dock",
+      "prev": [
+        "West Silvertown"
+      ],
+      "next": [
+        "London City Airport"
+      ],
+      "transfer": [
+        {
+          "line": "DLR 3",
+          "station": "Pontoon Dock"
+        }
+      ],
+      "time": 5
+    },
+    {
+      "name": "London City Airport",
+      "prev": [
+        "Pontoon Dock"
+      ],
+      "next": [
+        "King George V"
+      ],
+      "transfer": [
+        {
+          "line": "DLR 3",
+          "station": "London City Airport"
+        }
+      ],
+      "time": 5
+    },
+    {
+      "name": "King George V",
+      "prev": [
+        "London City Airport"
+      ],
+      "next": [
+        "Woolwich Arsenal"
+      ],
+      "transfer": [
+        {
+          "line": "DLR 3",
+          "station": "King George V"
+        }
+      ],
+      "time": 10
+    },
+    {
+      "name": "Woolwich Arsenal",
+      "prev": [
+        "King George V"
+      ],
+      "next": [],
+      "transfer": [
+        {
+          "line": "DLR 3",
+          "station": "Woolwich Arsenal"
+        }
+      ]
+    },
+    {
+      "name": "West India Quay",
+      "prev": [
+        "Westferry"
+      ],
+      "next": [
+        "Canary Wharf"
+      ],
+      "transfer": [
+        {
+          "line": "DLR 3",
+          "station": "West India Quay"
+        }
+      ],
+      "time": 5
+    },
+    {
+      "name": "Canary Wharf",
+      "prev": [
+        "West India Quay"
+      ],
+      "next": [
+        "Heron Quays"
+      ],
+      "transfer": [
+        {
+          "line": "Jubilee line",
+          "station": "Canary Wharf"
+        },
+        {
+          "line": "DLR 3",
+          "station": "Canary Wharf"
+        }
+      ],
+      "time": 7
+    },
+    {
+      "name": "Heron Quays",
+      "prev": [
+        "Canary Wharf"
+      ],
+      "next": [
+        "South Quay"
+      ],
+      "transfer": [
+        {
+          "line": "DLR 3",
+          "station": "Heron Quays"
+        }
+      ],
+      "time": 6
+    },
+    {
+      "name": "South Quay",
+      "prev": [
+        "Heron Quays"
+      ],
+      "next": [
+        "Crossharbour"
+      ],
+      "transfer": [
+        {
+          "line": "DLR 3",
+          "station": "South Quay"
+        }
+      ],
+      "time": 7
+    },
+    {
+      "name": "Crossharbour",
+      "prev": [
+        "South Quay"
+      ],
+      "next": [
+        "Mudchute"
+      ],
+      "transfer": [
+        {
+          "line": "DLR 3",
+          "station": "Crossharbour"
+        }
+      ],
+      "time": 3
+    },
+    {
+      "name": "Mudchute",
+      "prev": [
+        "Crossharbour"
+      ],
+      "next": [
+        "Island Gardens"
+      ],
+      "transfer": [
+        {
+          "line": "DLR 3",
+          "station": "Mudchute"
+        }
+      ],
+      "time": 5
+    },
+    {
+      "name": "Island Gardens",
+      "prev": [
+        "Mudchute"
+      ],
+      "next": [
+        "Cutty Sark"
+      ],
+      "transfer": [
+        {
+          "line": "DLR 3",
+          "station": "Island Gardens"
+        }
+      ],
+      "time": 8
+    },
+    {
+      "name": "Cutty Sark",
+      "prev": [
+        "Island Gardens"
+      ],
+      "next": [
+        "Greenwich"
+      ],
+      "transfer": [
+        {
+          "line": "DLR 3",
+          "station": "Cutty Sark"
+        }
+      ],
+      "time": 6
+    },
+    {
+      "name": "Greenwich",
+      "prev": [
+        "Cutty Sark"
+      ],
+      "next": [
+        "Deptford Bridge"
+      ],
+      "transfer": [
+        {
+          "line": "DLR 3",
+          "station": "Greenwich"
+        }
+      ],
+      "time": 6
+    },
+    {
+      "name": "Deptford Bridge",
+      "prev": [
+        "Greenwich"
+      ],
+      "next": [
+        "Elverson Road"
+      ],
+      "transfer": [
+        {
+          "line": "DLR 3",
+          "station": "Deptford Bridge"
+        }
+      ],
+      "time": 2
+    },
+    {
+      "name": "Elverson Road",
+      "prev": [
+        "Deptford Bridge"
+      ],
+      "next": [
+        "Lewisham"
+      ],
+      "transfer": [
+        {
+          "line": "DLR 3",
+          "station": "Elverson Road"
+        }
+      ],
+      "time": 4
+    },
+    {
+      "name": "Lewisham",
+      "prev": [
+        "Elverson Road"
+      ],
+      "next": [],
+      "transfer": [
+        {
+          "line": "DLR 3",
+          "station": "Lewisham"
+        }
+      ]
+    }
+  ],
+  "DLR 2": [
+    {
+      "name": "Tower Gateway",
+      "prev": [],
+      "next": [
+        "Shadwell"
+      ],
+      "transfer": [
+        {
+          "line": "Circle line",
+          "station": "Tower Hill"
+        },
+        {
+          "line": "District line",
+          "station": "Tower Hill"
+        }
+      ],
+      "time": 4
+    },
+    {
+      "name": "Shadwell",
+      "prev": [
+        "Tower Gateway"
+      ],
+      "next": [
+        "Limehouse"
+      ],
+      "transfer": [
+        {
+          "line": "DLR 1",
+          "station": "Shadwell"
+        }
+      ],
+      "time": 6
+    },
+    {
+      "name": "Limehouse",
+      "prev": [
+        "Shadwell"
+      ],
+      "next": [
+        "Westferry"
+      ],
+      "transfer": [
+        {
+          "line": "DLR 1",
+          "station": "Limehouse"
+        }
+      ],
+      "time": 5
+    },
+    {
+      "name": "Westferry",
+      "prev": [
+        "Limehouse"
+      ],
+      "next": [
+        "Poplar"
+      ],
+      "transfer": [
+        {
+          "line": "DLR 1",
+          "station": "Westferry"
+        }
+      ],
+      "time": 4
+    },
+    {
+      "name": "Poplar",
+      "prev": [
+        "Westferry"
+      ],
+      "next": [
+        "Blackwall"
+      ],
+      "transfer": [
+        {
+          "line": "DLR 1",
+          "station": "Poplar"
+        },
+        {
+          "line": "DLR 3",
+          "station": "Poplar"
+        }
+      ],
+      "time": 7
+    },
+    {
+      "name": "Blackwall",
+      "prev": [
+        "Poplar"
+      ],
+      "next": [
+        "East India"
+      ],
+      "transfer": [
+        {
+          "line": "DLR 1",
+          "station": "Blackwall"
+        }
+      ],
+      "time": 4
+    },
+    {
+      "name": "East India",
+      "prev": [
+        "Blackwall"
+      ],
+      "next": [
+        "Canning Town"
+      ],
+      "transfer": [
+        {
+          "line": "DLR 1",
+          "station": "East India"
+        }
+      ],
+      "time": 6
+    },
+    {
+      "name": "Canning Town",
+      "prev": [
+        "East India"
+      ],
+      "next": [
+        "Royal Victoria"
+      ],
+      "transfer": [
+        {
+          "line": "DLR 3",
+          "station": "Canning Town"
+        },
+        {
+          "line": "DLR 1",
+          "station": "Canning Town"
+        },
+        {
+          "line": "Jubilee",
+          "station": "Canning Town"
+        }
+      ],
+      "time": 4
+    },
+    {
+      "name": "Royal Victoria",
+      "prev": [
+        "Canning Town"
+      ],
+      "next": [
+        "Custom House"
+      ],
+      "transfer": [
+        {
+          "line": "DLR 3",
+          "station": "Royal Victoria"
+        }
+      ],
+      "time": 3
+    },
+    {
+      "name": "Custom House",
+      "prev": [
+        "Royal Victoria"
+      ],
+      "next": [
+        "Prince Regent"
+      ],
+      "transfer": [
+        {
+          "line": "DLR 3",
+          "station": "Custom House"
+        }
+      ],
+      "time": 5
+    },
+    {
+      "name": "Prince Regent",
+      "prev": [
+        "Custom House"
+      ],
+      "next": [
+        "Royal Albert"
+      ],
+      "transfer": [
+        {
+          "line": "DLR 3",
+          "station": "Prince Regent"
+        }
+      ],
+      "time": 3
+    },
+    {
+      "name": "Royal Albert",
+      "prev": [
+        "Prince Regent"
+      ],
+      "next": [
+        "Beckton Park"
+      ],
+      "transfer": [
+        {
+          "line": "DLR 3",
+          "station": "Royal Albert"
+        }
+      ],
+      "time": 3
+    },
+    {
+      "name": "Beckton Park",
+      "prev": [
+        "Royal Albert"
+      ],
+      "next": [
+        "Cyprus"
+      ],
+      "transfer": [
+        {
+          "line": "DLR 3",
+          "station": "Beckton Park"
+        }
+      ],
+      "time": 3
+    },
+    {
+      "name": "Cyprus",
+      "prev": [
+        "Beckton Park"
+      ],
+      "next": [
+        "Gallions Reach"
+      ],
+      "transfer": [
+        {
+          "line": "DLR 3",
+          "station": "Cyprus"
+        }
+      ],
+      "time": 3
+    },
+    {
+      "name": "Gallions Reach",
+      "prev": [
+        "Cyprus"
+      ],
+      "next": [
+        "Beckton"
+      ],
+      "transfer": [
+        {
+          "line": "DLR 3",
+          "station": "Gallions Reach"
+        }
+      ],
+      "time": 2
+    },
+    {
+      "name": "Beckton",
+      "prev": [
+        "Gallions Reach"
+      ],
+      "next": [],
+      "transfer": [
+        {
+          "line": "DLR 3",
+          "station": "Beckton"
+        }
+      ],
+      "time": 5
+    }
+  ],
+  "DLR 3": [
+    {
+      "name": "Stratford International",
+      "prev": [],
+      "next": [
+        "Stratford"
+      ],
+      "transfer": [],
+      "time": 2
+    },
+    {
+      "name": "Stratford",
+      "prev": [
+        "Stratford International"
+      ],
+      "next": [
+        "Stratford High Street",
+        "Pudding Mill Lane"
+      ],
+      "transfer": [
+        {
+          "line": "Central line",
+          "station": "Stratford"
+        },
+        {
+          "line": "Jubilee line",
+          "station": "Stratford"
+        }
+      ],
+      "time": 3
+    },
+    {
+      "name": "Stratford High Street",
+      "prev": [
+        "Stratford"
+      ],
+      "next": [
+        "Abbey Road"
+      ],
+      "transfer": [],
+      "time": 3
+    },
+    {
+      "name": "Abbey Road",
+      "prev": [
+        "Stratford High Street"
+      ],
+      "next": [
+        "West Ham"
+      ],
+      "transfer": [],
+      "time": 6
+    },
+    {
+      "name": "West Ham",
+      "prev": [
+        "Abbey Road"
+      ],
+      "next": [
+        "Star Lane"
+      ],
+      "transfer": [
+        {
+          "line": "Hammersmith & City line",
+          "station": "West Ham"
+        },
+        {
+          "line": "District line",
+          "station": "West Ham"
+        },
+        {
+          "line": "Jubilee line",
+          "station": "West Ham"
+        }
+      ],
+      "time": 2
+    },
+    {
+      "name": "Star Lane",
+      "prev": [
+        "West Ham"
+      ],
+      "next": [
+        "Canning Town"
+      ],
+      "transfer": [],
+      "time": 5
+    },
+    {
+      "name": "Canning Town",
+      "prev": [
+        "Star Lane"
+      ],
+      "next": [
+        "Royal Victoria",
+        "West Silvertown"
+      ],
+      "transfer": [
+        {
+          "line": "Jubilee line",
+          "station": "Canning Town"
+        },
+        {
+          "line": "DLR 1",
+          "station": "Canning Town"
+        },
+        {
+          "line": "DLR 2",
+          "station": "Canning Town"
+        }
+      ],
+      "time": 5
+    },
+    {
+      "name": "Royal Victoria",
+      "prev": [
+        "Canning Town"
+      ],
+      "next": [
+        "Custom House"
+      ],
+      "transfer": [
+        {
+          "line": "DLR 2",
+          "station": "Royal Victoria"
+        }
+      ],
+      "time": 7
+    },
+    {
+      "name": "Custom House",
+      "prev": [
+        "Royal Victoria"
+      ],
+      "next": [
+        "Prince Regent"
+      ],
+      "transfer": [
+        {
+          "line": "DLR 2",
+          "station": "Custom House"
+        }
+      ],
+      "time": 2
+    },
+    {
+      "name": "Prince Regent",
+      "prev": [
+        "Custom House"
+      ],
+      "next": [
+        "Royal Albert"
+      ],
+      "transfer": [
+        {
+          "line": "DLR 2",
+          "station": "Prince Regent"
+        }
+      ],
+      "time": 5
+    },
+    {
+      "name": "Royal Albert",
+      "prev": [
+        "Prince Regent"
+      ],
+      "next": [
+        "Beckton Park"
+      ],
+      "transfer": [
+        {
+          "line": "DLR 2",
+          "station": "Royal Albert"
+        }
+      ],
+      "time": 3
+    },
+    {
+      "name": "Beckton Park",
+      "prev": [
+        "Royal Albert"
+      ],
+      "next": [
+        "Cyprus"
+      ],
+      "transfer": [
+        {
+          "line": "DLR 2",
+          "station": "Beckton Park"
+        }
+      ],
+      "time": 3
+    },
+    {
+      "name": "Cyprus",
+      "prev": [
+        "Beckton Park"
+      ],
+      "next": [
+        "Gallions Reach"
+      ],
+      "transfer": [
+        {
+          "line": "DLR 2",
+          "station": "Cyprus"
+        }
+      ],
+      "time": 7
+    },
+    {
+      "name": "Gallions Reach",
+      "prev": [
+        "Cyprus"
+      ],
+      "next": [
+        "Beckton"
+      ],
+      "transfer": [
+        {
+          "line": "DLR 2",
+          "station": "Gallions Reach"
+        }
+      ],
+      "time": 1
+    },
+    {
+      "name": "Beckton",
+      "prev": [
+        "Gallions Reach"
+      ],
+      "next": [],
+      "transfer": [
+        {
+          "line": "DLR 2",
+          "station": "Beckton"
+        }
+      ],
+      "time": 7
+    },
+    {
+      "name": "West Silvertown",
+      "prev": [
+        "Canning Town"
+      ],
+      "next": [
+        "Pontoon Dock"
+      ],
+      "transfer": [
+        {
+          "line": "DLR 1",
+          "station": "West Silvertown"
+        }
+      ],
+      "time": 3
+    },
+    {
+      "name": "Pontoon Dock",
+      "prev": [
+        "West Silvertown"
+      ],
+      "next": [
+        "London City Airport"
+      ],
+      "transfer": [
+        {
+          "line": "DLR 1",
+          "station": "Pontoon Dock"
+        }
+      ],
+      "time": 2
+    },
+    {
+      "name": "London City Airport",
+      "prev": [
+        "Pontoon Dock"
+      ],
+      "next": [
+        "King George V"
+      ],
+      "transfer": [
+        {
+          "line": "DLR 1",
+          "station": "London City Airport"
+        }
+      ],
+      "time": 2
+    },
+    {
+      "name": "King George V",
+      "prev": [
+        "London City Airport"
+      ],
+      "next": [
+        "Woolwich Arsenal"
+      ],
+      "transfer": [
+        {
+          "line": "DLR 1",
+          "station": "King George V"
+        }
+      ],
+      "time": 10
+    },
+    {
+      "name": "Woolwich Arsenal",
+      "prev": [
+        "King George V"
+      ],
+      "next": [],
+      "transfer": [
+        {
+          "line": "DLR 1",
+          "station": "Woolwich Arsenal"
+        }
+      ]
+    },
+    {
+      "name": "Pudding Mill Lane",
+      "prev": [
+        "Stratford"
+      ],
+      "next": [
+        "Bow Church"
+      ],
+      "transfer": [],
+      "time": 1
+    },
+    {
+      "name": "Bow Church",
+      "prev": [
+        "Pudding Mill Lane"
+      ],
+      "next": [
+        "Devons Road"
+      ],
+      "transfer": [
+        {
+          "line": "Hammersmith & City line",
+          "station": "Bow Road"
+        },
+        {
+          "line": "District line",
+          "station": "Bow Road"
+        }
+      ],
+      "time": 5
+    },
+    {
+      "name": "Devons Road",
+      "prev": [
+        "Bow Church"
+      ],
+      "next": [
+        "Langdon Park"
+      ],
+      "transfer": [],
+      "time": 5
+    },
+    {
+      "name": "Langdon Park",
+      "prev": [
+        "Devons Road"
+      ],
+      "next": [
+        "All Saints"
+      ],
+      "transfer": [],
+      "time": 3
+    },
+    {
+      "name": "All Saints",
+      "prev": [
+        "Langdon Park"
+      ],
+      "next": [
+        "Poplar"
+      ],
+      "transfer": [],
+      "time": 6
+    },
+    {
+      "name": "Poplar",
+      "prev": [
+        "All Saints"
+      ],
+      "next": [
+        "West India Quay"
+      ],
+      "transfer": [
+        {
+          "line": "DLR 1",
+          "station": "Poplar"
+        },
+        {
+          "line": "DLR 2",
+          "station": "Poplar"
+        }
+      ],
+      "time": 3
+    },
+    {
+      "name": "West India Quay",
+      "prev": [
+        "Poplar"
+      ],
+      "next": [
+        "Canary Wharf"
+      ],
+      "transfer": [
+        {
+          "line": "DLR 1",
+          "station": "West India Quay"
+        }
+      ],
+      "time": 1
+    },
+    {
+      "name": "Canary Wharf",
+      "prev": [
+        "West India Quay"
+      ],
+      "next": [
+        "Heron Quays"
+      ],
+      "transfer": [
+        {
+          "line": "DLR 1",
+          "station": "Canary Wharf"
+        },
+        {
+          "line": "Jubilee line",
+          "station": "Canary Wharf"
+        }
+      ],
+      "time": 5
+    },
+    {
+      "name": "Heron Quays",
+      "prev": [
+        "Canary Wharf"
+      ],
+      "next": [
+        "South Quay"
+      ],
+      "transfer": [
+        {
+          "line": "DLR 1",
+          "station": "Heron Quays"
+        }
+      ],
+      "time": 4
+    },
+    {
+      "name": "South Quay",
+      "prev": [
+        "Heron Quays"
+      ],
+      "next": [
+        "Crossharbour"
+      ],
+      "transfer": [
+        {
+          "line": "DLR 1",
+          "station": "South Quay"
+        }
+      ],
+      "time": 2
+    },
+    {
+      "name": "Crossharbour",
+      "prev": [
+        "South Quay"
+      ],
+      "next": [
+        "Mudchute"
+      ],
+      "transfer": [
+        {
+          "line": "DLR 1",
+          "station": "Crossharbour"
+        }
+      ],
+      "time": 7
+    },
+    {
+      "name": "Mudchute",
+      "prev": [
+        "Crossharbour"
+      ],
+      "next": [
+        "Island Gardens"
+      ],
+      "transfer": [
+        {
+          "line": "DLR 1",
+          "station": "Mudchute"
+        }
+      ],
+      "time": 3
+    },
+    {
+      "name": "Island Gardens",
+      "prev": [
+        "Mudchute"
+      ],
+      "next": [
+        "Cutty Sark"
+      ],
+      "transfer": [
+        {
+          "line": "DLR 1",
+          "station": "Island Gardens"
+        }
+      ],
+      "time": 6
+    },
+    {
+      "name": "Cutty Sark",
+      "prev": [
+        "Island Gardens"
+      ],
+      "next": [
+        "Greenwich"
+      ],
+      "transfer": [
+        {
+          "line": "DLR 1",
+          "station": "Cutty Sark"
+        }
+      ],
+      "time": 6
+    },
+    {
+      "name": "Greenwich",
+      "prev": [
+        "Cutty Sark"
+      ],
+      "next": [
+        "Deptford Bridge"
+      ],
+      "transfer": [
+        {
+          "line": "DLR 1",
+          "station": "Greenwich"
+        }
+      ],
+      "time": 5
+    },
+    {
+      "name": "Deptford Bridge",
+      "prev": [
+        "Greenwich"
+      ],
+      "next": [
+        "Elverson Road"
+      ],
+      "transfer": [
+        {
+          "line": "DLR 1",
+          "station": "Deptford Bridge"
+        }
+      ],
+      "time": 3
+    },
+    {
+      "name": "Elverson Road",
+      "prev": [
+        "Deptford Bridge"
+      ],
+      "next": [
+        "Lewisham"
+      ],
+      "transfer": [
+        {
+          "line": "DLR 1",
+          "station": "Elverson Road"
+        }
+      ],
+      "time": 6
+    },
+    {
+      "name": "Lewisham",
+      "prev": [
+        "Elverson Road"
+      ],
+      "next": [],
+      "transfer": [
+        {
+          "line": "DLR 1",
+          "station": "Lewisham"
+        }
+      ]
+    }
+  ]
+}

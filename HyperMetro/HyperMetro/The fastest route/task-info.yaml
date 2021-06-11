@@ -1,0 +1,1766 @@
+type: edu
+files:
+- name: src/Main.java
+  visible: true
+  text: |
+    public class Main {
+
+        public static void main(String[] args) {
+            System.out.println("Hello, world!");
+        }
+    }
+  learner_created: false
+- name: test/Tests.java
+  visible: false
+  text: |-
+    import org.hyperskill.hstest.dynamic.DynamicTest;
+    import org.hyperskill.hstest.exception.outcomes.WrongAnswer;
+    import org.hyperskill.hstest.stage.StageTest;
+    import org.hyperskill.hstest.testcase.CheckResult;
+    import org.hyperskill.hstest.testing.TestedProgram;
+
+    public class Tests extends StageTest<String> {
+        // multiple line output
+        @DynamicTest(order = 1)
+        CheckResult multipleLineOutputTest() {
+
+            TestedProgram main = new TestedProgram();
+            main.start("./test/lausanne.json");
+            String output = main.execute("/output \"m1\"").trim();
+
+            String[] stations = new String[]{"Renes—Gare", "Epenex", "Crochy", "Cerisaie",
+                "Bassenges", "EPFL", "UNL—Sorge", "Mouline", "UNL—Chemberonne", "Bourdonnette", "Melley",
+                "Provence", "Montelly", "Vigie", "Lausanne—Flon"};
+
+            checkDepots(output);
+            checkOutputLength(output, stations.length + 2);
+            assertStations(output, stations);
+
+            stations = new String[]{"Croisettes", "Vennes", "Fourmi", "Sallaz", "CHUV", "Ours",
+                "Riponne M.Bejart", "Bessieres", "Lausanne—Flon", "Lausanne Gare CFF", "Grancy", "Delices", "Jourdils",
+                "Ouchy—Olympique"};
+
+            output = main.execute("/output \"m2\"");
+            checkDepots(output);
+            checkOutputLength(output, stations.length + 2);
+            assertStations(output, stations);
+
+            return CheckResult.correct();
+        }
+
+        // addition test
+        @DynamicTest(order = 2)
+        CheckResult additionTest() {
+
+            TestedProgram main = new TestedProgram();
+            main.start("./test/lausanne.json");
+
+            // added a station to the end of the line
+            main.execute("/append \"m1\" \"Test station 1\"");
+            String output = main.execute("/output \"m1\"");
+
+            String[] stations = new String[]{"Renes—Gare", "Epenex", "Crochy", "Cerisaie",
+                "Bassenges", "EPFL", "UNL—Sorge", "Mouline", "UNL—Chemberonne", "Bourdonnette", "Melley",
+                "Provence", "Montelly", "Vigie", "Lausanne—Flon", "Test station 1"};
+
+            checkDepots(output);
+            checkOutputLength(output, stations.length + 2);
+            assertStations(output, stations);
+
+            // added another one
+            main.execute("/append \"m1\" \"Test station 2\"");
+            output = main.execute("/output \"m1\"");
+
+            stations = new String[]{"Renes—Gare", "Epenex", "Crochy", "Cerisaie",
+                "Bassenges", "EPFL", "UNL—Sorge", "Mouline", "UNL—Chemberonne", "Bourdonnette", "Melley",
+                "Provence", "Montelly", "Vigie", "Lausanne—Flon", "Test station 1", "Test station 2"};
+
+            checkDepots(output);
+            checkOutputLength(output, stations.length + 2);
+            assertStations(output, stations);
+
+            // added one station to the beginning of the line
+            main.execute("/add-head \"m1\" \"Head\"");
+            output = main.execute("/output \"m1\"");
+
+            stations = new String[]{"Head", "Renes—Gare", "Epenex", "Crochy", "Cerisaie",
+                "Bassenges", "EPFL", "UNL—Sorge", "Mouline", "UNL—Chemberonne", "Bourdonnette", "Melley",
+                "Provence", "Montelly", "Vigie", "Lausanne—Flon", "Test station 1", "Test station 2"};
+
+            checkDepots(output);
+            checkOutputLength(output, stations.length + 2);
+            assertStations(output, stations
+            );
+
+            return CheckResult.correct();
+        }
+
+        // not existing file check
+        @DynamicTest(order = 3)
+        CheckResult nonexistingFileTest() {
+            TestedProgram main = new TestedProgram();
+            String output = main.start("tHiS_fIlE_DoEs_nOt_ExIsT.txt");
+            if (output.trim().length() == 0) {
+                return CheckResult.wrong("The program did not print anything when the file was not exist. ");
+            }
+            if (output.toLowerCase().startsWith("depot") || output.toLowerCase().endsWith("depot")) {
+                return CheckResult.wrong("It looks like the program did not print an error message when the file was not exist.");
+            }
+            return CheckResult.correct();
+        }
+
+        // output with transfers
+        @DynamicTest(order = 4)
+        CheckResult outputLineWithTransfer() {
+            TestedProgram main = new TestedProgram();
+            main.start("./test/prague.json");
+
+            String[][] stations = new String[][]{
+                {"Nemocnice Motol", null},
+                {"Petriny", null},
+                {"Nadrazi Veleslavin", null},
+                {"Borislavka", null},
+                {"Dejvicka", null},
+                {"Hradcanska", null},
+                {"Malostranska", null},
+                {"Staromestska", null},
+                {"Mustek", "Linka B"},
+                {"Muzeum", "Linka C"},
+                {"Namesti Miru", null},
+                {"Jiriho z Podebrad", null},
+                {"Flora", null},
+                {"Zelivskeho", null},
+                {"Strasnicka", null},
+                {"Skalka", null},
+                {"Depo Hostivar", null}
+            };
+
+            String output = main.execute("/output \"Linka A\"");
+            checkDepots(output);
+
+            checkOutputLength(output, stations.length + 2);
+            assertWithTransfer(output, stations);
+
+            return CheckResult.correct();
+        }
+
+        // connections test
+        @DynamicTest(order = 5)
+        CheckResult connectLinesTest() {
+
+            TestedProgram main = new TestedProgram();
+            main.start("./test/prague.json");
+
+            String[][] stations = new String[][]{{"Nemocnice Motol", null}, {"Petriny", "Linka C"},
+                {"Nadrazi Veleslavin", null}, {"Borislavka", null}, {"Dejvicka", null}, {"Hradcanska", null},
+                {"Malostranska", null}, {"Staromestska", null}, {"Mustek", "Linka B"}, {"Muzeum", "Linka C"},
+                {"Namesti Miru", null}, {"Jiriho z Podebrad", null}, {"Flora", null}, {"Zelivskeho", null},
+                {"Strasnicka", null}, {"Skalka", null}, {"Depo Hostivar", null}
+            };
+            main.execute("/connect \"Linka C\" \"I.P.Pavlova\" \"Linka A\" \"Petriny\"");
+
+            String output = main.execute("/output \"Linka A\"");
+
+            checkDepots(output);
+            checkOutputLength(output, stations.length + 2);
+            assertWithTransfer(output, stations);
+
+            return CheckResult.correct();
+        }
+
+        @DynamicTest(order = 6)
+        CheckResult simpleRouteTest() {
+            TestedProgram main = new TestedProgram();
+            main.start("./test/prague.json");
+
+            String[] correctRoute = {"Petriny", "Nadrazi Veleslavin", "Borislavka", "Dejvicka", "Hradcanska", "Malostranska",
+                "Staromestska", "Mustek", "Muzeum", "Namesti Miru", "Jiriho z Podebrad", "Flora"};
+
+            String[] sOutput = main.execute("/route \"Linka A\" \"Petriny\" \"Linka A\" \"Flora\"").toLowerCase().split("\n");
+
+            if (sOutput.length != correctRoute.length) {
+                return CheckResult.wrong("Your program printed an incorrect number of stations in the route.\n" +
+                    "Expected: " + correctRoute.length + " stations." +
+                    "\nYour output: " + sOutput.length + " stations.");
+            }
+
+            for (int i = 0; i < correctRoute.length; i++) {
+                if (i == 0 && !correctRoute[i].equalsIgnoreCase(sOutput[i])) {
+                    return CheckResult.wrong("The first station in the output should be '" + correctRoute[i] + "'.");
+                } else if (i != 0) {
+                    if (!correctRoute[i].equalsIgnoreCase(sOutput[i])) {
+                        return CheckResult.wrong("After '" + correctRoute[i - 1] + "' should be '" + correctRoute[i] + "'.");
+                    }
+                }
+            }
+
+            return CheckResult.correct();
+        }
+
+        // advanced route test
+        @DynamicTest(order = 7)
+        CheckResult advancedRouteTest() {
+            TestedProgram main = new TestedProgram();
+            main.start("./test/prague.json");
+
+            String[] route = {"Vysehrad", "I.P.Pavlova", "Muzeum",
+                "Linka A", "Muzeum", "Mustek",
+                "Linka B", "Mustek", "Namesti Republiky"};
+            String[] sOutput = main.execute("/route \"Linka C\" \"Vysehrad\" \"Linka B\" \"Namesti Republiky\"").split("\n");
+
+            if (sOutput.length != 9) {
+                return CheckResult.wrong("Your program printed an incorrect number of stations in the route.");
+            }
+
+            int index = 0;
+            for (String station : sOutput) {
+                if (!station.toLowerCase().trim().contains(route[index].toLowerCase())) {
+                    return CheckResult.wrong("The route is incorrect. Wrong stations were displayed");
+                }
+                index++;
+            }
+
+            return CheckResult.correct();
+        }
+
+        // simple test with time
+        @DynamicTest(order = 8)
+        CheckResult simpleTime() {
+            TestedProgram main = new TestedProgram();
+            main.start("./test/prague_w_time.json");
+
+            String[] route = {"Borislavka", "Dejvicka", "Hradcanska", "Malostranska", "Staromestska", "Mustek", "Muzeum",
+                "Namesti Miru", "Jiriho z Podebrad", "Flora", "44"};
+            String[] sOutput = main.execute("/fastest-route \"Linka A\" \"Borislavka\" \"Linka A\" \"Flora\"").split("\n");
+
+            if (sOutput.length != route.length) {
+                return CheckResult.wrong("Your program printed an incorrect number of stations in the route. Expected 10 stations and the total time!");
+            }
+
+            int index = 0;
+            for (String station : sOutput) {
+                if (!station.toLowerCase().trim().contains(route[index].toLowerCase())) {
+                    return CheckResult.wrong("The route is incorrect. Wrong stations were displayed");
+                }
+                index++;
+            }
+
+            return CheckResult.correct();
+        }
+
+        // advanced test with time
+        @DynamicTest(order = 9)
+        CheckResult advancedTime() {
+            TestedProgram main = new TestedProgram();
+            main.start("./test/prague_w_time.json");
+
+            String[] route = {"Vysehrad", "I.P.Pavlova", "Muzeum", "Hlavni nadrazi", "Florenc",
+                "Linka B", "Florenc", "Namesti Republiky", "29"
+            };
+
+            String[] sOutput = main.execute("/fastest-route \"Linka C\" \"Vysehrad\" \"Linka B\" \"Namesti Republiky\"")
+                .split("\n");
+
+            if (sOutput.length != 9) {
+                return CheckResult.wrong("Your program printed an incorrect number of stations in the route. Expected 8 stations and the total time!");
+            }
+
+            int index = 0;
+            for (String station : sOutput) {
+                if (!station.toLowerCase().trim().contains(route[index].toLowerCase())) {
+                    return CheckResult.wrong("The route is incorrect. Wrong stations were displayed");
+                }
+                index++;
+            }
+
+            return CheckResult.correct();
+        }
+
+        // checks for "depot" at the start and at the end
+        void checkDepots(String output) {
+            output = output.trim().toLowerCase();
+            if (!output.startsWith("depot")) {
+                throw new WrongAnswer("Your output should start with 'depot'.");
+            } else if (!output.endsWith("depot")) {
+                throw new WrongAnswer("Your output should end with 'depot'.");
+            }
+        }
+
+        // checks number of stations in output
+        void checkOutputLength(String output, int correctLength) {
+            int length = output.trim().split("\n").length;
+            if (length != correctLength) {
+                throw new WrongAnswer("You output contains wrong number of lines.\n" +
+                    "Expected: " + correctLength + " lines\n" +
+                    "Your output: " + length + " lines");
+            }
+        }
+
+        // checks stations
+        void assertStations(String output, String[] stations) {
+
+            String[] sOutput = output.trim().split("\n");
+
+            for (int i = 0; i < stations.length; i++) {
+                if (!sOutput[i + 1].equals(stations[i])) {
+                    throw new WrongAnswer("Can't find station '" + stations[i] + "' in the line number " + (i + 2));
+                }
+            }
+        }
+
+        void assertWithTransfer(String output, String[][] stations) {
+
+            String[] sOutput = output.split("\n");
+
+            for (int i = 0; i < stations.length; i++) {
+                String currentLine = sOutput[i + 1].toLowerCase().trim();
+                String currentStation = stations[i][0];
+                String currentTransfer = stations[i][1];
+                if (currentTransfer == null) {
+                    if (!currentLine.equals(currentStation.toLowerCase())) {
+                        throw new WrongAnswer("There is an error in your program's reply. Some stations were not found.");
+                    }
+                } else if (!currentLine.contains(currentStation.toLowerCase()) ||
+                    !currentLine.contains(currentTransfer.toLowerCase())) {
+                    throw new WrongAnswer("Expected transfer to '" + currentTransfer + "' from '" + currentStation + "' station.");
+                }
+            }
+        }
+    }
+  learner_created: false
+- name: test/lausanne.json
+  visible: false
+  text: |-
+    {
+      "m1": {
+        "1": {
+          "name": "Renes—Gare",
+          "transfer": [],
+          "time": 3
+        },
+        "2": {
+          "name": "Epenex",
+          "transfer": [],
+          "time": 2
+        },
+        "3": {
+          "name": "Crochy",
+          "transfer": [],
+          "time": 6
+        },
+        "4": {
+          "name": "Cerisaie",
+          "transfer": [],
+          "time": 5
+        },
+        "5": {
+          "name": "Bassenges",
+          "transfer": [],
+          "time": 4
+        },
+        "6": {
+          "name": "EPFL",
+          "transfer": [],
+          "time": 6
+        },
+        "7": {
+          "name": "UNL—Sorge",
+          "transfer": [],
+          "time": 8
+        },
+        "8": {
+          "name": "Mouline",
+          "transfer": [],
+          "time": 5
+        },
+        "9": {
+          "name": "UNL—Chemberonne",
+          "transfer": [],
+          "time": 4
+        },
+        "10": {
+          "name": "Bourdonnette",
+          "transfer": [],
+          "time": 5
+        },
+        "11": {
+          "name": "Melley",
+          "transfer": [],
+          "time": 7
+        },
+        "12": {
+          "name": "Provence",
+          "transfer": [],
+          "time": 6
+        },
+        "13": {
+          "name": "Montelly",
+          "transfer": [],
+          "time": 5
+        },
+        "14": {
+          "name": "Vigie",
+          "transfer": [],
+          "time": 4
+        },
+        "15": {
+          "name": "Lausanne—Flon",
+          "transfer": [],
+          "time": null
+        }
+      },
+      "m2": {
+        "1": {
+          "name": "Croisettes",
+          "transfer": [],
+          "time": 6
+        },
+        "2": {
+          "name": "Vennes",
+          "transfer": [],
+          "time": 5
+        },
+        "3": {
+          "name": "Fourmi",
+          "transfer": [],
+          "time": 4
+        },
+        "4": {
+          "name": "Sallaz",
+          "transfer": [],
+          "time": 6
+        },
+        "5": {
+          "name": "CHUV",
+          "transfer": [],
+          "time": 5
+        },
+        "6": {
+          "name": "Ours",
+          "transfer": [],
+          "time": 3
+        },
+        "7": {
+          "name": "Riponne M.Bejart",
+          "transfer": [],
+          "time": 4
+        },
+        "8": {
+          "name": "Bessieres",
+          "transfer": [],
+          "time": 6
+        },
+        "9": {
+          "name": "Lausanne—Flon",
+          "transfer": [],
+          "time": 5
+        },
+        "10": {
+          "name": "Lausanne Gare CFF",
+          "transfer": [],
+          "time": 3
+        },
+        "11": {
+          "name": "Grancy",
+          "transfer": [],
+          "time": 4
+        },
+        "12": {
+          "name": "Delices",
+          "transfer": [],
+          "time": 6
+        },
+        "13": {
+          "name": "Jourdils",
+          "transfer": [],
+          "time": 3
+        },
+        "14": {
+          "name": "Ouchy—Olympique",
+          "transfer": [],
+          "time": null
+        }
+      }
+    }
+  learner_created: false
+- name: test/prague_w_time.json
+  visible: false
+  text: |-
+    {
+      "Linka A": {
+        "0": {
+          "name": "Nemocnice Motol",
+          "transfer": [],
+          "time": 5
+        },
+        "1": {
+          "name": "Petriny",
+          "transfer": [],
+          "time": 5
+        },
+        "2": {
+          "name": "Nadrazi Veleslavin",
+          "transfer": [],
+          "time": 3
+        },
+        "3": {
+          "name": "Borislavka",
+          "transfer": [],
+          "time": 3
+        },
+        "4": {
+          "name": "Dejvicka",
+          "transfer": [],
+          "time": 4
+        },
+        "5": {
+          "name": "Hradcanska",
+          "transfer": [],
+          "time": 4
+        },
+        "6": {
+          "name": "Malostranska",
+          "transfer": [],
+          "time": 1
+        },
+        "7": {
+          "name": "Staromestska",
+          "transfer": [],
+          "time": 7
+        },
+        "8": {
+          "name": "Mustek",
+          "transfer": [
+            {
+              "line": "Linka B",
+              "station": "Mustek"
+            }
+          ],
+          "time": 8
+        },
+        "9": {
+          "name": "Muzeum",
+          "transfer": [
+            {
+              "line": "Linka C",
+              "station": "Muzeum"
+            }
+          ],
+          "time": 5
+        },
+        "10": {
+          "name": "Namesti Miru",
+          "transfer": [],
+          "time": 7
+        },
+        "11": {
+          "name": "Jiriho z Podebrad",
+          "transfer": [],
+          "time": 5
+        },
+        "12": {
+          "name": "Flora",
+          "transfer": [],
+          "time": 7
+        },
+        "13": {
+          "name": "Zelivskeho",
+          "transfer": [],
+          "time": 1
+        },
+        "14": {
+          "name": "Strasnicka",
+          "transfer": [],
+          "time": 7
+        },
+        "15": {
+          "name": "Skalka",
+          "transfer": [],
+          "time": 2
+        },
+        "16": {
+          "name": "Depo Hostivar",
+          "transfer": [],
+          "time": null
+        }
+      },
+      "Linka B": {
+        "0": {
+          "name": "Cerny Most",
+          "transfer": [],
+          "time": 3
+        },
+        "1": {
+          "name": "Rajska zahrada",
+          "transfer": [],
+          "time": 5
+        },
+        "2": {
+          "name": "Hloubetin",
+          "transfer": [],
+          "time": 4
+        },
+        "3": {
+          "name": "Kolbenova",
+          "transfer": [],
+          "time": 1
+        },
+        "4": {
+          "name": "Vysocanska",
+          "transfer": [],
+          "time": 6
+        },
+        "5": {
+          "name": "Ceskomoravska",
+          "transfer": [],
+          "time": 5
+        },
+        "6": {
+          "name": "Palmovka",
+          "transfer": [],
+          "time": 7
+        },
+        "7": {
+          "name": "Invalidovna",
+          "transfer": [],
+          "time": 5
+        },
+        "8": {
+          "name": "Krizikova",
+          "transfer": [],
+          "time": 1
+        },
+        "9": {
+          "name": "Florenc",
+          "transfer": [
+            {
+              "line": "Linka C",
+              "station": "Florenc"
+            }
+          ],
+          "time": 5
+        },
+        "10": {
+          "name": "Namesti Republiky",
+          "transfer": [],
+          "time": 3
+        },
+        "11": {
+          "name": "Mustek",
+          "transfer": [
+            {
+              "line": "Linka B",
+              "station": "Mustek"
+            }
+          ],
+          "time": 7
+        },
+        "12": {
+          "name": "Narodni trida",
+          "transfer": [],
+          "time": 3
+        },
+        "13": {
+          "name": "Karlovo namesti",
+          "transfer": [],
+          "time": 4
+        },
+        "14": {
+          "name": "Andel",
+          "transfer": [],
+          "time": 3
+        },
+        "15": {
+          "name": "Smichovske nadrazi",
+          "transfer": [],
+          "time": 3
+        },
+        "16": {
+          "name": "Radlicka",
+          "transfer": [],
+          "time": 4
+        },
+        "17": {
+          "name": "Jinonice",
+          "transfer": [],
+          "time": 7
+        },
+        "18": {
+          "name": "Nove Butovice",
+          "transfer": [],
+          "time": 2
+        },
+        "19": {
+          "name": "Hurka",
+          "transfer": [],
+          "time": 7
+        },
+        "20": {
+          "name": "Luziny",
+          "transfer": [],
+          "time": 5
+        },
+        "21": {
+          "name": "Luka",
+          "transfer": [],
+          "time": 6
+        },
+        "22": {
+          "name": "Stodulky",
+          "transfer": [],
+          "time": 7
+        },
+        "23": {
+          "name": "Zlicin",
+          "transfer": [],
+          "time": null
+        }
+      },
+      "Linka C": {
+        "0": {
+          "name": "Letnany",
+          "transfer": [],
+          "time": 3
+        },
+        "1": {
+          "name": "Prosek",
+          "transfer": [],
+          "time": 7
+        },
+        "2": {
+          "name": "Strizkov",
+          "transfer": [],
+          "time": 5
+        },
+        "3": {
+          "name": "Ladvi",
+          "transfer": [],
+          "time": 4
+        },
+        "4": {
+          "name": "Kobylisy",
+          "transfer": [],
+          "time": 5
+        },
+        "5": {
+          "name": "Nadrazi Holesovice",
+          "transfer": [],
+          "time": 7
+        },
+        "6": {
+          "name": "Vltavska",
+          "transfer": [],
+          "time": 2
+        },
+        "7": {
+          "name": "Florenc",
+          "transfer": [
+            {
+              "line": "Linka B",
+              "station": "Florenc"
+            }
+          ],
+          "time": 7
+        },
+        "8": {
+          "name": "Hlavni nadrazi",
+          "transfer": [],
+          "time": 2
+        },
+        "9": {
+          "name": "Muzeum",
+          "transfer": [
+            {
+              "line": "Linka A",
+              "station": "Muzeum"
+            }
+          ],
+          "time": 5
+        },
+        "10": {
+          "name": "I.P.Pavlova",
+          "transfer": [],
+          "time": 5
+        },
+        "11": {
+          "name": "Vysehrad",
+          "transfer": [],
+          "time": 4
+        },
+        "12": {
+          "name": "Prazskeho povstani",
+          "transfer": [],
+          "time": 7
+        },
+        "13": {
+          "name": "Pankrac",
+          "transfer": [],
+          "time": 5
+        },
+        "14": {
+          "name": "Budejovicka",
+          "transfer": [],
+          "time": 5
+        },
+        "15": {
+          "name": "Kacerov",
+          "transfer": [],
+          "time": 4
+        },
+        "16": {
+          "name": "Roztyly",
+          "transfer": [],
+          "time": 7
+        },
+        "17": {
+          "name": "Chodov",
+          "transfer": [],
+          "time": 6
+        },
+        "18": {
+          "name": "Opatov",
+          "transfer": [],
+          "time": 5
+        },
+        "19": {
+          "name": "Haje",
+          "transfer": [],
+          "time": null
+        }
+      }
+    }
+  learner_created: false
+- name: test/prague.json
+  visible: false
+  text: |-
+    {
+      "Linka A": {
+        "1": {
+          "name": "Nemocnice Motol" ,
+          "transfer": []
+        } ,
+        "2": {
+          "name": "Petriny" ,
+          "transfer": []
+        } ,
+        "3": {
+          "name": "Nadrazi Veleslavin" ,
+          "transfer": []
+        } ,
+        "4": {
+          "name": "Borislavka" ,
+          "transfer": []
+        } ,
+        "5": {
+          "name": "Dejvicka" ,
+          "transfer": []
+        } ,
+        "6": {
+          "name": "Hradcanska" ,
+          "transfer": []
+        } ,
+        "7": {
+          "name": "Malostranska" ,
+          "transfer": []
+        } ,
+        "8": {
+          "name": "Staromestska" ,
+          "transfer": []
+        } ,
+        "9": {
+          "name": "Mustek" ,
+          "transfer": [
+            {
+              "line": "Linka B" ,
+              "station": "Mustek"
+            }
+          ]
+        } ,
+        "10": {
+          "name": "Muzeum" ,
+          "transfer": [
+            {
+              "line": "Linka C" ,
+              "station": "Muzeum"
+            }
+          ]
+        } ,
+        "11": {
+          "name": "Namesti Miru" ,
+          "transfer": []
+        } ,
+        "12": {
+          "name": "Jiriho z Podebrad" ,
+          "transfer": []
+        } ,
+        "13": {
+          "name": "Flora" ,
+          "transfer": []
+        } ,
+        "14": {
+          "name": "Zelivskeho" ,
+          "transfer": []
+        } ,
+        "15": {
+          "name": "Strasnicka" ,
+          "transfer": []
+        } ,
+        "16": {
+          "name": "Skalka" ,
+          "transfer": []
+        } ,
+        "17": {
+          "name": "Depo Hostivar" ,
+          "transfer": []
+        }
+      } ,
+      "Linka B": {
+        "1": {
+          "name": "Cerny Most" ,
+          "transfer": []
+        } ,
+        "2": {
+          "name": "Rajska zahrada" ,
+          "transfer": []
+        } ,
+        "3": {
+          "name": "Hloubetin" ,
+          "transfer": []
+        } ,
+        "4": {
+          "name": "Kolbenova" ,
+          "transfer": []
+        } ,
+        "5": {
+          "name": "Vysocanska" ,
+          "transfer": []
+        } ,
+        "6": {
+          "name": "Ceskomoravska" ,
+          "transfer": []
+        } ,
+        "7": {
+          "name": "Palmovka" ,
+          "transfer": []
+        } ,
+        "8": {
+          "name": "Invalidovna" ,
+          "transfer": []
+        } ,
+        "9": {
+          "name": "Krizikova" ,
+          "transfer": []
+        } ,
+        "10": {
+          "name": "Florenc" ,
+          "transfer": [
+            {
+              "line": "Linka C" ,
+              "station": "Florenc"
+            }
+          ]
+        } ,
+        "11": {
+          "name": "Namesti Republiky" ,
+          "transfer": []
+        } ,
+        "12": {
+          "name": "Mustek" ,
+          "transfer": [
+            {
+              "line": "Linka B" ,
+              "station": "Mustek"
+            }
+          ]
+        } ,
+        "13": {
+          "name": "Narodni trida" ,
+          "transfer": []
+        } ,
+        "14": {
+          "name": "Karlovo namesti" ,
+          "transfer": []
+        } ,
+        "15": {
+          "name": "Andel" ,
+          "transfer": []
+        } ,
+        "16": {
+          "name": "Smichovske nadrazi" ,
+          "transfer": []
+        } ,
+        "17": {
+          "name": "Radlicka" ,
+          "transfer": []
+        } ,
+        "18": {
+          "name": "Jinonice" ,
+          "transfer": []
+        } ,
+        "19": {
+          "name": "Nove Butovice" ,
+          "transfer": []
+        } ,
+        "20": {
+          "name": "Hurka" ,
+          "transfer": []
+        } ,
+        "21": {
+          "name": "Luziny" ,
+          "transfer": []
+        } ,
+        "22": {
+          "name": "Luka" ,
+          "transfer": []
+        } ,
+        "23": {
+          "name": "Stodulky" ,
+          "transfer": []
+        } ,
+        "24": {
+          "name": "Zlicin" ,
+          "transfer": []
+        }
+      } ,
+      "Linka C": {
+        "1": {
+          "name": "Letnany" ,
+          "transfer": []
+        } ,
+        "2": {
+          "name": "Prosek" ,
+          "transfer": []
+        } ,
+        "3": {
+          "name": "Strizkov" ,
+          "transfer": []
+        } ,
+        "4": {
+          "name": "Ladvi" ,
+          "transfer": []
+        } ,
+        "5": {
+          "name": "Kobylisy" ,
+          "transfer": []
+        } ,
+        "6": {
+          "name": "Nadrazi Holesovice" ,
+          "transfer": []
+        } ,
+        "7": {
+          "name": "Vltavska" ,
+          "transfer": []
+        } ,
+        "8": {
+          "name": "Florenc" ,
+          "transfer": [
+            {
+              "line": "Linka B" ,
+              "station": "Florenc"
+            }
+          ]
+        } ,
+        "9": {
+          "name": "Hlavni nadrazi" ,
+          "transfer": []
+        } ,
+        "10": {
+          "name": "Muzeum" ,
+          "transfer": [
+            {
+              "line": "Linka A" ,
+              "station": "Muzeum"
+            }
+          ]
+        } ,
+        "11": {
+          "name": "I.P.Pavlova" ,
+          "transfer": []
+        } ,
+        "12": {
+          "name": "Vysehrad" ,
+          "transfer": []
+        } ,
+        "13": {
+          "name": "Prazskeho povstani" ,
+          "transfer": []
+        } ,
+        "14": {
+          "name": "Pankrac" ,
+          "transfer": []
+        } ,
+        "15": {
+          "name": "Budejovicka" ,
+          "transfer": []
+        } ,
+        "16": {
+          "name": "Kacerov" ,
+          "transfer": []
+        } ,
+        "17": {
+          "name": "Roztyly" ,
+          "transfer": []
+        } ,
+        "18": {
+          "name": "Chodov" ,
+          "transfer": []
+        } ,
+        "19": {
+          "name": "Opatov" ,
+          "transfer": []
+        } ,
+        "20": {
+          "name": "Haje" ,
+          "transfer": []
+        }
+      }
+    }
+  learner_created: false
+- name: bin/main/model/Tuple.class
+  visible: true
+  text: yv66vgAAADcAagcAAgEAC21vZGVsL1R1cGxlBwAEAQAQamF2YS9sYW5nL09iamVjdAEAB21lc3NhZ2UBABJMamF2YS9sYW5nL1N0cmluZzsBAA1Db25zdGFudFZhbHVlCAAJAQAYVHJhbnNpdGlvbiB0byBsaW5lICVzCiVzAQAHc3RhdGlvbgEAD0xtb2RlbC9TdGF0aW9uOwEABGxpbmUBAAxMbW9kZWwvTGluZTsBAA9wcmV2aW91c1N0YXRpb24BAA1MbW9kZWwvVHVwbGU7AQAKaXNUcmFuc2ZlcgEAAVoBAAY8aW5pdD4BACwoTG1vZGVsL1N0YXRpb247TG1vZGVsL0xpbmU7TG1vZGVsL1R1cGxlO1opVgEABENvZGUKAAMAFgwAEgAXAQADKClWCQABABkMAAUABgkAAQAbDAAKAAsJAAEAHQwADAANCQABAB8MAA4ADwkAAQAhDAAQABEBAA9MaW5lTnVtYmVyVGFibGUBABJMb2NhbFZhcmlhYmxlVGFibGUBAAR0aGlzAQAKZ2V0U3RhdGlvbgEAESgpTG1vZGVsL1N0YXRpb247AQAHZ2V0TGluZQEADigpTG1vZGVsL0xpbmU7AQASZ2V0UHJldmlvdXNTdGF0aW9uAQAPKClMbW9kZWwvVHVwbGU7AQADKClaAQAKZ2V0TWVzc2FnZQEAFCgpTGphdmEvbGFuZy9TdHJpbmc7CgAvADEHADABAAptb2RlbC9MaW5lDAAyAC0BAAdnZXROYW1lCgA0ADEHADUBAA1tb2RlbC9TdGF0aW9uCgA3ADkHADgBABBqYXZhL2xhbmcvU3RyaW5nDAA6ADsBAAZmb3JtYXQBADkoTGphdmEvbGFuZy9TdHJpbmc7W0xqYXZhL2xhbmcvT2JqZWN0OylMamF2YS9sYW5nL1N0cmluZzsBAA1TdGFja01hcFRhYmxlAQAIZ2V0Um91dGUHAD8BABRqYXZhL3V0aWwvTGlua2VkTGlzdAoAPgAWCgABAEIMACwALQoAPgBEDABFAEYBAANhZGQBABUoTGphdmEvbGFuZy9PYmplY3Q7KVoKAAEASAwAKQAqCgBKAEwHAEsBABVqYXZhL3V0aWwvQ29sbGVjdGlvbnMMAE0ATgEAB3JldmVyc2UBABMoTGphdmEvdXRpbC9MaXN0OylWCgA+AFAMAFEAUgEABnN0cmVhbQEAGygpTGphdmEvdXRpbC9zdHJlYW0vU3RyZWFtOwgAVAEAAQoIAFYBAAAKAFgAWgcAWQEAG2phdmEvdXRpbC9zdHJlYW0vQ29sbGVjdG9ycwwAWwBcAQAHam9pbmluZwEAZihMamF2YS9sYW5nL0NoYXJTZXF1ZW5jZTtMamF2YS9sYW5nL0NoYXJTZXF1ZW5jZTtMamF2YS9sYW5nL0NoYXJTZXF1ZW5jZTspTGphdmEvdXRpbC9zdHJlYW0vQ29sbGVjdG9yOwsAXgBgBwBfAQAXamF2YS91dGlsL3N0cmVhbS9TdHJlYW0MAGEAYgEAB2NvbGxlY3QBADAoTGphdmEvdXRpbC9zdHJlYW0vQ29sbGVjdG9yOylMamF2YS9sYW5nL09iamVjdDsBAAVyb3V0ZQEAFkxqYXZhL3V0aWwvTGlua2VkTGlzdDsBAAFwAQAWTG9jYWxWYXJpYWJsZVR5cGVUYWJsZQEAKkxqYXZhL3V0aWwvTGlua2VkTGlzdDxMamF2YS9sYW5nL1N0cmluZzs+OwEAClNvdXJjZUZpbGUBAApUdXBsZS5qYXZhACEAAQADAAAABQASAAUABgABAAcAAAACAAgAEgAKAAsAAAASAAwADQAAABIADgAPAAAAAgAQABEAAAAHAAEAEgATAAEAFAAAAIoAAgAFAAAAICq3ABUqEgi1ABgqK7UAGiostQAcKi21AB4qFQS1ACCxAAAAAgAiAAAAHgAHAAAAEgAEAAwACgAWAA8AFwAUABgAGQAZAB8AGgAjAAAANAAFAAAAIAAkAA8AAAAAACAACgALAAEAAAAgAAwADQACAAAAIAAOAA8AAwAAACAAEAARAAQAAQAlACYAAQAUAAAALwABAAEAAAAFKrQAGrAAAAACACIAAAAGAAEAAAAdACMAAAAMAAEAAAAFACQADwAAAAEAJwAoAAEAFAAAAC8AAQABAAAABSq0ABywAAAAAgAiAAAABgABAAAAIQAjAAAADAABAAAABQAkAA8AAAABACkAKgABABQAAAAvAAEAAQAAAAUqtAAesAAAAAIAIgAAAAYAAQAAACUAIwAAAAwAAQAAAAUAJAAPAAAAAQAQACsAAQAUAAAALwABAAEAAAAFKrQAIKwAAAACACIAAAAGAAEAAAApACMAAAAMAAEAAAAFACQADwAAAAIALAAtAAEAFAAAAG4ABQABAAAALyq0ACCZACMSCAW9AANZAyq0ABy2AC5TWQQqtAAatgAzU7gANqcACiq0ABq2ADOwAAAAAwAiAAAADgADAAAALQAnAC4ALgAtACMAAAAMAAEAAAAvACQADwAAADwAAAAHAAInRgcANwABAD0ALQABABQAAADPAAQAAwAAAEW7AD5ZtwBATCsqtgBBtgBDVyq0AB5NpwARKyy2AEG2AENXLLYAR00sx//xK7gASSu2AE8SUxJVElW4AFe5AF0CAMAAN7AAAAAEACIAAAAuAAsAAAAyAAgAMwARADQAFgA1ABkANgAiADcAJwA1ACsAOQAvADoAMwA7AEQAOgAjAAAAIAADAAAARQAkAA8AAAAIAD0AYwBkAAEAFgAvAGUADwACAGYAAAAMAAEACAA9AGMAZwABADwAAAAMAAL9ABkHAD4HAAENAAEAaAAAAAIAaQ==
+  learner_created: true
+- name: src/DataStructures/DoublyLinkedList.java
+  visible: true
+  text: |
+    package DataStructures;
+
+    import java.util.HashSet;
+    import java.util.LinkedList;
+    import java.util.List;
+    import java.util.Objects;
+    import java.util.Set;
+
+    public class DoublyLinkedList<T> {
+
+        private Entry head = null;
+        private Entry tail = null;
+        private Set<Entry> set;
+
+        public DoublyLinkedList() {
+            this.set = new HashSet<>();
+        }
+
+        public void addHead(T value) {
+            Entry<T> entry = new Entry(value);
+            if (head == null && tail == null) {
+                head = entry;
+                tail = entry;
+            } else {
+                entry.setNext(head);
+                head.setPrev(entry);
+                head = entry;
+            }
+            set.add(entry);
+        }
+
+        public void addTail(T value) {
+            Entry<T> entry = new Entry(value);
+            if (head == null) {
+                this.head = entry;
+            } else {
+                this.tail.setNext(entry);
+                entry.setPrev(this.tail);
+            }
+            this.tail = entry;
+            set.add(entry);
+        }
+
+        public void remove(T element) {
+            Entry<T> index = head;
+            while (index != null && element != null) {
+                if (Objects.equals(index.getValue(), element)) {
+                    if (index.getPrev() != null) {
+                        index.getPrev().setNext(index.getNext()); // Connect previous node with the next one
+                    } else {
+                        head = head.getNext();
+                    }
+                    if (index.getNext() != null) {
+                        index.getNext().setPrev(index.getPrev()); // Connect next node with previous
+                    } else {
+                        tail = tail.getPrev();
+                    }
+                    set.remove(index);
+                    return;
+                }
+                index = index.getNext();
+            }
+        }
+
+        public LinkedList<T> getListOfElements() {
+            LinkedList<T> list = new LinkedList<>();
+            Entry<T> pointer = head;
+            while (pointer != null) {
+                list.add(pointer.getValue());
+                pointer = pointer.getNext();
+            }
+            return list;
+        }
+
+        public List<Entry<T>> getListOfEntries() {
+            LinkedList<Entry<T>> list = new LinkedList<>();
+            Entry<T> pointer = head;
+            while (pointer != null) {
+                list.add(pointer);
+                pointer = pointer.getNext();
+            }
+            return list;
+        }
+
+        public Entry<T> getByValue(T value) {
+            Entry<T> pointer = head;
+            while (pointer != null) {
+                if (Objects.equals(pointer.getValue(), value)) {
+                    return pointer;
+                }
+                pointer = pointer.getNext();
+            }
+            return null;
+        }
+
+        public int getSize() {
+            return this.set.size();
+        }
+    }
+  learner_created: true
+- name: src/DataStructures/Entry.java
+  visible: true
+  text: |
+    package DataStructures;
+
+    public class Entry<T> {
+
+        private Entry prev = null;
+        private Entry next = null;
+        private T value;
+
+        public Entry(T value) {
+            this.value = value;
+        }
+
+        public Entry getPrev() {
+            return prev;
+        }
+
+        public void setPrev(Entry prev) {
+            this.prev = prev;
+        }
+
+        public Entry getNext() {
+            return next;
+        }
+
+        public void setNext(Entry next) {
+            this.next = next;
+        }
+
+        public T getValue() {
+            return value;
+        }
+    }
+  learner_created: true
+- name: src/utils/StringUtils.java
+  visible: true
+  text: |+
+    package utils;
+
+    import com.google.gson.internal.LinkedTreeMap;
+    import java.io.IOException;
+    import java.nio.file.Files;
+    import java.nio.file.Paths;
+    import java.util.ArrayList;
+    import java.util.List;
+    import java.util.regex.Pattern;
+    import java.util.stream.Collectors;
+    import model.Metro;
+
+    public class StringUtils {
+
+        public static String readFileData(String path) throws IOException {
+            return new String(Files.readAllBytes(Paths.get(path)));
+        }
+
+        public static String getMatchedValue(List<String> matchedValues, int position) {
+            return matchedValues.size() > position ?
+                matchedValues.get(position)
+                             .trim()
+                             .replace("\"", "") : null;
+        }
+
+        public static List<String> getMatches(Pattern pattern, String text) {
+            return pattern.matcher(text.replace("> ", ""))
+                          .results()
+                          .map(r -> r.group())
+                          .collect(Collectors.toList());
+
+        }
+
+        public static void parseJson(LinkedTreeMap metro, Metro out) {
+            metro.keySet().stream()
+                 .filter(line -> out.addLane((String) line))
+                 .forEach(line -> {
+                     LinkedTreeMap stations = (LinkedTreeMap) metro.get(line);
+                     stations.keySet()
+                             .stream()
+                             .mapToInt(s -> Integer.parseInt((String) s))
+                             .sorted()
+                             .forEach(station -> {
+                                 LinkedTreeMap stationProps = (LinkedTreeMap) stations.get(String.valueOf(station));
+                                 String name = (String) stationProps.get("name");
+                                 ArrayList<LinkedTreeMap> transfers = (ArrayList) stationProps.get("transfer");
+                                 out.getLine((String) line).addStation(name, transfers);
+                             });
+                 });
+        }
+    }
+
+  learner_created: true
+- name: src/model/Line.java
+  visible: true
+  text: |
+    package model;
+
+    import DataStructures.DoublyLinkedList;
+    import com.google.gson.internal.LinkedTreeMap;
+    import java.util.ArrayList;
+    import java.util.Objects;
+    import java.util.stream.Collectors;
+
+    public class Line {
+
+        private final DoublyLinkedList<Station> stationList;
+        private final String name;
+
+        public Line(String name) {
+            this.stationList = new DoublyLinkedList<>();
+            this.name = name;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void addStation(String station) {
+            this.addStation(station, new ArrayList<>());
+        }
+
+        public void addStation(String name, ArrayList<LinkedTreeMap> transfers) {
+            if (name != null) {
+                stationList.addTail(new Station(name, transfers));
+            }
+        }
+
+        public Station getNextStationAfter(String thisStation) {
+            return (Station) stationList.getListOfEntries()
+                                        .stream()
+                                        .map(s -> {
+                                            if (Objects.equals(s.getValue().getName(), thisStation)) {
+                                                return s.getNext() != null ? s.getNext().getValue() : null;
+                                            }
+                                            return null;
+                                        })
+                                        .filter(Objects::nonNull)
+                                        .findFirst().orElse(null);
+        }
+
+        public Station getPrevStationBefore(String thisStation) {
+            return (Station) stationList.getListOfEntries()
+                                        .stream()
+                                        .map(s -> {
+                                            if (Objects.equals(s.getValue().getName(), thisStation)) {
+                                                return s.getPrev() != null ? s.getPrev().getValue() : null;
+                                            }
+                                            return null;
+                                        })
+                                        .filter(Objects::nonNull)
+                                        .findFirst()
+                                        .orElse(null);
+        }
+
+        public void addHeadStation(String station_name) {
+            stationList.addHead(new Station(station_name));
+        }
+
+        public void appendStation(String station) {
+            stationList.addTail(new Station(station));
+        }
+
+        public void removeStation(String name) {
+            stationList.getListOfElements().forEach(station -> {
+                if (Objects.equals(station.getName(), name)) {
+                    stationList.remove(station);
+                }
+            });
+        }
+
+        public Station getStation(String name) {
+            return stationList.getListOfEntries()
+                              .stream()
+                              .map(s -> {
+                                  if (Objects.equals(s.getValue().getName(), name)) {
+                                      return s.getValue();
+                                  }
+                                  return null;
+                              })
+                              .filter(Objects::nonNull)
+                              .findFirst()
+                              .orElse(null);
+        }
+
+        @Override
+        public String toString() {
+            return stationList.getListOfEntries()
+                              .stream()
+                              .map(current -> current.getValue().toString())
+                              .collect(Collectors.joining("\n", "depot\n", "\ndepot"));
+        }
+    }
+  learner_created: true
+- name: bin/main/utils/RouteCalculator.class
+  visible: true
+  text: yv66vgAAADcBDgcAAgEAFXV0aWxzL1JvdXRlQ2FsY3VsYXRvcgcABAEAEGphdmEvbGFuZy9PYmplY3QBAARncmlkAQANTG1vZGVsL01ldHJvOwEACGZyb21MaW5lAQASTGphdmEvbGFuZy9TdHJpbmc7AQALZnJvbVN0YXRpb24BAAZ0b0xpbmUBAAl0b1N0YXRpb24BAA92aXNpdGVkU3RhdGlvbnMBAA9MamF2YS91dGlsL1NldDsBAAlTaWduYXR1cmUBACNMamF2YS91dGlsL1NldDxMamF2YS9sYW5nL1N0cmluZzs+OwEAD3Byb2Nlc3NpbmdRdWV1ZQEAFkxqYXZhL3V0aWwvTGlua2VkTGlzdDsBACVMamF2YS91dGlsL0xpbmtlZExpc3Q8TG1vZGVsL1R1cGxlOz47AQAQY2FsY3VsYXRlZFJvdXRlcwEAE0xqYXZhL3V0aWwvVHJlZU1hcDsBADpMamF2YS91dGlsL1RyZWVNYXA8TGphdmEvbGFuZy9JbnRlZ2VyO0xqYXZhL2xhbmcvU3RyaW5nOz47AQAGPGluaXQ+AQAQKExtb2RlbC9NZXRybzspVgEABENvZGUKAAMAGgwAFgAbAQADKClWCQABAB0MAAUABgcAHwEAF2phdmEvdXRpbC9MaW5rZWRIYXNoU2V0CgAeABoJAAEAIgwADAANBwAkAQAUamF2YS91dGlsL0xpbmtlZExpc3QKACMAGgkAAQAnDAAQABEBAA9MaW5lTnVtYmVyVGFibGUBABJMb2NhbFZhcmlhYmxlVGFibGUBAAR0aGlzAQAXTHV0aWxzL1JvdXRlQ2FsY3VsYXRvcjsBAAlpc1Zpc2l0ZWQBAB4oTG1vZGVsL0xpbmU7TG1vZGVsL1N0YXRpb247KVoIAC8BAAklcyA8LT4gJXMKADEAMwcAMgEACm1vZGVsL0xpbmUMADQANQEAB2dldE5hbWUBABQoKUxqYXZhL2xhbmcvU3RyaW5nOwoANwAzBwA4AQANbW9kZWwvU3RhdGlvbgoAOgA8BwA7AQAQamF2YS9sYW5nL1N0cmluZwwAPQA+AQAGZm9ybWF0AQA5KExqYXZhL2xhbmcvU3RyaW5nO1tMamF2YS9sYW5nL09iamVjdDspTGphdmEvbGFuZy9TdHJpbmc7CwBAAEIHAEEBAA1qYXZhL3V0aWwvU2V0DABDAEQBAAhjb250YWlucwEAFShMamF2YS9sYW5nL09iamVjdDspWgEABGxpbmUBAAxMbW9kZWwvTGluZTsBAAdzdGF0aW9uAQAPTG1vZGVsL1N0YXRpb247AQANbWFya0FzVmlzaXRlZAEAHihMbW9kZWwvTGluZTtMbW9kZWwvU3RhdGlvbjspVgsAQABMDABNAEQBAANhZGQBABJpc0Rlc3RpbmF0aW9uUG9pbnQJAAEAUAwACgAICgBSAFQHAFMBAAttb2RlbC9NZXRybwwAVQBWAQAHZ2V0TGluZQEAIChMamF2YS9sYW5nL1N0cmluZzspTG1vZGVsL0xpbmU7CQABAFgMAAsACAoAMQBaDABbAFwBAApnZXRTdGF0aW9uAQAjKExqYXZhL2xhbmcvU3RyaW5nOylMbW9kZWwvU3RhdGlvbjsKADoAXgwAXwBEAQAGZXF1YWxzAQANU3RhY2tNYXBUYWJsZQEAH2FkZFN0YXRpb25BbmRDaGVja0lmRGVzdGluYXRpb24BACwoTG1vZGVsL0xpbmU7TG1vZGVsL1N0YXRpb247TG1vZGVsL1R1cGxlO1opWgoAAQBkDAAsAC0HAGYBAAttb2RlbC9UdXBsZQoAZQBoDAAWAGkBACwoTG1vZGVsL1N0YXRpb247TG1vZGVsL0xpbmU7TG1vZGVsL1R1cGxlO1opVgoAIwBMCgABAGwMAEkASgoAAQBuDABOAC0BAARwcmV2AQANTG1vZGVsL1R1cGxlOwEACmlzVHJhbnNmZXIBAAFaAQAMc2V0Um91dGVGcm9tAQA9KExqYXZhL2xhbmcvU3RyaW5nO0xqYXZhL2xhbmcvU3RyaW5nOylMdXRpbHMvUm91dGVDYWxjdWxhdG9yOwkAAQB2DAAHAAgJAAEAeAwACQAIAQAJc3RhcnRMaW5lAQAMc3RhcnRTdGF0aW9uAQALc2V0Um91dGVyVG8BAAdlbmRMaW5lAQAKZW5kU3RhdGlvbgEACWNhbGN1bGF0ZQoAAQCADACBAIIBAAhnZXRSb3V0ZQEAXChMamF2YS9sYW5nL1N0cmluZztMamF2YS9sYW5nL1N0cmluZztMamF2YS9sYW5nL1N0cmluZztMamF2YS9sYW5nL1N0cmluZzspTGphdmEvbGFuZy9TdHJpbmc7BwCEAQARamF2YS91dGlsL1RyZWVNYXAKAIMAGgkAAQCHDAATABQHAIkBABFqYXZhL3V0aWwvSGFzaE1hcAoAiAAaCgCIAIwMAI0AjgEAA3B1dAEAOChMamF2YS9sYW5nL09iamVjdDtMamF2YS9sYW5nL09iamVjdDspTGphdmEvbGFuZy9PYmplY3Q7CgAjAJAMAJEAkgEAA3BvcAEAFCgpTGphdmEvbGFuZy9PYmplY3Q7CgBlAJQMAFUAlQEADigpTG1vZGVsL0xpbmU7CgBlAJcMAFsAmAEAESgpTG1vZGVsL1N0YXRpb247CgA3AJoMAJsAnAEADGdldFRyYW5zZmVycwEAGygpTGphdmEvdXRpbC9MaW5rZWRIYXNoTWFwOwoAMQCeDACfAFwBABNnZXROZXh0U3RhdGlvbkFmdGVyCgAxAKEMAKIAXAEAFGdldFByZXZTdGF0aW9uQmVmb3JlCgCkAKYHAKUBABdqYXZhL3V0aWwvTGlua2VkSGFzaE1hcAwApwCoAQAGa2V5U2V0AQARKClMamF2YS91dGlsL1NldDsLAEAAqgwAqwCsAQAGc3RyZWFtAQAbKClMamF2YS91dGlsL3N0cmVhbS9TdHJlYW07EgAAAK4MAK8AsAEABHRlc3QBAFAoTHV0aWxzL1JvdXRlQ2FsY3VsYXRvcjtMamF2YS91dGlsL0xpbmtlZEhhc2hNYXA7KUxqYXZhL3V0aWwvZnVuY3Rpb24vUHJlZGljYXRlOwsAsgC0BwCzAQAXamF2YS91dGlsL3N0cmVhbS9TdHJlYW0MALUAtgEABmZpbHRlcgEAOShMamF2YS91dGlsL2Z1bmN0aW9uL1ByZWRpY2F0ZTspTGphdmEvdXRpbC9zdHJlYW0vU3RyZWFtOwoAuAC6BwC5AQAbamF2YS91dGlsL3N0cmVhbS9Db2xsZWN0b3JzDAC7ALwBAAZ0b0xpc3QBAB4oKUxqYXZhL3V0aWwvc3RyZWFtL0NvbGxlY3RvcjsLALIAvgwAvwDAAQAHY29sbGVjdAEAMChMamF2YS91dGlsL3N0cmVhbS9Db2xsZWN0b3I7KUxqYXZhL2xhbmcvT2JqZWN0OwcAwgEADmphdmEvdXRpbC9MaXN0CwDBAMQMAMUAxgEACGl0ZXJhdG9yAQAWKClMamF2YS91dGlsL0l0ZXJhdG9yOwsAyADKBwDJAQASamF2YS91dGlsL0l0ZXJhdG9yDADLAJIBAARuZXh0CgCkAM0MAM4AzwEAA2dldAEAJihMamF2YS9sYW5nL09iamVjdDspTGphdmEvbGFuZy9PYmplY3Q7CgABANEMAGEAYgoAIwDTDADUAJIBAAdnZXRMYXN0CgBlANYMAIEANQsAyADYDADZANoBAAdoYXNOZXh0AQADKClaCgAjANwMAN0A2gEAB2lzRW1wdHkIAN8BAA5ObyByb3V0ZSBmb3VuZAEACGRlc3RMaW5lAQALZGVzdFN0YXRpb24BAAxzdGFydGluZ0xpbmUBAA9zdGFydGluZ1N0YXRpb24BAA9kZXN0aW5hdGlvbkxpbmUBABJkZXN0aW5hdGlvblN0YXRpb24BAAVzdGFydAEAC3N0YXJ0Q291cGxlAQATTGphdmEvdXRpbC9IYXNoTWFwOwEABGhlYWQBAAhoZWFkTGluZQEAC2hlYWRTdGF0aW9uAQAJdHJhbnNmZXJzAQAZTGphdmEvdXRpbC9MaW5rZWRIYXNoTWFwOwEAC25leHRTdGF0aW9uAQALcHJldlN0YXRpb24BAAx0cmFuc2ZlckxpbmUBAA90cmFuc2ZlclN0YXRpb24BABZMb2NhbFZhcmlhYmxlVHlwZVRhYmxlAQAwTGphdmEvdXRpbC9IYXNoTWFwPExtb2RlbC9TdGF0aW9uO0xtb2RlbC9MaW5lOz47AQA/TGphdmEvdXRpbC9MaW5rZWRIYXNoTWFwPExqYXZhL2xhbmcvU3RyaW5nO0xqYXZhL2xhbmcvU3RyaW5nOz47AQAIbGFtYmRhJDABAC4oTGphdmEvdXRpbC9MaW5rZWRIYXNoTWFwO0xqYXZhL2xhbmcvU3RyaW5nOylaAQADa2V5AQAKU291cmNlRmlsZQEAFFJvdXRlQ2FsY3VsYXRvci5qYXZhAQAQQm9vdHN0cmFwTWV0aG9kcwoA/AD+BwD9AQAiamF2YS9sYW5nL2ludm9rZS9MYW1iZGFNZXRhZmFjdG9yeQwA/wEAAQALbWV0YWZhY3RvcnkBAMwoTGphdmEvbGFuZy9pbnZva2UvTWV0aG9kSGFuZGxlcyRMb29rdXA7TGphdmEvbGFuZy9TdHJpbmc7TGphdmEvbGFuZy9pbnZva2UvTWV0aG9kVHlwZTtMamF2YS9sYW5n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
+  learner_created: true
+- name: src/model/Station.java
+  visible: true
+  text: |
+    package model;
+
+    import com.google.gson.internal.LinkedTreeMap;
+    import java.util.ArrayList;
+    import java.util.LinkedHashMap;
+    import java.util.stream.Collectors;
+
+    public class Station {
+
+        private String name;
+        private LinkedHashMap<String, String> transfers;
+
+        public Station(String name) {
+            this(name, new ArrayList<LinkedTreeMap>());
+        }
+
+        public Station(String name, ArrayList<LinkedTreeMap> transfers) {
+            this.name = name;
+            this.transfers = new LinkedHashMap<>();
+            try {
+                transfers.forEach(t -> {
+                    this.transfers.put((String) t.get("line"), (String) t.get("station"));
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public LinkedHashMap<String, String> getTransfers() {
+            return transfers;
+        }
+
+        public void setTransfer(String lane, String station) {
+            this.transfers.put(lane, station);
+        }
+
+        public String toString() {
+            return this.name + this.transfers.keySet()
+                                             .stream()
+                                             .map(t -> String.format(" - %s (%s line)", transfers.get(t), t))
+                                             .collect(Collectors.joining(""));
+        }
+    }
+  learner_created: true
+- name: src/model/Metro.java
+  visible: true
+  text: |
+    package model;
+
+    import java.util.HashMap;
+    import utils.RouteCalculator;
+
+    public class Metro {
+
+        private HashMap<String, Line> lanes;
+        private RouteCalculator routeCalculator;
+
+        public Metro() {
+            lanes = new HashMap<>();
+            routeCalculator = new RouteCalculator(this);
+        }
+
+        public boolean addLane(String entry) {
+            if (lanes.get(entry) == null) {
+                lanes.put(entry, new Line(entry));
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        public void connectStations(String laneA,
+                                    String stationA,
+                                    String laneB,
+                                    String stationB) {
+            this.getLine(laneA)
+                .getStation(stationA)
+                .setTransfer(laneB, stationB);
+
+            this.getLine(laneB)
+                .getStation(stationB)
+                .setTransfer(laneA, stationA);
+        }
+
+        public Line getLine(String line) {
+            return lanes.get(line);
+        }
+
+        public String getRoute(String startLine,
+                               String startStation,
+                               String endLine,
+                               String endStation) {
+
+            return routeCalculator.setRouteFrom(startLine, startStation)
+                                  .setRouterTo(endLine, endStation)
+                                  .calculate();
+        }
+    }
+  learner_created: true
+- name: bin/main/model/Line.class
+  visible: true
+  text: yv66vgAAADcA7gcAAgEACm1vZGVsL0xpbmUHAAQBABBqYXZhL2xhbmcvT2JqZWN0AQALc3RhdGlvbkxpc3QBACFMRGF0YVN0cnVjdHVyZXMvRG91Ymx5TGlua2VkTGlzdDsBAAlTaWduYXR1cmUBADJMRGF0YVN0cnVjdHVyZXMvRG91Ymx5TGlua2VkTGlzdDxMbW9kZWwvU3RhdGlvbjs+OwEABG5hbWUBABJMamF2YS9sYW5nL1N0cmluZzsBAAY8aW5pdD4BABUoTGphdmEvbGFuZy9TdHJpbmc7KVYBAARDb2RlCgADAA8MAAsAEAEAAygpVgcAEgEAH0RhdGFTdHJ1Y3R1cmVzL0RvdWJseUxpbmtlZExpc3QKABEADwkAAQAVDAAFAAYJAAEAFwwACQAKAQAPTGluZU51bWJlclRhYmxlAQASTG9jYWxWYXJpYWJsZVRhYmxlAQAEdGhpcwEADExtb2RlbC9MaW5lOwEAB2dldE5hbWUBABQoKUxqYXZhL2xhbmcvU3RyaW5nOwEACmFkZFN0YXRpb24HACABABNqYXZhL3V0aWwvQXJyYXlMaXN0CgAfAA8KAAEAIwwAHgAkAQAqKExqYXZhL2xhbmcvU3RyaW5nO0xqYXZhL3V0aWwvQXJyYXlMaXN0OylWAQAHc3RhdGlvbgEAVChMamF2YS9sYW5nL1N0cmluZztMamF2YS91dGlsL0FycmF5TGlzdDxMY29tL2dvb2dsZS9nc29uL2ludGVybmFsL0xpbmtlZFRyZWVNYXA7PjspVgcAKAEADW1vZGVsL1N0YXRpb24KACcAKgwACwAkCgARACwMAC0ALgEAB2FkZFRhaWwBABUoTGphdmEvbGFuZy9PYmplY3Q7KVYBAAl0cmFuc2ZlcnMBABVMamF2YS91dGlsL0FycmF5TGlzdDsBABZMb2NhbFZhcmlhYmxlVHlwZVRhYmxlAQA/TGphdmEvdXRpbC9BcnJheUxpc3Q8TGNvbS9nb29nbGUvZ3Nvbi9pbnRlcm5hbC9MaW5rZWRUcmVlTWFwOz47AQANU3RhY2tNYXBUYWJsZQEAE2dldE5leHRTdGF0aW9uQWZ0ZXIBACMoTGphdmEvbGFuZy9TdHJpbmc7KUxtb2RlbC9TdGF0aW9uOwoAEQA3DAA4ADkBABBnZXRMaXN0T2ZFbnRyaWVzAQASKClMamF2YS91dGlsL0xpc3Q7CwA7AD0HADwBAA5qYXZhL3V0aWwvTGlzdAwAPgA/AQAGc3RyZWFtAQAbKClMamF2YS91dGlsL3N0cmVhbS9TdHJlYW07EgAAAEEMAEIAQwEABWFwcGx5AQAxKExqYXZhL2xhbmcvU3RyaW5nOylMamF2YS91dGlsL2Z1bmN0aW9uL0Z1bmN0aW9uOwsARQBHBwBGAQAXamF2YS91dGlsL3N0cmVhbS9TdHJlYW0MAEgASQEAA21hcAEAOChMamF2YS91dGlsL2Z1bmN0aW9uL0Z1bmN0aW9uOylMamF2YS91dGlsL3N0cmVhbS9TdHJlYW07EgABAEsMAEwATQEABHRlc3QBACAoKUxqYXZhL3V0aWwvZnVuY3Rpb24vUHJlZGljYXRlOwsARQBPDABQAFEBAAZmaWx0ZXIBADkoTGphdmEvdXRpbC9mdW5jdGlvbi9QcmVkaWNhdGU7KUxqYXZhL3V0aWwvc3RyZWFtL1N0cmVhbTsLAEUAUwwAVABVAQAJZmluZEZpcnN0AQAWKClMamF2YS91dGlsL09wdGlvbmFsOwoAVwBZBwBYAQASamF2YS91dGlsL09wdGlvbmFsDABaAFsBAAZvckVsc2UBACYoTGphdmEvbGFuZy9PYmplY3Q7KUxqYXZhL2xhbmcvT2JqZWN0OwEAC3RoaXNTdGF0aW9uAQAUZ2V0UHJldlN0YXRpb25CZWZvcmUSAAIAQQEADmFkZEhlYWRTdGF0aW9uCgAnAGEMAAsADAoAEQBjDABkAC4BAAdhZGRIZWFkAQAMc3RhdGlvbl9uYW1lAQANYXBwZW5kU3RhdGlvbgEADXJlbW92ZVN0YXRpb24KABEAaQwAagBrAQARZ2V0TGlzdE9mRWxlbWVudHMBABgoKUxqYXZhL3V0aWwvTGlua2VkTGlzdDsSAAMAbQwAbgBvAQAGYWNjZXB0AQA9KExtb2RlbC9MaW5lO0xqYXZhL2xhbmcvU3RyaW5nOylMamF2YS91dGlsL2Z1bmN0aW9uL0NvbnN1bWVyOwoAcQBzBwByAQAUamF2YS91dGlsL0xpbmtlZExpc3QMAHQAdQEAB2ZvckVhY2gBACAoTGphdmEvdXRpbC9mdW5jdGlvbi9Db25zdW1lcjspVgEACmdldFN0YXRpb24SAAQAQRIABQBLAQAIdG9TdHJpbmcSAAYAewwAQgB8AQAfKClMamF2YS91dGlsL2Z1bmN0aW9uL0Z1bmN0aW9uOwgAfgEAAQoIAIABAAZkZXBvdAoIAIIBAAYKZGVwb3QKAIQAhgcAhQEAG2phdmEvdXRpbC9zdHJlYW0vQ29sbGVjdG9ycwwAhwCIAQAHam9pbmluZwEAZihMamF2YS9sYW5nL0NoYXJTZXF1ZW5jZTtMamF2YS9sYW5nL0NoYXJTZXF1ZW5jZTtMamF2YS9sYW5nL0NoYXJTZXF1ZW5jZTspTGphdmEvdXRpbC9zdHJlYW0vQ29sbGVjdG9yOwsARQCKDACLAIwBAAdjb2xsZWN0AQAwKExqYXZhL3V0aWwvc3RyZWFtL0NvbGxlY3RvcjspTGphdmEvbGFuZy9PYmplY3Q7BwCOAQAQamF2YS9sYW5nL1N0cmluZwEACGxhbWJkYSQwAQA8KExqYXZhL2xhbmcvU3RyaW5nO0xEYXRhU3RydWN0dXJlcy9FbnRyeTspTGphdmEvbGFuZy9PYmplY3Q7CgCSAJQHAJMBABREYXRhU3RydWN0dXJlcy9FbnRyeQwAlQCWAQAIZ2V0VmFsdWUBABQoKUxqYXZhL2xhbmcvT2JqZWN0OwoAJwCYDAAcAB0KAJoAnAcAmwEAEWphdmEvdXRpbC9PYmplY3RzDACdAJ4BAAZlcXVhbHMBACcoTGphdmEvbGFuZy9PYmplY3Q7TGphdmEvbGFuZy9PYmplY3Q7KVoKAJIAoAwAoQCiAQAHZ2V0TmV4dAEAGCgpTERhdGFTdHJ1Y3R1cmVzL0VudHJ5OwEAAXMBABZMRGF0YVN0cnVjdHVyZXMvRW50cnk7AQAnTERhdGFTdHJ1Y3R1cmVzL0VudHJ5PExtb2RlbC9TdGF0aW9uOz47AQAIbGFtYmRhJDIKAJIAqAwAqQCiAQAHZ2V0UHJldgEACGxhbWJkYSQ0AQAkKExqYXZhL2xhbmcvU3RyaW5nO0xtb2RlbC9TdGF0aW9uOylWCgARAK0MAK4ALgEABnJlbW92ZQEAD0xtb2RlbC9TdGF0aW9uOwEACGxhbWJkYSQ1AQA5KExqYXZhL2xhbmcvU3RyaW5nO0xEYXRhU3RydWN0dXJlcy9FbnRyeTspTG1vZGVsL1N0YXRpb247AQAIbGFtYmRhJDcBACooTERhdGFTdHJ1Y3R1cmVzL0VudHJ5OylMamF2YS9sYW5nL1N0cmluZzsKACcAtQwAeQAdAQAHY3VycmVudAEAClNvdXJjZUZpbGUBAAlMaW5lLmphdmEBABBCb290c3RyYXBNZXRob2RzCgC7AL0HALwBACJqYXZhL2xhbmcvaW52b2tlL0xhbWJkYU1ldGFmYWN0b3J5DAC+AL8BAAttZXRhZmFjdG9yeQEAzChMamF2YS9sYW5nL2ludm9rZS9NZXRob2RIYW5kbGVzJExvb2t1cDtMamF2YS9sYW5nL1N0cmluZztMamF2YS9sYW5nL2ludm9rZS9NZXRob2RUeXBlO0xqYXZhL2xhbmcvaW52b2tlL01ldGhvZFR5cGU7TGphdmEvbGFuZy9pbnZva2UvTWV0aG9kSGFuZGxlO0xqYXZhL2xhbmcvaW52b2tlL01ldGhvZFR5cGU7KUxqYXZhL2xhbmcvaW52b2tlL0NhbGxTaXRlOw8GALoQAFsKAAEAwwwAjwCQDwYAwgEAKihMRGF0YVN0cnVjdHVyZXMvRW50cnk7KUxqYXZhL2xhbmcvT2JqZWN0OxAAxQEAFShMamF2YS9sYW5nL09iamVjdDspWhAAxwoAmgDKDADLAMcBAAdub25OdWxsDwYAyRAAxxAAWwoAAQDQDACmAJAPBgDPEADFEAAuCgABANUMAKoAqw8HANQBABIoTG1vZGVsL1N0YXRpb247KVYQANcQAFsKAAEA2wwAsACxDwYA2gEAJyhMRGF0YVN0cnVjdHVyZXMvRW50cnk7KUxtb2RlbC9TdGF0aW9uOxAA3RAAxw8GAMkBABIoTG1vZGVsL1N0YXRpb247KVoQAOEQAFsKAAEA5QwAsgCzDwYA5BAAswEADElubmVyQ2xhc3NlcwcA6gEAJWphdmEvbGFuZy9pbnZva2UvTWV0aG9kSGFuZGxlcyRMb29rdXAHAOwBAB5qYXZhL2xhbmcvaW52b2tlL01ldGhvZEhhbmRsZXMBAAZMb29rdXAAIQABAAMAAAACABIABQAGAAEABwAAAAIACAASAAkACgAAABAAAQALAAwAAQANAAAAVQADAAIAAAAVKrcADiq7ABFZtwATtQAUKiu1ABaxAAAAAgAYAAAAEgAEAAAADgAEAA8ADwAQABQAEQAZAAAAFgACAAAA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
+  learner_created: true
+- name: src/utils/RouteCalculator.java
+  visible: true
+  text: |
+    package utils;
+
+    import java.util.Collections;
+    import java.util.HashMap;
+    import java.util.LinkedHashMap;
+    import java.util.LinkedHashSet;
+    import java.util.LinkedList;
+    import java.util.Set;
+    import java.util.TreeMap;
+    import java.util.stream.Collectors;
+    import model.Line;
+    import model.Metro;
+    import model.Station;
+    import model.Tuple;
+
+    public class RouteCalculator {
+
+        private Metro grid;
+        private String fromLine;
+        private String fromStation;
+        private String toLine;
+        private String toStation;
+        private Set<String> visitedStations;
+        private LinkedList<Tuple> processingQueue;
+        private TreeMap<Integer, String> calculatedRoutes;
+
+        public RouteCalculator(Metro grid) {
+            this.grid = grid;
+            this.visitedStations = new LinkedHashSet<>();
+            this.processingQueue = new LinkedList<>();
+        }
+
+        private boolean isVisited(Line line, Station station) {
+            return visitedStations.contains(String.format("%s <-> %s", line.getName(), station.getName()));
+        }
+
+        private void markAsVisited(Line line, Station station) {
+            visitedStations.add(String.format("%s <-> %s", line.getName(), station.getName()));
+        }
+
+        private boolean isDestinationPoint(Line line, Station station) {
+
+            if (grid.getLine(toLine) == null
+                || grid.getLine(toLine).getStation(toStation) == null) {
+                return false;
+            }
+
+            return grid.getLine(toLine)
+                       .getName()
+                       .equals(line.getName())
+                && grid.getLine(toLine).getStation(toStation)
+                       .getName()
+                       .equals(station.getName());
+        }
+
+        private boolean addStationAndCheckIfDestination(Line line,
+                                                        Station station,
+                                                        Tuple prev,
+                                                        boolean isTransfer) {
+            if (station != null && !isVisited(line, station)) {
+                processingQueue.add(new Tuple(station, line, prev, isTransfer));
+                markAsVisited(line, station);
+                return isDestinationPoint(line, station);
+            }
+            return false;
+        }
+
+        public RouteCalculator setRouteFrom(String startLine,
+                                            String startStation) {
+            this.fromLine = startLine;
+            this.fromStation = startStation;
+            return this;
+        }
+
+        public RouteCalculator setRouterTo(String endLine,
+                                           String endStation) {
+            this.toLine = endLine;
+            this.toStation = endStation;
+            return this;
+        }
+
+        public String calculate() {
+            return this.getRoute(fromLine, fromStation, toLine, toStation);
+        }
+
+        public String getRoute(String startLine,
+                               String startStation,
+                               String destLine,
+                               String destStation) {
+
+            // Reset all the cache
+            this.visitedStations = new LinkedHashSet<>();
+            this.processingQueue = new LinkedList<>();
+            this.calculatedRoutes = new TreeMap<>();
+
+            //Initialize all the objects
+            Line startingLine = grid.getLine(startLine);
+            Station startingStation = startingLine.getStation(startStation);
+            Line destinationLine = grid.getLine(destLine);
+            Station destinationStation = destinationLine.getStation(destStation);
+            Tuple start = new Tuple(startingStation, startingLine, null, false);
+            HashMap<Station, Line> startCouple = new HashMap<>();
+            this.markAsVisited(startingLine, startingStation);
+            startCouple.put(startingStation, startingLine);
+            processingQueue.add(start);
+
+            while (!processingQueue.isEmpty()) {
+
+                Tuple head = processingQueue.pop();
+                Line headLine = head.getLine();
+                Station headStation = head.getStation();
+                LinkedHashMap<String, String> transfers = headStation.getTransfers();
+                Station nextStation = headLine.getNextStationAfter(headStation.getName());
+                Station prevStation = headLine.getPrevStationBefore(headStation.getName());
+
+                // Traverse connection/transfer headStation if array is not empty
+                for (String line : headStation.getTransfers()
+                                              .keySet()
+                                              .stream()
+                                              .filter(key -> !isVisited(grid.getLine(key),
+                                                                        grid.getLine(key)
+                                                                            .getStation(transfers.get(key))))
+                                              .collect(Collectors.toList())) {
+
+                    Line transferLine = grid.getLine(line);
+                    Station transferStation = transferLine.getStation(transfers.get(transferLine.getName()));
+                    if (addStationAndCheckIfDestination(transferLine, transferStation, head, true)) {
+                        return processingQueue.getLast().getRoute();
+                    }
+                }
+
+                if (addStationAndCheckIfDestination(headLine, nextStation, head, false)) {
+                    return processingQueue.getLast().getRoute();
+                }
+
+                if (addStationAndCheckIfDestination(headLine, prevStation, head, false)) {
+                    return processingQueue.getLast().getRoute();
+                }
+            }
+
+            return "No route found";
+        }
+    }
+  learner_created: true
+- name: src/model/Tuple.java
+  visible: true
+  text: |
+    package model;
+
+    import java.util.Collections;
+    import java.util.LinkedList;
+    import java.util.stream.Collectors;
+
+    /**
+       * Tuple class for linking station between each other and traverse route back
+     */
+    public class Tuple {
+
+        private final String message = "Transition to line %s\n%s";
+        private final Station station;
+        private final Line line;
+        private final Tuple previousStation;
+        private boolean isTransfer;
+
+        public Tuple(Station station,
+                     Line line,
+                     Tuple previousStation,
+                     boolean isTransfer) {
+            this.station = station;
+            this.line = line;
+            this.previousStation = previousStation;
+            this.isTransfer = isTransfer;
+        }
+
+        public Station getStation() {
+            return station;
+        }
+
+        public Line getLine() {
+            return line;
+        }
+
+        public Tuple getPreviousStation() {
+            return previousStation;
+        }
+
+        public boolean isTransfer() {
+            return isTransfer;
+        }
+
+        private String getMessage() {
+            return isTransfer ? String.format(message, line.getName(), station.getName())
+                : station.getName();
+        }
+
+        public String getRoute() {
+            LinkedList<String> route = new LinkedList<>();
+            route.add(this.getMessage());
+            Tuple p = previousStation;
+            while (p != null) {
+                route.add(p.getMessage());
+                p = p.getPreviousStation();
+            }
+            Collections.reverse(route);
+            return route.stream()
+                        .collect(Collectors.joining("\n", "", ""));
+        }
+    }
+  learner_created: true
+- name: bin/test/prague_w_time.json
+  visible: true
+  learner_created: true
+- name: bin/main/utils/RouteCalculator$1.class
+  visible: true
+  learner_created: true
+- name: bin/test/prague.json
+  visible: true
+  learner_created: true
+- name: bin/test/lausanne.json
+  visible: true
+  learner_created: true
+feedback_link: https://hyperskill.org/projects/120/stages/652/implement#comment
+status: Solved
+feedback:
+  message: Congratulations!
+  time: Fri, 04 Jun 2021 19:06:19 UTC
+record: 5

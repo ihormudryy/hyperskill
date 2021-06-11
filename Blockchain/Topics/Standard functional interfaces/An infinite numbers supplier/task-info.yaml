@@ -1,0 +1,21 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    import java.util.function.*;
+
+    class FunctionUtils {
+
+        public static Supplier<Integer> getInfiniteRange() {
+            // write your code here
+        }
+
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/4333#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Wed, 14 Apr 2021 13:58:12 UTC
+record: -1

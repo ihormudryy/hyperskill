@@ -1,0 +1,32 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    class Movie {
+        private String title;
+        private String desc;
+        private int year;
+
+        // write two constructors here
+
+        public String getTitle() {
+            return title;
+        }
+
+        public String getDesc() {
+            return desc;
+        }
+
+        public int getYear() {
+            return year;
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/2174#comment
+status: Solved
+feedback:
+  message: <html>Correct solution<br/><br/>Continue on <a href="https://hyperskill.org/learn/step/2174#comment">JetBrains
+    Academy</a></html>
+  time: Fri, 20 Nov 2020 09:51:03 UTC
+record: -1

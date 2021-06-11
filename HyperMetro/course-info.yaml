@@ -1,0 +1,12 @@
+type: hyperskill
+title: HyperMetro
+language: English
+summary: Have you ever been worried about getting lost in the subway? Do you need
+  to find a faster route to your destination? Write an application that will help
+  you better navigate the complicated metro system.<br/><br/>Learn more at <a href="https://hyperskill.org">https://hyperskill.org/projects/120</a>
+programming_language: Java
+programming_language_version: 11
+content:
+- Topics
+- HyperMetro
+mode: Study

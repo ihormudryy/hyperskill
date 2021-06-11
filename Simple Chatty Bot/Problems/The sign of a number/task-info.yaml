@@ -1,0 +1,28 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    import java.util.Scanner;
+
+    public class Main {
+
+        public static int sign(int number) {
+            // write your code here
+        }
+
+        /* Do not change code below */
+        public static void main(String[] args) {
+            final Scanner scanner = new Scanner(System.in);
+            final int n = scanner.nextInt();
+            System.out.println(sign(n));
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/10995#comment
+status: Solved
+feedback:
+  message: <html>Correct solution<br/><br/>Continue on <a href="https://hyperskill.org/learn/step/10995#comment">JetBrains
+    Academy</a></html>
+  time: Mon, 02 Nov 2020 15:04:13 UTC
+record: -1

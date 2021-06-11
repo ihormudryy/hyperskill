@@ -1,0 +1,22 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    /**
+     Get number of fields class declares (the ones inherited should be excluded).
+     */
+    class FieldGetter {
+
+        public int getNumberOfFieldsClassDeclares(Class<?> clazz) {
+            // Add implementation here
+        }
+
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/2880#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Mon, 17 May 2021 12:55:08 UTC
+record: -1

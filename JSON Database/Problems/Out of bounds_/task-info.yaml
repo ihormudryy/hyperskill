@@ -1,0 +1,27 @@
+type: code
+custom_name: Out of bounds!
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    import java.util.*;
+
+    class FixingStringIndexOutOfBoundsException {
+
+        public static void main(String[] args) {
+            Scanner scanner = new Scanner(System.in);
+
+            String string = scanner.nextLine();
+            int index = scanner.nextInt();
+
+            System.out.println(string.charAt(index));
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/3821#comment
+status: Solved
+feedback:
+  message: <html>Correct solution<br/><br/>Continue on <a href="https://hyperskill.org/learn/step/3821#comment">JetBrains
+    Academy</a></html>
+  time: Tue, 01 Dec 2020 13:38:04 UTC
+record: -1

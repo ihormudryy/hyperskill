@@ -1,0 +1,15 @@
+<p>To consolidate your knowledge of REST API, you need to develop a web calculator with three operations: <strong>addition</strong>, <strong>subtraction</strong> and <strong>multiplication</strong>.</p>
+
+<p>To perform these operations, the web calculator must accept <code class="java">GET</code> requests using the following urls:</p>
+
+<ul>
+	<li><code class="java">/add</code></li>
+	<li><code class="java">/subtract</code></li>
+	<li><code class="java">/mult</code></li>
+</ul>
+
+<p>The requests will contain two arguments <code class="java">a</code> and <code class="java">b</code> in the request parameters. Here is an particular example: <code class="java">/add?a=10&amp;b=20</code>.</p>
+
+<p>As a response, the calculator must return a result value and the <strong>200 OK</strong> HTTP code. If there is an unsupported operation specified in the link (e.g. <code class="java">/divide</code>), the service must return the string <code class="java">"Unknown operation"</code>.</p>
+
+<p>We've already prepared a template for you. Just add some Spring annotations, their imports and code to perform calculations. Please, do not remove the calculator package!</p>

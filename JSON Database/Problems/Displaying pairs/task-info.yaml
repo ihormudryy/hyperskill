@@ -1,0 +1,15 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: "import java.util.*;\n\npublic class Main {\n    public static void main(String[]\
+    \ args) {\n        Map<String, Integer> map = new TreeMap<>();\n        map.put(\"\
+    Gamma\",  3);\n        map.put(\"Omega\", 24);\n        map.put(\"Alpha\",  1);\n\
+    \n        // write your code here    \n    }\n}"
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/2346#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Mon, 07 Dec 2020 21:48:38 UTC
+record: -1

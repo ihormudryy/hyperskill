@@ -1,0 +1,57 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: "import java.util.Arrays;\nimport java.util.Scanner;\nimport java.util.List;\n\
+    import java.util.function.Function;\nimport java.util.function.IntUnaryOperator;\n\
+    import java.util.function.UnaryOperator;\nimport java.util.stream.Collectors;\n\
+    \nclass MultifunctionalMapper {\n    private static final String TAB = \"    \"\
+    ;\n\n    /**\n     * The function accepts a list of mappers and returns an operator\
+    \ that accepts a list of integers\n     * and sequentially applies each mapper\
+    \ to each value (perform a transformation)\n     */\n    public static final Function<List<IntUnaryOperator>,\
+    \ UnaryOperator<List<Integer>>> MULTIFUNCTIONAL_MAPPER =\n\n    /**\n     * EXAMPLE:\
+    \ the operator transforms each number to the same number (perform the identity\
+    \ transformation)\n     *\n     * It returns a list of the same numbers.\n   \
+    \  */\n    public static final UnaryOperator<List<Integer>> IDENTITY_TRANSFORMATION\
+    \ =\n            MULTIFUNCTIONAL_MAPPER.apply(Arrays.asList(x -> x, x -> x, x\
+    \ -> x));\n\n    /**\n     * The operator accepts an integer list. \n     * It\
+    \ multiplies by two each integer number and then add one to it.\n     *\n    \
+    \ * The operator returns transformed integer list.\n     */\n    public static\
+    \ final UnaryOperator<List<Integer>> MULT_TWO_AND_THEN_ADD_ONE_TRANSFORMATION\
+    \ =\n\n    /**\n     * The operator accepts an integer list. \n     * It squares\
+    \ each integer number and then get the next even number following it.\n     *\n\
+    \     * The operator returns transformed integer list.\n     */\n    public static\
+    \ final UnaryOperator<List<Integer>> SQUARE_AND_THEN_GET_NEXT_EVEN_NUMBER_TRANSFORMATION\
+    \ =\n\n    // Don't change the code below\n    public static void main(String[]\
+    \ args) {\n\n        Scanner scanner = new Scanner(System.in);\n        String[]\
+    \ values = scanner.nextLine().split(\" \");\n\n        List<Integer> numbers =\
+    \ Arrays.stream(values)\n                .mapToInt(Integer::parseInt)\n      \
+    \          .boxed()\n                .collect(Collectors.toList());\n\n      \
+    \  List<Integer> idMapper = MULTIFUNCTIONAL_MAPPER\n                .apply(Arrays.asList(x\
+    \ -> x, x -> x, x -> x))\n                .apply(numbers);\n\n        List<Integer>\
+    \ idTransfomarmation =\n                IDENTITY_TRANSFORMATION.apply(numbers);\n\
+    \n        List<Integer> mult2AndAdd1Mapper = MULTIFUNCTIONAL_MAPPER\n        \
+    \        .apply(Arrays.asList(x -> x * 2, x -> x + 1))\n                .apply(numbers);\n\
+    \n        List<Integer> mult2AndAdd1Tranformation =\n                MULT_TWO_AND_THEN_ADD_ONE_TRANSFORMATION.apply(numbers);\n\
+    \n        List<Integer> squareAndNextEvenMapper = MULTIFUNCTIONAL_MAPPER\n   \
+    \             .apply(Arrays.asList(x -> x * x, x -> x % 2 == 0 ? x + 2 : x + 1))\n\
+    \                .apply(numbers);\n\n        List<Integer> squareAndNextEvenNumberTransformation\
+    \ =\n                SQUARE_AND_THEN_GET_NEXT_EVEN_NUMBER_TRANSFORMATION.apply(numbers);\n\
+    \n        StringBuilder result = new StringBuilder(\"\")\n                .append(getStringFromList(idMapper))\n\
+    \                .append(TAB)\n                .append(getStringFromList(idTransfomarmation))\n\
+    \                .append(TAB)\n                .append(getStringFromList(mult2AndAdd1Mapper))\n\
+    \                .append(TAB)\n                .append(getStringFromList(mult2AndAdd1Tranformation))\n\
+    \                .append(TAB)\n                .append(getStringFromList(squareAndNextEvenMapper))\n\
+    \                .append(TAB)\n                .append(getStringFromList(squareAndNextEvenNumberTransformation))\n\
+    \                .append(TAB);\n\n        System.out.println(result.toString().trim());\n\
+    \    }\n\n    private static String getStringFromList(List<Integer> numbers) {\n\
+    \        StringBuilder builder = new StringBuilder(\"\");\n        for (int n\
+    \ : numbers) {\n            builder.append(n).append(\" \");\n        }\n    \
+    \    return builder.toString().trim();\n    }\n}"
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/2434#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Sat, 08 May 2021 22:42:47 UTC
+record: -1

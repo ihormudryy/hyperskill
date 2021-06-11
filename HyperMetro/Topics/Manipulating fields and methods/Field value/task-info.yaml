@@ -1,0 +1,23 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    import java.lang.reflect.Field;
+    /**
+     * Get value for a given public field or null if the field does not exist or is not accessible.
+     */
+    class FieldGetter {
+
+        public Object getFieldValue(Object object, String fieldName) throws IllegalAccessException {
+
+        }
+
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/2882#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Thu, 27 May 2021 07:34:45 UTC
+record: -1

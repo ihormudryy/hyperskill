@@ -1,0 +1,15 @@
+<h2>Phone Book</h2>
+<html>
+ <head></head>
+ <body>
+  <p>Let's sum up and put all the implementation details together. The task is to use the described hash table to implement a simple phone book.</p> 
+  <p><strong>Input:</strong> the first line contains an integer $n$, the number of queries, also indicating the size of a table. Each of the next $n$ lines contains a query in one of the following formats:</p> 
+  <ul> 
+   <li><em>put</em> id number — put an entry (id, number) to a table;</li> 
+   <li><em>get</em> id — get a phone number with a specified id;</li> 
+   <li><em>remove</em> id — remove a phone number with a specified id.</li> 
+  </ul> 
+  <p><strong>Output:</strong> for each <em>get</em> query, print either the phone number that corresponds to the id or -1 if no number with the given id exists.</p>
+ </body>
+</html><br><b>Sample Input:</b><br><pre><code class="language-no-highlight">11<br>put 1 0001<br>put 4 0004<br>put 3 0003<br>get 1<br>get 4<br>get 3<br>remove 1<br>remove 4<br>get 1<br>get 4<br>get 3</code></pre><br><b>Sample Output:</b><br><pre><code class="language-no-highlight">0001<br>0004<br>0003<br>-1<br>-1<br>0003<br></code></pre><br><br><br><font color="gray">Memory limit: 64 MB</font><br><font color="gray">Time limit: 3 seconds</font><br><br>
+<a href="https://hyperskill.org/learn/step/6945">Show topic summary</a>

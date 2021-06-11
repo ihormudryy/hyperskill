@@ -1,0 +1,75 @@
+<h2>Description</h2>
+
+<p>Currently, your service allows creating new quizzes, but there may be problems if the client didn't provide all the quiz data. In such cases, the service will create an incorrect unsolvable quiz which is very frustrating for those who are trying to solve it.</p>
+
+<p>At this stage, you should fix this so that the service does not accept incorrect quizzes. Another task is to make quizzes more interesting by supporting the arbitrary number of correct options (from zero to all). It means that to solve a quiz, the client needs to send all correct options at once, or zero if all options are wrong.</p>
+
+<p>Here is a few resources where you can read how to validate data in the API:</p>
+
+<ul>
+	<li><a target="_blank" href="https://reflectoring.io/bean-validation-with-spring-boot/" rel="noopener noreferrer nofollow">Bean validation with Spring Boot</a></li>
+	<li><a target="_blank" href="https://www.baeldung.com/spring-boot-bean-validation" rel="noopener noreferrer nofollow">Spring Boot bean validation</a></li>
+</ul>
+
+<p>There are only two modified operations for creating and solving quizzes. All other operations should not be changed or deleted.</p>
+
+<h2>Create a new quiz</h2>
+
+<p>To create a new quiz, the client needs to send a JSON as the request's body via <code class="language-json">POST</code> to <code class="language-json">/api/quizzes</code>. The JSON should contain the four fields:</p>
+
+<ul>
+	<li><code class="language-json">title</code>: a string, <strong>required</strong>;</li>
+	<li><code class="language-json">text</code>: a string, <strong>required</strong>;</li>
+	<li><code class="language-json">options</code>: an array of strings, required, should contain at least 2 items;</li>
+	<li><code class="language-json">answer</code>: an array of indexes of correct options, optional, since all options can be wrong.</li>
+</ul>
+
+<p>Here is a new JSON quiz as an example:</p>
+
+<pre><code class="language-json">{
+  "title": "Coffee drinks",
+  "text": "Select only coffee drinks.",
+  "options": ["Americano","Tea","Cappuccino","Sprite"],
+  "answer": [0,2]
+}</code></pre>
+
+<p>The <code class="language-json">answer</code> equals <code class="language-json">[0,2]</code> corresponds to the first and the third item from the <code class="language-json">options</code> array (<code class="language-json">"Americano"</code> and <code class="language-json">"Cappuccino"</code>).</p>
+
+<p>The server response is a JSON with four fields: <code class="language-json">id</code>, <code class="language-json">title</code>, <code class="language-json">text</code> and <code class="language-json">options</code>. Here is an example:</p>
+
+<pre><code class="language-json">{
+  "id": 1,
+  "title": "Coffee drinks",
+  "text": "Select only coffee drinks.",
+  "options": ["Americano","Tea","Cappuccino","Sprite"]
+}</code></pre>
+
+<p>The <code class="language-json">id</code> field is a generated unique integer identifier for the quiz. Also, the response may or may not include the <code class="language-json">answer</code> field depending on your wishes. This is not very important for this operation.</p>
+
+<p>If the request JSON does not contain <code class="language-json">title</code> or <code class="language-json">text</code>, or they are empty strings (<code class="language-json">""</code>), then the server should respond with the  <code class="language-json">400 (Bad request)</code> status code. If the number of options in the quiz is less than 2, the server returns the same status code.</p>
+
+<h2>Solving a quiz</h2>
+
+<p>To solve a quiz, the client sends the <code class="language-json">POST</code> request to <code class="language-json">/api/quizzes/{id}/solve</code> with a JSON that contains the indexes of all chosen options as the answer. This looks like a regular JSON object with key <code class="language-json">"answer"</code> and value as the array: <code class="language-json">{"answer": [0,2]}</code>. As before, indexes start from zero.</p>
+
+<p>It is also possible to send an empty array <code class="language-json">[]</code> since some quizzes may not have correct options.</p>
+
+<p>The service returns a JSON with two fields: <code class="language-json">success</code> (<code class="language-json">true</code> or <code class="language-json">false</code>) and <code class="language-json">feedback</code> (just a string). There are three possible responses.</p>
+
+<ul>
+	<li>If the passed answer is correct:</li>
+</ul>
+
+<pre><code class="language-json">{"success":true,"feedback":"Congratulations, you're right!"}</code></pre>
+
+<ul>
+	<li>If the answer is incorrect:</li>
+</ul>
+
+<pre><code class="language-json">{"success":false,"feedback":"Wrong answer! Please, try again."}</code></pre>
+
+<ul>
+	<li>If the specified quiz does not exist, the server returns the <code class="language-json">404 (Not found)</code> status code.</li>
+</ul>
+
+<p>You can write any other strings in the <code class="language-json">feedback</code> field, but the names of fields and the <code class="language-json">true</code>/<code class="language-json">false</code> values must match this example.</p>

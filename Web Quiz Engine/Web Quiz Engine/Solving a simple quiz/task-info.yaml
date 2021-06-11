@@ -1,0 +1,149 @@
+type: edu
+custom_name: stage1
+files:
+- name: build.gradle
+  visible: true
+  text: |
+    plugins {
+        id 'org.springframework.boot' version '2.2.2.RELEASE'
+        id 'java'
+    }
+
+    apply plugin: 'io.spring.dependency-management'
+
+    sourceCompatibility = 11
+
+    repositories {
+        mavenCentral()
+    }
+
+    sourceSets.main.resources.srcDirs = ["src/resources"]
+
+    dependencies {
+        implementation 'org.springframework.boot:spring-boot-starter'
+        implementation 'org.springframework.boot:spring-boot-starter-actuator'
+        compile("org.springframework.boot:spring-boot-starter-web")
+    }
+  learner_created: false
+- name: src/engine/WebQuizEngine.java
+  visible: true
+  text: |
+    package engine;
+
+    import org.springframework.boot.SpringApplication;
+    import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+    @SpringBootApplication
+    public class WebQuizEngine {
+
+        public static void main(String[] args) {
+            SpringApplication.run(WebQuizEngine.class, args);
+        }
+
+    }
+  learner_created: false
+- name: src/resources/application.properties
+  visible: true
+  text: |
+    server.port=8889
+    management.endpoints.web.exposure.include=*
+    management.endpoint.shutdown.enabled=true
+  learner_created: false
+- name: test/tests/WebQuizEngineTest.java
+  visible: false
+  text: |
+    package tests;
+
+    import engine.WebQuizEngine;
+    import org.hyperskill.hstest.dynamic.input.DynamicTesting;
+    import org.hyperskill.hstest.dynamic.input.DynamicTestingMethod;
+    import org.hyperskill.hstest.exception.outcomes.WrongAnswer;
+    import org.hyperskill.hstest.mocks.web.request.HttpRequest;
+    import org.hyperskill.hstest.mocks.web.response.HttpResponse;
+    import org.hyperskill.hstest.stage.SpringTest;
+    import org.hyperskill.hstest.testcase.CheckResult;
+
+    import java.util.Map;
+
+    import static org.hyperskill.hstest.testing.expect.Expectation.expect;
+    import static org.hyperskill.hstest.testing.expect.json.JsonChecker.*;
+
+    public class WebQuizEngineTest extends SpringTest {
+        public WebQuizEngineTest() {
+            super(WebQuizEngine.class);
+        }
+
+        static void checkStatusCode(HttpResponse resp, int status) {
+            if (resp.getStatusCode() != status) {
+                throw new WrongAnswer(
+                    resp.getRequest().getMethod() + " " +
+                        resp.getRequest().getLocalUri() +
+                        " should respond with status code " + status + ", " +
+                        "responded: " + resp.getStatusCode() + "\n\n" +
+                        "Response body:\n\n" + resp.getContent()
+                );
+            }
+        }
+
+        @DynamicTestingMethod
+        public DynamicTesting[] dt = new DynamicTesting[] {
+            this::checkQuizReceived,
+            () -> checkQuizSuccess("2", true),
+            () -> checkQuizSuccess("1", false)
+        };
+
+        private CheckResult checkQuizReceived() {
+            String url = "/api/quiz";
+
+            HttpResponse resp = get(url).send();
+            checkStatusCode(resp, 200);
+
+            expect(resp.getContent()).asJson().check(
+                isObject()
+                    .value("title", isString())
+                    .value("text", isString())
+                    .value("options", isArray(4, isString()))
+            );
+
+            return CheckResult.correct();
+        }
+
+        private CheckResult checkQuizSuccess(String answerSent, boolean shouldResponse) {
+            String url = "/api/quiz";
+
+            HttpRequest req = post(url, Map.of("answer", answerSent));
+            HttpResponse resp = req.send();
+
+            checkStatusCode(resp, 200);
+
+            expect(resp.getContent()).asJson().check(
+                isObject()
+                    .value("success", shouldResponse)
+                    .value("feedback", isString())
+            );
+
+            return CheckResult.correct();
+        }
+    }
+  learner_created: false
+- name: src/engine/QuizController.java
+  visible: true
+  learner_created: true
+- name: src/model/Quiz.java
+  visible: true
+  learner_created: true
+- name: test/engine/QuizControllerTest.java
+  visible: true
+  learner_created: true
+- name: src/engine/ResponseMessages.java
+  visible: true
+  learner_created: true
+- name: src/engine/Response.java
+  visible: true
+  learner_created: true
+feedback_link: https://hyperskill.org/projects/91/stages/504/implement#comment
+status: Solved
+feedback:
+  message: Congratulations!
+  time: Mon, 14 Dec 2020 11:36:50 UTC
+record: 1

@@ -1,0 +1,9 @@
+type: framework
+content:
+- One-line metro
+- Several directions
+- A real metro
+- The shortest route
+- The fastest route
+- Branching
+current_task: 5

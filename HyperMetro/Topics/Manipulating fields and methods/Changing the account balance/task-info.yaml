@@ -1,0 +1,20 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    final class AccountUtils {
+
+        private AccountUtils() { }
+
+        public static void increaseBalance(Account account, long amount) {
+            // write your code here
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/12552#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Thu, 27 May 2021 07:30:53 UTC
+record: -1

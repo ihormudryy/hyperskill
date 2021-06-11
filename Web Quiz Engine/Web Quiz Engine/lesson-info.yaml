@@ -1,0 +1,9 @@
+type: framework
+content:
+- Solving a simple quiz
+- Lots of quizzes
+- Making quizzes more interesting
+- Moving quizzes to DB
+- User authorization
+- Advanced queries
+current_task: 5

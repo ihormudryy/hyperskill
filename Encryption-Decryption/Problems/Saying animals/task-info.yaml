@@ -1,0 +1,31 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    class Animal {
+
+        public void say() {
+            System.out.println("...An incomprehensible sound...");
+        }
+    }
+
+    class Cat extends Animal {
+
+    }
+
+    class Dog extends Animal {
+
+    }
+
+    class Duck extends Animal {
+
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/2200#comment
+status: Solved
+feedback:
+  message: <html>Correct solution<br/><br/>Continue on <a href="https://hyperskill.org/learn/step/2200#comment">JetBrains
+    Academy</a></html>
+  time: Fri, 20 Nov 2020 11:08:30 UTC
+record: -1

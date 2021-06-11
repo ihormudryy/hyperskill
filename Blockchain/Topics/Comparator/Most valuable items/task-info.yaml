@@ -1,0 +1,49 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    import java.util.List;
+
+    class StockItem {
+        private String name;
+        private double pricePerUnit;
+        private int quantity;
+
+        public StockItem(String name, double pricePerUnit, int quantity) {
+            this.name = name;
+            this.pricePerUnit = pricePerUnit;
+            this.quantity = quantity;
+        }
+
+        @Override
+        public String toString() {
+            return name + ": " + pricePerUnit + ", " + quantity + ";";
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public double getPricePerUnit() {
+            return pricePerUnit;
+        }
+
+        public int getQuantity() {
+            return quantity;
+        }
+    }
+
+    class Utils {
+        public static List<StockItem> sort(List<StockItem> stockItems) {
+            // your code here
+            return null;
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/12971#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Tue, 27 Apr 2021 17:55:12 UTC
+record: -1

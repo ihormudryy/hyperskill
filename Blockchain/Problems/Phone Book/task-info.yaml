@@ -1,0 +1,28 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: "public class Main {\n    private static class TableEntry<T> {\n        private\
+    \ final int key;\n        private final T value;\n        private boolean removed;\n\
+    \n        public TableEntry(int key, T value) {\n            this.key = key;\n\
+    \            this.value = value;\n        }\n\n        public int getKey() {\n\
+    \            return key;\n        }\n\n        public T getValue() {\n       \
+    \     return value;\n        }\n\n        public void remove() {\n           \
+    \  removed = true;   \n        }\n\n        public boolean isRemoved() {\n   \
+    \          return removed;   \n        }\n    }\n\n    private static class HashTable<T>\
+    \ {\n        private int size;\n        private TableEntry[] table;\n\n      \
+    \  public HashTable(int size) {\n            this.size = size;\n            table\
+    \ = new TableEntry[size];\n        }\n\n        public boolean put(int key, T\
+    \ value) {\n            // put your code here\n        }\n\n        public T get(int\
+    \ key) {\n            // put your code here\n        }\n\n        public void\
+    \ remove(int key) {\n            // put your code here\n        }\n\n        private\
+    \ int findKey(int key) {\n            // put your code here\n        }\n    }\n\
+    \n    public static void main(String[] args) {\n        // put your code here\n\
+    \    }\n}"
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/6951#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Fri, 12 Mar 2021 09:53:50 UTC
+record: -1

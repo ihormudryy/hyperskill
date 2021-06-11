@@ -1,0 +1,23 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    import java.util.Scanner;
+
+    class Main {
+        public static void main(String[] args) {
+            Scanner scanner = new Scanner(System.in);
+
+            String regNum = scanner.nextLine(); // a valid or invalid registration number
+
+            /* write your code here */
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/3697#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Thu, 20 May 2021 15:16:23 UTC
+record: -1

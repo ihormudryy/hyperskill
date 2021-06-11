@@ -1,0 +1,23 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    class BigIntegerConverter {
+
+        /**
+         * @param number string representing the number
+         * @return BigInteger instance
+         */
+        public static Number getBigInteger(String number) {
+            return // create BigInteger instance here
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/9897#comment
+status: Solved
+feedback:
+  message: <html>Correct solution<br/><br/>Continue on <a href="https://hyperskill.org/learn/step/9897#comment">JetBrains
+    Academy</a></html>
+  time: Mon, 16 Nov 2020 13:15:25 UTC
+record: -1

@@ -1,0 +1,49 @@
+<h2>Multifunctional mapper</h2>
+<html>
+<head></head>
+<body>
+<p></p>
+<div class="alert alert-primary">
+    Wow! This problem is kind of tricky. If you're ready to put your thinking cap on, brace yourself and good luck!
+    Otherwise, you can skip it for now and return any time later.
+</div>
+<p></p>
+<p>In this problem, you need to complete the implementation of three functions.</p>
+<ol>
+    <li>The <code class="java">multifunctionalMapper</code> function that accepts a list of operators (mappers) and
+        returns a new operator. The new operator just accepts a list of integer numbers and sequentially applies each
+        mapper to each number in the list (performs multiple transformations). It produces a list of transformed values.
+    </li>
+    <li>Based on <code class="java">multifunctionalMapper</code>, implement the <span style="color: #000000;"><code
+            class="java">multTwoAndThenAddOneTransformation</code></span> operator<strong> that multiplies by two each
+        integer number and then add one to its</strong>. The operator is applied to each number in the input list.
+    </li>
+    <li>Based on <code class="java">multifunctionalMapper</code>, implement the <span style="color: #000000;"><code
+            class="java">squareAndThenGetNextEvenNumberTransformation</code> </span>operator <strong>that squares each
+        integer number and then calculates the next even number </strong>following it.<strong> </strong>The operator is
+        also applied to each number in the input list.
+    </li>
+</ol>
+<p>There is also an example. The <code class="java">identityTransformation</code> that is based on the <code
+        class="java">multifunctionalMapper</code> function identity. It doesn't change values in the input list. It
+    repeats identity transformation three times just for example.</p>
+<p>Let's take a look at two example of how the operators should work.<br> <br> <strong>Example 1.</strong> The input
+    list is <code class="java">[1, 1, 1, 1]</code></p>
+<ul>
+    <li><code class="java">identityTransformation</code> returns the list <code class="java">[1, 1, 1, 1]</code></li>
+    <li><code class="java">multTwoAndThenAddOneTransformation</code><strong> </strong>returns the list
+        <strong> </strong><code class="java">[3, 3, 3, 3]</code></li>
+    <li><code class="java">squareAndThenGetNextEvenNumberTransformation</code> returns the list <code class="java"> [2,
+        2, 2, 2]</code></li>
+</ul>
+<p><strong>Example 2.</strong> The input list is <code class="java">[1, 2, 3]</code>.</p>
+<ul>
+    <li><code class="java">identityTransformation</code> returns the list <code class="java">[1, 2, 3]</code></li>
+    <li><code class="java">multTwoAndThenAddOneTransformation</code><strong> </strong>returns the list
+        <strong> </strong><code class="java">[3, 5, 7]</code></li>
+    <li><code class="java">squareAndThenGetNextEvenNumberTransformation</code> returns the result list
+        <strong> </strong><code class="java">[2, 6, 10]</code></li>
+</ul>
+</body>
+</html><br><br><font color="gray">Memory limit: 256 MB</font><br><font color="gray">Time limit: 8 seconds</font><br><br>
+<a href="https://hyperskill.org/learn/step/3579">Show topic summary</a>

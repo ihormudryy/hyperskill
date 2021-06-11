@@ -1,0 +1,17 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    public class Main {
+        public static void main(String[] args) {
+            // put your code here
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/9826#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Wed, 02 Jun 2021 11:41:54 UTC
+record: -1

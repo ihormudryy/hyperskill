@@ -1,0 +1,396 @@
+type: edu
+files:
+- name: src/client/Main.java
+  visible: true
+  text: |
+    package client;
+
+    public class Main {
+
+        public static void main(String[] args) {
+            System.out.println("Hello, world!");
+        }
+    }
+  learner_created: false
+- name: src/server/Main.java
+  visible: true
+  text: |
+    package server;
+
+    public class Main {
+
+        public static void main(String[] args) {
+            System.out.println("Hello, world!");
+        }
+    }
+  learner_created: false
+- name: test/JsonDatabaseTest.java
+  visible: false
+  text: "import com.google.gson.Gson;\nimport com.google.gson.JsonArray;\nimport org.hyperskill.hstest.dynamic.input.DynamicTestingMethod;\n\
+    import org.hyperskill.hstest.exception.outcomes.WrongAnswer;\nimport org.hyperskill.hstest.stage.StageTest;\n\
+    import org.hyperskill.hstest.testcase.CheckResult;\nimport org.hyperskill.hstest.testing.TestedProgram;\n\
+    import org.junit.AfterClass;\nimport org.junit.BeforeClass;\n\nimport java.io.File;\n\
+    import java.io.IOException;\nimport java.lang.management.ManagementFactory;\n\
+    import java.nio.charset.StandardCharsets;\nimport java.nio.file.Files;\nimport\
+    \ java.nio.file.Paths;\nimport java.nio.file.StandardCopyOption;\nimport java.util.List;\n\
+    \nimport static org.hyperskill.hstest.testing.expect.Expectation.expect;\nimport\
+    \ static org.hyperskill.hstest.testing.expect.json.JsonChecker.isArray;\nimport\
+    \ static org.hyperskill.hstest.testing.expect.json.JsonChecker.isObject;\n\npublic\
+    \ class JsonDatabaseTest extends StageTest<String> {\n\n    private static final\
+    \ String OK_STATUS = \"OK\";\n    private static final String ERROR_STATUS = \"\
+    ERROR\";\n    private static final String NO_SUCH_KEY_REASON = \"No such key\"\
+    ;\n\n    private static final String WRONG_EXIT = \"The server should stop when\
+    \ client sends 'exit' request\";\n\n    private static final String fileName =\
+    \ \"data.json\";\n    private static final String serverFolderPath = System.getProperty(\"\
+    user.dir\") + File.separator +\n        \"src\" + File.separator +\n        \"\
+    server\" + File.separator +\n        \"data\";\n    private static final String\
+    \ serverJsonFileName = serverFolderPath + File.separator + fileName;\n\n    private\
+    \ static final String clientFolderPath = System.getProperty(\"user.dir\") + File.separator\
+    \ +\n        \"src\" + File.separator +\n        \"client\" + File.separator +\n\
+    \        \"data\";\n\n    private static final Gson gson = new Gson();\n\n   \
+    \ private static final String setFileContent = JsonBuilder.newBuilder()\n    \
+    \    .addValue(\"type\", \"set\")\n        .addValue(\"key\", \"person\")\n  \
+    \      .addJsonObject(\"value\", JsonBuilder.newBuilder()\n            .addValue(\"\
+    name\", \"Elon Musk\")\n            .addJsonObject(\"car\",\n                JsonBuilder.newBuilder()\n\
+    \                    .addValue(\"model\", \"Tesla Roadster\")\n              \
+    \      .addValue(\"year\", \"2018\")\n                    .getAsJsonObject()\n\
+    \            )\n            .addJsonObject(\"rocket\",\n                JsonBuilder.newBuilder()\n\
+    \                    .addValue(\"name\", \"Falcon 9\")\n                    .addValue(\"\
+    launches\", \"87\")\n                    .getAsJsonObject())\n            .getAsJsonObject())\n\
+    \        .getAsString();\n\n    private static final String getFileContent = JsonBuilder.newBuilder()\n\
+    \        .addValue(\"type\", \"get\")\n        .addValue(\"key\", gson.fromJson(\"\
+    [person, name]\", JsonArray.class))\n        .getAsString();\n\n    private static\
+    \ final String secondGetFileContent = JsonBuilder.newBuilder()\n        .addValue(\"\
+    type\", \"get\")\n        .addValue(\"key\", gson.fromJson(\"[person]\", JsonArray.class))\n\
+    \        .getAsString();\n\n    private static final String deleteFileContent\
+    \ = JsonBuilder.newBuilder()\n        .addValue(\"type\", \"delete\")\n      \
+    \  .addValue(\"key\", gson.fromJson(\"[person, car, year]\", JsonArray.class))\n\
+    \        .getAsString();\n\n    private static final String updateFileContent\
+    \ = JsonBuilder.newBuilder()\n        .addValue(\"type\", \"set\")\n        .addValue(\"\
+    key\", gson.fromJson(\"[person, rocket, launches]\", JsonArray.class))\n     \
+    \   .addValue(\"value\", \"88\")\n        .getAsString();\n\n    private static\
+    \ int threadsCount;\n\n    @DynamicTestingMethod\n    CheckResult checkExit()\
+    \ {\n\n        TestedProgram server = getServer();\n        server.startInBackground();\n\
+    \n        TestedProgram client = getClient();\n        client.start(\"-t\", \"\
+    exit\");\n\n        if (!server.isFinished()) {\n            server.stop();\n\
+    \            return CheckResult.wrong(WRONG_EXIT);\n        }\n\n        return\
+    \ CheckResult.correct();\n    }\n\n    @DynamicTestingMethod\n    CheckResult\
+    \ checkJsonFile() throws IOException {\n\n        if (!Files.exists(Paths.get(serverFolderPath)))\
+    \ {\n            return CheckResult.wrong(\"Can't find /server/data folder\");\n\
+    \        }\n\n        if (!Files.exists(Paths.get(serverJsonFileName))) {\n  \
+    \          return CheckResult.wrong(\"Can't find \" + fileName + \" file in the\
+    \ /server/data folder\");\n        }\n\n        if (!Files.exists(Paths.get(clientFolderPath)))\
+    \ {\n            return CheckResult.wrong(\"Can't find /client/data folder\");\n\
+    \        }\n\n        createJsonFiles();\n\n        return CheckResult.correct();\n\
+    \    }\n\n    private static void createJsonFiles() throws IOException {\n   \
+    \     Files.write(Paths.get(clientFolderPath + File.separator + \"setFile.json\"\
+    ),\n            List.of(setFileContent),\n            StandardCharsets.UTF_8);\n\
+    \        Files.write(Paths.get(clientFolderPath + File.separator + \"getFile.json\"\
+    ),\n            List.of(getFileContent),\n            StandardCharsets.UTF_8);\n\
+    \        Files.write(Paths.get(clientFolderPath + File.separator + \"secondGetFile.json\"\
+    ),\n            List.of(secondGetFileContent),\n            StandardCharsets.UTF_8);\n\
+    \        Files.write(Paths.get(clientFolderPath + File.separator + \"deleteFile.json\"\
+    ),\n            List.of(deleteFileContent),\n            StandardCharsets.UTF_8);\n\
+    \        Files.write(Paths.get(clientFolderPath + File.separator + \"updateFile.json\"\
+    ),\n            List.of(updateFileContent),\n            StandardCharsets.UTF_8);\n\
+    \    }\n\n    @DynamicTestingMethod\n    CheckResult testInputs() throws InterruptedException\
+    \ {\n        \n        threadsCount = getThreadCount();\n\n        TestedProgram\
+    \ server = getServer();\n        server.startInBackground();\n\n        TestedProgram\
+    \ client;\n        String output;\n\n        String requestJson;\n        String\
+    \ responseJson;\n        \n        client = getClient();\n        output = client.start(\"\
+    -t\", \"set\", \"-k\", \"1\", \"-v\", \"Hello world!\");\n        requestJson\
+    \ = JsonFinder.findRequestJsonObject(output);\n        expect(requestJson)\n \
+    \           .asJson()\n            .check(isObject()\n                .value(\"\
+    type\", \"set\")\n                .value(\"key\", \"1\")\n                .value(\"\
+    value\", \"Hello world!\")\n            );\n        responseJson = JsonFinder.findResponseJsonObject(output);\n\
+    \        expect(responseJson)\n            .asJson()\n            .check(isObject()\n\
+    \                .value(\"response\", OK_STATUS)\n            );\n\n        //\
+    \ Files\n        client = getClient();\n        output = client.start(\"-in\"\
+    , \"setFile.json\");\n        requestJson = JsonFinder.findRequestJsonObject(output);\n\
+    \        expect(requestJson)\n            .asJson()\n            .check(isObject()\n\
+    \                .value(\"key\", \"person\")\n                .value(\"value\"\
+    , isObject()\n                    .value(\"name\", \"Elon Musk\")\n          \
+    \          .value(\"car\", isObject()\n                        .value(\"model\"\
+    , \"Tesla Roadster\")\n                        .anyOtherValues()\n           \
+    \         )\n                    .anyOtherValues()\n                )\n      \
+    \          .anyOtherValues()\n            );\n        responseJson = JsonFinder.findResponseJsonObject(output);\n\
+    \        expect(responseJson)\n            .asJson()\n            .check(isObject()\n\
+    \                .value(\"response\", OK_STATUS)\n            );\n\n        client\
+    \ = getClient();\n        output = client.start(\"-in\", \"getFile.json\");\n\
+    \        requestJson = JsonFinder.findRequestJsonObject(output);\n        expect(requestJson)\n\
+    \            .asJson()\n            .check(isObject()\n                .value(\"\
+    type\", \"get\")\n                .value(\"key\", isArray(\"person\", \"name\"\
+    ))\n            );\n        responseJson = JsonFinder.findResponseJsonObject(output);\n\
+    \        expect(responseJson)\n            .asJson()\n            .check(\n  \
+    \              isObject()\n                    .value(\"response\", OK_STATUS)\n\
+    \                    .value(\"value\", \"Elon Musk\")\n            );\n\n\n  \
+    \      client = getClient();\n        output = client.start(\"-in\", \"updateFile.json\"\
+    );\n        requestJson = JsonFinder.findRequestJsonObject(output);\n        expect(requestJson)\n\
+    \            .asJson()\n            .check(isObject()\n                .value(\"\
+    type\", \"set\")\n                .value(\"key\", isArray(\"person\", \"rocket\"\
+    , \"launches\"))\n                .value(\"value\", \"88\")\n            );\n\
+    \        responseJson = JsonFinder.findResponseJsonObject(output);\n        expect(responseJson)\n\
+    \            .asJson()\n            .check(\n                isObject()\n    \
+    \                .value(\"response\", OK_STATUS)\n            );\n\n\n       \
+    \ client = getClient();\n        output = client.start(\"-in\", \"secondGetFile.json\"\
+    );\n        requestJson = JsonFinder.findRequestJsonObject(output);\n        expect(requestJson)\n\
+    \            .asJson()\n            .check(isObject()\n                .value(\"\
+    type\", \"get\")\n                .value(\"key\", isArray(\"person\"))\n     \
+    \       );\n        responseJson = JsonFinder.findResponseJsonObject(output);\n\
+    \        expect(responseJson)\n            .asJson()\n            .check(\n  \
+    \              isObject()\n                    .value(\"response\", OK_STATUS)\n\
+    \                    .value(\"value\", isObject()\n                        .value(\"\
+    rocket\", isObject()\n                            .value(\"name\", \"Falcon 9\"\
+    )\n                            .value(\"launches\", \"88\")\n                \
+    \        )\n                        .anyOtherValues()\n                    )\n\
+    \            );\n\n\n        client = getClient();\n        output = client.start(\"\
+    -in\", \"deleteFile.json\");\n        requestJson = JsonFinder.findRequestJsonObject(output);\n\
+    \        expect(requestJson)\n            .asJson()\n            .check(isObject()\n\
+    \                .value(\"type\", \"delete\")\n                .value(\"key\"\
+    , isArray(\"person\", \"car\", \"year\"))\n            );\n        responseJson\
+    \ = JsonFinder.findResponseJsonObject(output);\n        expect(responseJson)\n\
+    \            .asJson()\n            .check(\n                isObject()\n    \
+    \                .value(\"response\", OK_STATUS)\n            );\n\n\n       \
+    \ client = getClient();\n        output = client.start(\"-in\", \"secondGetFile.json\"\
+    );\n        requestJson = JsonFinder.findRequestJsonObject(output);\n        expect(requestJson)\n\
+    \            .asJson()\n            .check(isObject()\n                .value(\"\
+    type\", \"get\")\n                .value(\"key\", isArray(\"person\"))\n     \
+    \       );\n        responseJson = JsonFinder.findResponseJsonObject(output);\n\
+    \        expect(responseJson)\n            .asJson()\n            .check(\n  \
+    \              isObject()\n                    .value(\"response\", OK_STATUS)\n\
+    \                    .value(\"value\", isObject()\n                        .value(\"\
+    rocket\", isObject()\n                            .value(\"name\", \"Falcon 9\"\
+    )\n                            .value(\"launches\", \"88\")\n                \
+    \        )\n                        .value(\"car\", isObject()\n             \
+    \               .value(\"model\", \"Tesla Roadster\")\n                      \
+    \  )\n                        .anyOtherValues()\n                    )\n     \
+    \       );\n        checkIfThreadWasCreated();\n\n\n        client = getClient();\n\
+    \        client.start(\"-t\", \"exit\");\n\n        return CheckResult.correct();\n\
+    \    }\n\n    private static TestedProgram getClient() {\n        return new TestedProgram(client.Main.class);\n\
+    \    }\n\n    private static TestedProgram getServer() {\n        return new TestedProgram(server.Main.class);\n\
+    \    }\n\n    private static int getThreadCount() {\n        return (int) ManagementFactory.getThreadMXBean().getTotalStartedThreadCount();\n\
+    \    }\n\n    private static void checkIfThreadWasCreated() {\n\n        int total\
+    \ = getThreadCount();\n\n        /*8 threads: 1 server thread and 7 client threads\
+    \ created during the test.\n         If the server doesn't handle clients in a\
+    \ new thread then the difference between number of threads\n         before and\
+    \ after the test should be equal 8 */\n        if (total - threadsCount == 8)\
+    \ {\n            throw new WrongAnswer(\"Looks like you don't process client connection\
+    \ in another thread.\\n\" +\n                \"Every client request should be\
+    \ parsed and handled in a separate thread!\\n\" +\n                (total - threadsCount));\n\
+    \        }\n    }\n\n    @AfterClass\n    public static void deleteFiles() {\n\
+    \        try {\n            Files.delete(Paths.get(clientFolderPath + File.separator\
+    \ + \"setFile.json\"));\n            Files.delete(Paths.get(clientFolderPath +\
+    \ File.separator + \"getFile.json\"));\n            Files.delete(Paths.get(clientFolderPath\
+    \ + File.separator + \"secondGetFile.json\"));\n            Files.delete(Paths.get(clientFolderPath\
+    \ + File.separator + \"deleteFile.json\"));\n            Files.delete(Paths.get(clientFolderPath\
+    \ + File.separator + \"updateFile.json\"));\n        } catch (IOException ignored)\
+    \ {\n        }\n\n        String filePath = serverFolderPath + File.separator\
+    \ + fileName;\n        String tempFilePath = serverFolderPath + File.separator\
+    \ + \"temp.json\";\n\n        try {\n            Files.copy(Paths.get(tempFilePath),\
+    \ Paths.get(filePath), StandardCopyOption.REPLACE_EXISTING);\n            Files.delete(Paths.get(tempFilePath));\n\
+    \        } catch (IOException ignored) {\n        }\n    }\n\n    @BeforeClass\n\
+    \    public static void copyFiles() {\n\n        String filePath = serverFolderPath\
+    \ + File.separator + fileName;\n        String tempFilePath = serverFolderPath\
+    \ + File.separator + \"temp.json\";\n\n        try {\n            Files.createFile(Paths.get(tempFilePath));\n\
+    \        } catch (IOException ignored) {\n        }\n\n        try {\n       \
+    \     Files.copy(Paths.get(filePath), Paths.get(tempFilePath), StandardCopyOption.REPLACE_EXISTING);\n\
+    \        } catch (IOException ignored) {\n        }\n\n        try {\n       \
+    \     Files.write(Paths.get(filePath), \"{}\".getBytes());\n        } catch (IOException\
+    \ ignored) {\n        }\n    }\n}\n"
+  learner_created: false
+- name: test/JsonRequestBuilder.java
+  visible: false
+  text: |-
+    import com.google.gson.Gson;
+    import com.google.gson.JsonElement;
+    import com.google.gson.JsonObject;
+
+    class JsonBuilder {
+
+        private final Gson gson = new Gson();
+        private final JsonObject jsonObject = new JsonObject();
+
+        private JsonBuilder() {
+
+        }
+
+        public static JsonBuilder newBuilder() {
+            return new JsonBuilder();
+        }
+
+        public JsonBuilder addValue(String key, String value) {
+            jsonObject.addProperty(key, value);
+            return this;
+        }
+
+        public JsonBuilder addValue(String key, JsonElement value) {
+            jsonObject.add(key, value);
+            return this;
+        }
+
+        public JsonBuilder addJsonObject(String key, JsonObject object) {
+            jsonObject.add(key, object);
+            return this;
+        }
+
+        public String getAsString() {
+            return jsonObject.toString();
+        }
+
+        public JsonObject getAsJsonObject() {
+            return jsonObject;
+        }
+    }
+  learner_created: false
+- name: test/JsonFinder.java
+  visible: false
+  text: |
+    import org.hyperskill.hstest.exception.outcomes.WrongAnswer;
+
+    import java.util.regex.Matcher;
+    import java.util.regex.Pattern;
+
+    public class JsonFinder {
+
+        private static final Pattern pattern = Pattern.compile("\\{.+}");
+
+        public static String findRequestJsonObject(String output) {
+
+            Matcher matcher = pattern.matcher(output);
+
+            while (matcher.find()) {
+                String json = matcher.group();
+                if (json.contains("type")) {
+                    return json;
+                }
+            }
+
+            throw new WrongAnswer("Can't find request JSON object in the output.\n" +
+                "It should contain 'type' key");
+        }
+
+        public static String findResponseJsonObject(String output) {
+
+            Matcher matcher = pattern.matcher(output);
+
+            while (matcher.find()) {
+                String json = matcher.group();
+                if (json.contains("response")) {
+                    return json;
+                }
+            }
+
+            throw new WrongAnswer("Can't find request JSON object in the output.\n" +
+                "It should contain 'response' key");
+        }
+    }
+  learner_created: false
+- name: JSON Database/task/src/server/data/db.json
+  visible: true
+  learner_created: true
+- name: bin/main/client/Args.class
+  visible: true
+  learner_created: true
+- name: bin/test/JsonBuilder.class
+  visible: true
+  learner_created: true
+- name: bin/main/server/Session.class
+  visible: true
+  learner_created: true
+- name: src/server/DataBaseManager.java
+  visible: true
+  text: |
+    package server;
+
+    public class DataBaseManager {
+
+        private String[] container = new String[1000];
+        enum response {
+            ERROR,
+            OK
+        }
+
+        DataBaseManager(){
+            for (String entry : container) {
+                entry = "";
+            }
+        }
+
+        public String get(int index) throws Exception {
+            try {
+                if (container[index - 1].isEmpty()) {
+                    response.ERROR.toString();
+                }
+                return container[index - 1];
+            } catch (IndexOutOfBoundsException e) {
+                return response.ERROR.toString();
+            }
+        }
+
+        public String set(int index, String string) {
+            try {
+                container[index - 1] = string;
+                return response.OK.toString();
+            } catch (NullPointerException e) {
+                return response.ERROR.toString();
+            } catch (IndexOutOfBoundsException e) {
+                return response.ERROR.toString();
+            }
+        }
+
+        public String delete(int index) {
+            try {
+                container[index - 1] = null;
+                return response.OK.toString();
+            } catch (NullPointerException e) {
+                return response.ERROR.toString();
+            } catch (IndexOutOfBoundsException e) {
+                return response.ERROR.toString();
+            }
+        }
+    }
+  learner_created: true
+- name: bin/test/JsonFinder.class
+  visible: true
+  learner_created: true
+- name: src/client/Args.java
+  visible: true
+  text: |
+    package client;
+
+    import com.beust.jcommander.Parameter;
+    import java.util.ArrayList;
+    import java.util.List;
+
+    public class Args {
+        @Parameter
+        protected List<String> parameters = new ArrayList<>();
+
+        @Parameter(names = "-t")
+        protected String command;
+
+        @Parameter(names = "-i")
+        protected String index;
+
+        @Parameter(names = "-m")
+        protected String message;
+    }
+  learner_created: true
+- name: src/utils/Command.java
+  visible: true
+  text: |
+    package utils;
+
+    public interface Command {
+        void execute();
+    }
+  learner_created: true
+- name: src/server/data/data.json
+  visible: true
+  learner_created: true
+feedback_link: https://hyperskill.org/projects/65/stages/353/implement#comment
+status: Solved
+feedback:
+  message: Congratulations!
+  time: Fri, 11 Dec 2020 16:11:04 UTC
+record: -1

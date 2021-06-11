@@ -1,0 +1,19 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    class Car {
+
+        int yearModel;
+        String make;
+        int speed;
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/2988#comment
+status: Solved
+feedback:
+  message: <html>Correct solution<br/><br/>Continue on <a href="https://hyperskill.org/learn/step/2988#comment">JetBrains
+    Academy</a></html>
+  time: Tue, 17 Nov 2020 10:09:26 UTC
+record: -1
