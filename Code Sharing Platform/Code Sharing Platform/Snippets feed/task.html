@@ -1,0 +1,90 @@
+<h2>Description</h2>
+
+<p>In this stage, you are going to use a specific tool to generate HTML: <strong>template engine</strong>. It will help you connect your Java content with the HTML content easily. </p>
+
+<p>Use the following dependency in the <code class="language-json">build.gradle</code> file to be able to use FreeMarker:</p>
+
+<pre><code class="language-no-highlight">implementation 'org.springframework.boot:spring-boot-starter-freemarker'</code></pre>
+
+<p>In this stage, you need to store all the code snippets that have been uploaded to the program. To get an individual snippet, you need to use <code class="language-json">GET /code/N</code> and <code class="language-json">GET /api/code/N</code> endpoints, where <code class="language-json">N</code> is the code snippet number starting from 1. <code class="language-json">GET /code</code> and <code class="language-json">GET /api/code</code> endpoints should no longer be accessible. For now, store the code snippets in the memory: we will start storing them in a database later.</p>
+
+<p>Your program should also be able to show the latest uploaded code snippets: use the endpoints <code class="language-json">GET /code/latest</code> and <code class="language-json">GET /api/code/latest</code> for this.</p>
+
+<h2>Objectives</h2>
+
+<p>In this stage, your program should support the following endpoints:</p>
+
+<ul>
+	<li><code class="language-json">GET /api/code/N</code> should return JSON with the N-th uploaded code snippet.<br>
+	 </li>
+	<li><code class="language-json">GET /code/N</code> should return HTML that contains the N-th uploaded code snippet.<br>
+	 </li>
+	<li><code class="language-json">POST /api/code/new</code> should take a JSON object with a single field <code class="language-json">code</code>, use it as the current code snippet, and return JSON with a single field <code class="language-json">id</code>. ID is the unique number of the snippet that helps you access it via the endpoint <code class="language-json">GET /code/N</code>.<br>
+	 </li>
+	<li><code class="language-json">GET /code/new</code> should be the same as in the previous stage.<br>
+	 </li>
+	<li><code class="language-json">GET /api/code/latest</code> should return a JSON array with 10 most recently uploaded code snippets sorted from the newest to the oldest.<br>
+	 </li>
+	<li><code class="language-json">GET /code/latest</code> should return HTML that contains 10 most recently uploaded code snippets. Use the title <code class="language-json">Latest</code> for this page.</li>
+</ul>
+
+<h2>Examples</h2>
+
+<p>In the examples below, consider that no code snippets have been uploaded beforehand.</p>
+
+<p><strong>Example 1</strong></p>
+
+<p>Request <code class="language-json">POST /api/code/new</code> with the following body:</p>
+
+<pre><code class="language-json">{ "code": "class Code { ..." }</code></pre>
+
+<p>Response: <code class="language-json">{ "id" : "1" }</code>.</p>
+
+<p>Another request <code class="language-json">POST /api/code/new</code> with the following body:</p>
+
+<pre><code class="language-json">{ "code": "public static void ..." }</code></pre>
+
+<p>Response: <code class="language-json">{ "id" : "2" }</code>.</p>
+
+<p><strong>Example 2</strong></p>
+
+<p>Request: <code class="language-json">GET /api/code/1</code> <br>
+Response:</p>
+
+<pre><code class="language-json">{
+    "code": "class Code { ...",
+    "date": "2020/05/05 11:59:12"
+}</code></pre>
+
+<p><strong>Example 3</strong></p>
+
+<p>Request: <code class="language-json">GET /api/code/2</code> <br>
+Response:</p>
+
+<pre><code class="language-json">{
+    "code": "public static void ...",
+    "date": "2020/05/05 12:00:43"
+}</code></pre>
+
+<p><strong>Example 4</strong></p>
+
+<p>Request: <code class="language-json">GET /api/code/latest</code><br>
+Response:</p>
+
+<pre><code class="language-json">[
+    {
+        "code": "public static void ...",
+        "date": "2020/05/05 12:00:43"
+    },
+    {
+        "code": "class Code { ...",
+        "date": "2020/05/05 11:59:12"
+    }
+]</code></pre>
+
+<p><strong>Example 5</strong></p>
+
+<p>Request: <code class="language-json">GET /code/latest</code><br>
+Response:</p>
+
+<p><img alt="" height="292" src="https://ucarecdn.com/30756489-c79d-48df-b837-6f2a14f5a996/" width="492"></p>

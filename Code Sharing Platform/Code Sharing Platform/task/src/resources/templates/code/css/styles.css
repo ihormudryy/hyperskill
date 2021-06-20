@@ -1,0 +1,10 @@
+span, .load_dates {
+    color: rgb(18, 27, 104);
+}
+
+textarea, .code_snippets {
+    border-style: solid;
+    background-color: gray;
+    margin: auto;
+    width: 90%;
+}

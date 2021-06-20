@@ -1,0 +1,45 @@
+<h2>Overview of the basic program</h2>
+<html>
+ <head></head>
+ <body>
+  <p>In this topic, you will learn how to develop your first JS script. These programs are quite simple yet functional, so they do a good job showing that programming in JavaScript is an easy and enjoyable activity. However, there are caveats and difficulties everywhere, so we will also look at some common programming errors so that you can successfully avoid them.</p> 
+  <h2 style="text-align: center;">Hello, World!</h2> 
+  <p>When learning any programming language, it is a kind of a tradition to start with writing a program that displays a message <code class="language-javascript">"Hello, World!"</code> on the screen or on another device. And who are we to break traditions?</p> 
+  <pre><code class="language-javascript">console.log("Hello, World!");</code></pre> 
+  <p>You may <a target="_blank" href="https://repl.it/languages/javascript" rel="nofollow noopener noreferrer">run</a> this code: just copy it and click on the triangle. You should get this result:</p> 
+  <pre><code class="language-no-highlight">Hello, World!</code></pre> 
+  <p>As you can see, the script consists of one line and simply prints the text passed in brackets. Note that quotes are also ignored when outputting the result. This code is very simple, but deserves detailed consideration.</p> 
+  <h2 style="text-align: center;">Explanation</h2> 
+  <p>Here <code class="language-javascript">console.log</code> is a function. A<strong> function</strong> is a block of code that performs useful work for you, such as printing text. In a way, a function is a subroutine that can be reused in your programs. When a function name is followed by parentheses, it means that it has been <strong>called</strong> to get the result. <code class="language-javascript">console.log</code> allows you to output information to the console, so this function is often used to find errors in the code.</p> 
+  <p>Moving on: <code class="language-javascript">"Hello, World!"</code> is a <strong>string</strong>. All strings in JavaScript are enclosed in single or double quotes, so <code class="language-javascript">'Hello, World!'</code> would also be a valid string. See for yourself – try to run the following code:</p> 
+  <pre><code class="language-javascript">console.log('JavaScript');</code></pre> 
+  <p>This program will print:</p> 
+  <pre><code class="language-no-highlight">JavaScript</code></pre> 
+  <h2 style="text-align: center;">Printing quotes</h2> 
+  <p>If you want to include quotes in a string, there are two ways to avoid the confusion and successfully print them:</p> 
+  <ul> 
+   <li>You can quote this line in other types of quotes, for example:</li> 
+  </ul> 
+  <pre><code class="language-javascript">console.log("Yes, I'm ready to learn JS.");</code></pre> 
+  <ul> 
+   <li>Or put a backslash (<code class="language-javascript">\</code>) before the quote:</li> 
+  </ul> 
+  <pre><code class="language-javascript">console.log('Yes, I\'m ready to learn JS.');</code></pre> 
+  <p>The result of both will be as follows:</p> 
+  <pre><code class="language-no-highlight">Yes, I'm ready to learn JS.</code></pre> 
+  <p>It'll work with other types of quotes, too. You can try <a target="_blank" href="https://repl.it/languages/javascript" rel="noopener noreferrer nofollow">running</a> all the examples to better familiarize yourself with JS.</p> 
+  <h2 style="text-align: center;">Possible errors</h2> 
+  <p>Even in simple code lines, errors happen. The most common are:</p> 
+  <ul> 
+   <li><strong>misprints</strong></li> 
+  </ul> 
+  <pre><code class="language-javascript">consle.log("Hello, World!");</code></pre> 
+  <p>This line contains <code class="language-javascript">consle.log</code> instead of <code class="language-javascript">console.log</code>. This code will not work because of a misprint.</p> 
+  <ul> 
+   <li><strong>missing one or both quotes for a string</strong></li> 
+  </ul> 
+  <pre><code class="language-javascript">console.log(JavaScript);</code></pre> 
+  <p>This does not work because of missing closing quotes.</p>
+ </body>
+</html>
+<a href="https://hyperskill.org/learn/step/8154">Show topic summary</a>

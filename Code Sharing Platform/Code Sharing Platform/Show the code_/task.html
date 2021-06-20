@@ -1,0 +1,67 @@
+<h2>Description</h2>
+
+<p>Sometimes, it's useful to have a tool that can help you share a piece of code with other programmers. Actually, there is a <a target="_blank" href="https://pastebin.com/" rel="noopener noreferrer nofollow">website called Pastebin</a> that does exactly that. A huge downside of Pastebin is that every piece of code you share automatically becomes available for the public. This could present a problem since many programmers work under the NDA (Non-disclosure agreement) which prohibits the use of such services to prevent the source code from leaking.</p>
+
+<p>If there is a team of programmers who work in the same company and want to exchange pieces of code, they can solve this problem by using their own implementation of Pastebin. Such a web service is supposed to be accessible only locally, not via the Internet. In this project, you will write a service just like that.</p>
+
+<p>As you're working on the project, you will implement two types of interfaces: API and web interface. The API interface should be accessed through endpoints that start with <code class="language-html">/api</code> while web interface endpoints should start with <code class="language-html">/</code>. The API interface should return data as <code class="language-html">JSON</code>, while the web interface should use <code class="language-html">HTML</code>, <code class="language-html">JS</code>, and <code class="language-html">CSS</code>.</p>
+
+<h2>Objectives</h2>
+
+<p>In the first stage, you need to develop a program that returns the same piece of code via the API and the web interface.</p>
+
+<p>Implement two endpoints:</p>
+
+<ul>
+	<li><code class="language-html">GET /code</code> that should:</li>
+</ul>
+
+<ol>
+	<li>Return HTML that contains tags <code class="language-html">&lt;pre&gt;</code> with a piece of code inside and the title <code class="language-html">Code</code>;</li>
+	<li>Respond with a header <code class="language-html">Content-Type</code> with the value <code class="language-html">text/html</code>.</li>
+</ol>
+
+<ul>
+	<li><code class="language-html">GET /api/code</code> that should:</li>
+</ul>
+
+<ol>
+	<li>Return a JSON object with a single field <code class="language-html">code</code> that contains the same piece of code;</li>
+	<li>Respond with a header <code class="language-html">Content-Type</code> with the value <code class="language-html">application/json</code>.</li>
+</ol>
+
+<p>In the upcoming stages, <code class="language-html">Content-Type</code> of all the API endpoints should be equal to <code class="language-html">application/json</code>, and of all the web endpoints should be equal to <code class="language-html">text/html</code>.</p>
+
+<p>Try to avoid duplicating the piece of code you return. Use the same object to construct both requests.</p>
+
+<p>If you need some extra guidance on setting headers to the response, check out a comprehensive <a target="_blank" href="https://www.baeldung.com/spring-response-header" rel="noopener noreferrer nofollow">tutorial at baeldung.com</a>.</p>
+
+<h2>Examples</h2>
+
+<p><strong>Example 1</strong></p>
+
+<p>Request: <code class="language-html">GET /code</code><br>
+Response (you can use your own piece of code):</p>
+
+<pre><code class="language-html">&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Code&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;pre&gt;
+public static void main(String[] args) {
+    SpringApplication.run(CodeSharingPlatform.class, args);
+}&lt;/pre&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+<p>Notice that the piece of code doesn't contain spaces before the lines: <code class="language-html">&lt;pre&gt;</code> tags render such spaces, so keep that in mind.</p>
+
+<p><strong>Example 2</strong></p>
+
+<p>Request: <code class="language-html">GET /api/code</code><br>
+Response:</p>
+
+<pre><code class="language-json">{
+    "code": "public static void main(String[] args) {\n    SpringApplication.run(CodeSharingPlatform.class, args);\n}"
+}</code></pre>

@@ -1,0 +1,180 @@
+type: edu
+custom_name: Show the code!
+files:
+- name: src/platform/CodeSharingPlatform.java
+  visible: true
+  text: |
+    package platform;
+
+    import org.springframework.boot.SpringApplication;
+    import org.springframework.boot.autoconfigure.SpringBootApplication;
+    import org.springframework.web.bind.annotation.RestController;
+
+    @SpringBootApplication
+    @RestController
+    public class CodeSharingPlatform {
+
+        public static void main(String[] args) {
+            SpringApplication.run(CodeSharingPlatform.class, args);
+        }
+
+    }
+  learner_created: false
+- name: build.gradle
+  visible: true
+  text: |
+    plugins {
+        id 'org.springframework.boot' version '2.3.3.RELEASE'
+        id 'java'
+    }
+
+    apply plugin: 'io.spring.dependency-management'
+
+    sourceCompatibility = 11
+
+    repositories {
+        mavenCentral()
+    }
+
+    sourceSets.main.resources.srcDirs = ["src/resources"]
+
+    dependencies {
+        implementation 'org.springframework.boot:spring-boot-starter'
+        implementation 'org.springframework.boot:spring-boot-starter-actuator'
+        compile("org.springframework.boot:spring-boot-starter-web")
+    }
+  learner_created: false
+- name: src/resources/application.properties
+  visible: true
+  text: |
+    server.port=8889
+    management.endpoints.web.exposure.include=*
+    management.endpoint.shutdown.enabled=true
+  learner_created: false
+- name: test/CodeSharingPlatformTest.java
+  visible: false
+  text: |
+    import org.hyperskill.hstest.dynamic.input.DynamicTesting;
+    import org.hyperskill.hstest.dynamic.input.DynamicTestingMethod;
+    import org.hyperskill.hstest.exception.outcomes.WrongAnswer;
+    import org.hyperskill.hstest.mocks.web.response.HttpResponse;
+    import org.hyperskill.hstest.stage.SpringTest;
+    import org.hyperskill.hstest.testcase.CheckResult;
+    import org.jsoup.Jsoup;
+    import org.jsoup.nodes.Document;
+    import org.jsoup.nodes.Element;
+    import org.jsoup.select.Elements;
+    import platform.CodeSharingPlatform;
+
+    import static org.hyperskill.hstest.testing.expect.Expectation.expect;
+    import static org.hyperskill.hstest.testing.expect.json.JsonChecker.isObject;
+    import static org.hyperskill.hstest.testing.expect.json.JsonChecker.isString;
+
+    public class CodeSharingPlatformTest extends SpringTest {
+        public CodeSharingPlatformTest() {
+            super(CodeSharingPlatform.class);
+        }
+
+        String API_CODE = "/api/code";
+        String WEB_CODE = "/code";
+
+        static void checkStatusCode(HttpResponse resp, int status) {
+            if (resp.getStatusCode() != status) {
+                throw new WrongAnswer(
+                    resp.getRequest().getMethod() + " " +
+                        resp.getRequest().getLocalUri() +
+                        " should respond with status code " + status + ", " +
+                        "responded: " + resp.getStatusCode() + "\n\n" +
+                        "Response body:\n\n" + resp.getContent()
+                );
+            }
+        }
+
+        @DynamicTestingMethod
+        public DynamicTesting[] dt = new DynamicTesting[] {
+            this::getApiCode,
+            this::checkApiCode,
+            this::checkWebCode,
+        };
+
+        String apiSnippet;
+
+        private CheckResult getApiCode() {
+            HttpResponse resp = get(API_CODE).send();
+            checkStatusCode(resp, 200);
+
+            expect(resp.getContent()).asJson().check(
+                isObject()
+                    .value("code", isString(value -> {
+                        apiSnippet = value;
+                        return true;
+                    }))
+            );
+
+            return CheckResult.correct();
+        }
+
+        private CheckResult checkApiCode() {
+            HttpResponse resp = get(API_CODE).send();
+            checkStatusCode(resp, 200);
+
+            expect(resp.getContent()).asJson().check(
+                isObject()
+                    .value("code", isString(value -> apiSnippet.equals(value)))
+            );
+
+            return CheckResult.correct();
+        }
+
+        private CheckResult checkWebCode() {
+            HttpResponse resp = get(WEB_CODE).send();
+            checkStatusCode(resp, 200);
+
+            String html = resp.getContent();
+            Document doc = Jsoup.parse(html);
+
+            if (!doc.title().equals("Code")) {
+                return CheckResult.wrong("GET " + WEB_CODE +
+                    " should contain title \"Code\"");
+            }
+
+            Elements pre = doc.getElementsByTag("pre");
+
+            if (pre.size() != 1) {
+                return CheckResult.wrong("GET " + WEB_CODE +
+                    " should contain a single <pre> element, found: " + pre.size());
+            }
+
+            Element tag = pre.get(0);
+            String webSnippet = tag.text();
+
+            if (!webSnippet.trim().equals(apiSnippet.trim())) {
+                return CheckResult.wrong("Web code snippet " +
+                    "and api code snippet are different");
+            }
+
+            return CheckResult.correct();
+        }
+    }
+  learner_created: false
+- name: src/resources/static/index.html
+  visible: true
+  learner_created: true
+- name: src/resources/static/response.json
+  visible: true
+  learner_created: true
+- name: src/platform/controllers/CodeController.java
+  visible: true
+  learner_created: true
+- name: src/utils/FileUtils.java
+  visible: true
+  learner_created: true
+- name: src/model/Code.java
+  visible: true
+  learner_created: true
+feedback_link: https://hyperskill.org/projects/130/stages/692/implement#comment
+status: Solved
+feedback:
+  message: Congratulations!
+  time: Sat, 12 Jun 2021 16:56:02 UTC
+record: 1

@@ -1,0 +1,12 @@
+type: hyperskill
+title: Code Sharing Platform
+language: English
+summary: 'There is a lot of collaboration in programming: many projects require sharing
+  your code with other developers. Using open web resources such as Pastebin is not
+  always an option. In this project, you will create your own secure version of a
+  code-sharing platform.<br/><br/>Learn more at <a href="https://hyperskill.org">https://hyperskill.org/projects/130</a>'
+programming_language: Java
+programming_language_version: 11
+content:
+- Code Sharing Platform
+mode: Study
