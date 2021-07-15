@@ -1,0 +1,101 @@
+<h2>Detecting annotations</h2>
+<html>
+ <head></head>
+ <body>
+  <p>We've already learned what annotations are and when they are used. Do you remember any of them? The most used ones in the Java library are <code class="language-java">@Deprecated</code> and <code class="language-java">@Override</code>, but there are many other annotations in third-party libraries. For example, the Spring library has lots of them, and there's a useful <code class="language-java">@Test</code> annotation for testing Java classes. You can quickly go through <a target="_blank" href="https://dzone.com/articles/key-java-annotations-to-build-full-spring-boot-res" rel="noopener noreferrer nofollow">this page's code examples</a> just to see how often they might be used in practice. Now let's find out how they actually work and what magic happens when they are present.</p> 
+  <h2><code class="language-java">getDeclaredAnnotations</code> method</h2> 
+  <p>Actually, annotations are just markers: they indicate that some class, method, or field has special properties. These annotations are further analyzed with the help of reflection when compiling or running the program.</p> 
+  <p>Let's look at the following class:</p> 
+  <pre><code class="language-java">class Item {
+    @Deprecated
+    public static final int maxItems = 100;
+    public static int inStock = 19;
+
+    private String name;
+    protected int basePrice;
+
+    public Item(String name, int basePrice) {
+        this.name = name;
+        this.basePrice = basePrice;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getPrice() {
+        return (int) (basePrice * getMarkUp());
+    }
+
+    public boolean haveSuchAmount(@Deprecated int amount) {
+        return inStock &gt;= amount;
+    }
+
+    @Deprecated
+    protected double getMarkUp() {
+        double markUp = 0.1;
+        // ... connecting to the remote server
+        return 1 + markUp;
+    }
+
+    @Override
+    public String toString() {
+        return getName() + " " + getPrice();
+    }
+}</code></pre> 
+  <p>It has three <code class="language-java">@Deprecated</code> annotations and one <code class="language-java">@Override</code> annotation. Let's try to analyze them by using reflection.</p> 
+  <p>For working with annotations, <code class="language-java">Class</code>, <code class="language-java">Method</code>, <code class="language-java">Field</code> and <code class="language-java">Constructor</code> classes have the <code class="language-java">getDeclaredAnnotations()</code> method, that returns an array of <code class="language-java">Annotation</code> objects. This method returns an array, not an object because multiple annotations can be applied to a single field or method. If you follow the link above, the first example there will contain a huge pile of six annotations before the class!</p> 
+  <p>The <code class="language-java">Annotation</code> class provides a useful method called <code class="language-java">annotationType</code> that returns a <code class="language-java">Class</code> object representing the annotation. It can be useful if you need to access all elements of the annotation or just get its name.</p> 
+  <h2>Code example</h2> 
+  <p>Let’s execute the following code. Here we go through all the names of methods and fields of our <code class="language-java">ItemClass</code> and apply the <code class="language-java">getDeclaredAnnotations()</code> method to get their annotations and print them next to the respective names: </p> 
+  <pre><code class="language-java">Class itemClass = Item.class;
+
+for (Field field : itemClass.getDeclaredFields()) {
+    for (Annotation annotation : field.getDeclaredAnnotations()) {
+        System.out.print(annotation + " - ");
+    }
+    System.out.println(field.getName());
+}
+
+for (Method method : itemClass.getDeclaredMethods()) {
+    for (Annotation annotation : method.getDeclaredAnnotations()) {
+        System.out.print(annotation + " - ");
+    }
+    System.out.println(method.getName());
+}</code></pre> 
+  <p>Take a look at the output:</p> 
+  <pre><code class="language-no-highlight">@java.lang.Deprecated(forRemoval=false, since="") - maxItems
+inStock
+name
+basePrice
+toString
+getName
+@java.lang.Deprecated(forRemoval=false, since="") - getMarkUp
+getPrice
+haveSuchAmount</code></pre> 
+  <p>You can see that though we had three instances of annotations in our class, we manage to output only two of them. <code class="language-java">@Deprecated</code> appeared in line with<code class="language-java">maxItems</code> field and <code class="language-java">getMarkUp</code> method as we might have expected. However, for some reason, there is no <code class="language-java">@Override toString</code> line in here. Let’s try to find out why by ourselves and this way learn more about annotations and reflection. We may suppose that the absence of @Override has to do with its method: actually, <code class="language-java">toString</code> is not declared in this class, but in the <code class="language-java">Object</code>. To check our hypotheses let’s use another method for getting class methods <code class="language-java">getMethods</code>. As you probably remember, it returns all public methods of the class, including the inherited ones. </p> 
+  <pre><code class="language-java">for (Method method : itemClass.getMethods()) {
+    for (Annotation annotation : method.getDeclaredAnnotations()) {
+        System.out.print(annotation + " - ");
+    }
+    System.out.println(method.getName());
+}</code></pre> 
+  <p>If our suggestion is correct, this time we will get the <code class="language-java">@Override</code> annotation for <code class="language-java">toString</code>method. But look what we get by the above snippet: </p> 
+  <pre><code class="language-no-highlight">toString
+getName
+getPrice
+haveSuchAmount
+wait
+wait
+wait
+equals
+@jdk.internal.HotSpotIntrinsicCandidate() - hashCode
+@jdk.internal.HotSpotIntrinsicCandidate() - getClass
+@jdk.internal.HotSpotIntrinsicCandidate() - notify
+@jdk.internal.HotSpotIntrinsicCandidate() - notifyAll</code></pre> 
+  <p>Still, something is not right! As you see, we now got four methods with unfamiliar annotations, and the <code class="language-java">toString</code> method still has no annotation. Let’s not focus on the ones containing the words <em>jdk </em>and <em>internal</em>, we have no intention to go there for now and just reproduce them for the sake of credibility. Note that this time we didn’t get <code class="language-java">getMarkUp</code> method at all since it is <em>protected</em>.</p> 
+  <p>Hence we may conclude that the reason lies in the nature of the annotation itself. Indeed, <code class="language-java">@Override</code> annotation is a compile-time annotation and is not present when the program is running. While <code class="language-java">@Deprecated</code> is present during the execution of the program, which means that it is a runtime annotation.</p> 
+  <h2>Conclusion</h2> 
+  <p>Reflection package provides functionality to retrieve annotations from the source code. <code class="language-java">Class</code>, <code class="language-java">Field</code> and <code class="language-java">Method</code> classes have the <code class="language-java">getDeclaredAnnotations</code> method, which returns a list of configured runtime annotations. Other annotations are not available at runtime because the compiler erases them.</p>
+ </body>
+</html>

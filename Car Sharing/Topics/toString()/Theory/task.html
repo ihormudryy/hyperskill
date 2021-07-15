@@ -1,0 +1,165 @@
+<h2>toString()</h2>
+<html>
+ <head></head>
+ <body>
+  <h2 style="text-align: center;">Using default toString</h2> 
+  <p>The root Java class <code class="language-java">Object</code> has the <code class="language-java">toString()</code> method to get the string representation of an object. If you'd like to have a string representation, override this method in your class.</p> 
+  <p>First, let's consider an example based on the default <code class="language-java">toString()</code> implementation provided by the <code class="language-java">Object</code> class.</p> 
+  <p>This is the <code class="language-java">Account</code> class. It has three fields and one constructor.</p> 
+  <pre><code class="language-java">class Account {
+
+    private long id;
+    private String code;
+    private Long balance;
+
+    public Account(long id, String code, Long balance) {
+        this.id = id;
+        this.code = code;
+        this.balance = balance;
+    }
+    
+    // getters and setters
+}</code></pre> 
+  <p>Let's create an instance of the class and get the string representation of that instance:</p> 
+  <pre><code class="language-java">Account account = new Account(1121, "111-123", 400_000L);
+
+String accString = account.toString(); // org.demo.example.Account@27082746</code></pre> 
+  <p>A string like <code class="language-java">org.demo.example.Account@27082746</code> is not exactly what we would like to see. What we got here is the full class name and the hashcode of the object. This is the default behavior of the method <code class="language-java">toString()</code>.</p> 
+  <h2 style="text-align: center;">Overriding toString when declaring a class</h2> 
+  <p>If we want to include fields in the string representation of an object, we should override the standard behavior of the <code class="language-java">toString()</code> method.</p> 
+  <p>Here is another version of the <code class="language-java">Account</code> class where we've overridden the <code class="language-java">toString()</code> method:</p> 
+  <pre><code class="language-java">class Account {
+
+    private long id;
+    private String code;
+    private Long balance;
+
+    public Account(long id, String code, Long balance) {
+        this.id = id;
+        this.code = code;
+        this.balance = balance;
+    }
+    
+    // getters and setters
+
+    @Override
+    public String toString() {
+        return "Account{id=" + id + ",code=" + code + ",balance=" + balance + "}";
+    }
+}</code></pre> 
+  <p>Let's create an instance of this class and get the string representation of the instance: </p> 
+  <pre><code class="language-java">Account account = new Account(1121, "111-123", 400_000L);
+
+String accString = account.toString(); // Account{id=1121,code=111-123,balance=400000}</code></pre> 
+  <p>Compared to the default string representation, this one gives us more information about the object and its attributes.</p> 
+  <p>String representations are very useful for debugging and logging. You can use the <code class="language-java">toString()</code> method to display a string representation of an object in the standard output:</p> 
+  <pre><code class="language-java">// option 1
+System.out.println(account.toString());
+
+// option 2
+System.out.println(account);</code></pre> 
+  <p>Some modern IDEs, such as <em>IntelliJ IDEA</em>, allow generating the overridden <code class="language-java">toString()</code> method automatically. This is very convenient if your class has a lot of fields.</p> 
+  <h2 style="text-align: center;">Overriding toString when subclassing</h2> 
+  <p>If you have a class hierarchy you can also override <code class="language-java">toString()</code>.</p> 
+  <p>Here is a hierarchy of two classes:</p> 
+  <ul> 
+   <li><code class="language-java">Person</code> with a single string field <code class="language-java">name</code>;</li> 
+   <li><code class="language-java">Employee</code> that extends <code class="language-java">Person</code> and adds the field <code class="language-java">salary</code>.</li> 
+  </ul> 
+  <pre><code class="language-java">class Person {
+
+    protected String name;
+
+    public Person(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Person{name=" + name + "}";
+    }
+}
+
+class Employee extends Person {
+
+    protected long salary;
+
+    public Employee(String name, long salary) {
+        super(name);
+        this.salary = salary;
+    }
+
+    @Override
+    public String toString() {
+        return "Employee{name=" + name + ",salary=" + salary + "}";
+    }
+}</code></pre> 
+  <p>It is considered to be a good practice to include the class name in the string representation when working with hierarchies.</p> 
+  <p>Let's create objects of these two classes and print them as strings:</p> 
+  <pre><code class="language-java">Person person = new Person("Helena");
+Employee employee = new Employee("Michael", 10_000);
+
+System.out.println(person);   // Person{name=Helena}
+System.out.println(employee); // Employee{name=Michael,salary=10000}</code></pre> 
+  <h2 style="text-align: center;">Possible problems when overriding toString</h2> 
+  <p>Overriding the <code class="language-java">toString()</code> method so far looks very simple but what if your class has another class as a type of a field? Sometimes it may cause an error.</p> 
+  <p>See the following example with <code class="language-java">Person</code> and <code class="language-java">Passport</code> classes. We do not include getters and setters in the code to make it more compact.</p> 
+  <pre><code class="language-java">class Person {
+
+    private String name;
+    private Passport passport;
+    
+    // getters and setters
+    
+    @Override
+    public String toString() {
+        return "Person{name='" + name + ",passport=" + passport + "}";
+    }
+}
+
+class Passport {
+    
+    private String country;
+    private String number;
+    
+    // getters and setters
+
+    @Override
+    public String toString() {
+        return "Passport{country=" + country + ",number=" + number + "}";
+    }
+}</code></pre> 
+  <p><br> If a person has no passport (<code class="language-java">null</code>), the string representation will contain <code class="language-java">null</code>.</p> 
+  <p>Here is an example of two objects.</p> 
+  <pre><code class="language-java">Passport passport = new Passport();
+passport.setNumber("4343999");
+passport.setCountry("Austria");
+
+Person person = new Person();
+person.setName("Michael");
+System.out.println(person);  // first print
+
+person.setPassport(passport);
+System.out.println(person);  // second print</code></pre> 
+  <p>This code prints:</p> 
+  <pre><code class="language-java">Person{name=Michael,passport=null} // first print
+Person{name=Michael, passport=Passport{country=Austria, number=4343999}} // second print</code></pre> 
+  <p>It works very well, no problems here! But what if the passport has the backward reference to the person and tries to get the string representation of the person?</p> 
+  <p>Let's add the following field and the corresponding setter to the class <code class="language-java">Passport</code> :</p> 
+  <pre><code class="language-java">private Person owner;</code></pre> 
+  <p>Let's also modify the <code class="language-java">toString()</code> method as follows:</p> 
+  <pre><code class="language-java">@Override
+public String toString() {
+    return "Passport{country=" + country + ",number=" + number + ",owner=" + owner + "}";
+}</code></pre> 
+  <p>When we create two objects let's set the owner to the passport:</p> 
+  <pre><code class="language-java">passport.setOwner(person);</code></pre> 
+  <p>Now we get the big problem — the program tries to get the string representation of the person that includes the string representation of passport that includes the string representation of the person. It causes <code class="language-java">java.lang.StackOverflowError</code>.</p> 
+  <p>There are several ways to fix this situation:</p> 
+  <ul> 
+   <li>do not include fields represented by your classes in the <code class="language-java">toString()</code> method;</li> 
+   <li>exclude the field in the <code class="language-java">toString()</code> method from one of the classes.</li> 
+  </ul> 
+  <p>So, be careful when including fields in the <code class="language-java">toString</code> method. Consider references between classes. If you don't need any information, it's better to exclude it. It will save you from fatal mistakes in the long run.</p>
+ </body>
+</html>

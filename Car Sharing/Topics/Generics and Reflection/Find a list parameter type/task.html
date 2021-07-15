@@ -1,0 +1,16 @@
+<h2>Find a list parameter type</h2>
+<html>
+ <head></head>
+ <body>
+  <p>There is a class <code class="java">TestClass</code> that has a field of <code class="java">List</code> type. Unfortunately, we don't know a type of the List's parameter:</p> 
+  <pre><code class="java">class TestClass {
+    ...
+    public List&lt;UNKNOWN_TYPE&gt; listField;
+    ..
+}</code></pre> 
+  <p>To obtain it, let's implement <code class="java">printParameterType</code> method that accepts an instance of <code class="java">TestClass</code> and the name of its field. The method should print a full name of the parameter type (package + class name).</p>
+ </body>
+</html><br><b>Sample Input:</b><br><pre><code class="language-no-highlight">stringField</code></pre><br><b>Sample Output:</b><br><pre><code class="language-no-highlight">java.lang.String</code></pre><br><br><br><font color="gray">Memory limit: 256 MB</font><br><font color="gray">Time limit: 8 seconds</font><br><br>
+<b>Caution</b><br><br>
+You may see errors in your code or execution results due to missing context. Don’t worry about it, just write the solution and press Check.
+<br><br>

@@ -1,0 +1,16 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    class Box //...finish the code of the class
+
+    // Don't change the code below
+    class Animal {}
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/9884#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Fri, 09 Jul 2021 12:50:42 UTC
+record: -1

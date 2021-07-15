@@ -1,0 +1,19 @@
+<h2>How many type variables defined?</h2>
+<html>
+ <head></head>
+ <body>
+  <p>Here is a class <code class="java">TestClass</code> that has a method with declared type variables:</p> 
+  <pre><code class="java">class TestClass {
+    ...
+    public &lt;A, B, C, ...&gt; void someMethod() {
+        //
+    }
+    ..
+}</code></pre> 
+  <p>Implement <code class="java">printTypeVariablesCount</code> method that accepts an instance of <code class="java">TestClass</code> and the name of its method.</p> 
+  <p>The method should print the number of type variables.</p>
+ </body>
+</html><br><b>Sample Input:</b><br><pre><code class="language-no-highlight">&lt;T&gt; void singleTypeMethod</code></pre><br><b>Sample Output:</b><br><pre><code class="language-no-highlight">1</code></pre><br><br><b>Sample Input:</b><br><pre><code class="language-no-highlight">&lt;K, V&gt; void twoTypesMethod</code></pre><br><b>Sample Output:</b><br><pre><code class="language-no-highlight">2</code></pre><br><br><br><font color="gray">Memory limit: 256 MB</font><br><font color="gray">Time limit: 8 seconds</font><br><br>
+<b>Caution</b><br><br>
+You may see errors in your code or execution results due to missing context. Don’t worry about it, just write the solution and press Check.
+<br><br>

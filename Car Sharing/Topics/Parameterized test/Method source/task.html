@@ -1,0 +1,27 @@
+<h2>Method source</h2>
+<html>
+ <head></head>
+ <body>
+  <p>Your task is to support testing of a <a target="_blank" href="https://en.wikipedia.org/wiki/Prime_number" rel="noopener noreferrer nofollow">prime number</a> checker that checks if the given number in the range from 10 to 1000, inclusive, is prime or not:</p> 
+  <pre><code class="language-java">class IntUtils {
+    public static boolean isPrimeIn10To1000(int number) {
+        // some sophisticated math that only math nerds can comprehend
+    }
+}</code></pre> 
+  <p>Here is the almost ready to use test method:</p> 
+  <pre><code class="language-java">class CalculatorTests {
+
+    @ParameterizedTest
+    @MethodSource("TestHelper#primeGenerator")
+    void testIsPrimeInRange(int number) {
+        assertTrue(number &gt;= 10);
+        assertTrue(number &lt;= 1000);
+        assertTrue(IntUtils.isPrimeIn10To1000(number));
+    }
+}</code></pre> 
+  <p>Now you must implement <code class="language-java">primeGenerator</code>, a <code class="language-java">public static</code> method in the <code class="language-java">TestHelper</code> class that should return an array of at least 40 unique prime numbers within the range from 10 to 1000.</p>
+ </body>
+</html><br><br><font color="gray">Memory limit: 256 MB</font><br><font color="gray">Time limit: 8 seconds</font><br><br>
+<b>Caution</b><br><br>
+You may see errors in your code or execution results due to missing context. Don’t worry about it, just write the solution and press Check.
+<br><br>

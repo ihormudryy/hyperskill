@@ -1,0 +1,266 @@
+type: edu
+custom_name: stage3
+files:
+- name: src/crawler/ApplicationRunner.java
+  visible: true
+  text: |
+    package crawler;
+
+
+    public class ApplicationRunner {
+        public static void main(String[] args) {
+            new WebCrawler();
+        }
+    }
+  learner_created: false
+- name: src/crawler/WebCrawler.java
+  visible: true
+  text: |-
+    package crawler;
+
+    import javax.swing.*;
+
+    public class WebCrawler extends JFrame {
+        public WebCrawler() {
+            setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            setSize(300, 300);
+            setVisible(true);
+        }
+    }
+  learner_created: false
+- name: test/PageContent.java
+  visible: false
+  text: "import java.util.HashMap;\nimport java.util.Map;\n\npublic class PageContent\
+    \ {\n    private Map<String, String> linksNContent;\n    private Map<String, String>\
+    \ linksNTitles;\n    public PageContent(){\n        linksNContent = new HashMap<>();\n\
+    \        linksNTitles = new HashMap<>();\n        initPageContent();\n    }\n\
+    \    \n    private void initPageContent() {\n        //Links\n        String exampleDomainLink\
+    \ = \"http://localhost:25555/exampleDotCom\";\n        String circular1Link =\
+    \ \"http://localhost:25555/circular1\";\n        String circular2Link = \"http://localhost:25555/circular2\"\
+    ;\n        String circular3Link = \"http://localhost:25555/circular3\";\n    \n\
+    \        //Titles\n        String exampleDomainTitle = \"Example Domain\";\n \
+    \       String circular1Title = \"circular1tiTle\";\n        String circular2Title\
+    \ = \"circular2tiTle\";\n        String circular3Title = \"circular3tiTle\";\n\
+    \    \n        //Contents\n        String exampleDomainContent = \"<!doctype html>\\\
+    n\" +\n                \"<html>\\n\" +\n                \"<head>\\n\" +\n    \
+    \            \"    <title>Example Domain</title>\\n\" +\n                \"\\\
+    n\" +\n                \"    <meta charset=\\\"utf-8\\\" />\\n\" +\n         \
+    \       \"    <meta http-equiv=\\\"content-type\\\" content=\\\"text/html; charset=utf-8\\\
+    \" />\\n\" +\n                \"    <meta name=\\\"viewport\\\" content=\\\"width=device-width,\
+    \ initial-scale=1\\\" />\\n\" +\n                \"    <style type=\\\"text/css\\\
+    \">\\n\" +\n                \"    body {\\n\" +\n                \"        background-color:\
+    \ #f0f0f2;\\n\" +\n                \"        margin: 0;\\n\" +\n             \
+    \   \"        padding: 0;\\n\" +\n                \"        font-family: \\\"\
+    Open Sans\\\", \\\"Helvetica Neue\\\", Helvetica, Arial, sans-serif;\\n\" +\n\
+    \                \"\\n\" +\n                \"    }\\n\" +\n                \"\
+    \    div {\\n\" +\n                \"        width: 600px;\\n\" +\n          \
+    \      \"        margin: 5em auto;\\n\" +\n                \"        padding:\
+    \ 50px;\\n\" +\n                \"        background-color: #fff;\\n\" +\n   \
+    \             \"        border-radius: 1em;\\n\" +\n                \"    }\\\
+    n\" +\n                \"    a:link, a:visited {\\n\" +\n                \"  \
+    \      color: #38488f;\\n\" +\n                \"        text-decoration: none;\\\
+    n\" +\n                \"    }\\n\" +\n                \"    @media (max-width:\
+    \ 700px) {\\n\" +\n                \"        body {\\n\" +\n                \"\
+    \            background-color: #fff;\\n\" +\n                \"        }\\n\"\
+    \ +\n                \"        div {\\n\" +\n                \"            width:\
+    \ auto;\\n\" +\n                \"            margin: 0 auto;\\n\" +\n       \
+    \         \"            border-radius: 0;\\n\" +\n                \"         \
+    \   padding: 1em;\\n\" +\n                \"        }\\n\" +\n               \
+    \ \"    }\\n\" +\n                \"    </style>\\n\" +\n                \"</head>\\\
+    n\" +\n                \"\\n\" +\n                \"<body>\\n\" +\n          \
+    \      \"<div>\\n\" +\n                \"    <h1>Example of Example Domain</h1>\\\
+    n\" +\n                \"    <p>This domain is established to be used for illustrative\
+    \ examples in documents. You may use this\\n\" +\n                \"    domain\
+    \ in examples without prior coordination or asking for permission.</p>\\n\" +\n\
+    \                \"    <p><a href=\\\"unavailablePage\\\">More information...</a></p>\\\
+    n\" +\n                \"</div>\\n\" +\n                \"</body>\\n\" +\n   \
+    \             \"</html>\";\n    \n        String circular1Content = \"\\n\" +\n\
+    \                \"            |<!doctype html>\\n\" +\n                \"   \
+    \         |<html>\\n\" +\n                \"            |<head>\\n\" +\n     \
+    \           \"            |<title>circular1tiTle</title>\\n\" +\n            \
+    \    \"            |</head>\\n\" +\n                \"            |<body>\\n\"\
+    \ +\n                \"            |<a href=\\\"circular2\\\">link1</a>\\n\" +\n\
+    \                \"            |</body>\\n\" +\n                \"           \
+    \ |</html>\\n\" +\n                \"        \";\n    \n        String circular2Content\
+    \ = \"\\n\" +\n                \"            |<!doctype html>\\n\" +\n       \
+    \         \"            |<html>\\n\" +\n                \"            |<head>\\\
+    n\" +\n                \"            |<title>circular2tiTle</title>\\n\" +\n \
+    \               \"            |</head>\\n\" +\n                \"            |<body>\\\
+    n\" +\n                \"            |<a href=\\\"circular3\\\">link1</a>\\n\"\
+    \ +\n                \"            |</body>\\n\" +\n                \"       \
+    \     |</html>\\n\" +\n                \"        \";\n    \n        String circular3Content\
+    \ = \"\\n\" +\n                \"            |<!doctype html>\\n\" +\n       \
+    \         \"            |<html>\\n\" +\n                \"            |<head>\\\
+    n\" +\n                \"            |<title>circular3tiTle</title>\\n\" +\n \
+    \               \"            |</head>\\n\" +\n                \"            |<body>\\\
+    n\" +\n                \"            |<a href=\\\"circular1\\\">link</a>\\n\"\
+    \ +\n                \"            |<a href=\\\"exampleDotCom\\\">link</a>\\n\"\
+    \ +\n                \"            |</body>\\n\" +\n                \"       \
+    \     |</html>\\n\" +\n                \"        \";\n    \n        linksNContent.put(exampleDomainLink,\
+    \ exampleDomainContent);\n        linksNContent.put(circular1Link, circular1Content);\n\
+    \        linksNContent.put(circular2Link, circular2Content);\n        linksNContent.put(circular3Link,\
+    \ circular3Content);\n    \n        linksNTitles.put(exampleDomainLink, exampleDomainTitle);\n\
+    \        linksNTitles.put(circular1Link, circular1Title);\n        linksNTitles.put(circular2Link,\
+    \ circular2Title);\n        linksNTitles.put(circular3Link, circular3Title);\n\
+    \    }\n    public Map<String, String> getLinksNContent(){\n        return linksNContent;\n\
+    \    }\n    public Map<String, String> getLinksNTitles(){return linksNTitles;}\n\
+    \    public String getContentWithLink(String link){\n        return linksNContent.getOrDefault(link,\
+    \ \"\");\n    }\n    public String getTitleWithLink(String link){\n        return\
+    \ linksNTitles.getOrDefault(link, \"\");\n    }\n}\n"
+  learner_created: false
+- name: test/CrawlerTest.java
+  visible: false
+  text: |
+    import crawler.WebCrawler;
+    import org.assertj.swing.fixture.JButtonFixture;
+    import org.assertj.swing.fixture.JLabelFixture;
+    import org.assertj.swing.fixture.JTextComponentFixture;
+    import org.hyperskill.hstest.dynamic.DynamicTest;
+    import org.hyperskill.hstest.mocks.web.WebServerMock;
+    import org.hyperskill.hstest.stage.SwingTest;
+    import org.hyperskill.hstest.testcase.CheckResult;
+    import org.hyperskill.hstest.testing.swing.SwingComponent;
+    import org.junit.AfterClass;
+    import org.junit.BeforeClass;
+
+    import java.util.Map;
+
+    public class CrawlerTest extends SwingTest {
+
+        private static WebServerMock webServerMock;
+        private static PageContent pageContent;
+        private static final int PORT = 25555;
+
+
+        public CrawlerTest() {
+            super(new WebCrawler());
+        }
+
+        @BeforeClass
+        public static void startServer() {
+            System.out.println("Initializing server");
+            pageContent = new PageContent();
+
+            webServerMock = new WebServerMock(PORT);
+            webServerMock.setPage("/exampleDotCom", pageContent.getContentWithLink("http://localhost:25555/exampleDotCom"));
+            webServerMock.setPage("/circular1", pageContent.getContentWithLink("http://localhost:25555/circular1"));
+            webServerMock.setPage("/circular2", pageContent.getContentWithLink("http://localhost:25555/circular2"));
+            webServerMock.setPage("/circular3", pageContent.getContentWithLink("http://localhost:25555/circular3"));
+
+            Thread thread = new Thread(() -> {
+                webServerMock.start();
+                webServerMock.run();
+            });
+
+            thread.start();
+        }
+
+        @AfterClass
+        public static void stopServer() {
+            System.out.println("Stopping server");
+            webServerMock.stop();
+        }
+
+        @SwingComponent(name = "HtmlTextArea")
+        JTextComponentFixture textArea;
+
+        @SwingComponent(name = "UrlTextField")
+        JTextComponentFixture textField;
+
+        @SwingComponent(name = "RunButton")
+        JButtonFixture runButton;
+
+        @SwingComponent(name = "TitleLabel")
+        JLabelFixture titleLabel;
+
+        @DynamicTest(order = 1)
+        CheckResult testTextArea() {
+
+            requireVisible(textArea);
+            requireDisabled(textArea);
+
+            return CheckResult.correct();
+        }
+
+        @DynamicTest(order = 2)
+        CheckResult testUrlFieldAndButton() {
+
+            requireVisible(textField);
+            requireVisible(runButton);
+            requireVisible(titleLabel);
+
+            requireEnabled(textField);
+            requireEnabled(runButton);
+            requireEnabled(titleLabel);
+
+            requireDisabled(textArea);
+
+            return CheckResult.correct();
+        }
+
+        @DynamicTest(order = 3)
+        CheckResult testHtmlCode() {
+
+            Map<String, String> map = pageContent.getLinksNContent();
+
+            for (Map.Entry<String, String> m : map.entrySet()) {
+
+                textField.setText(String.valueOf(m.getKey()));
+                runButton.click();
+
+                String content = pageContent.getContentWithLink(String.valueOf(m.getKey()));
+
+                if (!textArea.text().equals(content)) {
+                    return CheckResult.wrong("HtmlTextArea contains wrong HTML code");
+                }
+            }
+
+            return CheckResult.correct();
+        }
+
+        @DynamicTest(order = 4)
+        CheckResult testTitles() {
+
+            Map<String, String> map = pageContent.getLinksNTitles();
+
+            for (Map.Entry<String, String> m : map.entrySet()) {
+                String link = m.getKey();
+                textField.setText(link);
+                runButton.click();
+                String title = pageContent.getTitleWithLink(link);
+                if (!titleLabel.text().equals(title)) {
+                    return CheckResult.wrong("TitleLabel shows the wrong title");
+                }
+            }
+
+            return CheckResult.correct();
+        }
+    }
+  learner_created: false
+- name: src/crawler/api/URLFetcher.java
+  visible: true
+  text: |
+    package crawler.api;
+
+    import java.io.BufferedInputStream;
+    import java.io.InputStream;
+    import java.net.URL;
+    import java.nio.charset.StandardCharsets;
+
+    public class URLFetcher {
+
+        public static String fetchFromURL (String url) {
+            try (InputStream inputStream = new BufferedInputStream(new URL(url).openStream())) {
+                return new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
+            } catch (Exception e) {
+                return e.getLocalizedMessage();
+            }
+        }
+    }
+  learner_created: true
+feedback_link: https://hyperskill.org/projects/59/stages/319/implement#comment
+status: Solved
+feedback:
+  message: Congratulations!
+  time: Tue, 22 Jun 2021 13:24:21 UTC
+record: 3

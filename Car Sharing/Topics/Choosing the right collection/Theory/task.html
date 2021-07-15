@@ -1,0 +1,39 @@
+<h2>Choosing the right collection</h2>
+<html>
+ <head></head>
+ <body>
+  <p>As you already know, <strong>the Java Collections Framework</strong> includes numerous implementations of collections such as <code class="java">ArrayList</code>, <code class="java">LinkedList</code>, <code class="java">HashSet</code>, <code class="java">TreeSet</code>, <code class="java">HashMap</code> and others. Depending on the chosen implementation, your program will have different time and memory efficiency. In this regard, it is crucial to choose the right collection for the particular problem you're going to solve.</p> 
+  <p>In this topic, you won't be learning the collections again. Instead, it is time for you to understand how to choose the right one.</p> 
+  <h2 style="text-align: center;">Things to consider when choosing a collection</h2> 
+  <p>You have to take into account the properties of different collections to choose the one that'll do the best job. Let's briefly remember them:</p> 
+  <ul> 
+   <li><strong>Type of elements:</strong> various implementations of the <code class="java">List</code>, <code class="java">Queue</code> and <code class="java">Set</code> interface store singular elements, whereas the implementations of the <code class="java">Map</code> interface always store key-value pairs.</li> 
+   <li><strong>Duplicates or uniqueness of elements:</strong> the implementations of the <code class="java">Set</code> interface store only unique elements, while <code class="java">List</code>'s can store duplicates.</li> 
+   <li><strong>Access type:</strong> <code class="java">ArrayList</code> provides access to its elements by index, but <code class="java">ArrayDeque</code> provides restricted access to the first and last element.</li> 
+   <li><strong>Performance:</strong> usually, the more featured collection you use, the worse performance you have. For example, the performance of <code class="java">LinkedHashSet</code> has worse performance than an ordinary <code class="java">HashSet</code>.</li> 
+  </ul> 
+  <h2 style="text-align: center;">Decision-making diagram</h2> 
+  <p>Here is a diagram that shows how to select a proper implementation of the <code class="java">Set</code>, <code class="java">List</code>, <code class="java">Queue</code> or <code class="java">Map</code> interfaces. Although the diagram doesn't provide an answer for 100% of cases, it still works for most of the real situations. We recommend you scrutinize it, and after a while, you will be able to choose a right collection on your own.</p> 
+  <p></p>
+  <div class="alert alert-primary">
+   For easier viewing the picture below, save it locally or open it via the direct link.
+  </div>
+  <p></p> 
+  <p><img alt="" src="https://ucarecdn.com/d0dfd40f-32da-41fa-a6f8-06736953960d/"></p> 
+  <p></p>
+  <div class="alert alert-warning">
+   Please note that these implementations are only suitable for working in a single-threaded environment. If you need a multi-threaded access, this diagram won't work for you.
+  </div>
+  <p></p> 
+  <h2 style="text-align: center;">Additional recommendations</h2> 
+  <p>There are also some points to keep in mind when consulting this diagram.</p> 
+  <ol> 
+   <li>If you can't choose an implementation using this diagram in a particular case, we recommend you to prefer using the general-purpose implementations: <code class="java">ArrayList</code>, <code class="java">HashSet</code> and <code class="java">HashMap</code>. Their overall performance is better and they should suffice in most cases. Use them unless you need a special feature provided by another implementation (e.g. ordering or sorting).</li> 
+   <li>Use the most abstract interface that conforms to your case so that the collection type would be easier to change in the future. For example, if you need a specific list operation, use the <code class="java">List</code> interface instead of <code class="java">ArrayList</code> in all methods, fields, and local variables. If you only need to use the methods like <code class="java">add</code>, <code class="java">remove</code>, <code class="java">clear</code>, and the information about ordering and duplicates isn't important, then prefer using the <code class="java">Collection</code> interface.</li> 
+   <li>If none of the implementations provides a feature you need, then you may need to use several collections at once, or use an external collection library instead of the standard one, or create a new one.</li> 
+   <li>As <code class="java">LinkedList</code> implements both <code class="java">List</code> and <code class="java">Queue</code> interfaces, sometimes it isn't fully obvious what to choose between <code class="java">ArrayList</code> and <code class="java">LinkedList</code> or <code class="java">LinkedList</code> and <code class="java">ArrayDeque</code>. In modern versions of Java, the array-based collections are stated to be more performant and should be used in most standard cases. <code class="java">LinkedList</code> can be chosen when you have a colossal number of elements, and a lot of addition/deletion operations, especially to the beginning and the end of the list. However, there is still no guarantee that <code class="java">LinkedList</code> will act better than others.</li> 
+  </ol> 
+  <h2 style="text-align: center;">Conclusion</h2> 
+  <p>To choose the proper collection, think about what you need to store, how you want to access elements, and what is optimal in regards to performance. In the beginning, it's a good idea to stick to an algorithm we've discussed. If the algorithm doesn't help you in a particular case, there're also some general recommendations to remember. After some practice, you will be able to choose a collection quickly and accurately.</p>
+ </body>
+</html>

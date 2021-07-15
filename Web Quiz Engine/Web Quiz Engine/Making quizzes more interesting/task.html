@@ -13,7 +13,7 @@
 
 <p>There are only two modified operations for creating and solving quizzes. All other operations should not be changed or deleted.</p>
 
-<h2>Create a new quiz</h2>
+<h4>Create a new quiz</h4>
 
 <p>To create a new quiz, the client needs to send a JSON as the request's body via <code class="language-json">POST</code> to <code class="language-json">/api/quizzes</code>. The JSON should contain the four fields:</p>
 
@@ -48,7 +48,7 @@
 
 <p>If the request JSON does not contain <code class="language-json">title</code> or <code class="language-json">text</code>, or they are empty strings (<code class="language-json">""</code>), then the server should respond with the  <code class="language-json">400 (Bad request)</code> status code. If the number of options in the quiz is less than 2, the server returns the same status code.</p>
 
-<h2>Solving a quiz</h2>
+<h4>Solving a quiz</h4>
 
 <p>To solve a quiz, the client sends the <code class="language-json">POST</code> request to <code class="language-json">/api/quizzes/{id}/solve</code> with a JSON that contains the indexes of all chosen options as the answer. This looks like a regular JSON object with key <code class="language-json">"answer"</code> and value as the array: <code class="language-json">{"answer": [0,2]}</code>. As before, indexes start from zero.</p>
 

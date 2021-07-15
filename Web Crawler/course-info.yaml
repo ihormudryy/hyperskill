@@ -1,0 +1,14 @@
+type: hyperskill
+title: Web Crawler
+language: English
+summary: 'The Web is called so for a reason: all these pages are connected to many
+  others through links, resembling a spider’s web. It’s easy to get lost and miss
+  important links, so in this project you will write a program that might help. A
+  Web Crawler collects and saves links from a given page, storing them in the memory
+  for you to access later.<br/><br/>Learn more at <a href="https://hyperskill.org">https://hyperskill.org/projects/59</a>'
+programming_language: Java
+programming_language_version: 11
+content:
+- Web Crawler
+- Topics
+mode: Study

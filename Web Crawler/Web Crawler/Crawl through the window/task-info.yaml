@@ -1,0 +1,72 @@
+type: edu
+custom_name: stage1
+files:
+- name: src/crawler/ApplicationRunner.java
+  visible: true
+  text: |
+    package crawler;
+
+
+    public class ApplicationRunner {
+        public static void main(String[] args) {
+            new WebCrawler();
+        }
+    }
+  learner_created: false
+- name: src/crawler/WebCrawler.java
+  visible: true
+  text: |-
+    package crawler;
+
+    import javax.swing.*;
+
+    public class WebCrawler extends JFrame {
+        public WebCrawler() {
+            setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            setSize(300, 300);
+            setVisible(true);
+        }
+    }
+  learner_created: false
+- name: test/CrawlerTest.java
+  visible: false
+  text: |
+    import crawler.WebCrawler;
+    import org.assertj.swing.fixture.JTextComponentFixture;
+    import org.hyperskill.hstest.dynamic.DynamicTest;
+    import org.hyperskill.hstest.stage.SwingTest;
+    import org.hyperskill.hstest.testcase.CheckResult;
+    import org.hyperskill.hstest.testing.swing.SwingComponent;
+
+    public class CrawlerTest extends SwingTest {
+
+
+        public CrawlerTest() {
+            super(new WebCrawler());
+        }
+
+        @SwingComponent(name = "TextArea")
+        JTextComponentFixture textArea;
+
+        @DynamicTest
+        CheckResult testTextArea() {
+
+            requireVisible(textArea);
+            requireDisabled(textArea);
+
+            System.out.println(textArea.text());
+
+            if (!textArea.text().equals("HTML code?")) {
+                return CheckResult.wrong("TextArea should contain the text \"HTML code?\"");
+            }
+
+            return CheckResult.correct();
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/projects/59/stages/317/implement#comment
+status: Solved
+feedback:
+  message: Congratulations!
+  time: Mon, 21 Jun 2021 20:13:26 UTC
+record: 1

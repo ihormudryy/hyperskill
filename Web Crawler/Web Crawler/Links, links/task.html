@@ -1,0 +1,38 @@
+<h2 style="text-align: center;">Description</h2>
+
+<p>Currently, our window contains only a text area that shows text set at the start of the program. This kind of functionality is not very impressing, so let's take it one step further: add the ability to download the source code of a web page and display it in the text area. </p>
+
+<p>So, how do we download the source code? There are standard Java classes that can help us with that. </p>
+
+<p>Here is a code snippet that gets the source code of a web page: </p>
+
+<pre><code class="java">final String url = /* Get url from JTextField */;
+
+try (InputStream inputStream = new BufferedInputStream(new URL(url).openStream())) {
+String siteText = new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
+}</code></pre>
+
+<p>Note that the code to open <code class="java">InputStream</code> is placed in a <code class="java">try-with-resources</code> construct, so <code class="java">inputStream</code> will be closed automatically.</p>
+<p>IMPORTANT: For testing reasons, please do not interact with your computer while tests are running. Also if you're running on a Mac OS, make sure you give Intellij access to control your computer. To do so please follow these steps. Go to System Preferences -&gt; Security &amp; Privacy -&gt; Accessibility -&gt; Intellij IDEA CE.app and check the checkbox to allow your IDE to control your computer.</p>
+
+<h2 style="text-align: center;">Objectives</h2>
+
+<p>In this stage, you should: </p>
+
+<ol>
+	<li>Add a <code class="java">JTextField</code> to the window for entering a URL.</li>
+	<li>Add a <code class="java">JButton</code> for initiating the download and displaying the source code in the text area. </li>
+	<li>Set the names of the following components:</li>
+</ol>
+
+<ul>
+	<li><code class="java">JTextField</code> "UrlTextField";</li>
+	<li><code class="java">JButton</code> "RunButton";</li>
+	<li><code class="java">JTextArea</code> "HtmlTextArea".</li>
+</ul>
+
+<h2 style="text-align: center;">Example</h2>
+
+<p>Here is an example of what your window might look like:</p>
+
+<p style="text-align: center;"><img alt="" src="https://ucarecdn.com/2774d6df-8485-4675-b5e1-112d6a650929/"></p>

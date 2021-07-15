@@ -1,0 +1,28 @@
+<h2>Log events</h2>
+<html>
+ <head></head>
+ <body>
+   Suppose, we have a utility method to capitalize strings:
+  <p></p> 
+  <pre><code class="language-java">class Util {
+    public static String capitalize(String str) {
+        if (str == null || str.isBlank()) {
+            return str;
+        }
+
+        if (str.length() == 1) {
+            return str.toUpperCase();
+        }
+
+        return Character.toUpperCase(str.charAt(0)) + str.substring(1);
+    }
+}</code></pre> 
+  <p>Your task is to add some logging to this method so it print the input string both before capitalization and after capitalization in the following format:</p> 
+  <pre><code class="language-java">Before: string
+After: String</code></pre> 
+  <p>where <code class="language-java">string</code> is an example of the input string.</p>
+ </body>
+</html><br><b>Sample Input:</b><br><pre><code class="language-no-highlight">string</code></pre><br><b>Sample Output:</b><br><pre><code class="language-no-highlight">Before: string<br>After: String</code></pre><br><br><b>Sample Input:</b><br><pre><code class="language-no-highlight">Capitalized</code></pre><br><b>Sample Output:</b><br><pre><code class="language-no-highlight">Before: Capitalized<br>After: Capitalized</code></pre><br><br><br><font color="gray">Memory limit: 256 MB</font><br><font color="gray">Time limit: 8 seconds</font><br><br>
+<b>Caution</b><br><br>
+You may see errors in your code or execution results due to missing context. Don’t worry about it, just write the solution and press Check.
+<br><br>

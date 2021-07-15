@@ -1,0 +1,184 @@
+<h2>Unit testing with JUnit</h2>
+<html>
+ <head></head>
+ <body>
+  <p style="text-align: left;">In this topic, you will learn about automated unit testing in Java and will write your first unit tests. As you already know, a unit is a piece of code that performs a single task or a unit of work. In Java, in most cases, a unit corresponds to a class. You can write and execute tests to check if the public methods of that unit work correctly.</p> 
+  <p style="text-align: left;"></p>
+  <div class="alert alert-primary">
+   Note that we use 
+   <strong><em><em style="font-size: 12,0000pt;">unit</em></em> </strong>tests to test our application without its 
+   <em><strong>external</strong></em> dependencies such as databases, web services, and so on, which falls into the responsibility of 
+   <strong><em><em style="font-size: 12,0000pt;">integration</em></em> </strong>tests.
+  </div>
+  <p></p> 
+  <p style="text-align: left;">In Java, methods may return values or change the internal state of objects. So to verify the correctness of any method you may compare the value returned by that method with the expected output or compare the internal state of an object modified by that method with the expected internal state. If you write a bunch of tests covering all execution paths of such a method you can be sure that the method works correctly.</p> 
+  <p style="text-align: left;">Doing unit testing manually is tedious and time-consuming, especially if it involves manual input from the user. If you have ever tried it, you know it very well. That's why some frameworks provide convenient tools for automated unit testing. The most popular of them is <a target="_blank" href="https://junit.org/junit5/" rel="noopener noreferrer nofollow">JUnit</a>.</p> 
+  <h2 style="text-align: left;">Getting started</h2> 
+  <p>We are going to use JUnit 5 in this topic since it is the most recent version of the JUnit framework and it supports all features introduced by Java 1.8. This means that JUnit 5 requires Java 8 (or higher) at runtime but also can be used to test code compiled with previous versions of the JDK.</p> 
+  <p>To integrate the JUnit 5 framework into our project, you need to add the required dependencies. If you use <strong><strong style="font-size: 12,0000pt;">Gradle</strong></strong> as your project build tool, add the following lines to the <code class="language-java">build.gradle</code> file:</p> 
+  <pre><code class="language-java">dependencies {
+    implementation 'org.junit.jupiter:junit-jupiter:5.7.1'
+}</code></pre> 
+  <p>where 5.7.1 is the current most recent version of the library. You always may check <a target="_blank" href="https://search.maven.org/artifact/org.junit.jupiter/junit-jupiter" rel="noopener noreferrer nofollow">maven central</a> for the most current version of the library.</p> 
+  <p>Also, to correctly use Gradle with JUnit 5, tell Gradle to use <code class="language-java">JUnitPlatform</code> to run the tests:</p> 
+  <pre><code class="language-java">test {
+    useJUnitPlatform()
+}</code></pre> 
+  <p style="text-align: left;">Otherwise, Gradle will not be able to see your tests and run them.</p> 
+  <p style="text-align: left;">If you use <strong>Maven</strong>, add the following dependency to <code class="language-java">pom.xml</code>:</p> 
+  <pre><code class="language-xml">&lt;dependency&gt;
+  &lt;groupId&gt;org.junit.jupiter&lt;/groupId&gt;
+  &lt;artifactId&gt;junit-jupiter-engine&lt;/artifactId&gt;
+  &lt;version&gt;5.7.1&lt;/version&gt;
+&lt;/dependency&gt;</code></pre> 
+  <p></p>
+  <div class="alert alert-primary">
+   If you prefer using JUnit 4, you can find respective guidelines and instructions in 
+   <a target="_blank" href="https://junit.org/junit4/" rel="noopener noreferrer nofollow">the official documentation</a>.
+  </div>
+  <p></p> 
+  <p>Now, let's create a simple calculator performing basic calculations with integers, which we can easily test. The class <code class="language-java">Calculator</code> has four public methods: <code class="language-java">add</code>, <code class="language-java">subtract</code>, <code class="language-java">multiply</code> and <code class="language-java">divide</code>, each of which takes two integer arguments and returns an integer result of the respective arithmetic operation:</p> 
+  <pre><code class="language-java">public class Calculator {
+    public int add(int a, int b) {
+        return a + b;
+    }
+
+    public int subtract(int a, int b) {
+        return a - b;
+    }
+
+    public int multiply(int a, int b) {
+        return a * b;
+    }
+
+    public int divide(int a, int b) {
+        if (b == 0) {
+            throw new IllegalArgumentException("Divisor cannot be zero!");
+        }
+        return a / b;
+    }
+}</code></pre> 
+  <p>Feel free to modify these methods, for example, by adding additional checks to avoid <code class="language-java">int</code> overflow. Later you will be able to write additional tests for such modified methods to build up your skills.</p> 
+  <h2>Writing tests</h2> 
+  <p style="text-align: left;">Now you are ready to write your first test. Let's create a class in our project's <code class="language-java">test/java</code> folder and name it <code class="language-java">CalculatorTests</code>. You may do it manually or, if you are using IntelliJ IDEA, you may right-click on the class name and select <strong>Generate...</strong> and then <strong>Test...</strong> in the drop-down menu to let the IDE create the test class for you.</p> 
+  <p>Inside the class, add a new method <code class="language-java">testAddition</code> and annotate it with <code class="language-java">@Test</code>. This annotation tells the JUnit framework that the method is a unit test method. Note, that in JUnit5 you don't need the test class or any of the test methods to be public to work properly, so they may be package-private.</p> 
+  <pre><code class="language-java">class CalculatorTests {
+
+    @Test
+    void testAddition() {
+        Calculator calculator = new Calculator();
+        int result = calculator.add(1, 2);
+
+        assertEquals(3, result);
+    }
+}</code></pre> 
+  <p>Inside the test method, we declared an instance of our <code class="language-java">Calculator</code> class and calculated a result of the execution of its <code class="language-java">add</code> method with arguments <code class="language-java">1</code> and <code class="language-java">2</code>. After that we check if the expected result is equal to the actual result, using the <code class="language-java">assertEquals</code> method. It compares the expected value (first argument) and the actual value (second argument) and throws <code class="language-java">AssertionFailedError</code> if they are not equal.</p> 
+  <p>It's a good idea to give your test classes and methods meaningful and descriptive names. If you don't like to use long and hard to read names, you may use <code class="language-java">@DisplayName</code> annotation to declare custom names that will be shown in the test's output:</p> 
+  <pre><code class="language-java">@Test
+@DisplayName("Add 1 and 2, result should be 3")
+void testAddition() {
+    Calculator calculator = new Calculator();
+    int result = calculator.add(1, 2);
+
+    assertEquals(3, result);
+}</code></pre> 
+  <p>Now the line <code class="language-java">"Add 1 and 2, result should be 3"</code> will be displayed in the test output instead of the test method name. This is very convenient if you want to provide some additional information about the test case or the expected value.</p> 
+  <h2>Assertions</h2> 
+  <p>The <code class="language-java">Assertions</code> class of JUnit framework has a lot of overloaded assertion methods that allow you to test different conditions. Here are some useful assertions:</p> 
+  <table align="center" border="1" cellpadding="1" cellspacing="1"> 
+   <tbody> 
+    <tr> 
+     <td><code class="language-java">assertEquals</code></td> 
+     <td>tests if the arguments are equal</td> 
+    </tr> 
+    <tr> 
+     <td><code class="language-java">assertTrue</code></td> 
+     <td>tests if the argument is <code class="language-java">true</code></td> 
+    </tr> 
+    <tr> 
+     <td><code class="language-java">assertFalse</code></td> 
+     <td>tests if the argument is <code class="language-java">false</code></td> 
+    </tr> 
+    <tr> 
+     <td><code class="language-java">assertNull</code></td> 
+     <td>tests if the argument is <code class="language-java">null</code></td> 
+    </tr> 
+    <tr> 
+     <td><code class="language-java">assertNotNull</code></td> 
+     <td>tests if the argument is not <code class="language-java">null</code></td> 
+    </tr> 
+    <tr> 
+     <td><code class="language-java">assertThrows</code></td> 
+     <td>tests if the argument throws a certain exception</td> 
+    </tr> 
+   </tbody> 
+  </table> 
+  <p>All of them have overloaded versions which accept a message of the <code class="language-java">String</code> type that will be displayed if the test fails. You may find detailed descriptions of these and the other assertion methods in the <a target="_blank" href="https://junit.org/junit5/docs/current/api/org.junit.jupiter.api/org/junit/jupiter/api/Assertions.html" rel="noopener noreferrer nofollow">official JUnit 5 documentation</a>.</p> 
+  <h2>Running tests</h2> 
+  <p>Now we have a few unit tests which we may run. You may run unit tests by opening the <code class="language-java">CalculatorTests</code> file and click the green <strong>Run</strong> button in the gutter or by right-clicking on this file in the project view panel and selecting <strong>RunCalculatorTests</strong> in the drop-down menu.</p> 
+  <p>Another way to run the tests is to run them using Gradle. First, let's add the following lines to the <code class="language-java">build.gradle</code> file so we can see more detailed output for executed tests:</p> 
+  <pre><code class="language-java">test {
+
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}</code></pre> 
+  <p style="text-align: left;">After that, run the following command in the terminal window:</p> 
+  <pre><code class="language-no-highlight">gradle test</code></pre> 
+  <p>Once the tests are executed, you will see this is the output:</p> 
+  <pre><code class="language-no-highlight">&gt; Task :test
+CalculatorTests &gt; testMultiplication() PASSED
+CalculatorTests &gt; Add 1 and 2, result should be 3 PASSED
+CalculatorTests &gt; testDivisionByZero() PASSED
+CalculatorTests &gt; testDivision() PASSED
+BUILD SUCCESSFUL in 1s</code></pre> 
+  <p>The output shows the task that has been executed, the names of all tests, and the status of their execution.</p> 
+  <p></p>
+  <div class="alert alert-warning">
+   Note that if a test method has an empty body it will be counted as 
+   <code class="language-java">PASSED</code>. If you want to force your test to fail, you have to invoke the 
+   <code class="language-java">fail</code> method inside it.
+  </div>
+  <p></p> 
+  <h2>Test outcomes</h2> 
+  <p>Let's create a unit test for another method. But first, we are going to change our <code class="language-java">multiply</code> method to introduce a bug in its implementation and make it return zero for any arguments:</p> 
+  <pre><code class="language-java">public int muptiply(int a, int b) {
+    return 0;
+}</code></pre> 
+  <p>Here is the code of the respective test:</p> 
+  <pre><code class="language-java">@Test
+void testMultiplication() {
+    Calculator calculator = new Calculator();
+    int result =  calculator.multiply(2, 3);
+
+    assertEquals(6, result);
+}</code></pre> 
+  <p>Run the tests again using the terminal:</p> 
+  <pre><code class="language-no-highlight">gradle test</code></pre> 
+  <p style="text-align: left;">The new test fails as expected:</p> 
+  <pre><code class="language-no-highlight">&gt; Task :test FAILED
+CalculatorTests &gt; testDivision() PASSED
+CalculatorTests &gt; Add 1 and 2, result should be 3 PASSED
+CalculatorTests &gt; testMultiplcation() FAILED
+    org.opentest4j.AssertionFailedError at CalculatorTests.java:38
+CalculatorTests &gt; testDivisionByZero() PASSED
+4 tests completed, 1 failed</code></pre> 
+  <p style="text-align: left;">The output shows that <code class="language-java">testMultiplcation</code> failed with <code class="language-java">AssertionFailedError</code> at line 38 in <code class="language-java">CalculatorTests.java.</code> Now let's go to the faulty method, fix the bug by making <code class="language-java">multiply</code> to return a product of its arguments instead of zero, and re-run the tests:</p> 
+  <pre><code class="language-no-highlight">&gt; Task :test
+CalculatorTests &gt; testMultiplication() PASSED
+CalculatorTests &gt; Add 1 and 2, result should be 3 PASSED
+CalculatorTests &gt; testDivisionByZero() PASSED
+CalculatorTests &gt; testDivision() PASSED</code></pre> 
+  <p style="text-align: left;">Excellent! The bug is gone and all tests are successfully passed so we may be sure that our calculator works correctly.</p> 
+  <p></p>
+  <div class="alert alert-primary">
+   Please note that 
+   <code class="language-java">gradle test</code> runs each test only one time per change. If you execute this command again, there will be no output of test results. If you want to run all tests, including successfully passed and unchanged, use the following command: 
+   <code class="language-java">gradle cleanTest test</code>.
+  </div>
+  <p></p> 
+  <h2>Summary</h2> 
+  <p>JUnit framework provides API for unit testing Java classes. With its help, you can set up and run automated tests to check the results of the execution of your units of code against desired criteria. You may run tests from your IDE or using project build tools such as Maven or Gradle. If any test fails, JUnit may show detailed output to help you understand the reason for the test's failure.</p> 
+  <p>You write tests using assertions, the most frequently used of which is the <code class="language-java">assertEquals</code> method. Running a test can result in either <code class="language-java">SUCCESS</code> if everything works as expected or <code class="language-java">FAILURE</code> if the assertion method throws <code class="language-java">AssertionFailedError</code>.</p>
+ </body>
+</html>

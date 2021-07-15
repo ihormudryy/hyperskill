@@ -1,0 +1,92 @@
+<h2>Creating instances</h2>
+<html>
+ <head></head>
+ <body>
+  <p>In previous topics, we've learned how to control the fields of an object and invoke methods of a class with reflection. Reflection can also be used to create instances of a class, and in this topic, we will learn how to do so.</p> 
+  <h2>Acquiring a constructor</h2> 
+  <p>Let's take a look at the following code:</p> 
+  <pre><code class="language-java">class Item {
+
+    private String name;
+    protected int basePrice;
+
+    public Item() {
+        this("default");
+    }
+
+    public Item(String name) {
+        this(name, 0);
+    }
+
+    public Item(String name, int basePrice) {
+        this.name = name;
+        this.basePrice = basePrice;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getPrice() {
+        return (int) (basePrice * getMarkUp());
+    }
+    
+    protected double getMarkUp() {
+        double markUp = 0.1;
+        // ... connecting to the remote server
+        return 1 + markUp;
+    }
+}</code></pre> 
+  <p>As you can see, there are three constructors and one of them is empty.</p> 
+  <p>In Java, any object must be created by using a constructor. Reflection is no exception: it also requires a constructor to create an instance of a class. Luckily, there is a <code class="language-java">Constructor</code> class that can do this. </p> 
+  <p>Since a class can have multiple constructors you should pick one first. There are two ways to find a suitable constructor:</p> 
+  <p>1. Calling the <code class="language-java">getDeclaredConstructors()</code> method from the <code class="language-java">Class</code> object, and then find a suitable constructor among the existing ones.<br> 2. If you know what types you need to call the constructor with or you need to simply call the constructor without arguments, you can use the <code class="language-java">getDeclaredConstructor(... )</code> method and pass objects of the <code class="language-java">Class</code> type there indicating types of parameters the constructor should have. If you need a constructor without arguments, you don't need to pass anything there.</p> 
+  <p>Once the appropriate constructor has been found, the <code class="language-java">newInstance(... )</code> method should be called to create an instance of the class.</p> 
+  <p>There's also another way to create an object by using the <code class="language-java">newInstance()</code> method on the <code class="language-java">Class</code> object. For example, to create an object of the <code class="language-java">Item</code> class, you could write <code class="language-java">Item.class.newInstance()</code>. Now, this method is deprecated, so it is better to use the other methods discussed above.</p> 
+  <h2>Getting constructor parameters</h2> 
+  <p>Let's try to use these methods to create an instance of an object. First of all, let's try to output all the constructors and their arguments:</p> 
+  <pre><code class="language-java">Class itemClass = Item.class;
+Constructor[] constructors = itemClass.getDeclaredConstructors();
+
+for (Constructor constructor : constructors) {
+    Class[] params = constructor.getParameterTypes();
+    System.out.println("Constructor:");
+    if (params.length == 0) {
+        System.out.println("No params");
+        continue;
+    }
+    for (Class param : params) {
+        System.out.println(param);
+    }
+    System.out.println();
+}</code></pre> 
+  <p>As you can see, you need to call <code class="language-java">getParameterTypes()</code> method to get the constructor arguments.</p> 
+  <p>The code above prints the following:</p> 
+  <pre><code class="language-no-highlight">Constructor:
+class java.lang.String
+int
+
+Constructor:
+class java.lang.String
+
+Constructor:
+No params</code></pre> 
+  <p>Everything is as expected. There are three constructors: with zero, one and two arguments.</p> 
+  <h2>Creating an instance</h2> 
+  <p>Since you must know the types of arguments to create an instance, it is always easier to use the <code class="language-java">getDeclaredConstructor(... )</code> method. Below is an example of creating an instance using a constructor with two arguments:</p> 
+  <pre><code class="language-java">Constructor constructor = itemClass.getDeclaredConstructor(String.class, int.class);
+Object instance = constructor.newInstance("orange", 990);
+
+System.out.println(instance.getClass().getSimpleName());</code></pre> 
+  <p>Note that the constructor returns an <code class="language-java">Object</code>, but in this case, it is actually an <code class="language-java">Item</code> object. You can verify this by running the code above, and it will output the following:</p> 
+  <pre><code class="language-no-highlight">Item</code></pre> 
+  <p>And calling all the methods of this object will also work. Let's invoke the <code class="language-java">getName()</code> method.</p> 
+  <pre><code class="language-java">Method getName = instance.getClass().getDeclaredMethod("getName");
+System.out.println(getName.invoke(instance));</code></pre> 
+  <p>And you'll get the following output:</p> 
+  <pre><code class="language-no-highlight">orange</code></pre> 
+  <p>Which indeed means that you are working with the <code class="language-java">Item</code> object.</p> 
+  <h2>Conclusion</h2> 
+  <p>From this topic, you should know how to use reflection to create instances: first, we get the <code class="language-java">constructor</code> object for the class that we want to use; second, we call <code class="language-java">newInstance()</code> on it, passing the arguments. You may also encounter the <code class="language-java">newInstance()</code> method with similar functions, which is now deprecated. </p>
+ </body>
+</html>

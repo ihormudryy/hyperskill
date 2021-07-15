@@ -6,7 +6,7 @@
 
 <p>To complete this stage, you may read about <a target="_blank" href="https://www.baeldung.com/jackson-ignore-properties-on-serialization" rel="noopener noreferrer nofollow">some Jackson serializer properties for ignoring fields</a>. But this is not the only way to solve this stage.</p>
 
-<h2>Create a new quiz</h2>
+<h4>Create a new quiz</h4>
 
 <p>To create a new quiz, the client needs to send a JSON as the request's body via <code class="language-json">POST</code> to <code class="language-json">/api/quizzes</code>. The JSON should contain the four fields: <code class="language-json">title</code> (a string), <code class="language-json">text</code> (a string), <code class="language-json">options</code> (an array of strings) and <code class="language-json">answer</code> (integer index of the correct option). At this moment, all the keys are optional.</p>
 
@@ -34,7 +34,7 @@
 
 <p>At this moment, it is admissible if a creation request does not contain some quiz data. In the next stages, we will improve the service to avoid some server errors.</p>
 
-<h2>Get a quiz by id</h2>
+<h4>Get a quiz by id</h4>
 
 <p>To get a quiz by <code class="language-json">id</code>, the client sends the <code class="language-json">GET</code> request to <code class="language-json">/api/quizzes/{id}</code>.</p>
 
@@ -51,7 +51,7 @@
 
 <p>If the specified quiz does not exist, the server should return the <code class="language-json">404 (Not found)</code> status code.</p>
 
-<h2>Get all quizzes</h2>
+<h4>Get all quizzes</h4>
 
 <p>To get all existing quizzes in the service, the client sends the <code class="language-json">GET</code> request to <code class="language-json">/api/quizzes</code>.</p>
 
@@ -78,7 +78,7 @@
 
 <p>In both cases, the status code is <code class="language-json">200 (OK)</code>.</p>
 
-<h2>Solving a quiz</h2>
+<h4>Solving a quiz</h4>
 
 <p>To solve the quiz, the client sends a POST request to <code class="language-json">/api/quizzes/{id}/solve</code> and passes the <code class="language-json">answer</code> parameter in the content. This parameter is the index of a chosen option from <code class="language-json">options</code> array. As before, it starts from zero.</p>
 

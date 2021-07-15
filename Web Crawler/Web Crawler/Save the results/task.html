@@ -1,0 +1,36 @@
+<h2 style="text-align: center;">Description</h2>
+
+<p>Our mightly little program can collect all this data, but what happens when the program terminates? All the data is lost! Let's fix this and add the possibility to save the data our program collects. This can be particularly useful for sending results to another computer or processing results in another program. </p>
+
+<p>You should add a <code class="java">JButton</code> to save files on a disk and also add a <code class="java">JTextField</code> where the file path will be written. </p>
+
+<p>You should structure the file in a way that each odd line contains a link and the line that follows it (even line) contains the corresponding title.</p>
+
+<p>Also, let's update the way we've been creating the <code class="java">URLConnection</code> to disguise as a human because some sites might send the wrong HTML code if they see that the query was sent by a bot. To achieve this, you should specify user-agent property as the property in the browser. </p>
+
+<p>Use <code class="java">.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:63.0) Gecko/20100101 Firefox/63.0")</code> for a <code class="java">URLConnection</code> object. It's like Firefox running on Windows 10. This way, most sites will treat the bot as a human. </p>
+
+<h2 style="text-align: center;">Objectives </h2>
+
+<p>In this stage, you should: </p>
+
+<ol>
+	<li>Add a <code class="java">JTextField</code> where the file path will be entered.</li>
+	<li>Add a <code class="java">JButton</code> to save the file.</li>
+	<li>Set the names of the following components: </li>
+</ol>
+
+<ul>
+	<li><code class="java">JTextField</code> "UrlTextField";</li>
+	<li><code class="java">JButton</code> "RunButton";</li>
+	<li><code class="java">JLabel</code> "TitleLabel";</li>
+	<li><code class="java">JTable</code> "TitlesTable";</li>
+	<li><code class="java">JTextField</code> "ExportUrlTextField";</li>
+	<li><code class="java">JButton</code> "ExportButton".</li>
+</ul>
+
+<h2 style="text-align: center;">Example</h2>
+
+<p>Here is what your new window might look like:</p>
+
+<p style="text-align: center;"><img alt="" src="https://ucarecdn.com/520dcbed-0332-4d13-b70a-efcec0aa558c/"></p>

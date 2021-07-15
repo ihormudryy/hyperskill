@@ -1,0 +1,22 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    import java.util.*;
+
+
+    class MapFunctions {
+
+        public static void calcTheSamePairs(Map<String, String> map1, Map<String, String> map2) {
+            // write your code here
+
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/12390#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Mon, 12 Jul 2021 14:17:26 UTC
+record: -1

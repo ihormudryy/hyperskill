@@ -1,0 +1,24 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    class ThreadUtil {
+        static Thread createThreadInNewState() {
+            //implement the method
+        }
+    }
+
+    class Main {
+        public static void main(String[] args) {
+            Thread thread = ThreadUtil.createThreadInNewState();
+            System.out.println(thread.getState());
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/13653#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Mon, 12 Jul 2021 11:42:14 UTC
+record: -1

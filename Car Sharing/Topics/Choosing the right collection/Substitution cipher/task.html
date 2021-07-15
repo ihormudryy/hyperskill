@@ -1,0 +1,17 @@
+<h2>Substitution cipher</h2>
+<html>
+ <head></head>
+ <body>
+  <p>At some point in the Bioinformatics Institute, biology students no longer understood what did the computer science students say: they spoke a strange set of sounds.</p> 
+  <p>And one of the biologists had suddenly discovered the secret of computer science students: they used the <a target="_blank" href="https://en.wikipedia.org/wiki/Substitution_cipher" rel="nofollow noopener noreferrer">substitution cipher</a> in their communication, i.e. they replaced each symbol of the initial message to another corresponding symbol. Biologists gained the key to the cipher and now they need help:</p> 
+  <p>Write a program that can encode and decode the substitution cipher. The program accepts two input strings of the same length; the first line contains the characters of the original alphabet, the second line contains the symbols of a resulting alphabet. After that, there is a line you need to encode by the transmitted key, and another line to be decrypted.</p> 
+  <p>For example, the program takes the following input:</p> 
+  <pre><code class="language-no-highlight">abcd
+*d%#
+abacabadaba
+#*%*d*%</code></pre> 
+  <p>It means that symbol <strong>a</strong> of the initial message is changed to symbol <strong>*</strong> in the cipher, <strong>b</strong> changed to <strong>d</strong>, <strong>c</strong> — to <strong>%</strong> and <strong>d</strong> — to <strong>#</strong>. You need to encode the string <strong>abacabadaba</strong> and decode the string <strong>#*%*d*%</strong> using this cipher. So you get the following lines, which should be the output of the program:</p> 
+  <pre><code class="language-no-highlight">*d*%*d*#*d*
+dacabac</code></pre>
+ </body>
+</html><br><b>Sample Input:</b><br><pre><code class="language-no-highlight">abcd<br>*d%#<br>abacabadaba<br>#*%*d*%</code></pre><br><b>Sample Output:</b><br><pre><code class="language-no-highlight">*d*%*d*#*d*<br>dacabac</code></pre><br><br><b>Sample Input:</b><br><pre><code class="language-no-highlight">dcba<br>badc<br>dcba<br>badc</code></pre><br><b>Sample Output:</b><br><pre><code class="language-no-highlight">badc<br>dcba</code></pre><br><br><br><font color="gray">Memory limit: 256 MB</font><br><font color="gray">Time limit: 5 seconds</font><br><br>

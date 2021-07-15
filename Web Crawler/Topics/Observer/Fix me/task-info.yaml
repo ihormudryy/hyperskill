@@ -1,0 +1,33 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: "import java.util.*;     \n\n/** Observable */\n\n/** Concrete Observable\
+    \ */\nclass RockstarGames {\n\n    public String releaseGame;\n    /** write your\
+    \ code here ... */\n\n    public void release(String game) {\n        this.releaseGame\
+    \ = game;\n        /** write your code here ... */\n    }\n\n}\n\n/** Observer\
+    \ */\n\n/** Concrete Observer */\nclass Gamer {\n\n    private String name;\n\
+    \    private String reaction;\n   /** write your code here ... */\n\n    private\
+    \ Set<String> games = new HashSet<>();\n\n    public Gamer(String name,String\
+    \ reaction,/** */) {\n        this.reaction = reaction;\n        /** write your\
+    \ code here ... */\n        this.name = name;\n    }\n\n    /** write your code\
+    \ here ... */\n\n    public void buyGame(String game) {\n        games.add(game);\n\
+    \        System.out.println(reaction);\n    }\n\n    @Override\n    public String\
+    \ toString() {\n        return this.name;\n    }    \n}\n\n/** Main Class */\n\
+    \npublic class Main {\n    public static void main(String[] args) {\n\n      \
+    \  final Scanner scanner = new Scanner(System.in);\n\n        String game = null;\n\
+    \n        /** write your code here ... */\n\n        Gamer garry = new Gamer(\"\
+    Garry Rose\", \"I want to pre-order\", rockstarGames);\n        Gamer peter =\
+    \ new Gamer(\"Peter Johnston\", \"Pinch me...\", rockstarGames);\n        Gamer\
+    \ helen = new Gamer(\"Helen Jack\", \"Jesus, it's new game from Rockstar!\", rockstarGames);\n\
+    \n        /** write your code here ... */\n\n        game = scanner.nextLine();\n\
+    \        System.out.println(\"It's happened! RockstarGames releases new game -\
+    \ \" + game + \"!\");\n\n        /** write your code here ... */ \n\n        scanner.close();\n\
+    \    }\n}"
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/5526#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Tue, 22 Jun 2021 08:22:04 UTC
+record: -1

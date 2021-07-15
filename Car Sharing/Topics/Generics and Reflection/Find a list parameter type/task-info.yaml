@@ -1,0 +1,19 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: "// Do not remove imports\nimport java.lang.reflect.Field;\nimport java.lang.reflect.ParameterizedType;\n\
+    import java.util.List;\nimport java.util.Scanner;\n\nclass ListParameterInspector\
+    \ {\n    // Do not change the method\n    public static void main(String[] args)\
+    \ throws Exception {\n        Scanner scanner = new Scanner(System.in);\n    \
+    \    String fieldName = scanner.next();\n\n        ListParameterInspector inspector\
+    \ = new ListParameterInspector();\n        inspector.printParameterType(new TestClass(),\
+    \ fieldName);\n    }\n\n    public void printParameterType(TestClass obj, String\
+    \ fieldName) throws Exception {\n        // Add implementation here \n    }\n}"
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/11182#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Mon, 12 Jul 2021 11:10:36 UTC
+record: -1

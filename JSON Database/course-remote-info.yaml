@@ -25,6 +25,8 @@ stages:
   is_completed: true
 topics:
   0:
+  - title: Write, compile, and run
+    theory_id: 3739
   - title: JVM, JRE, and JDK
     theory_id: 3499
   - title: Units of information
@@ -79,14 +81,6 @@ topics:
     theory_id: 3507
   - title: Switch statement
     theory_id: 3504
-  - title: Write, compile, and run
-    theory_id: 3739
-  - title: Errors in programs
-    theory_id: 3536
-  - title: What is an exception
-    theory_id: 3497
-  - title: NPE
-    theory_id: 1945
   - title: What are streams
     theory_id: 5533
   - title: Sizes and ranges
@@ -107,20 +101,12 @@ topics:
     theory_id: 3511
   - title: Arrays as parameters
     theory_id: 3594
-  - title: Array exceptions
-    theory_id: 1940
   - title: String
     theory_id: 3523
   - title: Processing strings
     theory_id: 3551
   - title: Formatted output
     theory_id: 7046
-  - title: Hierarchy of exceptions
-    theory_id: 3570
-  - title: Exception handling
-    theory_id: 3552
-  - title: Throwing exceptions
-    theory_id: 3553
   - title: IntelliJ IDEA
     theory_id: 3801
   - title: IDEA Basics
@@ -129,6 +115,20 @@ topics:
     theory_id: 8977
   - title: Parameters and options
     theory_id: 9746
+  - title: Errors in programs
+    theory_id: 3536
+  - title: What is an exception
+    theory_id: 3497
+  - title: Hierarchy of exceptions
+    theory_id: 3570
+  - title: Exception handling
+    theory_id: 3552
+  - title: Throwing exceptions
+    theory_id: 3553
+  - title: NPE
+    theory_id: 1945
+  - title: Array exceptions
+    theory_id: 1940
   - title: Running programs on your computer
     theory_id: 3746
   - title: Files
@@ -202,19 +202,19 @@ topics:
   - title: Computer algorithms
     theory_id: 4953
   - title: The big O notation
-    theory_id: 4991
+    theory_id: 13991
   - title: Data structures
     theory_id: 5161
   - title: Fixed-size array
     theory_id: 7255
   - title: Dynamic array
     theory_id: 5357
-  - title: Build tools
-    theory_id: 4284
   - title: Command
     theory_id: 7762
   - title: Command-line arguments
     theory_id: 3566
+  - title: Build tools
+    theory_id: 4284
   - title: Java Archive
     theory_id: 4311
   - title: Maven basics
@@ -244,10 +244,10 @@ topics:
     theory_id: 3493
   - title: What are collections
     theory_id: 3770
-  - title: The Collections Framework overview
-    theory_id: 3624
   - title: ArrayList
     theory_id: 3567
+  - title: The Collections Framework overview
+    theory_id: 3624
   - title: The List interface
     theory_id: 3581
   - title: The Set interface

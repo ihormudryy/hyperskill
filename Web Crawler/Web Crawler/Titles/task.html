@@ -1,0 +1,40 @@
+<h2 style="text-align: center;">Description</h2>
+
+<p>At this point, our program can download and display the source code of a web page, but what about the title? It would be very nice if our users could see the page title right away. This is exactly what we are going to implement in this stage, but first, let's refresh something about HTML code. </p>
+
+<p>As you saw in the previous stage, HTML code contains many angle bracket symbols, <code class="java">&lt;</code> and <code class="java">&gt;</code>. These symbols declare tags. So, HTML consists of tags. There are two types of tags: </p>
+
+<ul>
+	<li>Pairs comprised of a start tag "<code class="java">&lt;tagname&gt;</code>" and an end tag "<code class="java">&lt;/tagname&gt;</code>". These tags act like containers, and content is placed between these paired tags. For example, the title of a web page can look something like this: <code class="java">&lt;title&gt;Some Title&lt;/title&gt;</code>. Note that these tags are used not only for declaring titles. </li>
+	<li>Empty-element tags, for example, <code class="java">&lt;img src="LINK" /&gt;</code>, a tag used for inserting images. Again, this type of tag is not only used for inserting images. The only way to customize these tags are attribute additions. <br>
+		<strong>Attributes</strong> are pairs of an attribute name and an attribute value. For example, you can see the attribute <code class="java">src="LINK"</code> in the <code class="java">img</code> tag. It can also be written as <code class="java">src='LINK'</code>. </li>
+</ul>
+
+<p>Now that you know a bit about HTML tags, you need to obtain the title of a web page and display it in a <code class="java">JLabel</code>. To do this, you need to extract the content between the start tag <code class="java">&lt;title&gt;</code> and the end tag <code class="java">&lt;/title&gt;</code>. </p>
+
+<p>Note that in the example below, the word "Title:" and the title itself are in two separate <code class="java">JLabel</code>. </p>
+
+<h2 style="text-align: center;">Objectives </h2>
+
+<p>In this stage, you should: </p>
+
+<ol>
+	<li>Add a <code class="java">JLabel</code> to the window.</li>
+	<li>Set the text of the <code class="java">JLabel</code> to the title of the web page when the run button is clicked.</li>
+	<li>Set the names of the following components:</li>
+</ol>
+
+<ul>
+	<li><code class="java">JTextField</code> "UrlTextField";</li>
+	<li><code class="java">JButton</code> "RunButton";</li>
+	<li><code class="java">JLabel</code> "TitleLabel";</li>
+	<li><code class="java">JTextArea</code> "HtmlTextArea".</li>
+</ul>
+
+<h2 style="text-align: center;">Example</h2>
+
+<p>Here is what your new window might look like. In this example, the site has tag <code class="java">&lt;title&gt;Example Domain&lt;/title&gt;</code>:</p>
+
+<p> </p>
+
+<p style="text-align: center;"><img alt="" src="https://ucarecdn.com/485cf860-42fd-4ba3-8b5b-c17dba910b18/"></p>
