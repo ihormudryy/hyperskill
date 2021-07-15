@@ -627,30 +627,6 @@ files:
         }
     }
   learner_created: false
-- name: src/platform/utils/FileUtils.java
-  visible: true
-  text: |
-    package platform.utils;
-
-    import java.io.File;
-    import java.io.FileOutputStream;
-    import java.io.IOException;
-    import java.nio.file.Files;
-    import java.nio.file.Paths;
-
-    public class FileUtils {
-
-        public static String readFileData(String path) throws IOException {
-            return new String(Files.readAllBytes(Paths.get(path)));
-        }
-
-        public static void writeDataToFile(String data, String path) throws IOException {
-            FileOutputStream output = new FileOutputStream(new File(path));
-            output.write(data.getBytes());
-            output.close();
-        }
-    }
-  learner_created: true
 - name: src/platform/model/Code.java
   visible: true
   text: |
@@ -711,55 +687,6 @@ files:
 - name: bin/default/src/platform/config/MvcConfig.class
   visible: true
   text: yv66vgAAADoANgcAAgEAHXNyYy9wbGF0Zm9ybS9jb25maWcvTXZjQ29uZmlnBwAEAQAQamF2YS9sYW5nL09iamVjdAEABjxpbml0PgEAAygpVgEABENvZGUHAAkBAA9qYXZhL2xhbmcvRXJyb3IIAAsBBoVVbnJlc29sdmVkIGNvbXBpbGF0aW9uIHByb2JsZW1zOiAKCVRoZSB0eXBlIGphdmEubGFuZy5TdHJpbmcgY2Fubm90IGJlIHJlc29sdmVkLiBJdCBpcyBpbmRpcmVjdGx5IHJlZmVyZW5jZWQgZnJvbSByZXF1aXJlZCAuY2xhc3MgZmlsZXMKCVRoZSBkZWNsYXJlZCBwYWNrYWdlICJwbGF0Zm9ybS5jb25maWciIGRvZXMgbm90IG1hdGNoIHRoZSBleHBlY3RlZCBwYWNrYWdlICJzcmMucGxhdGZvcm0uY29uZmlnIgoJVGhlIGltcG9ydCBmcmVlbWFya2VyIGNhbm5vdCBiZSByZXNvbHZlZAoJVGhlIGltcG9ydCBqYXZhLmlvIGNhbm5vdCBiZSByZXNvbHZlZAoJVGhlIGltcG9ydCBvcmcgY2Fubm90IGJlIHJlc29sdmVkCglUaGUgaW1wb3J0IG9yZyBjYW5ub3QgYmUgcmVzb2x2ZWQKCVRoZSBpbXBvcnQgb3JnIGNhbm5vdCBiZSByZXNvbHZlZAoJVGhlIGltcG9ydCBvcmcgY2Fubm90IGJlIHJlc29sdmVkCglUaGUgaW1wb3J0IG9yZyBjYW5ub3QgYmUgcmVzb2x2ZWQKCVRoZSBpbXBvcnQgb3JnIGNhbm5vdCBiZSByZXNvbHZlZAoJVGhlIGltcG9ydCBvcmcgY2Fubm90IGJlIHJlc29sdmVkCglUaGUgaW1wb3J0IG9yZyBjYW5ub3QgYmUgcmVzb2x2ZWQKCVRoZSBpbXBvcnQgb3JnIGNhbm5vdCBiZSByZXNvbHZlZAoJQ29uZmlndXJhdGlvbiBjYW5ub3QgYmUgcmVzb2x2ZWQgdG8gYSB0eXBlCglFbmFibGVXZWJNdmMgY2Fubm90IGJlIHJlc29sdmVkIHRvIGEgdHlwZQoJQ29tcG9uZW50U2NhbiBjYW5ub3QgYmUgcmVzb2x2ZWQgdG8gYSB0eXBlCglJbXBsaWNpdCBzdXBlciBjb25zdHJ1Y3RvciBPYmplY3QoKSBpcyB1bmRlZmluZWQgZm9yIGRlZmF1bHQgY29uc3RydWN0b3IuIE11c3QgZGVmaW5lIGFuIGV4cGxpY2l0IGNvbnN0cnVjdG9yCglXZWJNdmNDb25maWd1cmVyIGNhbm5vdCBiZSByZXNvbHZlZCB0byBhIHR5cGUKCUJlYW4gY2Fubm90IGJlIHJlc29sdmVkIHRvIGEgdHlwZQoJUHJpbWFyeSBjYW5ub3QgYmUgcmVzb2x2ZWQgdG8gYSB0eXBlCglGcmVlTWFya2VyQ29uZmlndXJhdGlvbkZhY3RvcnlCZWFuIGNhbm5vdCBiZSByZXNvbHZlZCB0byBhIHR5cGUKCUlPRXhjZXB0aW9uIGNhbm5vdCBiZSByZXNvbHZlZCB0byBhIHR5cGUKCUZyZWVNYXJrZXJDb25maWd1cmF0aW9uRmFjdG9yeUJlYW4gY2Fubm90IGJlIHJlc29sdmVkIHRvIGEgdHlwZQoJRnJlZU1hcmtlckNvbmZpZ3VyYXRpb25GYWN0b3J5QmVhbiBjYW5ub3QgYmUgcmVzb2x2ZWQgdG8gYSB0eXBlCglDbGFzc1RlbXBsYXRlTG9hZGVyIGNhbm5vdCBiZSByZXNvbHZlZCB0byBhIHR5cGUKCUNsYXNzVGVtcGxhdGVMb2FkZXIgY2Fubm90IGJlIHJlc29sdmVkIHRvIGEgdHlwZQoJVGhlIG1ldGhvZCBnZXRDbGFzcygpIGlzIHVuZGVmaW5lZCBmb3IgdGhlIHR5cGUgTXZjQ29uZmlnCglPdmVycmlkZSBjYW5ub3QgYmUgcmVzb2x2ZWQgdG8gYSB0eXBlCglSZXNvdXJjZUhhbmRsZXJSZWdpc3RyeSBjYW5ub3QgYmUgcmVzb2x2ZWQgdG8gYSB0eXBlCglCZWFuIGNhbm5vdCBiZSByZXNvbHZlZCB0byBhIHR5cGUKCUZyZWVNYXJrZXJDb25maWd1cmVyIGNhbm5vdCBiZSByZXNvbHZlZCB0byBhIHR5cGUKCUZyZWVNYXJrZXJDb25maWd1cmVyIGNhbm5vdCBiZSByZXNvbHZlZCB0byBhIHR5cGUKCUZyZWVNYXJrZXJDb25maWd1cmVyIGNhbm5vdCBiZSByZXNvbHZlZCB0byBhIHR5cGUKCgAIAA0MAAUADgEAFShMamF2YS9sYW5nL1N0cmluZzspVgEAD0xpbmVOdW1iZXJUYWJsZQEAEkxvY2FsVmFyaWFibGVUYWJsZQEABHRoaXMBAB9Mc3JjL3BsYXRmb3JtL2NvbmZpZy9NdmNDb25maWc7AQAaZ2V0RnJlZU1hcmtlckNvbmZpZ3VyYXRpb24BACYoKUxGcmVlTWFya2VyQ29uZmlndXJhdGlvbkZhY3RvcnlCZWFuOwEACkV4Y2VwdGlvbnMHABcBAAtJT0V4Y2VwdGlvbgEAG1J1bnRpbWVJbnZpc2libGVBbm5vdGF0aW9ucwEABkxCZWFuOwEACUxQcmltYXJ5OwgAHAEB91VucmVzb2x2ZWQgY29tcGlsYXRpb24gcHJvYmxlbXM6IAoJQmVhbiBjYW5ub3QgYmUgcmVzb2x2ZWQgdG8gYSB0eXBlCglQcmltYXJ5IGNhbm5vdCBiZSByZXNvbHZlZCB0byBhIHR5cGUKCUZyZWVNYXJrZXJDb25maWd1cmF0aW9uRmFjdG9yeUJlYW4gY2Fubm90IGJlIHJlc29sdmVkIHRvIGEgdHlwZQoJSU9FeGNlcHRpb24gY2Fubm90IGJlIHJlc29sdmVkIHRvIGEgdHlwZQoJRnJlZU1hcmtlckNvbmZpZ3VyYXRpb25GYWN0b3J5QmVhbiBjYW5ub3QgYmUgcmVzb2x2ZWQgdG8gYSB0eXBlCglGcmVlTWFya2VyQ29uZmlndXJhdGlvbkZhY3RvcnlCZWFuIGNhbm5vdCBiZSByZXNvbHZlZCB0byBhIHR5cGUKCUNsYXNzVGVtcGxhdGVMb2FkZXIgY2Fubm90IGJlIHJlc29sdmVkIHRvIGEgdHlwZQoJQ2xhc3NUZW1wbGF0ZUxvYWRlciBjYW5ub3QgYmUgcmVzb2x2ZWQgdG8gYSB0eXBlCglUaGUgbWV0aG9kIGdldENsYXNzKCkgaXMgdW5kZWZpbmVkIGZvciB0aGUgdHlwZSBNdmNDb25maWcKAQAfUnVudGltZUludmlzaWJsZVR5cGVBbm5vdGF0aW9ucwEAE2FkZFJlc291cmNlSGFuZGxlcnMBABwoTFJlc291cmNlSGFuZGxlclJlZ2lzdHJ5OylWAQAKTE92ZXJyaWRlOwgAIgEAf1VucmVzb2x2ZWQgY29tcGlsYXRpb24gcHJvYmxlbXM6IAoJT3ZlcnJpZGUgY2Fubm90IGJlIHJlc29sdmVkIHRvIGEgdHlwZQoJUmVzb3VyY2VIYW5kbGVyUmVnaXN0cnkgY2Fubm90IGJlIHJlc29sdmVkIHRvIGEgdHlwZQoBABBmcmVlbWFya2VyQ29uZmlnAQAYKClMRnJlZU1hcmtlckNvbmZpZ3VyZXI7CAAmAQDeVW5yZXNvbHZlZCBjb21waWxhdGlvbiBwcm9ibGVtczogCglCZWFuIGNhbm5vdCBiZSByZXNvbHZlZCB0byBhIHR5cGUKCUZyZWVNYXJrZXJDb25maWd1cmVyIGNhbm5vdCBiZSByZXNvbHZlZCB0byBhIHR5cGUKCUZyZWVNYXJrZXJDb25maWd1cmVyIGNhbm5vdCBiZSByZXNvbHZlZCB0byBhIHR5cGUKCUZyZWVNYXJrZXJDb25maWd1cmVyIGNhbm5vdCBiZSByZXNvbHZlZCB0byBhIHR5cGUKAQAKU291cmNlRmlsZQEADk12Y0NvbmZpZy5qYXZhAQAPTENvbmZpZ3VyYXRpb247AQAOTEVuYWJsZVdlYk12YzsBAA9MQ29tcG9uZW50U2NhbjsBABVJbmNvbnNpc3RlbnRIaWVyYXJjaHkHAC4BACJGcmVlTWFya2VyQ29uZmlndXJhdGlvbkZhY3RvcnlCZWFuBwAwAQAURnJlZU1hcmtlckNvbmZpZ3VyZXIHADIBABdSZXNvdXJjZUhhbmRsZXJSZWdpc3RyeQcANAEAEFdlYk12Y0NvbmZpZ3VyZXIBAAxNaXNzaW5nVHlwZXMAIQABAAMAAAAAAAQAAQAFAAYAAQAHAAAANAADAAEAAAAKuwAIWRIKtwAMvwAAAAIADwAAAAYAAQAAAAEAEAAAAAwAAQAAAAoAEQASAAAAAQATABQABAAVAAAABAABABYAGAAAAAoAAgAZAAAAGgAAAAcAAAA0AAMAAQAAAAq7AAhZEhu3AAy/AAAAAgAPAAAABgABAAAAFAAQAAAADAABAAAACgARABIAAAAdAAAADgACFAAAGQAAFAAAGgAAAAEAHgAfAAIAGAAAAAYAAQAgAAAABwAAADQAAwACAAAACrsACFkSIbcADL8AAAACAA8AAAAGAAEAAAAdABAAAAAMAAEAAAAKABEAEgAAAAEAIwAkAAMAGAAAAAYAAQAZAAAABwAAADQAAwABAAAACrsACFkSJbcADL8AAAACAA8AAAAGAAEAAAAkABAAAAAMAAEAAAAKABEAEgAAAB0AAAAIAAEUAAAZAAAABAAnAAAAAgAoABgAAAAOAAMAKQAAACoAAAArAAAALAAAAAAANQAAAA4ABgAtAC8AFgAxADMAAw==
-  learner_created: true
-- name: src/platform/config/MvcConfig.java
-  visible: true
-  text: |+
-    package platform.config;
-
-    import freemarker.cache.ClassTemplateLoader;
-    import java.io.IOException;
-    import org.springframework.context.annotation.Bean;
-    import org.springframework.context.annotation.ComponentScan;
-    import org.springframework.context.annotation.Configuration;
-    import org.springframework.context.annotation.Primary;
-    import org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean;
-    import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-    import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-    import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-    import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
-
-    @Configuration
-    @EnableWebMvc
-    @ComponentScan
-    public class MvcConfig implements WebMvcConfigurer {
-
-        @Bean
-        @Primary
-        public FreeMarkerConfigurationFactoryBean getFreeMarkerConfiguration() throws IOException {
-            FreeMarkerConfigurationFactoryBean bean = new FreeMarkerConfigurationFactoryBean();
-            ClassTemplateLoader ctl = new ClassTemplateLoader(getClass(), "/templates/");
-            bean.setPostTemplateLoaders(ctl);
-            return bean;
-        }
-
-        @Override
-        public void addResourceHandlers(ResourceHandlerRegistry registry) {
-            registry
-                .addResourceHandler("/**")
-                .addResourceLocations("classpath:/static/", "classpath:/templates/");
-        }
-
-        @Bean
-        public FreeMarkerConfigurer freemarkerConfig() {
-            FreeMarkerConfigurer freeMarkerConfigurer = new FreeMarkerConfigurer();
-            freeMarkerConfigurer.setTemplateLoaderPath("classpath:/templates/");
-            return freeMarkerConfigurer;
-        }
-
-    }
-
-
   learner_created: true
 - name: src/platform/controllers/CodeController.java
   visible: true
@@ -908,9 +835,6 @@ files:
     @Repository
     public interface CodeRepository extends JpaRepository<Code, Long> {
     }
-  learner_created: true
-- name: src/platform/functions/FilterModel.java
-  visible: true
   learner_created: true
 - name: src/resources/templates/new.ftlh
   visible: true

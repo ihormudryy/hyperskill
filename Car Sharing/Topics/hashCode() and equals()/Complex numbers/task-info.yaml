@@ -1,0 +1,30 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    class ComplexNumber {
+
+        private final double re;
+        private final double im;
+
+        public ComplexNumber(double re, double im) {
+            this.re = re;
+            this.im = im;
+        }
+
+        public double getRe() {
+            return re;
+        }
+
+        public double getIm() {
+            return im;
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/2309#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Thu, 08 Jul 2021 10:02:53 UTC
+record: -1

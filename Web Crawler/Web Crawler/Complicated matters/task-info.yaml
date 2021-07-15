@@ -1,0 +1,609 @@
+type: edu
+custom_name: stage6
+files:
+- name: src/crawler/ApplicationRunner.java
+  visible: true
+  text: |
+    package crawler;
+
+
+    public class ApplicationRunner {
+        public static void main(String[] args) {
+            new WebCrawler();
+        }
+    }
+  learner_created: false
+- name: src/crawler/WebCrawler.java
+  visible: true
+  text: |-
+    package crawler;
+
+    import javax.swing.*;
+
+    public class WebCrawler extends JFrame {
+        public WebCrawler() {
+            setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            setSize(300, 300);
+            setVisible(true);
+        }
+    }
+  learner_created: false
+- name: test/PageContent.java
+  visible: false
+  text: "import java.util.HashMap;\nimport java.util.Map;\n\npublic class PageContent\
+    \ {\n    private Map<String, String> linksNContent;\n    private Map<String, String>\
+    \ linksNTitles;\n    private Map<String, Integer> linksNSubLinks;\n    public\
+    \ PageContent(){\n        linksNContent = new HashMap<>();\n        linksNTitles\
+    \ = new HashMap<>();\n        linksNSubLinks = new HashMap<>();\n        initPageContent();\n\
+    \    }\n    \n    private void initPageContent() {\n        //Links\n        String\
+    \ exampleDomainLink = \"http://localhost:25555/exampleDotCom\";\n        String\
+    \ circular1Link = \"http://localhost:25555/circular1\";\n        String circular2Link\
+    \ = \"http://localhost:25555/circular2\";\n        String circular3Link = \"http://localhost:25555/circular3\"\
+    ;\n    \n        //Titles\n        String exampleDomainTitle = \"Example Domain\"\
+    ;\n        String circular1Title = \"circular1tiTle\";\n        String circular2Title\
+    \ = \"circular2tiTle\";\n        String circular3Title = \"circular3tiTle\";\n\
+    \    \n        //Contents\n        String exampleDomainContent = \"<!doctype html>\\\
+    n\" +\n                \"<html>\\n\" +\n                \"<head>\\n\" +\n    \
+    \            \"    <title>Example Domain</title>\\n\" +\n                \"\\\
+    n\" +\n                \"    <meta charset=\\\"utf-8\\\" />\\n\" +\n         \
+    \       \"    <meta http-equiv=\\\"Content-type\\\" content=\\\"text/html; charset=utf-8\\\
+    \" />\\n\" +\n                \"    <meta name=\\\"viewport\\\" content=\\\"width=device-width,\
+    \ initial-scale=1\\\" />\\n\" +\n                \"    <style type=\\\"text/css\\\
+    \">\\n\" +\n                \"    body {\\n\" +\n                \"        background-color:\
+    \ #f0f0f2;\\n\" +\n                \"        margin: 0;\\n\" +\n             \
+    \   \"        padding: 0;\\n\" +\n                \"        font-family: \\\"\
+    Open Sans\\\", \\\"Helvetica Neue\\\", Helvetica, Arial, sans-serif;\\n\" +\n\
+    \                \"\\n\" +\n                \"    }\\n\" +\n                \"\
+    \    div {\\n\" +\n                \"        width: 600px;\\n\" +\n          \
+    \      \"        margin: 5em auto;\\n\" +\n                \"        padding:\
+    \ 50px;\\n\" +\n                \"        background-color: #fff;\\n\" +\n   \
+    \             \"        border-radius: 1em;\\n\" +\n                \"    }\\\
+    n\" +\n                \"    a:link, a:visited {\\n\" +\n                \"  \
+    \      color: #38488f;\\n\" +\n                \"        text-decoration: none;\\\
+    n\" +\n                \"    }\\n\" +\n                \"    @media (max-width:\
+    \ 700px) {\\n\" +\n                \"        body {\\n\" +\n                \"\
+    \            background-color: #fff;\\n\" +\n                \"        }\\n\"\
+    \ +\n                \"        div {\\n\" +\n                \"            width:\
+    \ auto;\\n\" +\n                \"            margin: 0 auto;\\n\" +\n       \
+    \         \"            border-radius: 0;\\n\" +\n                \"         \
+    \   padding: 1em;\\n\" +\n                \"        }\\n\" +\n               \
+    \ \"    }\\n\" +\n                \"    </style>\\n\" +\n                \"</head>\\\
+    n\" +\n                \"\\n\" +\n                \"<body>\\n\" +\n          \
+    \      \"<div>\\n\" +\n                \"    <h1>Example of Example Domain</h1>\\\
+    n\" +\n                \"    <p>This domain is established to be used for illustrative\
+    \ examples in documents. You may use this\\n\" +\n                \"    domain\
+    \ in examples without prior coordination or asking for permission.</p>\\n\" +\n\
+    \                \"    <p><a href=\\\"unavailablePage\\\">More information...</a></p>\\\
+    n\" +\n                \"</div>\\n\" +\n                \"</body>\\n\" +\n   \
+    \             \"</html>\";\n    \n        String circular1Content = \"\\n\" +\n\
+    \                \"            |<!doctype html>\\n\" +\n                \"   \
+    \         |<html>\\n\" +\n                \"            |<head>\\n\" +\n     \
+    \           \"            |<title>circular1tiTle</title>\\n\" +\n            \
+    \    \"            |</head>\\n\" +\n                \"            |<body>\\n\"\
+    \ +\n                \"            |<a href=\\\"circular2\\\">link1</a>\\n\" +\n\
+    \                \"            |</body>\\n\" +\n                \"           \
+    \ |</html>\\n\" +\n                \"        \";\n    \n        String circular2Content\
+    \ = \"\\n\" +\n                \"            |<!doctype html>\\n\" +\n       \
+    \         \"            |<html>\\n\" +\n                \"            |<head>\\\
+    n\" +\n                \"            |<title>circular2tiTle</title>\\n\" +\n \
+    \               \"            |</head>\\n\" +\n                \"            |<body>\\\
+    n\" +\n                \"            |<a href=\\\"circular3\\\">link1</a>\\n\"\
+    \ +\n                \"            |</body>\\n\" +\n                \"       \
+    \     |</html>\\n\" +\n                \"        \";\n    \n        String circular3Content\
+    \ = \"\\n\" +\n                \"            |<!doctype html>\\n\" +\n       \
+    \         \"            |<html>\\n\" +\n                \"            |<head>\\\
+    n\" +\n                \"            |<title>circular3tiTle</title>\\n\" +\n \
+    \               \"            |</head>\\n\" +\n                \"            |<body>\\\
+    n\" +\n                \"            |<a href=\\\"circular1\\\">link</a>\\n\"\
+    \ +\n                \"            |<a href=\\\"exampleDotCom\\\">link</a>\\n\"\
+    \ +\n                \"            |</body>\\n\" +\n                \"       \
+    \     |</html>\\n\" +\n                \"        \";\n    \n        linksNContent.put(exampleDomainLink,\
+    \ exampleDomainContent);\n        linksNContent.put(circular1Link, circular1Content);\n\
+    \        linksNContent.put(circular2Link, circular2Content);\n        linksNContent.put(circular3Link,\
+    \ circular3Content);\n    \n        linksNTitles.put(exampleDomainLink, exampleDomainTitle);\n\
+    \        linksNTitles.put(circular1Link, circular1Title);\n        linksNTitles.put(circular2Link,\
+    \ circular2Title);\n        linksNTitles.put(circular3Link, circular3Title);\n\
+    \        \n        linksNSubLinks.put(exampleDomainLink, 1);\n        linksNSubLinks.put(circular1Link,\
+    \ 2);\n        linksNSubLinks.put(circular2Link, 2);\n        linksNSubLinks.put(circular3Link,\
+    \ 3);\n    }\n    \n    public Map<String, String> getLinksNTitles(){return linksNTitles;}\n\
+    \    public int getSubLinksWithLink(String link){return linksNSubLinks.getOrDefault(link,\
+    \ 0);}\n    public String getContentWithLink(String link){\n        return linksNContent.getOrDefault(link,\
+    \ \"\");\n    }\n    public String getTitleWithLink(String link){\n        return\
+    \ linksNTitles.getOrDefault(link, \"\");\n    }\n}\n"
+  learner_created: false
+- name: test/CrawlerTest.java
+  visible: false
+  text: |
+    import crawler.WebCrawler;
+    import org.assertj.swing.fixture.*;
+    import org.hyperskill.hstest.dynamic.DynamicTest;
+    import org.hyperskill.hstest.mocks.web.WebPage;
+    import org.hyperskill.hstest.mocks.web.WebServerMock;
+    import org.hyperskill.hstest.stage.SwingTest;
+    import org.hyperskill.hstest.testcase.CheckResult;
+    import org.hyperskill.hstest.testing.swing.SwingComponent;
+    import org.junit.After;
+    import org.junit.AfterClass;
+    import org.junit.BeforeClass;
+
+    import java.io.BufferedReader;
+    import java.io.File;
+    import java.io.FileReader;
+    import java.io.IOException;
+    import java.nio.file.Paths;
+    import java.util.ArrayList;
+    import java.util.List;
+    import java.util.Map;
+
+    public class CrawlerTest extends SwingTest {
+
+        private Map<String, String> mapOfLinksNTitles = pageContent.getLinksNTitles();
+        private final String EXPORT_DIRECTORY = Paths.get("").toAbsolutePath().toString() + "/temp.txt";
+
+        private static WebServerMock webServerMock;
+        private static PageContent pageContent;
+        private static final int PORT = 25555;
+        private Map<String, String> mapOfTitles;
+        private static List<String> parsedPages;
+
+        public CrawlerTest() {
+            super(new WebCrawler());
+        }
+
+        @BeforeClass
+        public static void initWebServer() {
+
+            System.out.println("Initializing server");
+            pageContent = new PageContent();
+            parsedPages = new ArrayList<>();
+
+            WebPage exampleDotComPage = new WebPage();
+            exampleDotComPage.setContent(pageContent.getContentWithLink("http://localhost:25555/exampleDotCom"));
+            exampleDotComPage.setContentType("text/html");
+
+            WebPage circular1Page = new WebPage();
+            circular1Page.setContent(pageContent.getContentWithLink("http://localhost:25555/circular1"));
+            circular1Page.setContentType("text/html");
+
+            WebPage circular2Page = new WebPage();
+            circular2Page.setContent(pageContent.getContentWithLink("http://localhost:25555/circular2"));
+            circular2Page.setContentType("text/html");
+
+            WebPage circular3Page = new WebPage();
+            circular3Page.setContent(pageContent.getContentWithLink("http://localhost:25555/circular3"));
+            circular3Page.setContentType("text/html");
+
+            WebPage unavailablePage = new WebPage();
+            unavailablePage.setContent("Web Page not found");
+
+            webServerMock = new WebServerMock(PORT);
+            webServerMock.setPage("/exampleDotCom", exampleDotComPage);
+            webServerMock.setPage("/circular1", circular1Page);
+            webServerMock.setPage("/circular2", circular2Page);
+            webServerMock.setPage("/circular3", circular3Page);
+            webServerMock.setPage("/unavailablePage", unavailablePage);
+
+            Thread thread = new Thread(() -> {
+                webServerMock.start();
+                webServerMock.run();
+            });
+
+            thread.start();
+        }
+
+        @AfterClass
+        public static void stopServer() {
+            System.out.println("Stopping server");
+            webServerMock.stop();
+        }
+
+        @After
+        public void deleteFile() {
+            File file = new File(EXPORT_DIRECTORY);
+            if (file.exists()) {
+                boolean deleted = file.delete();
+            }
+        }
+
+        @SwingComponent(name = "UrlTextField")
+        JTextComponentFixture textField;
+
+        @SwingComponent(name = "RunButton")
+        JToggleButtonFixture runButton;
+
+        @SwingComponent(name = "DepthTextField")
+        JTextComponentFixture depthTextField;
+
+        @SwingComponent(name = "DepthCheckBox")
+        JCheckBoxFixture depthCheckBox;
+
+        @SwingComponent(name = "ParsedLabel")
+        JLabelFixture parsedLabel;
+
+        @SwingComponent(name = "ExportUrlTextField")
+        JTextComponentFixture exportUrlTextField;
+
+        @SwingComponent(name = "ExportButton")
+        JButtonFixture exportButton;
+
+        @DynamicTest(order = 1)
+        CheckResult testComponents() {
+
+            requireVisible(textField);
+            requireVisible(runButton);
+            requireVisible(exportUrlTextField);
+            requireVisible(exportButton);
+            requireVisible(depthTextField);
+            requireVisible(depthCheckBox);
+            requireVisible(parsedLabel);
+
+            requireEnabled(textField);
+            requireEnabled(runButton);
+            requireEnabled(exportUrlTextField);
+            requireEnabled(exportButton);
+            requireEnabled(depthTextField);
+            requireEnabled(depthCheckBox);
+            requireEnabled(parsedLabel);
+
+            return CheckResult.correct();
+        }
+
+        @DynamicTest(order = 2)
+        CheckResult testParsedLabel() {
+
+            String link = "http://localhost:25555/exampleDotCom";
+            textField.setText(link);
+            runButton.click();
+
+            try {
+                Thread.sleep(200);
+            } catch (InterruptedException e) {
+                System.out.println();
+            }
+
+            int numberOfSubLinks = pageContent.getSubLinksWithLink(link);
+
+            try {
+                int parsedLabelText = Integer.parseInt(parsedLabel.text());
+
+                if (parsedLabelText != numberOfSubLinks) {
+                    return CheckResult.wrong("ParsedLabel shows wrong number of parsed pages");
+                }
+
+            } catch (NumberFormatException e) {
+                return CheckResult.wrong("ParsedLabel shows wrong number of parsed pages");
+            }
+
+            return CheckResult.correct();
+        }
+
+        @DynamicTest(order = 3)
+        CheckResult testRunButtonDeselected() {
+
+            textField.setText("http://localhost:25555/exampleDotCom");
+            runButton.click();
+
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            runButton = runButton.requireSelected(false);
+
+            if (runButton == null) {
+                return CheckResult.wrong("RunButton should be deselected when there are no more links to parse");
+            }
+
+            return CheckResult.correct();
+        }
+
+        @DynamicTest(order = 4)
+        CheckResult testFileCreation() {
+
+            exportUrlTextField.setText(EXPORT_DIRECTORY);
+            mapOfTitles = pageContent.getLinksNTitles();
+            for (Map.Entry<String, String> m : mapOfTitles.entrySet()) {
+                String link = m.getKey();
+                textField.setText(link);
+                runButton.click();
+                exportButton.click();
+                boolean fileExists = checkFileExistence();
+                if (!fileExists) {
+                    return CheckResult.wrong("Your app did not save a file after exporting.");
+                }
+                deleteFile();
+            }
+
+            return CheckResult.correct();
+        }
+
+        @DynamicTest(order = 5)
+        CheckResult testForDuplicateLinks() {
+            for (Map.Entry<String, String> m : mapOfTitles.entrySet()) {
+                String link = m.getKey();
+                textField.setText(link);
+                runButton.click();
+                exportButton.click();
+                boolean duplicateLinks = checkForDuplicateLinks();
+                if (duplicateLinks) {
+                    return CheckResult.wrong("You should not save links that you have previously parsed.");
+                }
+            }
+            return CheckResult.correct();
+        }
+
+        @DynamicTest(order = 6)
+        CheckResult testFileNumberOfLines() {
+
+            textField.setText("http://localhost:25555/exampleDotCom");
+            runButton.click();
+            exportButton.click();
+            boolean checkOne = checkFileNumberOfLines(2);
+
+            textField.setText("http://localhost:25555/circular3");
+            runButton.click();
+            exportButton.click();
+            boolean checkTwo = checkFileNumberOfLines(8);
+
+            if (!(checkOne && checkTwo)) {
+                return CheckResult.wrong("The file your app saves contains wrong number of lines");
+            }
+
+            return CheckResult.correct();
+        }
+
+        @DynamicTest(order = 7)
+        CheckResult testMaximumDepth() {
+            for (int i = 1; i <= 3; i++) {
+                depthTextField.setText(String.valueOf(i));
+                depthCheckBox.check(true);
+                textField.setText("http://localhost:25555/circular1");
+                runButton.click();
+                exportButton.click();
+
+                boolean maxDepthExceeded = checkMaxDepthExceeded(i * 2);
+                if (maxDepthExceeded) {
+                    return CheckResult.wrong("Your program parsed links deeper than the maximum depth");
+                }
+            }
+
+            return CheckResult.correct();
+        }
+
+        @DynamicTest(order = 8)
+        CheckResult testTitlesInFile() {
+
+            depthTextField.setText("");
+            depthCheckBox.check(false);
+            for (Map.Entry<String, String> m : mapOfTitles.entrySet()) {
+                String link = m.getKey();
+                textField.setText(link);
+                runButton.click();
+                exportButton.click();
+                boolean valid = checkEvenLines();
+                if (!valid) {
+                    return CheckResult.wrong("The file your app saves contains wrong title for it's parent url");
+                }
+            }
+
+            return CheckResult.correct();
+        }
+
+        @DynamicTest(order = 9)
+        CheckResult testTitlesInFileForDifferentDepths() {
+
+            for (int i = 1; i <= 3; i++) {
+                depthTextField.setText(String.valueOf(i));
+                depthCheckBox.check(true);
+                textField.setText("http://localhost:25555/circular1");
+                runButton.click();
+                exportButton.click();
+
+                boolean valid = checkEvenLines();
+                if (!valid) {
+                    return CheckResult.wrong("The file your app saves contains wrong title for it's parent url");
+                }
+            }
+
+            return CheckResult.correct();
+        }
+
+
+        private boolean checkFileExistence() {
+            File file = new File(EXPORT_DIRECTORY);
+            return file.exists();
+        }
+
+        private boolean checkFileNumberOfLines(int expectedLineNumber) {
+            int fileLines = 0;
+            try (BufferedReader reader = new BufferedReader(new FileReader(EXPORT_DIRECTORY))) {
+                while (reader.readLine() != null) {
+                    fileLines++;
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return expectedLineNumber == fileLines;
+        }
+
+        private boolean checkForDuplicateLinks() {
+            parsedPages.clear();
+
+            boolean duplicateLinks = false;
+            int lineNumber = 1;
+            String line = "";
+            try (BufferedReader reader = new BufferedReader(new FileReader(EXPORT_DIRECTORY))) {
+                while ((line = reader.readLine()) != null) {
+                    //Every odd line contains a link
+                    if (lineNumber % 2 != 0) {
+                        if (parsedPages.contains(line)) {
+                            duplicateLinks = true;
+                        }
+                        parsedPages.add(line);
+                    }
+                    lineNumber++;
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return duplicateLinks;
+        }
+
+        private boolean checkMaxDepthExceeded(int expectedLines) {
+            int fileLines = 0;
+            try (BufferedReader reader = new BufferedReader(new FileReader(EXPORT_DIRECTORY))) {
+                while (reader.readLine() != null) {
+                    fileLines++;
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return fileLines > expectedLines;
+        }
+
+        //Checks if every even line contains the correct title
+        private boolean checkEvenLines() {
+            boolean valid = true;
+            int lineNumber = 1;
+            String line;
+            String originalTitle = "";
+            try (BufferedReader reader = new BufferedReader(new FileReader(EXPORT_DIRECTORY))) {
+                while ((line = reader.readLine()) != null) {
+                    //Every odd line contains a link
+                    if (lineNumber % 2 != 0) {
+                        originalTitle = pageContent.getTitleWithLink(line);
+                    } else {
+                        //Every even line contains a title
+                        if (!line.equals(originalTitle)) {
+                            valid = false;
+                        }
+                    }
+                    lineNumber++;
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return valid;
+        }
+    }
+  learner_created: false
+- name: src/crawler/api/URLFetcher.java
+  visible: true
+  text: |
+    package crawler.api;
+
+    import java.io.BufferedInputStream;
+    import java.io.IOException;
+    import java.io.InputStream;
+    import java.net.MalformedURLException;
+    import java.net.URL;
+    import java.net.URLConnection;
+    import java.nio.charset.StandardCharsets;
+
+    public class URLFetcher {
+
+      private static final String userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:63.0) Gecko/20100101 Firefox/63.0";
+
+      public static URL formCorrectURL(String url, URL domain) throws MalformedURLException {
+        return url.contains("http") ? new URL(url) :
+            new URL(domain.getProtocol() +
+                        "://" + domain.getHost() +
+                        (domain.getPort() != -1 ? ":" + domain.getPort() : "") +
+                        "/" + url);
+      }
+
+      public static URLConnection getURLConnection(URL link) throws IOException {
+        URLConnection connection = link.openConnection();
+        connection.setRequestProperty("User-Agent", userAgent);
+        if (connection.getContentType()
+                      .contains("text/html")) {
+          return link.openConnection();
+        }
+        throw new NullPointerException("Connection was not initialized");
+      }
+
+      public static String fetchFromURL(URL url) {
+        try {
+          InputStream inputStream = new BufferedInputStream(getURLConnection(url).getInputStream());
+          return new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
+        } catch (Exception e) {
+          System.out.println(url + " does not exist");
+          throw new RuntimeException("URL " + url + " could not be loaded");
+        }
+      }
+    }
+  learner_created: true
+- name: src/crawler/api/HTMLParser.java
+  visible: true
+  text: |
+    package crawler.api;
+
+    import java.net.MalformedURLException;
+    import java.net.URL;
+    import java.util.Map;
+    import java.util.regex.Matcher;
+    import java.util.regex.Pattern;
+    import java.util.stream.Collectors;
+
+    public class HTMLParser {
+
+      public static final Pattern patternTitle = Pattern.compile("\\<title.*?\\>.*?\\<\\/title\\>");
+      public static final Pattern patternForTag = Pattern.compile("\\<a.*?href=['\\\"].*?['\\\"].*?\\>");
+      public static final Pattern patternForURL = Pattern.compile("href=['\\\"].*?['\\\"]");
+      public static final Pattern titleTagName = Pattern.compile("\\<.*?\\>");
+
+      public static Map<String, String> getAllPageURLs(String htmlPage, URL domain) {
+
+        return patternForTag.matcher(htmlPage)
+                                 .results()
+                                 .map(e -> e.group())
+                                 .flatMap(el -> patternForURL.matcher(el)
+                                                            .results()
+                                                            .map(e -> e.group()))
+                                 .map(link -> link.replaceAll("href=", "")
+                                                 .replaceAll("\"", "")
+                                                 .replaceAll("'", ""))
+                                 .map(link -> {
+                                   try {
+                                     URL url = URLFetcher.formCorrectURL(link, domain);
+                                     if(URLFetcher.getURLConnection(url) != null) {
+                                       return url.toString();
+                                     }
+                                   } catch (java.io.IOException | NullPointerException e) {
+                                     System.out.println(link + " page does not really exist!");
+                                   }
+                                   return null;
+                                 })
+                                 .filter(link -> link != null)
+                                 .collect(Collectors.toMap(e -> e.toString(),
+                                                           e -> {
+                                                             try {
+                                                               return getTitle(URLFetcher.fetchFromURL(new URL(e)));
+                                                             } catch (MalformedURLException malformedURLException) {
+                                                               return "";
+                                                             }
+                                                           }));
+      }
+
+      public static String getTitle(String text) {
+        String title = "";
+        Matcher matcher = patternTitle.matcher(text);
+        if (matcher.find()) {
+          title = titleTagName.matcher(matcher.group()).replaceAll("");
+        }
+        return title;
+      }
+    }
+  learner_created: true
+- name: src/crawler/CrawlerService.java
+  visible: true
+  learner_created: true
+feedback_link: https://hyperskill.org/projects/59/stages/322/implement#comment
+status: Solved
+feedback:
+  message: Well done! You've finished the project. Select a new project on <a href="https://hyperskill.org/projects">JetBrains
+    Academy</a> to continue learning.
+  time: Tue, 06 Jul 2021 11:07:24 UTC
+record: -1

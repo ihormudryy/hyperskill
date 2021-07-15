@@ -1,0 +1,27 @@
+content:
+- toString()
+- Runtime type checking
+- hashCode() and equals()
+- Detecting annotations
+- Custom annotations and types of annotations
+- Inner classes
+- Nested classes
+- Enums in Java
+- Fields and methods in enum
+- Type Bounds
+- Wildcards
+- Generics and Reflection
+- States of a thread
+- Comparing dates and time
+- Timers
+- LinkedList vs. ArrayList
+- HashMap
+- Choosing the right collection
+- Iterator and Iterable
+- The utility class Collections
+- Standard logger
+- Unit testing with JUnit
+- Parameterized test
+- Debugging techniques
+- Creating instances
+- Class Loader

@@ -1,0 +1,23 @@
+<h2>Complex numbers</h2>
+<html>
+ <head></head>
+ <body>
+  <p>Here's a class <code class="language-java">ComplexNumber</code>. You need to override its methods <code class="language-java">equals()</code> and <code class="language-java">hashCode()</code>. The method <code class="language-java">equals()</code> should compare two instances of <code class="language-java">ComplexNumber</code> by the fields <code class="language-java">re</code> and <code class="language-java">im</code>. The method <code class="language-java">hashCode()</code> must be consistent with your implementation of <code class="language-java">equals()</code>.</p> 
+  <p>Implementations of the method <code class="language-java">hashCode()</code> that return a constant or do not consider a fractional part of <code class="language-java">re</code> and <code class="language-java">im</code>, will not be accepted.</p> 
+  <p><strong>Example</strong></p> 
+  <pre><code class="language-java">ComplexNumber a = new ComplexNumber(1, 1);
+ComplexNumber b = new ComplexNumber(1, 1);
+// a.equals(b) must return true
+// a.hashCode() must be equal to b.hashCode()</code></pre> 
+  <p><br> <button class="btn-sm btn-outline-secondary" onclick="getElementById('hint-820').style.display='inline'"> Hint </button> </p>
+  <div id="hint-820" style="display:none;">
+   Find a static method in the class 
+   <code class="language-java">java.lang.Double</code> that will help in solving this quiz.
+  </div>
+  <p></p> 
+  <p>If you can't solve this quiz anyway, you can use a modern IDE (such as IntelliJ Idea) for automatically generating correct <code class="language-java">equals()</code> and <code class="language-java">hashCode()</code>. But in this case, you need to understand what is generated and why it works.</p>
+ </body>
+</html><br><br><font color="gray">Memory limit: 256 MB</font><br><font color="gray">Time limit: 8 seconds</font><br><br>
+<b>Caution</b><br><br>
+You may see errors in your code or execution results due to missing context. Don’t worry about it, just write the solution and press Check.
+<br><br>

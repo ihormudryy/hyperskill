@@ -22,10 +22,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 public class DataBaseManager implements Serializable {
     private final ObjectMapper mapper = new ObjectMapper();
     private final ReentrantReadWriteLock rwl = new ReentrantReadWriteLock();
-    private static final String dbFilePath = System.getProperty("user.dir") + File.separator +
-        "JSON Database" + File.separator +
-        "task" + File.separator +
-        "src" + File.separator +
+
         "server" + File.separator +
         "data";
     private static final String fileName = dbFilePath + File.separator + "db.json";

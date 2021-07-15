@@ -1,0 +1,36 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    import java.util.Scanner;
+
+    class Util {
+        public static void swapInts(int x, int y) {
+            int tmp = x;
+            x = y;
+            y = tmp;
+        }
+    }
+
+    class Main {
+        public static void main(String[] args) {
+            Scanner scanner = new Scanner(System.in);
+            while (scanner.hasNextLine()) {
+                int x = Integer.parseInt(scanner.nextLine());
+                int y = Integer.parseInt(scanner.nextLine());
+
+                Util.swapInts(x, y); // fixme this method doesn't work as expected
+
+                System.out.println(x);
+                System.out.println(y);
+            }
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/13782#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Tue, 13 Jul 2021 13:32:56 UTC
+record: -1

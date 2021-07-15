@@ -1,0 +1,51 @@
+<h2 style="text-align: center;">Description</h2>
+
+<p>As you know, web pages contain links to other web pages. In this stage, we are going to collect all the links to other web pages and their respective titles from a given web page and display them in a <code class="java">JTable</code>. </p>
+
+<p>In HTML, links are tags like <code class="java">&lt;a target="_blank" href="LINK"&gt;</code>, where <code class="java">LINK</code> is a URL that can be contained in single (<code class="java">'</code>) or double (<code class="java">"</code>) quotes. </p>
+
+<p>The link itself can be presented in different ways: </p>
+
+<ul>
+	<li>An absolute link;</li>
+	<li>A relative link;</li>
+	<li>A link without a protocol.</li>
+</ul>
+
+
+<p>Don't forget that other than links to web pages, there are also links to images, audio files, videos, and so on. Let's handle these cases by updating the page download code. </p>
+
+<p>The URL's <code class="java">openStream()</code> method is shorthand for <code class="java">openConnection().getInputStream()</code>. Receive an object <code class="java">URLConnection</code> by <code class="java">openConnection()</code> and check its <code class="java">getContentType()</code> which can return a null value so be sure to handle such a case. If it starts with "text/html", then use <code class="java">.getInputStream()</code> to pass the connection to the <code class="java">InputStreamReader</code>. </p>
+
+<p>When the run button is clicked, the data should be downloaded. Display this data in the <code class="java">JTable</code> with the first column being the link and the second column the title. Make sure to clear the previous data in the table if any. </p>
+
+<p>The first row in the table should contain the initial page and its title.The remaining rows should contain links found within the page paired with their titles. And you need to make sure that the links you add to your table are formatted in their absolute form.</p>
+
+
+<p>You should put the <code class="java">JTable</code> in a <code class="java">JScrollPane</code> so that the <code class="java">JTable</code> header is shown. </p>
+
+<p>You can implement the table in Swing using <a target="_blank" href="https://www.geeksforgeeks.org/java-swing-jtable/" rel="noopener noreferrer nofollow">JTable</a>. </p>
+
+<h2 style="text-align: center;">Objectives </h2>
+
+<p>In this stage, you should: </p>
+
+<ol>
+	<li>Add a <code class="java">JTable</code> to the window and put it in a <code class="java">JScrollPane</code>.</li>
+	<li>Display the data collected in the <code class="java">JTable</code>.</li>
+	<li>Disable the <code class="java">JTable</code>.</li>
+	<li>Set the names of the following components: </li>
+</ol>
+
+<ul>
+	<li><code class="java">JTextField</code> "UrlTextField";</li>
+	<li><code class="java">JButton</code> "RunButton";</li>
+	<li><code class="java">JLabel</code> "TitleLabel";</li>
+	<li><code class="java">JTable</code> "TitlesTable".</li>
+</ul>
+
+<h2 style="text-align: center;">Example</h2>
+
+<p>Here is what your new window might look like:</p>
+
+<p style="text-align: center;"><img alt="" src="https://ucarecdn.com/11458043-4aa4-462f-a782-a03dfef00c39/"></p>

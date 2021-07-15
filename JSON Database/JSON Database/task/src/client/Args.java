@@ -8,7 +8,7 @@ public class Args {
     @Parameter
     protected List<String> parameters = new ArrayList<>();
 
-    @Parameter(names = "-t")
+    @Parameter(names = "-databaseFileName")
     protected String command;
 
     @Parameter(names = "-k")

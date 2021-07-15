@@ -1,0 +1,33 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    import java.util.*;
+    import java.util.stream.Collectors;
+
+    public class Main {
+
+        public static void iterateOverList(ListIterator<String> iter) {
+            // write your code here
+        }
+
+        public static void printList(ListIterator<String> iter) {
+            // write your code here
+        }
+
+        /* Do not change code below */
+        public static void main(String[] args) {
+            Scanner scanner = new Scanner(System.in);
+            List<String> list = Arrays.stream(scanner.nextLine().split(" ")).collect(Collectors.toList());
+            iterateOverList(list.listIterator());
+            printList(list.listIterator());
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/2343#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Mon, 12 Jul 2021 16:38:19 UTC
+record: -1

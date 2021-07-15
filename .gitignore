@@ -29,7 +29,7 @@ gradle/
 target/
 unitTestOutput/
 logs/
-
+bin/
 # Mac
 .DS_Store
 # Test Files

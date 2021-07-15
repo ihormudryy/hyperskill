@@ -1,0 +1,30 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    import java.util.Timer;
+    import java.util.TimerTask;
+
+    class TimerCode extends TimerTask {
+        public void run() {
+            //Add code here
+            System.exit(0);
+        }
+    }
+
+    public class Main {
+        public static void main(String[] args) {
+            Timer timer = new Timer();
+            TimerTask task = new TimerCode();
+
+            timer.schedule(task, 0L);
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/12766#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Mon, 12 Jul 2021 12:37:24 UTC
+record: -1

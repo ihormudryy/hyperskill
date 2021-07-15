@@ -1,0 +1,37 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: "import java.util.*;\n\n/**\n * Observable interface\n**/\ninterface Observable\
+    \ {\n\n    void addObserver(Observer observer);\n\n    void removeObserver(Observer\
+    \ observer);\n\n    void notifyObservers();\n}\n\n/**\n * Concrete Observable\
+    \ - Rockstar Games\n**/\nclass RockstarGames implements Observable {\n\n    public\
+    \ String releaseGame;\n    private List<Observer> observers = new ArrayList<>();\n\
+    \n    public void release(String releaseGame) {\n        this.releaseGame = releaseGame;\n\
+    \        // write your code here ...\n    }\n\n    @Override\n    public void\
+    \ addObserver(Observer observer) {\n        // write your code here ...\n    }\n\
+    \n    @Override\n    public void removeObserver(Observer observer) {\n       \
+    \ // write your code here ...\n    }\n\n    @Override\n    public void notifyObservers()\
+    \ {\n        for (Observer observer : observers) {\n            System.out.println(\"\
+    Notification for gamer : \" + observer);\n            observer.update(releaseGame);\n\
+    \        }\n    }\n}\n\n/**\n * Observer interface\n**/\ninterface Observer {\n\
+    \n    public void update(String domain);\n}\n\n/**\n * Concrete observer - Gamer\n\
+    **/\nclass Gamer implements Observer {\n\n    private String name;\n    private\
+    \ Set<String> games = new HashSet<>();\n\n    public Gamer(String name) {\n  \
+    \      this.name = name;\n    }\n\n    @Override\n    public void update(String\
+    \ game) {\n        buyGame(game);\n    }\n\n    public void buyGame(String game)\
+    \ {\n        System.out.println(name + \" says : \\\"Oh, Rockstar releases new\
+    \ game \" + game + \" !\\\"\");\n        games.add(game);\n    }\n\n    @Override\n\
+    \    public String toString() {\n        return this.name;\n    }    \n}\n\n/**\n\
+    \ * Main class\n**/\npublic class Main {\n    public static void main(String[]\
+    \ args) {\n        final Scanner scanner = new Scanner(System.in);\n\n       \
+    \ String game = null;\n\n        RockstarGames rockstarGames = new RockstarGames();\n\
+    \n        Gamer garry = new Gamer(\"Garry Rose\");\n        Gamer peter = new\
+    \ Gamer(\"Peter Johnston\");\n        Gamer helen = new Gamer(\"Helen Jack\");\n\
+    \n        rockstarGames.addObserver(garry);\n        rockstarGames.addObserver(peter);\n\
+    \        rockstarGames.addObserver(helen);\n\n        game = scanner.nextLine();\n\
+    \        rockstarGames.release(game);\n\n        scanner.close();\n    }\n}"
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/5524#comment
+status: Solved
+record: -1

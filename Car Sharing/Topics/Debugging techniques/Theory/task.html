@@ -1,0 +1,96 @@
+<h2>Debugging techniques</h2>
+<html>
+ <head></head>
+ <body>
+  <p>Debugging is the process of finding and fixing bugs in a program. Some bugs, like those that prevent the program from compiling, can be fixed easily since the compiler or an IDE can tell you what's wrong. Other bugs are trickier and may require you to put a lot of effort into detecting them.</p> 
+  <p>In this topic, we will consider the most popular ways that programmers use to debug a program:</p> 
+  <ul> 
+   <li>Logging </li> 
+   <li>Assertions</li> 
+   <li>Attaching a debugger</li> 
+  </ul> 
+  <h2>Logging/'printf' debugging </h2> 
+  <p>One way to track the changes in the program state is to insert additional print statements in the code. When executed, they will inform you about what's happening under the hood at runtime.</p> 
+  <p>For example, you can insert a line just before a method returns that will print the return value to the console. This way, in addition to seeing the final result, you will also be able to understand what happens at a certain stage of data processing.</p> 
+  <p>Let's look at the following code snippet, which hangs indefinitely when run:</p> 
+  <pre><code class="language-java">class UnexpectedResults {
+    public static void main(String[] args) {
+        count(1, 10);
+    }
+
+    public static void count(int start, int to) {
+        while (start &lt; to); {
+            System.out.println(start);
+            start++;
+        }
+    }
+}</code></pre> 
+  <p>While the error is not hard to catch, we can still add some print statements that would clearly indicate where the hanging happens:</p> 
+  <pre><code class="language-java">class UnexpectedResults {
+    public static void main(String[] args) {
+        System.out.println("main() started");
+        count(1, 10);
+        System.out.println("main() complete");
+    }
+
+    public static void count(int start, int to) {
+        System.out.println("count() started");
+        while (start &lt; to); {
+            System.out.println(start);
+            start++;
+        }
+        System.out.println("count() complete");
+    }
+}</code></pre> 
+  <p>Now, instead of just hanging, the program will output:</p> 
+  <pre><code class="language-java">main() started
+count() started</code></pre> 
+  <p>This output shows us that the program reaches the start of the <code class="language-java">count()</code> method, but never reaches its end, which means that the problem is in the <code class="language-java">while</code> loop. After we take a closer look at the construct, we see that there is an extra semicolon.</p> 
+  <p>Inserting print statements is the most basic way to debug your code, however, we provide it just so you know this technique. You should not use this method in real projects because modern debuggers can do the same in a much more convenient way and because you would not be able to do that everywhere. For example, if you want to get information from some library code, this would be a problem because you cannot modify compiled code.</p> 
+  <p>Be patient, we will cover the nice way shortly.</p> 
+  <h2>Assertions</h2> 
+  <p>In order to detect bugs in the program at earlier development stages, you can use assertions. The assertion is a mechanism that monitors the program state, but unlike additional print statements, it terminates the program in a fail-fast manner when things go wrong.</p> 
+  <p>Fail-fast is an approach when errors that could otherwise be non-fatal are forced to cause an immediate failure, thus making them visible. </p> 
+  <p>You may wonder why one would want to crash the production code, and the answer is: one wouldn't. Assertions are meant for testing/debugging and should never be used in production code.</p> 
+  <p>Let’s take a look at the following program:</p> 
+  <pre><code class="language-java">class BrokenInvariants {
+    public static void main(String[] args) {
+        Cat casper = new Cat("Casper", -1);
+    }
+}
+
+class Cat {
+    String name;
+    int age;
+    public Cat(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+}</code></pre> 
+  <p>This code creates a <code class="language-java">Cat</code> object. This would be fine if it weren't for the negative age value that makes no sense. Naturally, in a more complex program, this may lead to various bugs. Such an object may be passed around for a long time before we see a problem, and when a problem arises, it is not always obvious what was the cause.</p> 
+  <p>To prevent that from happening, we can use an assertion right in the <code class="language-java">Cat</code> constructor:</p> 
+  <pre><code class="language-java">public Cat(String name, int age) {
+    assert (age &gt;= 0) : "Invalid age";
+    this.name = name;
+    this.age = age;
+}</code></pre> 
+  <p>The part before the colon specifies the boolean expression that should be checked, and when it evaluates to <code class="language-java">false</code>, an error is thrown. The part after it specifies the message that describes the error.</p> 
+  <p>Now, if we run the code with the <code class="language-java">-ea</code> flag (<code class="language-java">java -ea BrokenInvariants</code>), the program will throw an error and terminate right in the <code class="language-java">Cat</code> constructor:</p> 
+  <pre><code class="language-java">Exception in thread "main" java.lang.AssertionError: Invalid age
+at Cat.&lt;init&gt;(scratch_1.java:11)
+at BrokenInvariants.main(scratch_1.java:3)</code></pre> 
+  <p>You may have noticed that we used the word <em>invariants </em>and are curious what it means. <strong>Invariants</strong> are constraints that must be met for a program to function properly. In the code above, positive <code class="language-java">age</code> is an example of an invariant. Using a negative <code class="language-java">age</code> is asking for a problem. Enforcing invariants is exactly why we need assertions. </p> 
+  <p>We can also use assertions to check method preconditions and postconditions, that is conditions that must be met before or after a method is invoked.</p> 
+  <p>The only and very important limitation that should be observed when using assertions is that they should never produce side effects and change the way a program operates. In other words, the assertion should not affect a program in any way other than throwing an error.</p> 
+  <p>Below is an example of an assertion that violates this rule:</p> 
+  <pre><code class="language-java">assert (age++ &gt;= 0) : "Invalid age";
+this.name = name;
+this.age = age;</code></pre> 
+  <p>Besides checking the condition, the assertion also increments the <code class="language-java">age</code> value, which means that when assertions are disabled, the program will operate differently, invalidating the results of testing and probably introducing new bugs. Clearly, you want to avoid such situations in production.</p> 
+  <h2>Attaching a debugger</h2> 
+  <p>A debugger is a tool that interferes with the normal program execution allowing you to get runtime information and test different scenarios to diagnose bugs. This is the most popular use of debuggers. However, when you grow more experienced with them, you'll see that they can be helpful in various situations, not necessarily related to bugs.</p> 
+  <p>Modern debuggers provide a vast variety of tools that can be used to diagnose the most intricate failure conditions, so they definitely warrant a section of their own. In the next topics, we will get started with IntelliJ IDEA debugger and learn how to debug simple code.</p> 
+  <h2>Conclusion</h2> 
+  <p>In this topic, you have learned about different debugging techniques you can use to ensure that your code is error-free. The most basic method is inserting print statements to keep track of the values and the execution order of your program. Also, you may add assertions using the <code class="language-java">assert</code> keyword to make potential hidden errors visible at an early stage of development. Such assertions may be enabled and disabled by adding or removing the <code class="language-java">-ea</code> JVM flag. Finally, you may attach a debugger to the program to examine its internal state at runtime. These techniques will help you to detect and fix bugs in your code efficiently.</p>
+ </body>
+</html>

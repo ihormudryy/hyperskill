@@ -1,0 +1,32 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    class Person {
+
+        protected String name;
+        protected int age;
+
+        public Person(String name, int age) {
+            this.name = name;
+            this.age = age;
+        }
+    }
+
+    class Patient extends Person {
+
+        protected int height;
+
+        public Patient(String name, int age, int height) {
+            super(name, age);
+            this.height = height;
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/3003#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Thu, 08 Jul 2021 07:40:21 UTC
+record: -1

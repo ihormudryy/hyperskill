@@ -1,0 +1,42 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    class Person {
+        // Do not change these fields
+        public static final String DEFAULT_NAME = "Unknown";
+        public static final int MAX_AGE = 130;
+        public static final int MIN_AGE = 0;
+        private String name;
+        private int age;
+
+        // Fix the constructor to make its code pass the unit tests
+        Person(String name, int age) {
+            this.name = name;
+            this.age = age;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public int getAge() {
+            return age;
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/12650#comment
+status: Solved
+feedback:
+  message: |-
+    <html>[+] Test #1. OK
+    [+] Test #2. OK
+    [+] Test #3. OK
+    [+] Test #4. OK
+    [+] Test #5. OK
+    [+] Test #6. OK
+
+    6 of 6 test(s) passed.</html>
+  time: Tue, 13 Jul 2021 11:44:46 UTC
+record: -1

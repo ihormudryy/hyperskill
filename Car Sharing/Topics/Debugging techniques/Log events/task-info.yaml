@@ -1,0 +1,25 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    class Util {
+        public static String capitalize(String str) {
+            if (str == null || str.isBlank()) {
+                return str;
+            }
+
+            if (str.length() == 1) {
+                return str.toUpperCase();
+            }
+
+            return Character.toUpperCase(str.charAt(0)) + str.substring(1);
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/13776#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Tue, 13 Jul 2021 13:43:15 UTC
+record: -1

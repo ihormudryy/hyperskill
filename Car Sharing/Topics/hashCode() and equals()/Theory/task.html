@@ -1,0 +1,191 @@
+<h2>hashCode() and equals()</h2>
+<html>
+ <head></head>
+ <body>
+  <h2 style="text-align: center;">The behavior of hashCode() and equals() methods</h2> 
+  <p>Sometimes, you need to compare objects of your custom class with each other. The <code class="language-java">java.lang.Object</code> class, which is the superclass of any class, provides two methods for that: <code class="language-java">equals(Object obj)</code> and <code class="language-java">hashCode()</code>. Their default behavior is the following:</p> 
+  <ul> 
+   <li><code class="language-java">boolean equals(Object obj)</code> checks whether this object and another one are stored in the same memory address;</li> 
+   <li><code class="language-java">int hashCode()</code> returns an integer hash code that is unique for each object (object's identity).</li> 
+  </ul> 
+  <p>Let's look at how they behave. Here's a simple <code class="language-java">Person</code> class with three fields:</p> 
+  <pre><code class="language-java">class Person {
+
+    private String firstName;
+    private String lastName;
+    private int age;
+
+    // constructor, getters and setters
+}</code></pre> 
+  <p>There are two objects that basically represent the same person (i.e., the objects are logically equivalent):</p> 
+  <pre><code class="language-java">Person p1 = new Person("John", "Smith", 31);
+Person p2 = new Person("John", "Smith", 31);</code></pre> 
+  <p>However, the <code class="language-java">equals</code> method considers them to be different since it compares references rather than the values of their fields:</p> 
+  <pre><code class="language-java">System.out.println(p1.equals(p2)); // false</code></pre> 
+  <p>The <code class="language-java">hashCode</code> method also says nothing about their equality:</p> 
+  <pre><code class="language-java">System.out.println(p1.hashCode()); // 242131142
+System.out.println(p2.hashCode()); // 1782113663</code></pre> 
+  <p></p>
+  <div class="alert alert-primary">
+   Note, you may see other values than 242131142 and 1782113663!
+  </div>
+  <p></p> 
+  <p>So, the default behavior of methods <code class="language-java">equals(Object obj)</code> and <code class="language-java">hashCode()</code> is not enough to compare objects of a custom class by the values of their fields.</p> 
+  <p>What's interesting is how these methods behave with standard classes, for example, <code class="language-java">String</code> :</p> 
+  <pre><code class="language-java">String person1 = new String("John Smith");
+String person2 = new String("John Smith");
+
+System.out.println(person1.equals(person2)); // true
+
+System.out.println(person1.hashCode()); // 2314539
+System.out.println(person2.hashCode()); // 2314539</code></pre> 
+  <p>If we want to define a similar logic for equality testing in the <code class="language-java">Person</code> class, we should override <strong>both</strong> of the described methods. It is not enough to just override just one of them.</p> 
+  <h2 style="text-align: center;">Overriding equals()</h2> 
+  <p>To test the <strong>logical equality</strong> of objects, we should override the <code class="language-java">equals</code> method of our class. It is not as trivial as it may sound.</p> 
+  <p>There are some math restrictions placed on the behavior of <code class="language-java">equals</code>, which are listed in the documentation for <code class="language-java">Object</code>.</p> 
+  <ul> 
+   <li><strong>Reflexivity:</strong> for any non-null reference value <code class="language-java">x</code>, <code class="language-java">x.equals(x)</code> should return <code class="language-java">true</code>.</li> 
+   <li><strong>Symmetry: </strong>for any non-null reference values <code class="language-java">x</code> and <code class="language-java">y</code>, <code class="language-java">x.equals(y)</code> should return <code class="language-java">true</code> if and only if <code class="language-java">y.equals(x)</code> returns <code class="language-java">true</code>.</li> 
+   <li><strong>Transitivity:</strong> for any non-null reference values <code class="language-java">x</code>, <code class="language-java">y</code>, and <code class="language-java">z</code>, if <code class="language-java">x.equals(y)</code> returns <code class="language-java">true</code> and <code class="language-java">y.equals(z)</code> returns <code class="language-java">true</code>, then <code class="language-java">x.equals(z)</code> should return <code class="language-java">true</code>.</li> 
+   <li><strong>Consistency:</strong> for any non-null reference values <code class="language-java">x</code> and <code class="language-java">y</code>, multiple invocations of <code class="language-java">x.equals(y)</code> consistently return <code class="language-java">true</code> or consistently return <code class="language-java">false</code>, provided that no information used in <code class="language-java">equals</code> comparisons on the objects is modified.</li> 
+   <li><strong>Non-nullity:</strong> for any non-null reference value <code class="language-java">x</code>, <code class="language-java">x.equals(null)</code> should return <code class="language-java">false</code>.</li> 
+  </ul> 
+  <p>To create a method that satisfies the listed restrictions, first, you need to select the field that you want to compare. Then you should perform three tests inside the <code class="language-java">equals</code> method:</p> 
+  <ol> 
+   <li>if this and other object have the same reference, <strong>the objects are equal</strong>, otherwise — go to step 2;</li> 
+   <li>if the other object is <code class="language-java">null</code><strong> </strong>or has an unsuitable type, <strong>the objects are not equal</strong>, otherwise — go to step 3;</li> 
+   <li>if all selected fields are equal, <strong>the objects are equal</strong>, otherwise, they are <strong>not equal</strong>.</li> 
+  </ol> 
+  <p>If you do not perform all of these tests, in some cases, the <code class="language-java">equals</code> method will not work properly.</p> 
+  <p>Here is a modified class <code class="language-java">Person</code> that overrides the <code class="language-java">equals</code> method. It uses all three fields in comparison.</p> 
+  <pre><code class="language-java">class Person {
+
+    private String firstName;
+    private String lastName;
+    private int age;
+
+    // constructor, getters and setters
+
+    @Override
+    public boolean equals(Object other) {
+        /* Check this and other refer to the same object */
+        if (this == other) {
+            return true;
+        }
+
+        /* Check other is Person and not null */
+        if (!(other instanceof Person)) {
+            return false;
+        }
+
+        Person person = (Person) other;
+
+        /* Compare all required fields */
+        return age == person.age &amp;&amp; 
+                Objects.equals(firstName, person.firstName) &amp;&amp;
+                Objects.equals(lastName, person.lastName);
+    }
+}</code></pre> 
+  <p>In the example above, we use <code class="language-java">java.util.Objects.equals(obj1, obj2)</code> to check if the string fields are equal. This approach allows us to avoid a <code class="language-java">NullPointerException</code>.</p> 
+  <p>Below is an example where we test three objects for equality. Two of the objects represent the same person.</p> 
+  <pre><code class="language-java">Person p1 = new Person("John", "Smith", 31); // a person
+Person p2 = new Person("John", "Smith", 31); // the same person
+Person p3 = new Person("Marry", "Smith", 30); // another person
+
+System.out.println(p1.equals(p2)); // true
+System.out.println(p2.equals(p3)); // false
+System.out.println(p3.equals(p3)); // true (reflexivity)</code></pre> 
+  <p>As you can see, now the <code class="language-java">equals</code> method compares two objects and returns <code class="language-java">true</code> if their fields are equal, otherwise — <code class="language-java">false</code>.</p> 
+  <h2 style="text-align: center;">Overriding hashCode()</h2> 
+  <p>If you override <code class="language-java">equals</code>, a good practice is to override <code class="language-java">hashCode()</code> as well. Otherwise, your class cannot be used correctly in any collection that applies a hashing mechanism (such as <code class="language-java">HashMap</code>, <code class="language-java">HashSet</code> or <code class="language-java">HashTable</code>).</p> 
+  <p>Below are three requirements for the <code class="language-java">hashCode()</code> method (taken from the <a target="_blank" href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html" rel="nofollow noopener noreferrer">documentation</a>).</p> 
+  <p>1) Whenever it is invoked on the same object more than once during an execution of a Java application, the <code class="language-java">hashCode</code> method must consistently return the same integer, provided no information used in <code class="language-java">equals</code> comparisons on the object is modified. This integer doesn't have to remain the same from one execution of an application to another.</p> 
+  <pre><code class="language-java">person1.hashCode(); // 400000 - ok
+person1.hashCode(); // 400000 - ok
+person1.hashCode(); // 500000 - not ok</code></pre> 
+  <p>2) If two objects are equal according to the <code class="language-java">equals(Object)</code> method, then calling the <code class="language-java">hashCode</code> method on each of the two objects must produce the same integer result.</p> 
+  <pre><code class="language-java">person1.equals(person2); // true
+person1.hashCode() == person2.hashCode(); // false - not ok, it must be true</code></pre> 
+  <p>3) It is not required for unequal objects to produce distinct hash codes. However, the programmer should be aware that producing distinct integer results for unequal objects may improve the performance of hash tables.</p> 
+  <pre><code class="language-java">person1.equals(person3); // false
+person1.hashCode() == person3.hashCode(); // true - will work</code></pre> 
+  <p>The simplest implementation of the <code class="language-java">hashCode()</code> method may look as follows:</p> 
+  <pre><code class="language-java">@Override
+public int hashCode() {
+    return 42;
+}</code></pre> 
+  <p>It always returns the same value and satisfies both required conditions 1 and 2, but does not satisfy the optional condition 3. Unfortunately, this method is very inefficient for industrial programming since it totally degrades the power of hash-based collections. A good hash function tends to generate different hash codes for unequal objects.</p> 
+  <p>To develop a valid and effective <code class="language-java">hashCode</code> method, we recommend the algorithm proposed by Joshua Bloch in his book "<strong>Effective Java"</strong>.</p> 
+  <ol> 
+   <li> <p>Create a <code class="language-java">int result</code> and assign a <strong>non-zero</strong> value (i.e. <code class="language-java">17</code>).</p> </li> 
+   <li> <p>For <em>every field</em> <code class="language-java">f</code> tested in the <code class="language-java">equals()</code> method, calculate a hash code <code class="language-java">code</code>:</p> 
+    <ol> 
+     <li>Calculate the integer hash code for <code class="language-java">f</code> : 
+      <ul> 
+       <li>If the field <code class="language-java">f</code> is a <code class="language-java">boolean</code>: calculate <code class="language-java">(f ? 0 : 1)</code>;</li> 
+       <li>If the field <code class="language-java">f</code> is a <code class="language-java">byte</code>, <code class="language-java">char</code>, <code class="language-java">short</code> or <code class="language-java">int</code>: calculate <code class="language-java">(int) f</code>;</li> 
+       <li>If the field <code class="language-java">f</code> is a <code class="language-java">long</code>: calculate <code class="language-java">(int)(f ^ (f &gt;&gt;&gt; 32))</code>;</li> 
+       <li>If the field <code class="language-java">f</code> is a <code class="language-java">float</code>: calculate <code class="language-java">Float.floatToIntBits(f)</code>;</li> 
+       <li>If the field <code class="language-java">f</code> is a <code class="language-java">double</code>: calculate <code class="language-java">Double.doubleToLongBits(f)</code> and handle the return value like every long value;</li> 
+       <li>If the field <code class="language-java">f</code> is an <em>object</em>: use the result of the <code class="language-java">hashCode()</code> method or 0 if <code class="language-java">f == null</code>;</li> 
+       <li>If the field <code class="language-java">f</code> is an <em>array</em>: see every field as a separate element and calculate the hash value in a <em>recursive fashion</em>. Then, combine the values as described.</li> 
+      </ul> </li> 
+     <li>Combine the hash value <code class="language-java">code</code> with <code class="language-java">result</code> as follows: <code class="language-java">result = 31 * result + code;</code>.</li> 
+    </ol> </li> 
+   <li>Return <code class="language-java">result</code> as a hash code of the object.</li> 
+  </ol> 
+  <p></p>
+  <div class="alert alert-warning">
+   It is important, do 
+   <strong>NOT include</strong> fields that are not used in 
+   <code class="language-java">equals</code> to 
+   <strong>this algorithm</strong>.
+  </div>
+  <p></p> 
+  <p>Here we apply the described algorithm to the <code class="language-java">Person</code> class.</p> 
+  <pre><code class="language-java">class Person {
+
+    private String firstName;
+    private String lastName;
+    private int age;
+
+    // constructor, getters and setters
+
+    // overridden equals method
+
+    @Override
+    public int hashCode() {
+        int result = 17;
+        result = 31 * result + (firstName == null ? 0 : firstName.hashCode());
+        result = 31 * result + (lastName == null ? 0 : lastName.hashCode());
+        result = 31 * result + age;
+        return result;
+    }
+}</code></pre> 
+  <p>Below you can see an example of invoking <code class="language-java">hashCode()</code> for three objects. Two of the objects represent the same person.</p> 
+  <pre><code class="language-java">Person p1 = new Person("John", "Smith", 31);  // a person
+Person p2 = new Person("John", "Smith", 31);  // the same person
+Person p3 = new Person("Marry", "Smith", 30); // another person
+
+System.out.println(p1.hashCode()); // 409937238
+System.out.println(p2.hashCode()); // 409937238
+System.out.println(p3.hashCode()); // 689793455</code></pre> 
+  <p>As you can see, we have the same hash code for equal objects.</p> 
+  <p></p>
+  <div class="alert alert-primary">
+   Note, since Java 7, we have an 
+   <code class="language-java">java.util.Objects.hash(Object... values)</code> utility method for hashing 
+   <code class="language-java">Objects.hash(firstName, secondName, age)</code>. It hides all magic constants and null-checks inside.
+  </div>
+  <p></p> 
+  <h2 style="text-align: center;">Summary</h2> 
+  <p>The default behavior of the <code class="language-java">equals</code> method provided by the <code class="language-java">java.lang.Object</code> class checks whether objects references are equal. This is not enough if you would like to compare objects by the values of their fields. In this case, you should override the <code class="language-java">equals</code> method in your class.</p> 
+  <p>The correct implementation should satisfy the following conditions: <strong>reflexivity</strong>, <strong>symmetry, </strong><strong>transitivity, consistency, </strong>and <strong>non-nullity</strong>. You should also override the <code class="language-java">hashCode</code> method, taking into account that:</p> 
+  <ul> 
+   <li>if two objects are equal, they MUST also have the same hash code;</li> 
+   <li>if two objects have the same hash code, they do NOT have to be equal too.</li> 
+  </ul> 
+  <p>While it is good to understand <code class="language-java">hashCode()</code> and <code class="language-java">equals()</code> methods, we do not recommend to implement them manually in industrial programming. Modern IDEs such as IntelliJ IDEA or Eclipse can generate correct implementations for both these methods automatically. This approach will help you to avoid bugs since overriding these methods is quite error-prone.</p> 
+  <p>If you'd like to know more, read the book "Effective Java" by Joshua Bloch. You can also read the IBM article <a target="_blank" href="https://www.ibm.com/developerworks/java/library/j-jtp05273/index.html#N10184" rel="nofollow noopener noreferrer">"Hashing it out"</a> as an addition to this topic.</p>
+ </body>
+</html>

@@ -1,0 +1,233 @@
+<h2>JTable</h2>
+<html>
+ <head></head>
+ <body>
+  <p>The <code class="language-java">JTable</code> component can be used to represent tabular data in our GUI applications. Let's focus more on this Swing component.</p> 
+  <h2>Creating simple tables</h2> 
+  <p>To set up a table, we will need to specify the columns of the table, as well as the data that is to be displayed in the table. The names of the columns are represented as an array of type <code class="language-java">String</code>, where each entry in the array is a new column. The data in the table is represented as a 2-D array, which is typically declared with the <code class="language-java">Object</code> type since each column might have a different data type in it.</p> 
+  <p>Every <code class="language-java">JTable</code> has an underlying <code class="language-java">TableModel</code> which is responsible for controlling the data contained within the table. It is possible to use the default <code class="language-java">TableModel</code> to construct a <code class="language-java">JTable</code>, however, it is preferred to implement a custom <code class="language-java">TableModel</code> which extends the <code class="language-java">AbstractTableModel</code> class. The reason for this is that it enables more control over the data contained in the table, and provides a natural extension to changing the table data later.</p> 
+  <p>To extend the <code class="language-java">AbstractTableModel</code>, we need to implement <code class="language-java">getRowCount</code>, which returns the number of rows in the table, <code class="language-java">getColumnCount</code>, which returns the number of columns in the table, and <code class="language-java">getValueAt</code>, which defines how to retrieve a value from the table data. The code below shows an example of how these methods can be defined using an array of columns, and a 2-D array of data.</p> 
+  <pre><code class="language-java">class MyTableModel extends AbstractTableModel {
+    String[] columns = {"Employee Name" , "Job Title" , "Salary"};
+    Object[][] data = {{"Bob" , "Programmer" , 19000} , {"Alice" , "Programmer" , 19000}};
+
+    @Override
+    public int getRowCount() {
+        return data.length;
+    }
+
+    @Override
+    public int getColumnCount() {
+        return columns.length;
+    }
+
+    @Override
+    public Object getValueAt(int rowIndex, int columnIndex) {
+        return data[rowIndex][columnIndex];
+    }
+
+}</code></pre> 
+  <p>Once we have defined <code class="language-java">AbstractTableModel</code> we can instantiate an instance of it, and use the instance to create a <code class="language-java">JTable</code>. This table can then be added to the Swing <code class="language-java">JFrame</code> as shown below.</p> 
+  <pre><code class="language-java">public class JTableExample extends JFrame {
+    public static void main(String[] args) {
+        JTableExample table = new JTableExample();
+        table.setVisible(true);
+    }
+
+    public JTableExample() {
+        super("JTable Example");
+        setSize(500, 500);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        getContentPane().setBackground(Color.white);
+
+        TableModel tableModel = new MyTableModel();
+
+        JTable table = new JTable(tableModel);
+
+        JScrollPane sp = new JScrollPane(table);
+        this.add(sp);
+
+
+    }
+}</code></pre> 
+  <p>When we add the <code class="language-java">JTable</code> component, we typically choose to place it within a <code class="language-java">JScrollPane</code>. The main reason to do this is to ensure that if there is more table data than what can be contained on the screen, the user can scroll to view the remaining data. This results in a simple table of data as shown below.</p> 
+  <p style="text-align: center;"><img alt="" src="https://ucarecdn.com/506a0b87-e0b1-4251-9659-79e851328d00/"></p> 
+  <h2>DefaultTableModel</h2> 
+  <p>There is a standard class that implements <code class="language-java">AbstractTableModel</code> which is called <code class="language-java">DefaultTableModel</code>. It is often a short and convenient way to define <code class="language-java">TableModel</code>.</p> 
+  <pre><code class="language-java">Object[] columns = new Object[] { "Name", "Race" };
+Object[][] data = new Object[][] {
+    {"Frodo", "Hobbit"},
+    {"Legalas", "Elf"},
+    {"Gimli", "Dwarf"}
+};
+
+DefaultTableModel model = new DefaultTableModel();
+model.setColumnIdentifiers(columns);
+for (Object[] row : data) {
+    model.addRow(row);
+}</code></pre> 
+  <p>If you need to update or insert table content you may use <code class="language-java">setValueAt</code> or <code class="language-java">addRow</code> method. Both of them generate <code class="language-java">tableChanged</code> notifications.</p> 
+  <h2>Adjusting column widths</h2> 
+  <p>Sometimes the width of a column needs to be adjusted so that the data is fully visible. We can adjust the width of any column in our table using the <code class="language-java">setPreferredWidth</code> method. This method takes one integer value as an argument, which is used to adjust the width of the column provided. In order to use this method, we must select a column from our <code class="language-java">JTable</code> to adjust. We can do this by accessing the <code class="language-java">JTable</code> column model using the <code class="language-java">getColumnModel</code> method. Using the column model, we can invoke the <code class="language-java">getColumn</code> method to get a column at a specified index. By default, the column is zero-indexed, and will match the column array we specified for the <code class="language-java">JTable</code>. The code below shows how we can adjust the first column in our table to have a larger width.</p> 
+  <pre><code class="language-java">public JTableExample() {
+    super("JTable Example");
+    setSize(500 , 500);
+    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    getContentPane().setBackground(Color.white);
+
+    TableModel tableModel = new MyTableModel();
+
+    JTable table = new JTable(tableModel);
+
+    TableColumn column = table.getColumnModel().getColumn(0);
+    column.setPreferredWidth(200);
+
+    JScrollPane sp = new JScrollPane(table);
+    this.add(sp);
+
+}</code></pre> 
+  <p> </p> 
+  <h2>Detecting content changes with event listeners</h2> 
+  <p>Often when we display data in <code class="language-java">JTable</code> format, it is being taken from some dynamic data source, such as a database. When this data source updates, we want to be able to update our <code class="language-java">JTable</code> as well. To do this, we can utilize event listeners in order to update the table on various events related to it.</p> 
+  <p>The event listener <code class="language-java">TableModelListener</code> can be used to detect changes to a <code class="language-java">JTable</code> and take action based on the event. In order to add this event listener, we will need to implement it in our class definition. Once it is implemented, we can add it to the model of the <code class="language-java">JTable</code> as shown below. </p> 
+  <pre><code class="language-java">public class JTableExample extends JFrame {
+    public static void main(String[] args) {
+        JTableExample table = new JTableExample();
+        table.setVisible(true);
+    }
+
+    public JTableExample() {
+        super("JTable Example");
+        setSize(500, 500);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        getContentPane().setBackground(Color.white);
+
+        TableModel tableModel = new MyTableModel();
+
+        JTable table = new JTable(tableModel);
+        tableModel.addTableModelListener(new CustomListener()); //Adds the TableModelListener
+
+        JScrollPane sp = new JScrollPane(table);
+        this.add(sp);
+
+
+    }
+
+}
+class CustomListener implements TableModelListener {
+    @Override
+    public void tableChanged(TableModelEvent e) {
+        System.out.println("Table Updated!");
+    }
+}</code></pre> 
+  <p>The <code class="language-java">tableChanged</code> method will trigger in any instance where the <code class="language-java">JTable</code> is changed. There are a number of events that can be fired to trigger the <code class="language-java">tableChanged</code> method. For instance, the <code class="language-java">fireTableCellUpdated</code> method can be used to trigger the <code class="language-java">tableChanged</code> method in the case that a specific cell in the table is updated. If we have updated a row in the table, we can use the <code class="language-java">fireTableRowsUpdated</code> method. If the whole table has been updated, we would use the <code class="language-java">fireTableDataChanged</code> method. Finally, in the case of a row being inserted or deleted, we would use <code class="language-java">fireTableRowsInserted</code>, or <code class="language-java">fireTableRowsDeleted.</code></p> 
+  <p>To be able to change data in our table, we can simply implement a new method in our <code class="language-java">AbstractTableModel</code> to update the underlying data. Inside this method, we can fire the appropriate event depending on the changes being made. The example below shows how we can add a method called <code class="language-java">setValueAt</code> to update data in the table. This method works by updating the underlying data array with the new value, and once this is completed, it fires the <code class="language-java">fireTableCellUpdated</code> event, since it is used to change a single cell's data.</p> 
+  <pre><code class="language-java">class MyTableModel extends AbstractTableModel {
+    String[] columns = {"Employee Name" , "Job Title" , "Salary"};
+    Object[][] data = {{"Bob" , "Programmer" , 19000} , {"Alice" , "Programmer" , 19000}};
+
+    @Override
+    public int getRowCount() {
+        return data.length;
+    }
+
+    @Override
+    public int getColumnCount() {
+        return columns.length;
+    }
+
+    @Override
+    public Object getValueAt(int rowIndex, int columnIndex) {
+        return data[rowIndex][columnIndex];
+    }
+
+    public void setValueAt(Object value, int rowIndex, int columnIndex) {
+        data[rowIndex][columnIndex] = value;
+        fireTableCellUpdated(rowIndex,columnIndex);
+    }
+}</code></pre> 
+  <p>When we trigger the <code class="language-java">setValueAt</code> method, it will cause the <code class="language-java">tableChanged</code> method to fire, since a table update event has taken place. Inside of this method, we can take any actions we want when data is updated. To see this in action, you can add a simple print statement to see that the method is firing. The example code below demonstrates how we can update a value. You will notice that the cell updates in the GUI and the message is printed to the console.</p> 
+  <pre><code class="language-java">public class JTableExample extends JFrame {
+    public static void main(String[] args) {
+        JTableExample table = new JTableExample();
+        table.setVisible(true);
+    }
+
+    public JTableExample() {
+        super("JTable Example");
+        setSize(500, 500);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        getContentPane().setBackground(Color.white);
+
+
+        TableModel tableModel = new MyTableModel();
+
+        JTable table = new JTable(tableModel);
+
+        tableModel.addTableModelListener(new CustomListener()); //Adds the TableModelListener
+        JScrollPane sp = new JScrollPane(table);
+        this.add(sp);
+
+        tableModel.setValueAt("James" , 0, 0);
+
+    }
+
+}
+
+class CustomListener implements TableModelListener {
+    @Override
+    public void tableChanged(TableModelEvent e) {
+        System.out.println("Table Updated!");
+    }
+}</code></pre> 
+  <h2>Sorting and filtering</h2> 
+  <p>We can enable sorting in our <code class="language-java">JTable</code> using the <code class="language-java">setAutoCreateRowSorter</code> method. Enabling this method just requires us to pass an argument of <strong>true</strong> into the method. Once this is done, the user will be able to click on any column name in the table, and it will be sorted by the selected column.</p> 
+  <pre><code class="language-java">public JTableExample() {
+    super("JTable Example");
+    setSize(500, 500);
+    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    getContentPane().setBackground(Color.white);
+
+
+    TableModel tableModel = new MyTableModel();
+
+    JTable table = new JTable(tableModel);
+
+    tableModel.addTableModelListener(new CustomListener()); //Adds the TableModelListener
+    JScrollPane sp = new JScrollPane(table);
+    this.add(sp);
+
+    tableModel.setValueAt("James", 0, 0);
+
+    table.setAutoCreateRowSorter(true);
+
+
+}</code></pre> 
+  <p>To set up filters in our table, we can create a custom <code class="language-java">TableRowSorter</code> object for our table. Using this sorter, we can create a filter based on a regular expression. We can add a text input for the filter, or just code one in statically. The example below shows how to use the <code class="language-java">setRowFilter</code> method to add a new filter to our table.</p> 
+  <pre><code class="language-java">public JTableExample() {
+    super("JTable Example");
+    setSize(500, 500);
+    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    getContentPane().setBackground(Color.white);
+
+
+    TableModel tableModel = new MyTableModel();
+
+    JTable table = new JTable(tableModel);
+
+    tableModel.addTableModelListener(new CustomListener()); //Adds the TableModelListener
+    JScrollPane sp = new JScrollPane(table);
+    this.add(sp);
+
+    tableModel.setValueAt("James", 0, 0);
+
+    final TableRowSorter&lt;TableModel&gt; sorter = new TableRowSorter&lt;TableModel&gt;(tableModel);
+    table.setRowSorter(sorter);
+    sorter.setRowFilter(RowFilter.regexFilter("James"));
+
+}</code></pre> 
+  <p>When this filter is added, the table will now display just a single value, which is where the name is equal to James.</p> 
+  <h2>Conclusion</h2> 
+  <p>In this topic we've covered the main points on creating tables in our GUI applications: how to create one, allow scrolling through the data, and adjust the column sizes to make all data visible, update and sort the data stored in the table. Try and practice using all these features of the JTable components by yourself!</p>
+ </body>
+</html>

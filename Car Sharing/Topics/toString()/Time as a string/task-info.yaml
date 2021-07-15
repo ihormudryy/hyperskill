@@ -1,0 +1,24 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: |-
+    class Time {
+
+        private int hours;
+        private int minutes;
+        private int seconds;
+
+        public Time(int hours, int minutes, int seconds) {
+            this.hours = hours;
+            this.minutes = minutes;
+            this.seconds = seconds;
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/3002#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Thu, 08 Jul 2021 07:49:28 UTC
+record: -1

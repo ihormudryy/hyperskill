@@ -1,0 +1,66 @@
+<h2>Test driven development</h2>
+<html>
+ <head></head>
+ <body>
+  <p>Imagine that you got a task to fix an implementation of a <code class="language-java">Person</code> class to make it pass the following unit tests written according to business logic requirements:</p> 
+  <pre><code class="language-java">@Test
+void testPersonCreationValidArgs() {
+    String name = "Jane Doe";
+    int age = Person.MIN_AGE + 23;
+    Person person = new Person(name, age);
+
+    assertEquals(name, person.getName());
+    assertEquals(age, person.getAge());
+}
+
+@Test
+void testPersonCreationNegativeAge() {
+    String name = "Jane Doe";
+    int age = Person.MIN_AGE - 1;
+    Person person = new Person(name, age);
+
+    assertEquals(Person.MIN_AGE, person.getAge());
+}
+
+@Test
+void testPersonCreationAgeOverUpperLimit() {
+    String name = "Jane Doe";
+    int age = Person.MAX_AGE + 1;
+    Person person = new Person(name, age);
+
+    assertEquals(Person.MAX_AGE, person.getAge());
+}
+
+@Test
+void testPersonCreationNameNull() {
+    String name = null;
+    int age = Person.MIN_AGE + 1;
+    Person person = new Person(name, age);
+
+    assertNotNull(person.getName());
+    assertEquals(Person.DEFAULT_NAME, person.getName());
+}
+
+@Test
+void testPersonCreationNameBlank() {
+    String name = "\t";
+    int age = Person.MIN_AGE + 1;
+    Person person = new Person(name, age);
+
+    assertEquals(Person.DEFAULT_NAME, person.getName());
+}
+
+@Test
+void testPersonCreationNameEmpty() {
+    String name = "";
+    int age = Person.MIN_AGE + 1;
+    Person person = new Person(name, age);
+
+    assertEquals(Person.DEFAULT_NAME, person.getName());
+}</code></pre> 
+  <p>The <code class="language-java">Person</code> class has a constructor that accepts two arguments, <code class="language-java">String name</code> and <code class="language-java">int age</code>, and should set the <code class="language-java">name</code> and the <code class="language-java">age</code> fields of the object according to the criteria set out in the unit tests.</p>
+ </body>
+</html><br><br><font color="gray">Memory limit: 256 MB</font><br><font color="gray">Time limit: 8 seconds</font><br><br>
+<b>Caution</b><br><br>
+You may see errors in your code or execution results due to missing context. Don’t worry about it, just write the solution and press Check.
+<br><br>

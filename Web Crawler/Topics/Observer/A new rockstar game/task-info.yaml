@@ -1,0 +1,35 @@
+type: code
+files:
+- name: src/Main.java
+  visible: true
+  text: "import java.util.*;     \n\n/**\n * Observable interface\n**/\ninterface\
+    \ Observable {\n    // write your code here ...\n}\n\n/**\n * Concrete Observable\
+    \ - Rockstar Games\n**/\nclass RockstarGames implements Observable {\n\n    public\
+    \ String releaseGame;\n\n    // write your code here ...\n\n    public void release(String\
+    \ game) {\n        this.releaseGame = game;\n        // write your code here ...\n\
+    \    }\n}\n\n/**\n * Observer interface\n**/\ninterface Observer {\n    // write\
+    \ your code here ...\n}\n\n/**\n * Concrete observer - Gamer\n**/\nclass Gamer\
+    \ implements Observer {\n\n    private String name;\n    private Observable observable;\n\
+    \    private Set<String> games = new HashSet<>();\n\n    public Gamer(String name,\
+    \ Observable observable) {\n        this.name = name;\n        this.observable\
+    \ = observable;\n    }\n\n    // write your code here ...\n\n    public void buyGame(String\
+    \ game) {\n        System.out.println(name + \" says : \\\"Oh, Rockstar releases\
+    \ new game \" + game + \" !\\\"\");\n        games.add(game);\n    }\n\n    @Override\n\
+    \    public String toString() {\n        return this.name;\n    }    \n}\n\n/**\n\
+    \ * Main class\n**/\npublic class Main {\n    public static void main(String[]\
+    \ args) {\n        final Scanner scanner = new Scanner(System.in);\n\n       \
+    \ String game = null;\n\n        RockstarGames rockstarGames = new RockstarGames();\n\
+    \n        Gamer garry = new Gamer(\"Garry Rose\", rockstarGames);\n        Gamer\
+    \ peter = new Gamer(\"Peter Johnston\", rockstarGames);\n        Gamer helen =\
+    \ new Gamer(\"Helen Jack\", rockstarGames);\n\n        rockstarGames.addObserver(garry);\n\
+    \        rockstarGames.addObserver(peter);\n        rockstarGames.addObserver(helen);\n\
+    \n        for (int i = 0; i < 2; i++) {\n            game = scanner.nextLine();\n\
+    \            rockstarGames.release(game);\n        }\n\n        scanner.close();\n\
+    \    }\n}"
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/5525#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Tue, 22 Jun 2021 08:04:16 UTC
+record: -1

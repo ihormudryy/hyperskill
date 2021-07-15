@@ -1,0 +1,56 @@
+<h2>LinkedList vs. ArrayList</h2>
+<html>
+ <head></head>
+ <body>
+  <p>In the previous topics, you have met two classes that are quite similar: <code class="java">ArrayList</code> and <code class="java">LinkedList</code>. They both implement the <code class="java">List</code> interface and provide useful features for storing and accessing elements. Which one to use? The truth of life is that different problems require different approaches. To make the right choice you need to understand who is the winner in which situation. And today you finally will be prepared for making this choice: we are going on an exciting journey of comparing <code class="java">ArrayList</code> and <code class="java">LinkedList</code> in detail. </p> 
+  <h2 style="text-align: center;">What is inside?</h2> 
+  <p>Let's start with a quick and illustrative overview of how our lists look inside.<br> On the inside, an <code class="java">ArrayList</code> is a resizable array of objects, where every element has an index.</p> 
+  <p style="text-align: center;"><img alt="" height="121" src="https://ucarecdn.com/bba5a7fb-a17d-475a-b790-c44a3bdd039f/" width="518"></p> 
+  <p>A <code class="java">LinkedList</code> is a doubly-linked list based on connected nodes. <code class="java">LinkedList</code> stores its <em>head</em> and <em>tail</em>.</p> 
+  <p style="text-align: center;"><img alt="" height="141" src="https://ucarecdn.com/18c8bec4-b03f-4927-aee9-86db5180dcd7/" width="867"></p> 
+  <p>A node is a class that has three fields: the element itself, the previous, and the next node. </p> 
+  <p style="text-align: center;"><img alt="" height="197" src="https://ucarecdn.com/974f57f9-562f-4269-ad3d-3b6257b805f6/" width="140"></p> 
+  <p>Now, with these pictures in mind, it's time to think how fast standard operations will work for both of them and why. </p> 
+  <h2 style="text-align: center;">First round: ArrayList</h2> 
+  <p>The logic of an <code class="java">ArrayList</code> is simple: because internally it's an array, the operations <code class="java">get(int index)</code> and <code class="java">set(int index, E element)</code> will be fast. In other words, the time complexity for access by an index is <em>O(1)</em>. <br> <br> If you use the <code class="java">add(E e)</code> operation, a new element will be added to the end of <code class="java">ArrayList</code>. This would also be fast and take constant time to make, so the complexity would be the same: <em>O(1)</em>.</p> 
+  <p>But if you would like to insert an element into the <code class="java">ArrayList</code> by using the <code class="java">add(int index, E element)</code> operation the situation will be different. To put the new element into a specific index the <code class="java">ArrayList</code> needs to move all subsequent elements.</p> 
+  <p style="text-align: center;"><img alt="" height="350" src="https://ucarecdn.com/276bd49d-651f-4753-abe5-1ef24087f673/" width="644"></p> 
+  <p>In our example, after the insertion, an element <code class="java">"Array"</code> will have an index of 4 and an element <code class="java">"List!"</code> will have an index of 5. If there are a lot of subsequent elements this operation will be quite long with the time complexity <em>O(n)</em>. </p> 
+  <p>Let's take a look at what is really happening inside of Java.</p> 
+  <p>When you want to add a new element to the <em>full</em> <code class="java">ArrayList</code>, firstly, a new array with a bigger size will be created. Then all existing elements will be copied to that new array. And only then your new element will be added. So, the worst time complexity would be <em>O(n)</em>.</p>
+  <div class="alert alert-primary">
+   An 
+   <code class="java">ArrayList</code> is a resizable array, so when you fill up its initial size, it becomes bigger and that will happen again and again.
+  </div>
+  <p></p> 
+  <p>The last operation is <code class="java">remove(int index)</code>. When you would like to remove an element all subsequent elements will have to be moved. </p> 
+  <p style="text-align: center;"><img alt="" height="311" src="https://ucarecdn.com/07c7f67b-3c21-451a-826f-c498c0bf49f5/" width="523"></p> 
+  <p>Because of moving all subsequent elements, this operation won't be very efficient for a long list, with the time complexity <em>O(n)</em>.</p> 
+  <p>Now you know what is happening with <code class="java">ArrayList</code> and it's time to pay some attention to his rival <code class="java">LinkedList</code>.</p> 
+  <h2 style="text-align: center;">Final round: LinkedList</h2> 
+  <p>A <code class="java">LinkedList</code> is not an array, so it doesn't support fast access by index. But it <em>can</em> reach an element by its index. In order to do this <code class="java">LinkedList</code> decides what will be closer to that index: head or tail. And then going from either head or tail, <code class="java">LinkedList</code> traverses all the elements before it reaches the required one. </p> 
+  <p style="text-align: center;"><code class="java">fistElement.next.next.next.next.next.next...</code></p> 
+  <p>Let's start with <code class="java">get(int index)</code> and <code class="java">set(int index, E element</code>) operations.</p> 
+  <p style="text-align: center;"><img alt="" height="144" src="https://ucarecdn.com/712cb4d1-4674-4b48-9370-b6f607c06675/" width="886"></p> 
+  <p>To get an element <code class="java">"am"</code> with an index 1, <code class="java">LinkedList</code> will start from the head. In our example, <code class="java">LinkedList</code> will need to go only through one link: between element <code class="java">"I"</code> and element <code class="java">"am"</code>. But if you have a long <code class="java">LinkedList</code> and the required index is in the middle, these operations <code class="java">get(int index)</code> and <code class="java">set(int index, E element</code>) will take a lot of time. So, in a bad situation, the time complexity would be <em>O(n)</em>.</p> 
+  <p>Adding an element to the end of the <code class="java">LinkedList</code> is a fast operation. <code class="java">LinkedList</code> will connect the new element <code class="java">"Hello!"</code> with the last element <code class="java">"List"</code> and will make the element <code class="java">"Hello"</code> the new tail. </p> 
+  <p> </p> 
+  <p><img alt="" height="173" src="https://ucarecdn.com/451dc838-5ba1-4a51-adbc-6cfc81135c93/" width="989"></p> 
+  <p>So it always takes constant time and the complexity of <code class="java">add(E e)</code> is <em>O(1)</em>.</p> 
+  <p>Besides the method <code class="java">add(E e)</code> there are two other methods: <code class="java">addFirst(E e)</code> and <code class="java">addLast(E e)</code>. As you can understand from their names, they add the element in the head and in the tail of the <code class="java">LinkedList</code> respectively. Their internal mechanism is absolutely the same as with the method <code class="java">add(E e)</code>. And their complexity is also <em>O(1)</em>. The method <code class="java">addLast(E e)</code> is the equivalent to the method <code class="java">add(E e)</code>. The difference is that the method <code class="java">add(E e)</code> returns <code class="java">boolean</code> and the method <code class="java">addLast(E e)</code> returns <code class="java">void</code>.</p> 
+  <p>And what about the inserting element into the concrete index with the operation <code class="java">add(int index, E element)</code>?</p> 
+  <p>To add an element <code class="java">LinkedList</code> needs to reach the required position and then only change the links of the new element neighbors. </p> 
+  <p><img alt="" src="https://ucarecdn.com/cfadf3d0-1020-4b63-abb7-3c5461d3f330/"></p> 
+  <p>And that's it: connect the new element with the previous and the next element, and the insertion is done. No need to move elements as in the <code class="java">ArrayList</code>.</p> 
+  <p>If you add new elements near the head or tail the time complexity of it would be <em>O(1)</em>. In most situations, it's a fast operation. But if your list is a very long one then reaching the element in the middle wouldn't be so fast. So, in a bad situation, the time complexity would be <em>O(n)</em>.</p> 
+  <p>The last one is <code class="java">remove(int index)</code> operation. The mechanism is the same, <code class="java">LinkedList</code> needs to reach the element and change the links.</p> 
+  <p style="text-align: center;"><img alt="" height="229" src="https://ucarecdn.com/986a5213-bd7d-4399-9532-2d5d9537c4f0/" width="859"></p> 
+  <p>By changing the neighbors' links the unwanted element would be deleted. And again, for most situations, it's a fast operation<em>.</em> But for removing the element from the middle of a very long <code class="java">LinkedList</code> the time complexity would be <em>O(n)</em>.</p> 
+  <p><code class="java">LinkedList</code> has two other useful methods: <code class="java">removeFirst()</code> and <code class="java">removeLast()</code>. For them, LinkedList doesn't need to traverse the elements. It just removes the first or last element and changes the head or tail respectively. The time complexity for both operations is <em>O(1)</em>.</p> 
+  <h2 style="text-align: center;">And the winner is...</h2> 
+  <p>Let's illustrate the main points with a table:</p> 
+  <p style="text-align: center;"><img alt="" height="277" src="https://ucarecdn.com/c271364c-3c5e-488d-858c-9bf3074551c2/" width="690"></p> 
+  <p>So, there is no absolute winner in our competition. Yes, <code class="java">ArrayList</code> is more popular, but in fact, everything depends on the task you are working on. For all operations, it's impossible to say in advance whether they are fast or take a long time. It depends on what is the size of your list and with which part of it you are working. The most important thing for you to understand is how these operations work. Sometimes it may be difficult to make the right choice, but with this understanding, you will definitely avoid silly mistakes.</p> 
+  <p>And there's another reason to pay special attention to this topic: there is a very good chance that you will be asked about the differences between <code class="java">ArrayList</code> and <code class="java">LinkedList</code> on the job interview.</p>
+ </body>
+</html>

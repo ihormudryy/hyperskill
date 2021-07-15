@@ -1,0 +1,58 @@
+<h2 style="text-align: center;">Description</h2>
+
+<p>In this final stage, we are going to complete our web crawler. </p>
+
+<p>Create worker-threads that wait for new tasks in the task queue. Each task is a URL. If a thread-worker gets a task, it goes to the page, saves its title, collects all the links on the page, and adds these links as new tasks in the task queue. </p>
+
+<p>The links and their titles will be searched breadth-first.</p>
+
+<p>Don't forget to exclude the pages that have already been visited to avoid being redundant. </p>
+
+<p>Now that we know we'll be needing thread-workers, there should be a way to specify the number of workers available for a task. Use a <code class="java">JTextField</code> to accomplish this.</p>
+
+<p>There should also be a way to keep track of the number of pages parsed: use a <code class="java">JLabel</code> for this. </p>
+
+<p><code class="java">JLabel</code> is also sufficient to keep track of the elapsed time when the crawling process begins. </p>
+
+<p>Add two checkable restrictions: </p>
+
+<ul>
+	<li><strong>Maximum crawling depth</strong>: if enabled, workers won't go too deep into the Web. For example, if "Max Depth" is set to <samp>3</samp>, your program should parse the initial link (depth <samp>1</samp>), all the links in the initial link (depth <samp>2</samp>), and all the links in the pages opened from the initial link (depth <samp>3</samp>), and that's it. The image below will help you visualize the workflow.</li>
+	<li><strong>Time limit</strong>: if enabled, workers won't add tasks after the given time. </li>
+</ul>
+
+<p><img alt="" height="338" src="https://ucarecdn.com/66164af0-5690-4b26-8679-8328ab8ef86f/" width="598"></p>
+
+<p>Finally, replace the existing <code class="java">JButton</code> that starts the crawling process with a <code class="java">JToggleButton</code> to <em>Run/Stop</em> the process. During the process, the button should be in its selected state. If any of the restrictions above become <em>true</em> or the tasks run out, the button should return to its default state (unselected). Use the <code class="java">setSelected(boolean b)</code> method of the button to accomplish this.</p>
+
+<h2 style="text-align: center;">Objectives </h2>
+
+<p>In this stage, you should:</p>
+
+<ol>
+	<li>Replace the <code class="java">JButton</code> with a <code class="java">JToggleButton</code>.</li>
+	<li>Add a <code class="java">JTextField</code> to the window for specifying the number of thread-workers to be created.</li>
+	<li>Add a <code class="java">JTextField</code> to specify the maximum depth.</li>
+	<li>Add a <code class="java">JCheckBox</code> to enable the maximum depth restriction.</li>
+	<li>Add a <code class="java">JTextField</code> to specify the time limit.</li>
+	<li>Add a <code class="java">JCheckBox</code> to enable the time limit restriction.</li>
+	<li>Add a <code class="java">JLabel</code> to keep track of the number of parsed pages.</li>
+	<li>Add a <code class="java">JLabel</code> to keep track of the time elapsed after parsing begins.</li>
+	<li>Set the names of the following components :</li>
+</ol>
+
+<ul>
+	<li><code class="java">JTextField</code> "UrlTextField";</li>
+	<li><code class="java">JToggleButton</code> "RunButton";</li>
+	<li><code class="java">JTextField</code> "DepthTextField";</li>
+	<li><code class="java">JCheckBox</code> "DepthCheckBox";</li>
+	<li><code class="java">JLabel</code> "ParsedLabel";</li>
+	<li><code class="java">JTextField</code> "ExportUrlTextField";</li>
+	<li><code class="java">JButton</code> "ExportButton".</li>
+</ul>
+
+<h2 style="text-align: center;">Example</h2>
+
+<p>Here is what your final product might look:</p>
+
+<p style="text-align: center;"><img alt="" src="https://ucarecdn.com/d7c94d48-02da-4484-9085-9517d629f65b/"></p>

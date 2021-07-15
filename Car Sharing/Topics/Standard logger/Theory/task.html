@@ -1,0 +1,108 @@
+<h2>Standard logger</h2>
+<html>
+ <head></head>
+ <body>
+  <h2 style="text-align: center;">Introduction to Java Logging</h2> 
+  <p><strong>Logs </strong>are records of a software application which we choose to save to a file or display in a console. These records could be anything such as an event in the application, a value of a variable, error or an exception in the application. Logs are mostly used for debugging purposes. Today, we learn about <code class="language-java">java.util.logging</code> package which is responsible for giving the developers logging capabilities within Java standard SDK. There are several components you need to learn when working with Java Logging. Those are <code class="language-java">Logger</code> class, <code class="language-java">FileHandler</code>class, <code class="language-java">ConsoleHandler</code> class, <code class="language-java">SimpleFormatter</code>, <code class="language-java">XMLFormatter</code>, <code class="language-java">Level</code>, <code class="language-java">LogRecord</code> and <code class="language-java">LogManager</code>. We will be discussing the first 6 components in this lesson. Following images show how Loggers, Handlers, Filters, and Formatters work together. </p> 
+  <p style="text-align: center;"><img alt="" height="384" src="https://ucarecdn.com/1a60851e-aff5-4486-97a6-4a6409a8ce72/" width="672"></p> 
+  <h2 style="text-align: center;">Logger class</h2> 
+  <p><code class="language-java">Logger</code> class is the most important and fundamental component in the logging package. The standard practice is to create a logger instance for each class. <code class="language-java">Logger</code> class introduces several methods to print log messages. <code class="language-java">log()</code> method is one of them. Check the following example.</p> 
+  <pre><code class="language-java">import java.util.logging.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Logger logger = Logger.getLogger(Main.class.getName());
+        logger.log(Level.WARNING, "Hello " + logger.getName());
+    }
+}</code></pre> 
+  <p>It will output</p> 
+  <pre><code class="language-java">WARNING: Hello Main</code></pre> 
+  <p>First, we create a logger instance using the class name. Then we call the <code class="language-java">log()</code> method to print the log message. <code class="language-java">log()</code> method takes two arguments. Its first argument is a <strong>Level</strong> object and the second argument is a message. <code class="language-java">Level.WARNING</code> is a constant from <strong>Level </strong>class in logging package. </p> 
+  <p>Every log message is related to a certain log level. In this example, it is <strong>Warning</strong>. Java uses <strong>Info </strong>as its <strong>default log level</strong>. There are <strong>seven </strong>log levels in Java logging package. The list below shows them from the highest severity to lowest severity.</p> 
+  <ul> 
+   <li><strong>SEVERE</strong></li> 
+   <li><strong>WARNING</strong></li> 
+   <li><strong>INFO</strong></li> 
+   <li><strong>CONFIG</strong></li> 
+   <li><strong>FINE</strong></li> 
+   <li><strong>FINER</strong></li> 
+   <li><strong>FINEST</strong></li> 
+  </ul> 
+  <p>Following image show integer values of the Log Levels.</p> 
+  <p style="text-align: center;"><img alt="" src="https://ucarecdn.com/83a2ec88-8daf-44e9-86a8-b2594e2b81ab/"></p> 
+  <p><strong>Logger </strong>class contains methods such as <code class="language-java">info()</code>, <code class="language-java">config()</code> where you don’t have to provide a <strong>log level</strong> as an attribute. <br> Check the following example. </p> 
+  <pre><code class="language-java">import java.util.logging.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Logger logger = Logger.getLogger( Main.class.getName());
+        logger.severe("Severe Log");
+        logger.warning("Warning Log");
+        logger.info("Info Log");
+    }
+}</code></pre> 
+  <p>Output will be</p> 
+  <pre><code class="language-java">Apr 04, 2019 10:01:34 PM Main main
+SEVERE: Severe Log
+Apr 04, 2019 10:01:34 PM Main main
+WARNING: Warning Log
+Apr 04, 2019 10:01:34 PM Main main
+INFO: Info Log</code></pre> 
+  <p><br> </p> 
+  <h2 style="text-align: center;">Handlers and Formatters</h2> 
+  <p>The next important components in the logging package are <strong>Handlers </strong>and <strong>Formatters</strong>. <strong>Handlers </strong>and <strong>Formatters </strong>often work together. <strong>Handlers </strong>are responsible for taking actual logs to the outside world. There is an abstract class called <strong>Handler </strong>in <code class="language-java">java.util.logging</code><strong> </strong>package. It is extended by five concrete classes. Two most important classes among them are <code class="language-java">ConsoleHandler</code>and <code class="language-java">FileHandler</code>. <code class="language-java">ConsoleHandler</code> writes log messages to System.err while <code class="language-java">FileHandler</code>writes log messages to a file. </p> 
+  <p>Usually, a <strong>Handler </strong>uses a <strong>Formatter </strong>to format the log message. There are two types of Formatters in the logging package. Those are <code class="language-java">SimpleFormatter</code>and <code class="language-java">XMLFormatter</code>. Of course, both of them extend the <strong>Formatter </strong>abstract class in the logging package. <br> Check the following example to understand <strong>Handlers </strong>and <strong>Formatters</strong>.</p> 
+  <pre><code class="language-java">import java.util.logging.*;
+
+public class Main {
+    public static void main(String[] args) throws Exception {
+        Logger logger = Logger.getLogger( Main.class.getName());
+        Handler fileHandler = new FileHandler("default.log");
+        logger.addHandler(fileHandler);
+        fileHandler.setFormatter(new XMLFormatter());
+        logger.info("Info log message");
+    }
+}</code></pre> 
+  <p>It will create a log file called <strong>default.log</strong>. Default.log file will contain the following XML text. <br> </p> 
+  <pre><code class="language-xml">&lt;?xml version="1.0" encoding="UTF-8" standalone="no"?&gt;
+&lt;!DOCTYPE log SYSTEM "logger.dtd"&gt;
+&lt;log&gt;
+&lt;record&gt;
+ &lt;date&gt;2019-04-04T22:26:35&lt;/date&gt;
+ &lt;millis&gt;1554416795693&lt;/millis&gt;
+ &lt;sequence&gt;0&lt;/sequence&gt;
+ &lt;logger&gt;Main&lt;/logger&gt;
+ &lt;level&gt;INFO&lt;/level&gt;
+ &lt;class&gt;Main&lt;/class&gt;
+ &lt;method&gt;main&lt;/method&gt;
+ &lt;thread&gt;1&lt;/thread&gt;
+ &lt;message&gt;Info log message&lt;/message&gt;
+&lt;/record&gt;
+&lt;/log&gt;</code></pre> 
+  <p> </p> 
+  <h2 style="text-align: center;">Filters</h2> 
+  <p>Let’s discuss <strong>Filters </strong>now. When we are developing a software application, we write as many log messages as possible. But we don’t want all the log messages to be executed every time application runs. It will waste resources and also it can create unnecessarily long log files. That’s when we use filters. Let’s say you want to print only info messages. For that, first, you have to create a <strong>custom filter </strong>class by implementing <code class="language-java">Filter</code> <strong>interface</strong> in logging package. </p> 
+  <pre><code class="language-java">class FilterExample implements Filter {
+    public boolean isLoggable(LogRecord record) {
+        if (record.getLevel() != Level.INFO) {
+            return false;
+        }
+        return true;
+    }
+}</code></pre> 
+  <p>Now you create an object of <code class="language-java">FilterExample</code> class. Then use <code class="language-java">setFilter()</code> method of the Logger instance to set the filter. <br> </p> 
+  <pre><code class="language-java">public class Main {
+    public static void main(String[] args) throws Exception {
+        Logger logger = Logger.getLogger( Main.class.getName());
+        Filter filter = new FilterExample();
+        logger.setFilter(filter);
+        logger.severe("Severe Log"); 
+        logger.info("Info Log");
+        logger.warning("Warning Log");
+    }
+}</code></pre> 
+  <p>When this code is executed, only <code class="language-java">Info log</code> message will be printed. </p> 
+  <h2 style="text-align: center;">Conclusion</h2> 
+  <p>Let's summarize what we learned in this lesson. First, <code class="language-java">java.util.logging</code> is a part of Java SDK and it is responsible for giving logging capabilities to developers. We discussed several components in the logging package. Logger instances are responsible for creating log messages. We usually create a Logger instance for every class that we are going to add logs. Handlers are responsible for sending log message out of the application. If you want to print log messages to console, use <code class="language-java">ConsoleHandler</code>. If you want to write log messages to a file, use <code class="language-java">FileHandler</code>. Formatters format log messages. If you want to log messages in XML format, use <code class="language-java">XMLFormatter</code>. Finally, we discussed Filters which help you to manage which logs are to be executed when the application runs. </p>
+ </body>
+</html>

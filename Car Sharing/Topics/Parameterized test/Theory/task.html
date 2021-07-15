@@ -1,0 +1,224 @@
+<h2>Parameterized test</h2>
+<html>
+ <head></head>
+ <body>
+  <p>You have already learned about unit testing principles and the JUnit framework and familiarized yourself with lifecycle annotations used to control the execution of tests. Now it's time to study new advanced features of JUnit that will help you to manipulate data supplied to your tests.</p> 
+  <h2>Getting started</h2> 
+  <p>In this topic we will expand our <code class="language-java">Calculator</code> class from the <a target="_blank" href="https://hyperskill.org/learn/step/12640" rel="noopener noreferrer nofollow">introductory JUnit topic</a> by adding a new method that will calculate the maximum of two arguments:</p> 
+  <pre><code class="language-java">public class Calculator {
+
+    public int maxOf(int a, int b) {
+        if (a &gt;= b) {
+            return a;
+        } else {
+            return b;
+        }
+    }
+}</code></pre> 
+  <p>We also will write the necessary tests to be sure that this method works correctly. We need to test three cases: when the first argument is greater than the second one, when the first argument is less than the second one, and when both arguments are equal.</p> 
+  <pre><code class="language-java">import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
+
+class CalculatorTests {
+
+    @Test
+    void textMaxFirstArgGreaterThanSecondArg() {
+        Calculator calculator = new Calculator();
+        int result = calculator.maxOf(2, 1);
+        int expected = 2;
+
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void textMaxFirstArgLessThanSecondArg() {
+        Calculator calculator = new Calculator();
+        int result = calculator.maxOf(1, 2);
+        int expected = 2;
+
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void textMaxFirstArgEqualToSecondArg() {
+        Calculator calculator = new Calculator();
+        int result = calculator.maxOf(2, 2);
+        int expected = 2;
+
+        assertEquals(expected, result);
+    }
+}</code></pre> 
+  <p>Now, let's run these tests to be sure that our implementation of the <code class="language-java">max</code> method successfully passes all the tests. Running the test using Gradle gives the following output:</p> 
+  <pre><code class="language-no-highlight">CalculatorTests &gt; textMaxFirstArgEqualToSecondArg() PASSED
+CalculatorTests &gt; textMaxFirstArgLessThanSecondArg() PASSED
+CalculatorTests &gt; textMaxFirstArgGreaterThanSecondArg() PASSED</code></pre> 
+  <p>However, if you look at these tests you will notice that they are nearly identical and the only difference is the values we use in their bodies. Do we have a way to write such tests in a cleaner manner? JUnit provides us such an option, which is called "parametrized tests".</p> 
+  <p>First, let's add the following dependency to our project so that JUnit be able to work with parameterized tests.</p> 
+  <p>Gradle:</p> 
+  <pre><code class="language-java">dependencies {
+    testImplementation "org.junit.jupiter:junit-jupiter-params:5.7.1"
+}</code></pre> 
+  <p>Maven:</p> 
+  <pre><code class="language-xhtml">&lt;dependency&gt;
+    &lt;groupId&gt;org.junit.jupiter&lt;/groupId&gt;
+    &lt;artifactId&gt;junit-jupiter-params&lt;/artifactId&gt;
+    &lt;version&gt;5.7.1&lt;/version&gt;
+    &lt;scope&gt;test&lt;/scope&gt;
+&lt;/dependency&gt;</code></pre> 
+  <p></p>
+  <div class="alert alert-primary">
+   If you use JUnit Jupiter aggregator artifact dependency 
+   <code class="language-java">'org.junit.jupiter:junit-jupiter:5.7.1'</code>, it automatically pulls in dependencies on 
+   <code class="language-java">junit-jupiter-api</code>, 
+   <code class="language-java">junit-jupiter-params</code>, and 
+   <code class="language-java">junit-jupiter-engine</code>.
+  </div>
+  <p></p> 
+  <h2>@ParameterizedTest</h2> 
+  <p><code class="language-java">@ParameterizedTest</code> allows us to invoke a single test method multiple times, passing different arguments to it. Look at the following code snippet:</p> 
+  <pre><code class="language-java">import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+class CalculatorTests {
+    
+    @ParameterizedTest
+    @CsvSource({"2, 1, 2", "1, 2, 2", "1, 1, 1"})
+    void textMax(int first, int second, int expected) {
+        Calculator calculator = new Calculator();
+        int result = calculator.maxOf(first, second);
+
+        assertEquals(expected, result);
+    }
+}</code></pre> 
+  <p>In this example, we use the <code class="language-java">@ParameterizedTest</code> annotation instead of <code class="language-java">@Test</code> to specify that the corresponding test should be executed multiple times with different arguments. We also use the <code class="language-java">@CsvSource</code> annotation to provide an array of such arguments. JUnit has plenty of annotations for different sources of arguments, such as <code class="language-java">@ValueSource</code>, <code class="language-java">@EnumSource</code>, <code class="language-java">@MethodSource</code>, <code class="language-java">@CsvSource</code>, <code class="language-java">@CsvFileSource</code>, and <code class="language-java">@ArgumentsSource</code>, some of which we are going to discuss below.</p> 
+  <p>Note that the test method now has three parameters: <code class="language-java">int first</code>, <code class="language-java">int second</code>and <code class="language-java">int expected</code>, which are used in the body of the test method, and respective arguments are supplied by JUnit at runtime based on the specified argument source. Let's run this test:</p> 
+  <pre><code class="language-no-highlight">CalculatorTests &gt; [1] 2, 1, 2 PASSED
+CalculatorTests &gt; [2] 1, 2, 2 PASSED
+CalculatorTests &gt; [3] 1, 1, 1 PASSED</code></pre> 
+  <p>The default output consists of the current invocation index and the list of the arguments. We can specify a <a target="_blank" href="https://junit.org/junit5/docs/current/user-guide/#writing-tests-parameterized-tests-display-names" rel="noopener noreferrer nofollow">custom message format</a> for a test using attributes and placeholders, for example:</p> 
+  <pre><code class="language-java">@ParameterizedTest(name = "{index} =&gt; maxOf({0}, {1}) == {2}")</code></pre> 
+  <p>The execution of the same test with such a custom display name looks as follows:</p> 
+  <pre><code class="language-no-highlight">CalculatorTests &gt; 1 =&gt; maxOf(2, 1) == 2 PASSED
+CalculatorTests &gt; 2 =&gt; maxOf(1, 2) == 2 PASSED
+CalculatorTests &gt; 3 =&gt; maxOf(1, 1) == 1 PASSED</code></pre> 
+  <p>With the help of custom display names, you can easily and conveniently provide pretty and informative test outputs.</p> 
+  <h2>Sources of arguments</h2> 
+  <p>JUnit provides a number of annotations to define a source of arguments. Such arguments may be a sequence of arguments of the same type for test methods accepting a single argument or a sequence of arguments of the same or different types for test methods accepting multiple arguments. We are going to discuss <code class="language-java">@ValueSource</code>, <code class="language-java">@CsvSource</code>, and <code class="language-java">@CsvFileSource</code> in detail and have a glimpse of some other annotations. You can find the full information about them in the <a target="_blank" href="https://junit.org/junit5/docs/current/user-guide/#writing-tests-parameterized-tests-sources" rel="noopener noreferrer nofollow">official guide</a>.</p> 
+  <h2>@ValueSource</h2> 
+  <p><code class="language-java">@ValueSource</code> is an argument source that supplies an array of literal values for test methods with a single parameter. Such literal values may be of any of the following types: <code class="language-java">short</code>, <code class="language-java">byte</code>, <code class="language-java">int</code>, <code class="language-java">long</code>, <code class="language-java">float</code>, <code class="language-java">double</code>, <code class="language-java">char</code>, <code class="language-java">boolean</code>, <code class="language-java">java.lang.String</code>, and <code class="language-java">java.lang.Class</code>.</p> 
+  <p>Let us add another method to our<code class="language-java">Calculator</code> class, which will accept a single <code class="language-java">int</code> argument and return <code class="language-java">boolean</code>:</p> 
+  <pre><code class="language-java">public boolean isEven(int a) {
+    return a % 2 == 0;
+}</code></pre> 
+  <p>After that, we will use the following test method that will be invoked multiple times with different integer arguments supplied by <code class="language-java">@ValueSource</code>:</p> 
+  <pre><code class="language-java">import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+class CalculatorTests {
+    
+    @ParameterizedTest
+    @ValueSource(ints = { 0, 2, 4, 1000 })
+    void testIsEven(int arg) {
+        assertTrue(new Calculator().isEven(arg));
+    }
+}</code></pre> 
+  <p>For non-primitive types, you can use <code class="language-java">@EmptySource</code>, <code class="language-java">@NullSource</code> or <code class="language-java">@NullAndEmptySource</code> annotations to pass <code class="language-java">null</code> and empty values. In order to avoid writing too much code, we will be using more abstract examples to illustrate how to pass different types of arguments to test methods. The following code snippets demonstrate passing an empty argument and an empty and then <code class="language-java">null</code> arguments:</p> 
+  <pre><code class="language-java">import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EmptySource;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
+
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+class CalculatorTests {
+
+    @ParameterizedTest
+    @EmptySource
+    void testEmpty(int[] arg) {
+        assertEquals(0, arg.length);
+    }
+
+    @ParameterizedTest
+    @NullAndEmptySource
+    void testNullAndEmpty(List&lt;String&gt; arg) {
+        assertTrue(arg == null || arg.isEmpty());
+    }
+}</code></pre> 
+  <p>You can even combine these annotations with <code class="language-java">@ValueSource</code> values to check the whole range of test cases in a single test method.</p> 
+  <h2>@MethodSource</h2> 
+  <p>This annotation allows you to use a method of your test class or an external class as a source of arguments. Each such method must satisfy the following requirements: it must be <code class="language-java">static</code>, it must not accept any arguments, and must return a stream <a target="_blank" href="https://hyperskill.org/learn/step/3582" rel="noopener noreferrer nofollow">(see this topic for details)</a>, an array, or a collection of arguments.</p> 
+  <pre><code class="language-java">import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+class CalculatorTests {
+
+    @ParameterizedTest
+    @MethodSource("stringFactory")
+    void testStrings(String str) {
+        assertFalse(str.isEmpty());
+    }
+
+    static List&lt;String&gt; stringFactory() {
+        return List.of("apple", "banana", "lemon", "orange");
+    }
+}</code></pre> 
+  <p></p>
+  <div class="alert alert-primary">
+   You may use non-static methods as long as they are internal methods of the test class annotated with 
+   <code class="language-java">@TestInstance(Lifecycle.PER_CLASS)</code>, but if you use methods of external classes as a source of arguments, they must always be declared as
+   <code class="language-java">static</code>
+  </div>
+  <p></p> 
+  <p>If a parameterized test method has multiple parameters, your argument source method needs to return a collection, a stream, or an array of <code class="language-java">Arguments</code> or an array of <code class="language-java">Object</code>. In this case, <code class="language-java">Arguments</code> can be generated by the <code class="language-java">arguments</code> static method:</p> 
+  <pre><code class="language-java">import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
+
+class CalculatorTests {
+
+    @ParameterizedTest
+    @MethodSource("argFactory")
+    void testStringLength(String str, int length) {
+        assertEquals(length, str.length());
+    }
+
+    static List&lt;Arguments&gt; argFactory() {
+        return List.of(arguments("apple", 5), arguments("watermelon", 10));
+    }
+}</code></pre> 
+  <p>See the <a target="_blank" href="https://junit.org/junit5/docs/current/user-guide/#writing-tests-parameterized-tests-sources-MethodSource" rel="noopener noreferrer nofollow">official JUnit documentation</a> for more detailed information about <code class="language-java">@MethodSource</code>.</p> 
+  <h2>Working with CSV</h2> 
+  <p>In the first example of a parameterized test, we used the annotation <code class="language-java">@CsvSource</code>. It allows you to supply a list of arguments as comma-separated values (<a target="_blank" href="https://en.wikipedia.org/wiki/Comma-separated_values" rel="noopener noreferrer nofollow">CSV format</a>), for example:</p> 
+  <pre><code class="language-java">@CsvSource({ "apple, 5", "strawberry, 10", "cherry, 6" })</code></pre> 
+  <p>In this case, each value is represented by a <code class="language-java">String</code> literal containing a list of arguments separated by a comma which serves as the default delimiter. <code class="language-java">@CsvSource</code> also has a number of attributes to define the format of the arguments. You can change the default delimiter to another character or even a <code class="language-java">String</code> literal, as well as define the representation of empty and <code class="language-java">null</code> values, however, all these attributes are optional and can be used when needed.</p> 
+  <p>Due to its flexibility, <code class="language-java">@CsvSource</code> is well suited for supplying arguments for methods with multiple parameters of different types.</p> 
+  <p>In addition to<code class="language-java">@CsvSource</code>, JUnit has the <code class="language-java">@CsvFileSource</code> annotation which is used to load a CSV file from the classpath or the local file system. Each line from a CSV file serves as a source of arguments for one invocation of the parameterized test. You may skip the desired number of lines in the file by setting the <code class="language-java">numLinesToSkip</code> attribute. Also, if you want any lines in the CSV file to be ignored, you can use the symbol <code class="language-java">#</code> at the beginning of the respective lines to comment them out.</p> 
+  <p>Here is an example of a CSV file:</p> 
+  <pre><code class="language-no-highlight">String, Length
+apple, 5
+strawberry, 10
+# commented line
+cherry, 6</code></pre> 
+  <p>And an example of the <code class="language-java">@CsvFileSource</code>annotation:</p> 
+  <pre><code class="language-java">@CsvFileSource(resources = "/dataset.csv", numLinesToSkip = 1)</code></pre> 
+  <p>This way you can use big sets of input data for your tests. If you are interested in detailed instructions on how to work with CSV argument sources, check the <a target="_blank" href="https://junit.org/junit5/docs/current/user-guide/#writing-tests-parameterized-tests-sources-CsvSource" rel="noopener noreferrer nofollow">corresponding sections</a> of the official JUnit5 guide.</p> 
+  <h2>Conclusion</h2> 
+  <p>In this topic, you learned about the concept of parameterized tests and familiarized yourself with the tools JUnit provides for this purpose. Parameterized tests are a convenient tool for writing effective and concise tests. Instead of multiple test methods, you can have one method denoted by <code class="language-java">@ParameterizedTests</code> that takes parameters so that you can supply different arguments to it. This allows you to reuse your code efficiently and improve the readability of your tests.</p> 
+  <p>JUnit has many options to set up argument sources for your tests, including <code class="language-java">@ValueSource</code>, <code class="language-java">@MethodSource</code>, <code class="language-java">@CsvSource</code> and a number of other annotations. By combining different sources, you can use sets of input data of any size to cover as many test cases as possible. This allows for testing units of code with very complex logic and extremely large numbers of execution paths that otherwise could not be reliably tested.</p>
+ </body>
+</html>
