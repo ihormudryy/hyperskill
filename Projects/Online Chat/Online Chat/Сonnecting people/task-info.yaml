@@ -1,0 +1,338 @@
+type: edu
+files:
+- name: src/chat/connectors/Reader.java
+  visible: true
+  text: |
+    package chat.connectors;
+
+    import chat.config.PortGenerator;
+
+    import java.io.DataInputStream;
+    import java.io.IOException;
+
+    public class Reader extends Thread {
+
+        private DataInputStream input;
+
+        public Reader(DataInputStream input) {
+            this.input = input;
+        }
+
+        @Override
+        public void run() {
+            try {
+                while (true) {
+                    System.out.println(input.readUTF());
+                }
+            } catch (IOException e) {
+                try {
+                    input.close();
+                } catch (IOException ex) {
+                    //
+                }
+            }
+        }
+    }
+  learner_created: false
+- name: src/chat/config/Configuration.java
+  visible: true
+  text: |
+    package chat.config;
+
+    import java.util.Random;
+
+    public enum Configuration {
+
+        LOCALHOST("localhost", 12345);
+
+        String ip;
+        int port;
+
+        Configuration(String ip, int port) {
+            this.ip = ip;
+            this.port = port;
+        }
+
+        public String getIp() {
+            return ip;
+        }
+
+        public int getPort() {
+            return port;
+        }
+    }
+  learner_created: false
+- name: src/chat/client/Client.java
+  visible: true
+  text: |-
+    package chat.client;
+
+    import chat.config.PortGenerator;
+    import chat.connectors.Reader;
+    import chat.connectors.Writer;
+    import chat.server.Server;
+
+    import java.io.DataInputStream;
+    import java.io.DataOutputStream;
+    import java.io.IOException;
+    import java.net.InetAddress;
+    import java.net.Socket;
+    import java.net.UnknownHostException;
+
+    import static chat.config.Configuration.LOCALHOST;
+
+    public class Client {
+
+        public static void main(String[] args) {
+            Socket socket = null;
+            while (socket == null) {
+                try {
+                    socket = new Socket(InetAddress.getByName(LOCALHOST.getIp()), LOCALHOST.getPort());
+                    Thread writer = new Writer(new DataOutputStream(socket.getOutputStream()));
+                    Thread reader = new Reader(new DataInputStream(socket.getInputStream()));
+                    System.out.println("Client started!");
+                    reader.start();
+                    writer.start();
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException ignored) {
+                        try {
+                            reader.interrupt();
+                        } catch (Exception p) {}
+                        try {
+                            writer.interrupt();
+                        } catch (Exception x) {}
+                        try {
+                            socket.close();
+                        } catch (IOException e) {}
+                    }
+                } catch (Exception e) {
+                }
+            }
+        }
+    }
+  learner_created: false
+- name: src/chat/connectors/Writer.java
+  visible: true
+  text: |
+    package chat.connectors;
+
+    import chat.config.PortGenerator;
+
+    import java.io.DataOutputStream;
+    import java.io.IOException;
+    import java.util.Scanner;
+
+    public class Writer extends Thread {
+
+        private DataOutputStream output;
+
+        public Writer(DataOutputStream output) {
+            this.output = output;
+        }
+
+        @Override
+        public void run() {
+            Scanner scanner = new Scanner(System.in);
+            try {
+                while (true) {
+                    output.writeUTF(scanner.nextLine());
+                }
+            } catch (IOException e) {
+                try {
+                    output.close();
+                } catch (IOException ex) {
+                    //ex.printStackTrace();
+                }
+            }
+        }
+    }
+  learner_created: false
+- name: src/chat/server/Server.java
+  visible: true
+  text: |
+    package chat.server;
+
+    import chat.config.PortGenerator;
+    import chat.connectors.Reader;
+    import chat.connectors.Writer;
+
+    import java.io.DataInputStream;
+    import java.io.DataOutputStream;
+    import java.io.IOException;
+    import java.net.InetAddress;
+    import java.net.ServerSocket;
+    import java.net.Socket;
+    import java.util.Random;
+
+    import static chat.config.Configuration.LOCALHOST;
+
+    public class Server {
+
+        public static void main(String[] args) {
+            try (ServerSocket serverSocket = new ServerSocket(LOCALHOST.getPort(), 50,
+                    InetAddress.getByName(LOCALHOST.getIp()))) {
+                Socket socket = serverSocket.accept();
+                Thread writer = new Writer(new DataOutputStream(socket.getOutputStream()));
+                Thread reader = new Reader(new DataInputStream(socket.getInputStream()));
+                System.out.println("Server started!");
+                reader.start();
+                writer.start();
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException ignored) {
+                    try {
+                        reader.interrupt();
+                    } catch (Exception p) {}
+                    try {
+                        writer.interrupt();
+                    } catch (Exception x) {}
+                    try {
+                        socket.close();
+                    } catch (IOException e) {}
+                }
+            } catch (Exception e) {
+                System.out.println("Server connection refused ");
+            }
+        }
+    }
+  learner_created: false
+- name: test/Tests.java
+  visible: false
+  text: |
+    import org.hyperskill.hstest.dynamic.input.DynamicTestingMethod;
+    import org.hyperskill.hstest.stage.StageTest;
+    import org.hyperskill.hstest.testcase.CheckResult;
+    import org.hyperskill.hstest.testing.TestedProgram;
+
+    import static org.hyperskill.hstest.common.Utils.sleep;
+
+    public class Tests extends StageTest<String> {
+
+        @DynamicTestingMethod
+        CheckResult test() {
+            final TestedProgram server = new TestedProgram("chat.server");
+            final TestedProgram client1 = new TestedProgram("chat.client");
+            final TestedProgram client2 = new TestedProgram("chat.client");
+            final TestedProgram client3 = new TestedProgram("chat.client");
+            client1.setReturnOutputAfterExecution(false);
+            client2.setReturnOutputAfterExecution(false);
+            client3.setReturnOutputAfterExecution(false);
+            final String countIs = "Count is ";
+            final int executePause = 50;
+
+            server.startInBackground();
+
+            //////Client 1
+
+            client1.start();
+            sleep(executePause);
+
+            final String client1Start = client1.getOutput().trim();
+            if (!"Client started!".equals(client1Start))
+                return CheckResult.wrong("Can't get the \"Client started!\" message");
+
+            client1.execute("1 2 3");
+            sleep(executePause);
+
+            final String client1Answer1 = client1.getOutput().trim();
+            if (!(countIs + "3").equals(client1Answer1))
+                return CheckResult.wrong("Client showed a wrong answer!");
+
+            client1.execute("1 2");
+            sleep(executePause);
+
+            final String client1Answer2 = client1.getOutput().trim();
+            if (!(countIs + "2").equals(client1Answer2))
+                return CheckResult.wrong("Client showed a wrong answer!");
+
+            client1.execute("/exit");
+            sleep(executePause);
+
+            //////Client 2
+
+            client2.start();
+            sleep(executePause);
+            client2.getOutput();
+
+            client2.execute("By my hands");
+            sleep(executePause);
+
+            final String client2Answer1 = client2.getOutput().trim();
+            if (!(countIs + "3").equals(client2Answer1))
+                return CheckResult.wrong("Client showed a wrong answer!");
+
+            /////Client 3
+
+            client3.start();
+            sleep(executePause);
+            client3.getOutput();
+
+            client3.execute("Zzzz.");
+            sleep(executePause);
+
+            final String client3Answer1 = client3.getOutput().trim();
+            if (!(countIs + "1").equals(client3Answer1))
+                return CheckResult.wrong("Client showed a wrong answer!");
+
+            client3.execute("want to sleep");
+            sleep(executePause);
+
+            final String client3Answer2 = client3.getOutput().trim();
+            if (!(countIs + "3").equals(client3Answer2))
+                return CheckResult.wrong("Client showed a wrong answer!");
+
+            client3.execute("/exit");
+
+            //////Client 2 AGAIN
+
+            client2.execute("Repeat");
+            sleep(executePause);
+
+            final String client2Answer2 = client2.getOutput().trim();
+            if (!(countIs + "1").equals(client2Answer2))
+                return CheckResult.wrong("Client showed a wrong answer!");
+
+            client2.execute("/exit");
+            sleep(executePause);
+
+            //////Server
+
+            if (!server.getOutput().trim().equals(
+            "Server started!\n" +
+
+            "Client 1 connected!\n" +
+            "Client 1 sent: 1 2 3\n" +
+            "Sent to client 1: " + countIs + "3\n" +
+            "Client 1 sent: 1 2\n" +
+            "Sent to client 1: " + countIs + "2\n" +
+            "Client 1 disconnected!\n" +
+
+            "Client 2 connected!\n" +
+            "Client 2 sent: By my hands\n" +
+            "Sent to client 2: " + countIs + "3\n" +
+
+            "Client 3 connected!\n" +
+            "Client 3 sent: Zzzz.\n" +
+            "Sent to client 3: " + countIs + "1\n" +
+
+            "Client 3 sent: want to sleep\n" +
+            "Sent to client 3: " + countIs + "3\n" +
+            "Client 3 disconnected!\n" +
+
+            "Client 2 sent: Repeat\n" +
+            "Sent to client 2: " + countIs + "1\n" +
+            "Client 2 disconnected!"
+            ))
+                return CheckResult.wrong(
+                "Server showed wrong messages or messages in wrong order");
+
+
+            return CheckResult.correct();
+        }
+
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/projects/49/stages/267/implement#comment
+status: Solved
+record: 2

@@ -1,0 +1,216 @@
+<h5 style="text-align: center;">Description</h5>
+
+<p>First, let's create a moderation system. Imagine that someone is spamming messages to everyone on the server. Of course, there should be a way to kick such spammers out! To achieve that, the server should store a list of the moderators’ login information on the hard drive. When one of the moderators sends the message <code class="java">/kick NAME</code> to the server, the user with the name NAME should be kicked out of the server for 5 minutes. During these 5 minutes, the server should reject any login attempts from this user.</p>
+
+<p>Also, create an admin whose username is always "admin". The admin should be able to add and remove moderators in the system. To add a moderator, the admin needs to type <code class="java">/grant NAME</code>, and to remove a moderator, <code class="java">/revoke NAME</code>. Of course, the admin should be able to kick users out of the server. Note that the moderator <strong>can</strong> kick out the users but <strong>cannot</strong> kick out the other moderators. The admin can kick out both users and moderators. Nobody can kick out the admin, not even the admin!</p>
+
+<p>The second major improvement involves unread messages. When a user types <code class="java">/unread</code>, the server should send back a list of users who have sent unread messages. When the user types <code class="java">/chat NAME</code> to go to the correspondence with the user NAME, the server should send the last 10 read messages and all unread messages on top of that. Note: the server must never send more than 25 messages at a time. After, all the messages from this conversation should be marked as read. For example, if there are 22 unread messages, the server should send them and 3 read messages on top of that. If there are 26 unread messages, the server should send the last 25 unread messages, but mark all 26 as read.</p>
+
+<p>Also, let's add some useful functions for the user. Right now, it is impossible to read old messages, other than the 10 last messages. Let's fix that: if the user sends <code class="java">/history N</code>, the server should send back <em>N</em> last messages of the current conversation. To protect the server from the users trying to request the last million messages, the server should send back no more than 25 messages. So, if the user asks for the last 250 messages, the server should send back a list of 25 messages: the messages 250 to 226 (inclusive) back in the conversation.</p>
+
+<p>Another useful feature is statistics. If the user types <code class="java">/stats</code>, the server should send the statistics of the current conversation. The statistics consist of the total number of messages in the conversation, the total number of messages sent by that user, and the total number of messages sent by the user you’re talking to.</p>
+
+<ol>
+	<li>If a client sends a message to another user who doesn’t “<em>/chat</em>” with them, then the message should be only saved.</li>
+	<li>If a client tries to send a message before choosing the addressee, the server should send the following message:<br>
+	<code class="java">Server: use /list command to choose a user to text!</code></li>
+	<li>If a client tries to send a message or a command before auth, the server should send the following message:<br>
+	<code class="java">Server: you are not in the chat!</code></li>
+	<li>The server should check the login before checking the password and send only the following error message:<br>
+	<code class="java">Server: incorrect login!</code></li>
+	<li>Keep in mind that messages that were sent to you when you weren't chatting with this person should be shown with prefix <code class="java">(new)</code> at the start on a message but shouldn’t be saved with it;</li>
+	<li>Neither the server nor the client should react to a command more than described in the stage.</li>
+</ol>
+
+<p>For the admin, use login <code class="java">admin</code> and password <code class="java">12345678</code>.</p>
+
+<p>Below is a list of commands and their possible technical messages. Note that the words in uppercase should be replaced with actual data.</p>
+
+<ol>
+	<li><code class="java">/auth</code><br>
+	a. Server: incorrect login!<br>
+	b. Server: incorrect password!<br>
+	c. Server: you are banned!<br>
+	d. Server: you are authorized successfully!</li>
+	<li><code class="java">/registration</code><br>
+	a. Server: this login is already taken! Choose another one.<br>
+	b. Server: the password is too short!<br>
+	c. Server: you are registered successfully!</li>
+	<li><code class="java">/exit</code><br>
+	No technical messages</li>
+	<li><code class="java">/chat</code><br>
+	a. Server: the user is not online!</li>
+	<li><code class="java">/list</code><br>
+	a. Server: no one online<br>
+	b. Server: online: USER_A USER_B (etc)<br>
+	The user list should be sorted alphabetically.</li>
+	<li><code class="java">/kick</code><br>
+	a. Server: you can't kick yourself!<br>
+	b. Server: USER was kicked!<br>
+	c. Server: you are not a moderator or an admin!<br>
+	d. A kicked user should receive the following message:<br>
+	Server: you have been kicked out of the server!</li>
+	<li><code class="java">/grant</code><br>
+	a. Server: USER is the new moderator!<br>
+	b. Server: this user is already a moderator!<br>
+	c. Server: you are not an admin!<br>
+	d. A granted user should receive the following message:<br>
+	Server: you are the new moderator now!</li>
+	<li><code class="java">/revoke</code><br>
+	a. Server: USER is no longer a moderator!<br>
+	b. Server: this user is not a moderator!<br>
+	c. Server: you are not an admin!<br>
+	d. A revoked user should receive the following message:<br>
+	Server: you are no longer a moderator!</li>
+	<li><code class="java">/unread</code><br>
+	a. Server: unread from: USER_A USER_B (etc)<br>
+	The user list should be sorted alphabetically.<br>
+	b. Server: no one unread</li>
+	<li><code class="java">/stats</code><br>
+	Server:<br>
+	Statistics with USER:<br>
+	Total messages: COUNT<br>
+	Messages from YOU: Х<br>
+	Messages from USER: X</li>
+	<li><code class="java">/history</code><br>
+	a. Server: X is not a number!<br>
+	b. Server:<br>
+	MESSAGE_1<br>
+	MESSAGE_2<br>
+	(etc)</li>
+</ol>
+
+<h5 style="text-align: center;">Example</h5>
+
+<p>The greater-than symbol followed by a space <code class="java">&gt; </code> represents the user input. Note that it's not part of the input.</p>
+
+<p>Example from the <strong>admin's </strong>perspective:</p>
+
+<pre><code class="language-no-highlight">Client started!
+Server: authorize or register
+&gt; /register admin 12341234
+Server: The user admin already exist!
+&gt; /auth admin super-secret-pass
+Server: you are authorized successfully!
+&gt; /unread
+Server: unread from: Cat Killer
+&gt; /list
+Server: online: Cat Dog Killer
+&gt; /kick Killer
+Server: Killer was kicked!
+&gt; /list
+Server: online: Cat Dog
+&gt; /kick admin
+Server: You can't kick yourself!
+&gt; /chat Cat
+Cat: Meow!!
+admin: Hi cat! How're you doing?
+Cat: Meow... Meow!
+admin: Ok, I need to go. Bye.
+(new) Cat: Meow! Meow! Meow!
+&gt; Oh, I see what I missed. Want to be a moderator?
+admin: Oh, I see what I missed. Want to be a moderator?
+Cat: MEOW!!!
+&gt; OK, one second
+admin: OK, one second
+&gt; /grant Cat
+Server: Cat is the new moderator!
+Cat: Meow!!!
+&gt; /unread
+Server: unread from: Dog Killer
+&gt; /chat Dog
+admin: Hi Dog!
+Dog: Woof! Woof!
+admin: Ok, I need to go. Bye.
+Dog: Woof!
+(new) Dog: WOOF! WOOOF! WOOF!
+(new) Dog: WOOF!
+&gt; Cat wants to kick you?
+admin: Cat wants to kick you?
+Dog: WOOF!
+&gt; Ok, it was a mistake...
+admin: Ok, is was a mistake...
+&gt; /revoke Cat
+Server: Cat is no longer a moderator!
+&gt; /stats
+Server:
+Statistics with Dog:
+Total messages: 9
+Messages from admin: 4
+Messages from Dog: 5
+&gt; /history 3
+Server:
+admin: Cat wants to kick you?
+Dog: WOOF!
+admin: Ok, is was a mistake...
+&gt; /history qwe
+Server: qwe is not a number!
+&gt; /unread
+Server: unread from: Cat Killer
+Dog: Woof, woof, woof!
+&gt; Bye!
+admin: Bye!
+&gt; /exit</code></pre>
+
+<p>Example from the <strong>Cat </strong>perspective:</p>
+
+<pre><code class="language-no-highlight">Client started!
+Server: authorize or register
+&gt; /auth Cat sneaky123
+Server: you are authorized successfully!
+&gt; /chat admin
+admin: Hi cat! How're you doing?
+Cat: Meow... Meow!
+admin: Ok, I need to go. Bye.
+Cat: Meow! Meow! Meow!
+(new) admin: Oh, I see what I missed. Want to be a moderator?
+&gt; MEOW!!!
+Cat: MEOW!!!
+admin: OK, one second
+Server: you are the new moderator now!
+&gt; Meow!!!
+Cat: Meow!!!
+&gt; /chat Dog
+Dog: Woof
+Cat: Meow
+Dog: Woof
+&gt; MeOw mEoW!1!
+Cat: MeOw! mEoW!1!
+Dog: ???
+Server: you are no longer a moderator!
+&gt; meow...
+Cat: meow...
+/exit</code></pre>
+
+<p>Example from the <strong>Dog</strong> perspective:</p>
+
+<pre><code class="language-no-highlight">Client started!
+Server: authorize or register
+&gt; /auth Dog goodboy1
+Server: you are authorized successfully!
+&gt; /chat Cat
+Dog: Woof
+Cat: Meow
+&gt; Woof
+Dog: Woof
+Cat: MeOw mEoW!1!
+&gt; ???
+Dog: ???
+/chat admin
+admin: Hi Dog!
+Dog: Woof! Woof!
+admin: Ok, I need to go. Bye.
+Dog: Woof!
+&gt; WOOF! WOOOF! WOOF!
+Dog: WOOF! WOOOF! WOOF!
+&gt; WOOF!
+Dog: WOOF!
+admin: Ok, is was a mistake...
+&gt; /chat Cat
+Dog: Woof
+Cat: Meow
+Dog: Woof
+Cat: MeOw mEoW!1!
+Dog: ???
+(new) Cat: meow...
+&gt; /exit</code></pre>

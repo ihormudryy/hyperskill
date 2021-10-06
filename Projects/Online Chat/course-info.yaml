@@ -1,0 +1,11 @@
+type: hyperskill
+title: Online Chat
+language: English
+summary: In this project, you will create a simple chat based on the client/server
+  architecture that will allow you to talk with other Internet users.<br/><br/>Learn
+  more at <a href="https://hyperskill.org/projects/49?utm_source=ide&utm_medium=ide&utm_campaign=ide&utm_content=project-card">https://hyperskill.org/projects/49</a>
+programming_language: Java
+programming_language_version: 11
+content:
+- Online Chat
+mode: Study

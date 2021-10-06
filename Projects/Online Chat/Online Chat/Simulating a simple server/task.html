@@ -1,0 +1,52 @@
+<h5 style="text-align: center;">Description</h5>
+
+<p>Online chat is an application that lets you send and receive messages through the Internet. This project will show and explain the magic behind casually chatting with your online pals: you will work that magic yourself!</p>
+
+<p>The first stage of the project is pretty simple. Imagine that some people are messaging each other in a group chat. Your program should receive raw messages from the standard input, process them, and output only the text type messages ignoring the technical messages like when someone <strong>joined</strong>/<strong>left</strong> the chat.</p>
+
+<p>Each line of the input contains the person's name and the action this person performed. If the person performed the <strong>sent </strong>action, then the rest of the line after the keyword <code class="java">sent</code> is the text of their message. Check out the output example to better understanding!</p>
+
+<h5 style="text-align: center;">Objectives</h5>
+
+<p>In this stage, your program should satisfy the following conditions:</p>
+
+<ol>
+	<li>Every line of the input contains the person's name and the action this person performed (sent, joined, left, connected, and disconnected).</li>
+	<li>The person's name is a single word; there are no character restrictions for the person’s name.</li>
+	<li>The sent messages match the pattern "<em>Name sent Message</em>".</li>
+	<li>The messages in the output match the pattern "<em>Name: Message</em>".</li>
+	<li>All other types of messages are not shown in the output.</li>
+	<li>Your program will receive only correct raw messages.</li>
+</ol>
+
+<h5 style="text-align: center;">Example</h5>
+
+<p>For the following input:</p>
+
+<pre><code class="language-no-highlight">Nick joined
+Nick sent Hello everyone!
+Nick sent Someone here?
+Josh joined
+Josh sent Hey Nick!
+Nick sent Hey Josh! I thought no one here...
+Josh sent Oh, I just joined, so..
+Nick sent OK
+Nick disconnected
+Josh sent Are you here?
+Nick connected
+Nick sent Yes, just bad connection
+Josh sent Alright
+Nick left
+Josh left</code></pre>
+
+<p>The program should output:</p>
+
+<pre><code class="java">Nick: Hello everyone!
+Nick: Someone here?
+Josh: Hey Nick!
+Nick: Hey Josh! I thought no one was here...
+Josh: Oh, I just joined, so..
+Nick: OK
+Josh: Are you here?
+Nick: Yes, just bad connection
+Josh: Alright</code></pre>
