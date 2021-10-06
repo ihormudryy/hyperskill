@@ -1,0 +1,29 @@
+<h2>Most valuable items</h2>
+<html>
+ <head></head>
+ <body>
+  <p>This time we have the following <code class="language-java">StockItem</code> class which has three fields: <code class="language-java">String name</code>, <code class="language-java">double pricePerUnit</code>, and <code class="language-java">int quantity</code>.</p> 
+  <pre><code class="language-java">class StockItem {
+    private String name;
+    private double pricePerUnit;
+    private int quantity;
+
+    public StockItem(String name, double pricePerUnit, int quantity) {
+        this.name = name;
+        this.pricePerUnit = pricePerUnit;
+        this.quantity = quantity;
+    }
+
+    @Override
+    public String toString() {
+        return name + ": " + pricePerUnit + ", " + quantity + ";";
+    }
+
+    // getters
+}</code></pre> 
+  <p>Write a method that accepts a list of <code class="language-java">StockItem</code> objects, sorts them by their total value in descending order, and returns the sorted list. You don't need to read or write anything from or to the console, just implement the method.</p>
+ </body>
+</html><br><b>Sample Input:</b><br><pre><code class="language-no-highlight">nails: 0.01, 512; hammers: 7.5, 24; screws: 0.02, 318<br></code></pre><br><b>Sample Output:</b><br><pre><code class="language-no-highlight">hammers: 7.5, 24; screws: 0.02, 318; nails: 0.01, 512<br></code></pre><br><br><b>Sample Input:</b><br><pre><code class="language-no-highlight">pens: 3.72, 40; pencils: 1.45, 75; notebooks: 0.84, 130</code></pre><br><b>Sample Output:</b><br><pre><code class="language-no-highlight">pens: 3.72, 40; notebooks: 0.84, 130; pencils: 1.45, 75</code></pre><br><br><br><font color="gray">Memory limit: 256 MB</font><br><font color="gray">Time limit: 8 seconds</font><br><br>
+<b>Caution</b><br><br>
+You may see errors in your code or execution results due to missing context. Don’t worry about it, just write the solution and press Check.
+<br><br>

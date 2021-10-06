@@ -1,0 +1,9 @@
+type: framework
+content:
+- Simulating a simple server
+- First contact
+- Сonnecting people
+- Group chat
+- Registration and save messages
+- Moderation and unread messages
+current_task: 5

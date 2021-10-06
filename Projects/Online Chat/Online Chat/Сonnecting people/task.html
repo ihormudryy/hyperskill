@@ -1,0 +1,73 @@
+<h5 style="text-align: center;">Description</h5>
+
+<p>Improve the server so that it can handle more than one user. To make it possible for multiple people to join, you need multithreading. The main server thread should only listen to the incoming client connections. When a client is connected, the appropriate input and output streams should be handled in a separate thread so that they don’t block other incoming clients.</p>
+
+<p>The task of the server is to count how many words the client sent. For each client, there should be a separate counter. The server should send the count back to the client. If the client types <code class="java">/exit</code>, both the client and the server should close connections and the thread should be finished.</p>
+
+<p>The task of the client is getting data from the standard input, sending messages to the server, and printing answers to the console. If the input is <code class="java">/exit</code>, the client should send this message to the server, close the connection, and shut down.</p>
+
+<p>Use the following template in the server code to handle multiple users simultaneously:</p>
+
+<pre><code class="java">while (true) {
+    Socket socket = serverSocket.accept();
+    /* create a new thread to handle client socket */
+}</code></pre>
+
+<p>Here is some information for future reference: socket connections are not secure, which means that anyone can read the messages between you and the server. To secure your chat, it's a good idea to encrypt the messages before sending them to the server. In addition, the server also should encrypt messages before sending them to the client. However, in this project, encryption methods are not discussed or applied.</p>
+
+<ol>
+	<li>The input messages contain at least one word.</li>
+	<li>The client should print <code class="java">Client started!</code> at the start of the program.</li>
+	<li>The server should print <code class="java">Server started!</code> at the start of the program.</li>
+	<li>The server’s messages should match the following patterns:<br>
+		a. Client X sent: "message"<br>
+		b. Sent to client X: Count is N.</li>
+</ol>
+
+<p>At the end of the each test every thread you created will be interrupted. It may be in form of <code class="java">InterruptedException</code> or <code class="java">isInterrupted()</code> flag. You should stop your server in this case.</p>
+
+<h5 style="text-align: center;">Example</h5>
+
+<p>For a given input for the <strong>first </strong>client:</p>
+
+<pre><code class="language-no-highlight">Hello server from client 1!
+I want to send more messages
+/exit</code></pre>
+
+<p>The output should be:</p>
+
+<pre><code class="language-no-highlight">Client started!
+Count is 5 
+Count is 6 </code></pre>
+
+<p>For a given input for <strong>second </strong>client:</p>
+
+<pre><code class="language-no-highlight">Hello I am a second client!
+I want to hold on the connection
+Zzz...
+/exit</code></pre>
+
+<p>The output should be:</p>
+
+<pre><code class="language-no-highlight">Client started!
+Count is 6
+Count is 7
+Count is 1</code></pre>
+
+<p>And the <strong>server </strong>should output the following message:</p>
+
+<pre><code class="language-no-highlight">Server started!
+Client 1 connected!
+Client 1 sent: Hello server from client 1!
+Sent to client 1: Count is 5
+Client 2 connected!
+Client 2 sent: Hello I am the second client!
+Sent to client 2: Count is 5
+Client 1 sent: I want to send more messages
+Sent to client 1: Count is 5
+Client 1 disconnected!
+Client 2 sent: I want to hold on the connection
+Sent to client 2: Count is 7
+Client 2 sent: Zzz...
+Sent to client 2: Count is 1
+Client 2 disconnected!</code></pre>

@@ -1,0 +1,69 @@
+<h5 style="text-align: center;">Description</h5>
+
+<p>It is time to write an actual group chat.</p>
+
+<p>The first task of the server is to ask the name of every connected client. If a client with a given name already exists, the server should ask for another name. After that, when one of the clients sends a message, the server should send this message to all the connected clients. Also, when someone connects to the chat, the server should send this client the last 10 messages in the chat, so that the client has some context.</p>
+
+<p>The task of the client is to connect and send a unique name to the server. After that, the server should send the last 10 messages (or fewer if there are fewer than 10 messages since the start of the chat). The user should be able to type messages into the console input and at the same time receive new messages from the server. Use multithreading to achieve this behavior. To exit the chat, the user should write <code class="java">/exit</code>.</p>
+
+<ol>
+	<li>First, the server should send the following message, and the client should print it:<br>
+		 <code class="java">Server: write your name</code></li>
+	<li>If this username was already used, the server should send the following message, and the client should print it: <br>
+		<code class="java">Server: this name is already taken! Choose another one.</code></li>
+</ol>
+
+<h5 style="text-align: center;">Example</h5>
+
+<p>The greater-than symbol followed by a space <code class="java">&gt; </code>  represents the user input. Note that it's not part of the input.</p>
+
+<p>The first client should output something like this:</p>
+
+<pre><code class="language-no-highlight">Client started!
+Server: write your name
+&gt; Leela
+&gt; Is anybody here?
+Leela: Is anybody here?
+Mike: Yes, I'm here, just logged in
+&gt; How are you?
+Leela: How are you?
+Mike: Fine, thanks
+John: Hi, everyone!
+Mike: Hi!
+&gt; Hi
+Leela: Hi
+&gt; /exit</code></pre>
+
+<p>The second client should output something like this:</p>
+
+<pre><code class="language-no-highlight">Client started!
+Server: write your name
+&gt; Mike
+Leela: Is anybody here?
+&gt; Yes, I'm here, just logged in
+Mike: Yes I'm here, just logged in
+Leela: How are you?
+&gt; Fine, thanks
+Mike: Fine, thanks
+John: Hi, everyone!
+&gt; Hi!
+Mike: Hi!
+Leela: Hi
+&gt; /exit</code></pre>
+
+<p>The third client should output something like this:</p>
+
+<pre><code class="language-no-highlight">Client started!
+Server: write your name
+&gt; Mike
+Server: This name is already taken! Choose another one.
+&gt; John
+Leela: Is anybody here?
+Mike: Yes I'm here, just logged in
+Leela: How are you?
+Mike: Fine, thanks
+&gt; Hi, everyone!
+John: Hi, everyone!
+Mike: Hi!
+Leela: Hi
+&gt; /exit</code></pre>

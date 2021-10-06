@@ -1,0 +1,138 @@
+<h5 style="text-align: center;">Description</h5>
+
+<p>Now that we have a solid base for our chat application, it's time to improve it. In this stage, you will add functionality that will allow users to register and log in to the system. Also, allow users to choose who they're writing to and continue their correspondence. The server should send the last 10 messages of the user’s correspondence with the chosen person, and the user can write a new message. The server should save every message on a hard drive to make sure that the correspondence is safe even if the server crashes.</p>
+
+<p>Let's add another great feature: saving the information about logins and passwords. This has to be done wisely so that if some hacker cracked the server and stole the file with logins and passwords, there wouldn’t be a chance to use it. To achieve this, the server should save the login and the <strong>hash </strong>of the password to the file. The next time the user tries to log in, the server should take the hash of the password and compare it with the hash written in the file. Knowing the hash is not useful because you can't restore the password from it. In this project, you can use <code class="java">String.hashCode()</code> to get the hash from the password, but in a real application, you should use something more secure, for example, SHA-256. Even if you use a hash function, <code class="java">String.hashCode()</code> is simple and easily reversed.</p>
+
+<p>First, the server should identify the user. The user can send <code class="java">/auth LOGIN PASSWORD</code> or <code class="java">/registration LOGIN PASSWORD</code>. If the password is less than 8 symbols during registration, the server should notify the user that the password is too short.</p>
+
+<p>To list all the clients that are currently online, the client should send <code class="java">/list</code>.</p>
+
+<p>To start the correspondence, the user should input <code class="java">/chat NAME</code>. After that, the server should send the client the last 10 messages of the correspondence with this user. After that, the user can just type some text to send, except for the commands which must start with <code class="java">/</code>.</p>
+
+<p>As previously, the users should write <code class="java">/exit</code> to exit the chat.</p>
+
+<p>Also, in this stage you need to mark messages that were sent to you when you weren't chatting with a person with the word <code class="java">(new)</code>. The prefix <code class="java">(new)</code> near the new message should appear only for the first time you see the message. If you chatting with someone in realtime the messages you receive shouldn't be prefixed with <code class="java">(new)</code>.</p>
+
+<p>Use the Command pattern and enums to implement this feature.</p>
+
+<ol>
+	<li>If a client sends a message to another user who doesn’t “<em>/chat</em>” with them, then the message should only be saved.</li>
+	<li>If a client tries to send a message before choosing the addressee, the server should send the following message:<br>
+	<code class="java">Server: use /list command to choose a user to text!</code></li>
+	<li>If a client tries to send a message or command before auth, the server should send the following message:<br>
+	<code class="java">Server: you are not in the chat!</code></li>
+	<li>The server should check the login before checking the password and send only the first error message from the following list.</li>
+	<li>The server should send one of these message for the corresponding errors:<br>
+	a. <code class="java">Server: incorrect login!</code><br>
+	b. <code class="java">Server: incorrect password!</code><br>
+	c. <code class="java">Server: the password is too short!</code><br>
+	d. <code class="java">Server: this login is already taken! Choose another one.</code><br>
+	e. <code class="java">Server: the user is not online!</code><br>
+	f. <code class="java">Server: incorrect command!</code></li>
+	<li>Here is the rest of the informative server messages:<br>
+	a. <code class="java">Server: authorize or register</code><br>
+	b. <code class="java">Server: you are registered successfully!</code><br>
+	c. <code class="java">Server: you are authorized successfully!</code><br>
+	d. <code class="java">Server: online: userA userB</code> or <code class="java">Server: no one online</code></li>
+</ol>
+
+<h5 style="text-align: center;">Examples</h5>
+
+<p>The greater-than symbol followed by a space <code class="java">&gt; </code> represents the user input. Note that it's not part of the input.</p>
+
+<p><strong>Example 1</strong></p>
+
+<pre><code class="language-no-highlight">Client started!
+Server: authorize or register
+&gt; /registration Mark 1234
+Server: The password is too short!
+&gt; /registration Mark 12345678
+Server: you are registered successfully!
+&gt; /list
+Server: no one online
+&gt; /chat friend
+Server: the user is not online!
+&gt; /lst
+Server: incorrect command!
+&gt; /exit</code></pre>
+
+<p><strong>Example 2 </strong></p>
+
+<pre><code class="language-no-highlight">Client started!
+Server: authorize or register
+&gt; auth Mark 12345678
+Server: you are not in the chat!
+&gt; /auth Mark 12345678
+Server: you are authorized successfully!
+&gt; /list
+Server: online: Cat Dog
+&gt; /chat Cat
+&gt; Hello Cat!
+Mark: Hello Cat!
+Cat: Meow, meow
+Cat: Meow!
+&gt; How are you?
+Mark: How are you?
+Cat: Meooow...
+&gt; /list
+Server: online: Cat Dog Frog
+&gt; Ok, talk to you later
+Mark: Ok, talk to you later
+Cat: Meow
+&gt; /chat Dog
+&gt; hey Dog!
+Mark: hey Dog!
+Dog: Woof, woof!
+&gt; /exit</code></pre>
+
+<p><strong>Example 3 </strong></p>
+
+<pre><code class="language-no-highlight">Client started!
+Server: authorize or register
+&gt; /auth Mark 12345678
+Server: you are authorized successfully!
+&gt; /list
+Server: online: Cat
+&gt; /chat Cat
+Mark: Hello Cat!
+Cat: Meow, meow
+Cat: Meow!
+Mark: How are you?
+Cat: Meooow...
+Mark: Ok, talk to you later
+Cat: Meow
+&gt; I'm back!
+Mark: I'm back!
+Cat: Meow!
+&gt; /exit</code></pre>
+
+<p><strong>Example 4</strong></p>
+
+<pre><code class="language-no-highlight">Client started!
+Server: authorize or register
+&gt; /auth Mark 12345678
+Server: you are authorized successfully!
+&gt; /list
+Server: online: Dog Frog
+&gt; /chat Dog
+Mark: hey Dog!
+Dog: Woof, woof!
+(new) Dog: Woof! Wooof!
+&gt; Do you want to eat?
+Mark: Do you want to eat?
+&gt; /chat Frog
+&gt; Hey new friend!
+Mark: Hey new friend!
+/chat Dog
+Mark: hey Dog!
+Dog: Woof, woof!
+Dog: Woof! Wooof!
+Mark: Do you want to eat?
+(new) Dog: Woof woof woof!
+(new) Dog: Woof!!!
+&gt; Alright I'll buy a steak
+/chat Frog
+Mark: Hey new friend!
+(new) Frog: Quack-quack!
+&gt; /exit</code></pre>
