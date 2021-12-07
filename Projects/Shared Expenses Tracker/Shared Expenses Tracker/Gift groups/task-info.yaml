@@ -1,0 +1,601 @@
+type: edu
+files:
+- name: src/splitter/Main.java
+  visible: true
+  text: |
+    package splitter;
+
+    public class Main {
+
+        public static void main(String[] args) {
+
+            System.out.println("Hello World");
+        }
+    }
+  learner_created: false
+- name: src/splitter/Utils.java
+  visible: true
+  text: |
+    package splitter;
+
+    import java.text.ParseException;
+    import java.time.LocalDate;
+    import java.time.format.DateTimeFormatter;
+    import java.util.Collections;
+    import java.util.HashMap;
+    import java.util.List;
+    import java.util.Map;
+    import java.util.concurrent.atomic.AtomicBoolean;
+    import java.util.stream.Collectors;
+
+    public class Utils {
+
+        public static Map<String, User> balances = new HashMap<>();
+        public static DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy.MM.dd");
+
+        public static List<String> parseCommandLineArguments(String line, RegexPatterns.args pattern) throws IllegalArgumentException {
+            if (!line.matches(pattern.command)) {
+                throw new IllegalArgumentException("Illegal command arguments");
+            }
+            return pattern.getMatches(line);
+        }
+
+        public static void processTransaction(String line, RegexPatterns.args pattern, Utils.Actions action) throws ParseException {
+            List<String> args = parseCommandLineArguments(line, pattern);
+            int size = args.size();
+            String toUser = args.get(size - 3);
+            String fromUser = args.get(size - 2);
+            int amount = Integer.parseInt(args.get(size - 1));
+            LocalDate date = size < 5 ? LocalDate.now()
+                : LocalDate.parse(args.get(0), dateFormatter);
+
+            if (!balances.containsKey(fromUser)) {
+                balances.put(fromUser, new User(fromUser));
+            }
+            balances.get(fromUser).deductFromBalance(amount, toUser, date, action.equals(Utils.Actions.REPAY));
+
+            if (!balances.containsKey(toUser)) {
+                balances.put(toUser, new User(toUser));
+            }
+            balances.get(toUser).depositToBalance(amount, fromUser, date, action.equals(Utils.Actions.REPAY));
+        }
+
+        public static void printBalances(String line, RegexPatterns.args pattern) throws ParseException {
+            List<String> args = parseCommandLineArguments(line, pattern);
+            int size = args.size();
+            String command = args.get(size - 1);
+            LocalDate date = size < 3 && !command.equals("balance") ? LocalDate.now()
+                : LocalDate.parse(args.get(0), dateFormatter);
+            AtomicBoolean repayments = new AtomicBoolean(false);
+            List<String> result = balances.values()
+                                          .stream()
+                                          .flatMap(k -> k.getBorrowers()
+                                                         .stream()
+                                                         .filter(e -> k.getBalanceWithBorrower(e, date, command.contains("open")) > 0)
+                                                         .map(b -> {
+                                                             Integer balance = k.getBalanceWithBorrower(b, date, command.contains("open"));
+                                                             repayments.set(true);
+                                                             return String.format("%s owes %s %d", k.getName(), b, balance);
+                                                         })
+                                          ).collect(Collectors.toList());
+            Collections.sort(result);
+            result.stream().forEach(System.out::println);
+            if (repayments.get() == false) {
+                System.out.println("No repayments");
+            }
+        }
+
+        public enum Actions {
+            HELP("help"),
+            EXIT("exit"),
+            BORROW("borrow"),
+            REPAY("repay"),
+            BALANCE("balance");
+            private final String text;
+
+            Actions(String text) {
+                this.text = text;
+            }
+
+            @Override
+            public String toString() {
+                return text;
+            }
+        }
+    }
+  learner_created: true
+- name: src/splitter/User.java
+  visible: true
+  text: |
+    package splitter;
+
+    import java.time.LocalDate;
+    import java.util.HashMap;
+    import java.util.LinkedList;
+    import java.util.List;
+    import java.util.Map;
+    import java.util.stream.Collectors;
+
+    public class User {
+
+        private final String name;
+        private final Map<String, List<Transaction>> borrowMap;
+        private int balance;
+
+        public User(String name) {
+            this.name = name;
+            this.balance = 0;
+            borrowMap = new HashMap<>();
+        }
+
+        public void deductFromBalance(int sum, String sentTo, LocalDate date, boolean isRepayment) {
+            this.balance -= sum;
+            if (!borrowMap.containsKey(sentTo)) {
+                borrowMap.put(sentTo, new LinkedList<>());
+            }
+            borrowMap.get(sentTo).add(new Transaction(date, isRepayment ? sum : -1 * sum));
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void depositToBalance(int sum, String sentFrom, LocalDate date, boolean isRepayment) {
+            this.balance += sum;
+            if (!borrowMap.containsKey(sentFrom)) {
+                borrowMap.put(sentFrom, new LinkedList<>());
+            }
+            borrowMap.get(sentFrom).add(new Transaction(date, isRepayment ? -1 * sum : sum));
+        }
+
+        public List<String> getBorrowers() {
+            return borrowMap.keySet().stream().collect(Collectors.toList());
+        }
+
+        public Integer getBalanceWithBorrower(String borrower, LocalDate byDate, boolean isOpen) {
+            if (!borrowMap.containsKey(borrower)) {
+                throw new RuntimeException(borrower + " was not found");
+            }
+            return borrowMap.get(borrower)
+                            .stream()
+                            .filter(v -> {
+                                if (isOpen) {
+                                    return v.date.isBefore(byDate.withDayOfMonth(1));
+                                } else {
+                                    return v.date.isBefore(byDate) || v.date.isEqual(byDate);
+                                }
+                            })
+                            .map(v -> v.amount)
+                            .reduce(0, (subtotal, element) -> subtotal + element);
+        }
+
+        class Transaction {
+            LocalDate date;
+            int amount;
+
+            public Transaction(LocalDate date, int amount) {
+                this.date = date;
+                this.amount = amount;
+            }
+        }
+    }
+  learner_created: true
+- name: test/SharedBillsSplitterTestStage2.java
+  visible: false
+  text: |
+    import org.hyperskill.hstest.dynamic.output.InfiniteLoopDetector;
+    import org.hyperskill.hstest.stage.StageTest;
+    import org.hyperskill.hstest.testcase.CheckResult;
+    import org.hyperskill.hstest.testcase.SimpleTestCase;
+    import org.hyperskill.hstest.testcase.TestCase;
+    import org.hyperskill.hstest.testing.TestedProgram;
+
+    import java.math.BigDecimal;
+    import java.util.Arrays;
+    import java.util.List;
+    import java.util.Optional;
+    import java.util.Random;
+    import java.util.stream.Collectors;
+
+    public class SharedBillsSplitterTestStage2 extends StageTest {
+
+        private static final String UNKNOWN_COMMAND = "Unknown command";
+        private static final String EXIT_ERROR = "Your program should stop after exit command";
+        private static final String HELP_ERROR = "Help command should print all commands line by line in natural order";
+        private static final String ILLEGAL_COMMAND_ARGUMENTS = "Illegal command arguments";
+        private static final String ILLEGAL_ARGUMENTS_ERROR = "Your program should handle exceptions in incorrect command arguments input";
+        private static final String UNKNOWN_GROUP = "Unknown group";
+        private static final String NO_REPAYMENTS = "No repayments";
+        private static final String WRONG_CALCULATIONS = "Wrong calculations. Program should output owes list that " +
+                "if every person in this list repay his owes then everyone will have zero balance and everyone will be paid off";
+        private static final String INCORRECT_BALANCE = "The balance your program outputs is incorrect";
+        private static final String INCORRECT_MONEY_FORMAT = "Money should be formatted with proper scale";
+
+        static {
+            InfiniteLoopDetector.setWorking(false);
+        }
+
+        private static boolean equalsByLines(String sample, String linesStr) {
+
+            List<String> sampleLines = strToLinesTrimmed(sample);
+            List<String> lines = strToLinesTrimmed(linesStr);
+            return sampleLines.equals(lines);
+        }
+
+        private static List<String> strToLinesTrimmed(String sample) {
+
+            return sample.lines().map(String::trim).collect(Collectors.toList());
+        }
+
+        @Override
+        public List<TestCase> generate() {
+
+            return List.of(
+                    new TestCase<String>()
+                            .setCheckFunc(this::checkUnknownCommand)
+                            .setAttach("someAttachText")
+                            .setInput("someRandomText\n" +
+                                              "exit"),
+
+                    new SimpleTestCase("" +
+                                               "repay Ann\n" +
+                                               "exit",
+                                       ILLEGAL_COMMAND_ARGUMENTS)
+                            .setFeedback(ILLEGAL_ARGUMENTS_ERROR),
+
+                    new TestCase<String>()
+                            .setCheckFunc(this::checkHelpCommand)
+                            .setInput(concatLines(Commands.help.toString(), Commands.exit.toString())),
+
+                    new TestCase<String>().setDynamicTesting(() -> {
+                        TestedProgram main = new TestedProgram();
+                        main.start();
+                        main.execute(Commands.exit.toString());
+                        if (!main.isFinished()) {
+                            return CheckResult.wrong(EXIT_ERROR);
+                        }
+                        return CheckResult.correct();
+                    }),
+
+                    new TestCase<String>().setDynamicTesting(() -> {
+                        TestedProgram main = new TestedProgram();
+                        main.start();
+                        String output;
+                        String[] words;
+
+                        main.execute("2020.09.30 borrow Ann Bob 20.10");
+                        main.execute("2020.10.01 repay Ann Bob 10.22");
+                        main.execute("2020.10.10 borrow Bob Ann 7.35");
+                        main.execute("2020.10.15 repay Ann Bob 8.99");
+                        main.execute("repay Bob Ann 6.46");
+                        output = main.execute("2020.09.25 balance").trim();
+                        if (!output.equals(NO_REPAYMENTS)) {
+                            return CheckResult.wrong(INCORRECT_BALANCE);
+                        }
+
+                        output = main.execute("2020.10.30 balance open").trim();
+                        words = output.split("\\s");
+                        if (!isMoneyFormatted(words[words.length - 1])) {
+                            return CheckResult.wrong(INCORRECT_MONEY_FORMAT);
+                        }
+                        if (!output.equals("Ann owes Bob 20.10")) {
+                            return CheckResult.wrong(INCORRECT_BALANCE);
+                        }
+
+                        output = main.execute("2020.10.20 balance close").trim();
+                        words = output.split("\\s");
+                        if (!isMoneyFormatted(words[words.length - 1])) {
+                            return CheckResult.wrong(INCORRECT_MONEY_FORMAT);
+                        }
+                        if (!output.equals("Bob owes Ann 6.46")) {
+                            return CheckResult.wrong(INCORRECT_BALANCE);
+                        }
+
+                        output = main.execute("balance close").trim();
+                        if (!output.equals(NO_REPAYMENTS)) {
+                            return CheckResult.wrong(INCORRECT_BALANCE);
+                        }
+
+                        main.execute("exit");
+
+                        return CheckResult.correct();
+                    }),
+
+                    new TestCase<String>().setDynamicTesting(() -> {
+                        String[] response = {"Ann owes Bob 14.00", "Chuck owes Bob 7.00", "Diana owes Bob 5.00", "Diana owes Chuck 26.00", "Elon owes Diana 12.00"};
+                        TestedProgram main = new TestedProgram();
+                        String output;
+                        String[] lines;
+                        main.start();
+
+                        main.execute("borrow Ann Bob 25");
+                        main.execute("repay Ann Bob 15");
+                        main.execute("repay Bob Chuck 7");
+                        main.execute("borrow Ann Bob 4");
+                        main.execute("repay Bob Diana 5");
+                        main.execute("borrow Elon Diana 12");
+                        main.execute("repay Chuck Diana 14");
+                        main.execute("repay Chuck Diana 12");
+                        output = main.execute("balance close").trim();
+                        lines = output.split("\n");
+                        for (int i = 0; i < lines.length; i++) {
+                            if (!lines[i].equals(response[i]) && lines[i].equals(NO_REPAYMENTS)) {
+                                return CheckResult.wrong(INCORRECT_BALANCE);
+                            } else if (!lines[i].equals(response[i])) {
+                                return CheckResult.wrong("Owes should be sorted by Person who owes and Person whom owes");
+                            }
+                        }
+
+                        if (!isSortedInNaturalOrder(lines)) {
+                            return CheckResult.wrong("List of repayments should be sorted in a natural order.");
+                        }
+
+                        for (String line : lines) {
+                            String[] words = line.split("\\s");
+                            if (!isMoneyFormatted(words[words.length - 1])) {
+                                return CheckResult.wrong(INCORRECT_MONEY_FORMAT);
+                            }
+                        }
+
+                        main.execute("exit");
+
+                        return CheckResult.correct();
+                    }),
+
+                    new TestCase<String>().setDynamicTesting(() -> {
+                        Random random = new Random();
+                        List<String> persons = List.of("Annabelle", "Billibob", "Carlos", "Diana", "Elon", "Finny");
+                        String keyPerson = persons.get(random.nextInt(persons.size()));
+                        BigDecimal keyBalanceBorrow = BigDecimal.ZERO;
+                        BigDecimal keyBalanceRepay = BigDecimal.ZERO;
+                        TestedProgram main = new TestedProgram();
+                        main.start();
+                        for (int i = 0; i < 100; i++) {
+                            String personFrom = persons.get(random.nextInt(persons.size()));
+                            String personTo = persons.get(random.nextInt(persons.size()));
+                            if (personFrom.equalsIgnoreCase(personTo)) {
+                                continue;
+                            }
+                            Commands command;
+                            BigDecimal amount = new BigDecimal(
+                                    String.format("%d.%d", random.nextInt(200), random.nextInt(99)));
+
+                            if (random.nextBoolean()) {
+                                command = Commands.borrow;
+                                if (personFrom.equals(keyPerson)) {
+                                    keyBalanceBorrow = keyBalanceBorrow.add(amount);
+                                }
+                                if (personTo.equals(keyPerson)) {
+                                    keyBalanceBorrow = keyBalanceBorrow.subtract(amount);
+                                }
+                            } else {
+                                command = Commands.repay;
+                                if (personFrom.equals(keyPerson)) {
+                                    keyBalanceRepay = keyBalanceRepay.add(amount);
+                                }
+                                if (personTo.equals(keyPerson)) {
+                                    keyBalanceRepay = keyBalanceRepay.subtract(amount);
+                                }
+                            }
+                            String line = String.format("%s %s %s %s", command, personFrom, personTo, amount);
+                            main.execute(line);
+                        }
+                        String result = main.execute("balance close");
+                        Optional<BigDecimal> sum = Arrays.stream(result.split("\n"))
+                                                         .filter(it -> it.contains(keyPerson))
+                                                         .map(it -> {
+                                                             String[] split = it.split("\\s+");
+                                                             Character sign = it.startsWith(keyPerson) ? '+' : '-';
+                                                             return sign + split[split.length - 1];
+                                                         })
+                                                         .map(BigDecimal::new)
+                                                         .reduce(BigDecimal::add);
+
+                        BigDecimal sumBalance = keyBalanceBorrow.subtract(keyBalanceRepay);
+                        if (sumBalance.compareTo(sum.orElse(BigDecimal.ZERO)) == 0) {
+                            return CheckResult.correct();
+                        }
+                        return CheckResult.wrong(WRONG_CALCULATIONS);
+                    }),
+
+
+                    new TestCase<String>().setDynamicTesting(() -> {
+                        TestedProgram main = new TestedProgram();
+                        main.start();
+                        if (!main.execute("group create lowerCaseText").contains(ILLEGAL_COMMAND_ARGUMENTS)) {
+                            return CheckResult.wrong(String.format(
+                                    "Group name must be UPPERCASE, otherwise \"%s\" should be printed",
+                                    ILLEGAL_COMMAND_ARGUMENTS));
+                        }
+                        if (!main.execute("group show NOTFOUNDGROUP").contains(UNKNOWN_GROUP)) {
+                            return CheckResult.wrong(
+                                    String.format("\"%s\" should be printed if the group have not been created yet", UNKNOWN_GROUP));
+                        }
+
+                        main.execute("group create BOYS (Elon, Bob, Chuck)");
+                        String showGroupResult = main.execute("group show BOYS").trim();
+                        if (!equalsByLines(showGroupResult, "" +
+                                "Bob\n" +
+                                "Chuck\n" +
+                                "Elon")) {
+                            return CheckResult.wrong("Persons should be printed line by line sorted in natural order");
+                        }
+                        return CheckResult.correct();
+                    }),
+
+                    new TestCase<String>().setDynamicTesting(() -> {
+                        TestedProgram main = new TestedProgram();
+                        main.start();
+                        main.execute("group create COFFEETEAM (Ann, Bob)");
+                        main.execute("purchase Bob coffee 10 (COFFEETEAM)");
+                        String balanceFirst = main.execute("balance close").trim();
+                        if (balanceFirst.contains("Bob owes")) {
+                            return CheckResult.wrong("Only Ann owes Bob. Bob should not owe to himself");
+                        }
+                        if (!balanceFirst.equals("Ann owes Bob 5.00")) {
+                            return CheckResult.wrong(INCORRECT_BALANCE);
+                        }
+                        main.execute("repay Ann Bob 5.00");
+                        String balanceSecond = main.execute("balance close").trim();
+                        if (!balanceSecond.equals(NO_REPAYMENTS)) {
+                            return CheckResult.wrong("If everybody owes zero, it should be printed \"No repayments\"");
+                        }
+                        return CheckResult.correct();
+                    }),
+
+                    new TestCase<String>().setDynamicTesting(() -> {
+                        TestedProgram main = new TestedProgram();
+                        main.start();
+                        main.execute("group create FRIENDS (Ann, Bob, Chuck)");
+                        main.execute("purchase Elon chocolate 12.50 (FRIENDS)");
+                        String balanceResult = main.execute("balance close");
+                        if (!equalsByLines(balanceResult, "" +
+                                "Ann owes Elon 4.17\n" +
+                                "Bob owes Elon 4.17\n" +
+                                "Chuck owes Elon 4.16")) {
+                            return CheckResult.wrong("The remainder after division should be spread amongst the first N persons just like the examples");
+                        }
+                        return CheckResult.correct();
+                    }),
+
+                    new TestCase<String>().setDynamicTesting(() -> {
+                        TestedProgram main = new TestedProgram();
+                        main.start();
+                        main.execute("group create BOYS (Elon, Bob, Chuck)");
+                        main.execute("group create GIRLS (Ann, Diana)");
+                        main.execute("2020.10.20 purchase Diana flowers 15.65 (BOYS)");
+                        main.execute("2020.10.21 purchase Chuck chocolate 6.30 (BOYS)");
+                        main.execute("2020.10.22 purchase Bob icecream 3.99 (GIRLS)");
+                        String balanceCloseResult = main.execute("balance close");
+                        if (!equalsByLines(balanceCloseResult, "" +
+                                "Ann owes Bob 2.00\n" +
+                                "Bob owes Chuck 2.10\n" +
+                                "Bob owes Diana 3.23\n" +
+                                "Chuck owes Diana 5.22\n" +
+                                "Elon owes Chuck 2.10\n" +
+                                "Elon owes Diana 5.21")) {
+                            return CheckResult.wrong("The remainder after division should be spread amongst the first N persons just like the examples");
+                        }
+                        return CheckResult.correct();
+                    })
+
+
+            );
+        }
+
+        private boolean isMoneyFormatted(String s) {
+
+            return s.matches("\\d+.\\d+");
+        }
+
+        private boolean isSortedInNaturalOrder(String[] arr) {
+
+            String previous = "";
+
+            for (String current : arr) {
+                if (current.compareTo(previous) < 0) {
+                    return false;
+                }
+                previous = current;
+            }
+            return true;
+        }
+
+        private CheckResult checkHelpCommand(String reply, String attach) {
+
+            String[] replyArr = reply.split("\n");
+            List<String> commandList = getCommandList();
+            if (replyArr.length != commandList.size()) {
+                return CheckResult.wrong(HELP_ERROR);
+            }
+            for (int i = 0; i < replyArr.length; i++) {
+                if (!replyArr[i].toLowerCase().startsWith(commandList.get(i).toLowerCase())) {
+                    return CheckResult.wrong(HELP_ERROR);
+                }
+            }
+            return CheckResult.correct();
+        }
+
+        private CheckResult checkUnknownCommand(String reply, String attach) {
+
+            try {
+                reply = reply.trim();
+                Commands command = Commands.valueOf(reply);
+                ;
+            } catch (IllegalArgumentException e) {
+                if (!reply.toLowerCase().startsWith(UNKNOWN_COMMAND.toLowerCase())) {
+                    return CheckResult.wrong(String.format(
+                            "For unknown command output should start with: %s", UNKNOWN_COMMAND));
+                }
+            }
+            return CheckResult.correct();
+        }
+
+        private List<String> getCommandList() {
+
+            return Arrays.stream(Commands.values())
+                         .map(Enum::toString)
+                         .sorted().collect(Collectors.toList());
+        }
+
+        private String concatLines(List<String> strings) {
+
+            return String.join("\n", strings);
+        }
+
+        private String concatLines(String... strings) {
+
+            return String.join("\n", strings);
+        }
+
+        enum Commands {
+            help,
+            borrow,
+            repay,
+            balance,
+            exit,
+            group,
+            purchase
+        }
+    }
+  learner_created: false
+- name: src/splitter/RegexPatterns.java
+  visible: true
+  text: |
+    package splitter;
+
+    import java.util.Arrays;
+    import java.util.List;
+    import java.util.regex.Pattern;
+    import java.util.stream.Collectors;
+
+    public class RegexPatterns {
+        public static final String action = "[0-9.]*\\s?[\\w+]+\\s+[\\w+]+\\s+[\\w+]+\\s+[\\d]+";
+        public static final String balance = "[0-9.]*\\s?[\\w+]+\\s?[open|close]*";
+
+        public enum args {
+            ACTION(RegexPatterns.action, Pattern.compile(RegexPatterns.action)),
+            BALANCE(RegexPatterns.balance, Pattern.compile(RegexPatterns.balance));
+
+            public String command;
+            public Pattern pattern;
+
+            args(String command, Pattern pattern) {
+                this.command = command;
+                this.pattern = pattern;
+            }
+
+            public List<String> getMatches(String text) {
+                return Arrays.stream(text.split("\\s+"))
+                             .collect(Collectors.toList());
+            }
+        }
+
+    }
+  learner_created: true
+feedback_link: https://hyperskill.org/learn/step/11719#comment
+status: Solved
+feedback:
+  message: Congratulations!
+  time: Fri, 03 Dec 2021 15:35:35 UTC
+record: 2

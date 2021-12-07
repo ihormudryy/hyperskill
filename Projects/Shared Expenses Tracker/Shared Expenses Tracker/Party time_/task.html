@@ -1,0 +1,120 @@
+<h5>Description</h5>
+
+<p>Tired of all work and no play, your colleagues are going to throw a big outdoor party, which can only mean one thing: a lot of complicated bill splitting... A group bus ticket should be split among the passengers, and fuel bills should be grouped by car. When it comes to food, some people will have to be excluded from the bill for certain categories: vegans will not pay for meat, healthy food enthusiasts shouldn't have to chip in for sugary soda, etc.</p>
+
+<p>You've already done some bill splitting using a database. The database allows to query large amounts of data with decent performance. Although databases are effective when it comes to querying, using it to process small collections may be a bit of an overshot. This is where Stream API comes in!</p>
+
+<p>Below you can find a list of close approximations of SQL for stream API : </p>
+
+<table border="1" cellpadding="1" cellspacing="1" style="width: 500px;">
+	<tbody>
+		<tr>
+			<td><samp>TABLE</samp></td>
+			<td><samp>Stream&lt;DomainClass&gt;</samp></td>
+		</tr>
+		<tr>
+			<td><samp>SELECT</samp></td>
+			<td><samp>map()</samp></td>
+		</tr>
+		<tr>
+			<td><samp>DISTINCT</samp></td>
+			<td><samp>distinct()</samp></td>
+		</tr>
+		<tr>
+			<td><samp>JOIN</samp></td>
+			<td><samp>flatMap()</samp></td>
+		</tr>
+		<tr>
+			<td><samp>WHERE / HAVING</samp></td>
+			<td><samp>filter()</samp></td>
+		</tr>
+		<tr>
+			<td><samp>GROUP BY</samp></td>
+			<td><samp>collect(toMap())<br>
+			reduce()</samp></td>
+		</tr>
+		<tr>
+			<td><samp>ORDER BY</samp></td>
+			<td><samp>sorted()</samp></td>
+		</tr>
+		<tr>
+			<td><samp>UNION ALL</samp></td>
+			<td><samp>concat()</samp></td>
+		</tr>
+	</tbody>
+</table>
+
+<p>Note that DomainClass represents your POJO objects.</p>
+
+<h5>Objectives</h5>
+
+<p>In this stage, your program should be able to:</p>
+
+<ol>
+	<li>Work with Spring boot console application.</li>
+	<li>Process the following command:<br>
+	<code class="java">[date] <strong>balance</strong><strong> </strong>[open|close] [(list of [+|-] persons | GROUPS)]</code></li>
+	<li>Process complex shared purchases and repayments.</li>
+	<li>Calculate and display the list of repayments with names and amounts to be repaid.</li>
+</ol>
+
+<p>Use database name <code class="java">spring.datasource.url=jdbc:h2:file:../testDB.mv.db</code> for testing.</p>
+
+<h5>Examples</h5>
+
+<p>The greater-than symbol followed by a space (<code class="java">&gt; </code>) represents the user input. <br>
+The program should print a list of commands:</p>
+
+<pre><code class="language-no-highlight">&gt; help
+balance
+borrow
+cashBack
+exit
+group
+help
+purchase
+repay
+secretSanta
+writeOff</code></pre>
+
+<p>Complex splitting without filtering, and filtered by (-Frank, CAR, Chuck):</p>
+
+<pre><code class="language-no-highlight">&gt; writeOff
+&gt; group create TEAM (Ann, Bob, Chuck, Diana, Elon, Frank)
+&gt; group create CAR (Diana, Elon)
+&gt; group create BUS (Ann, Bob, Chuck, Frank)
+&gt; purchase Chuck busTickets 5.25 (BUS, -Frank)
+&gt; purchase Elon fuel 25 (CAR, Frank)
+&gt; purchase Ann chocolate 2.99 (BUS, -Bob, CAR)
+&gt; purchase Diana soda 5.45 (TEAM, -Ann, -Chuck)
+&gt; purchase Frank bbq 29.90 (TEAM, CAR, BUS, -Frank, -Bob)
+&gt; cashBack YourCompany party 12 (TEAM, BUS)
+&gt; cashBack YourCompany tickets 3.50 (BUS)
+&gt; borrow Frank Bob 10
+&gt; repay Chuck Diana 20
+&gt; balance close
+Ann owes Chuck 1.15
+Ann owes Frank 6.89
+Bob owes Chuck 1.75
+Bob owes Diana 1.37
+Chuck owes Frank 7.48
+Diana owes Ann 0.60
+Diana owes Chuck 20.00
+Diana owes Elon 6.98
+Diana owes Frank 6.11
+Elon owes Ann 0.60
+Frank owes Bob 10.00
+Frank owes Elon 0.86
+YourCompany owes Ann 2.88
+YourCompany owes Bob 2.88
+YourCompany owes Chuck 2.87
+YourCompany owes Diana 2.00
+YourCompany owes Elon 2.00
+YourCompany owes Frank 2.87
+&gt; balance close (-Frank, CAR, Chuck)
+Chuck owes Frank 7.48
+Diana owes Ann 0.60
+Diana owes Chuck 20.00
+Diana owes Elon 6.98
+Diana owes Frank 6.11
+Elon owes Ann 0.60</code></pre>
