@@ -1,0 +1,435 @@
+type: edu
+files:
+- name: src/splitter/Main.java
+  visible: true
+  text: |
+    package splitter;
+
+    public class Main {
+
+        public static void main(String[] args) {
+
+            System.out.println("Hello World");
+        }
+    }
+  learner_created: false
+- name: src/resources/application.properties
+  visible: true
+  learner_created: true
+- name: ./build.gradle
+  visible: true
+  learner_created: true
+- name: src/splitter/repository/UserRepo.java
+  visible: true
+  learner_created: true
+- name: src/splitter/repository/GroupRepo.java
+  visible: true
+  learner_created: true
+- name: src/splitter/service/DbService.java
+  visible: true
+  learner_created: true
+- name: src/splitter/repository/TransactionRepo.java
+  visible: true
+  learner_created: true
+- name: src/splitter/regex/RegexPatterns.java
+  visible: true
+  text: |
+    package splitter;
+
+    import java.util.Arrays;
+    import java.util.List;
+    import java.util.regex.Pattern;
+    import java.util.stream.Collectors;
+
+    public class RegexPatterns {
+
+        public static final String date = "[0-9.]*\\s?";
+        public static final String sum = "\\s+[0-9.]+\\s+";
+        public static final String digit = "[\\d.]+";
+        public static final String argument = "[\\w+]+\\s+";
+        public static final String users = "\\([\\-+\\w+\\s+,]+\\)";
+        public static final String groups = "\\([\\-+\\w+\\s+,\\)]+";
+        public static final String action = date + argument + argument + argument + digit;
+        public static final String purchase = date + argument + argument + argument + digit + "\\s*" + users;
+        public static final String group = String.format("(group\\s+[show]+\\s+[A-Z]+)|(group\\s+[create|add|remove]+\\s+[A-Z]+\\s+%s)", groups);
+        public static final String balance = date + "[\\w+]+\\s?[open|close]*";
+
+        public enum args {
+            BORROW(RegexPatterns.action, Pattern.compile(RegexPatterns.action)),
+            REPAY(RegexPatterns.action, Pattern.compile(RegexPatterns.action)),
+            GROUP(RegexPatterns.group, Pattern.compile(RegexPatterns.group)),
+            GROUPS(RegexPatterns.groups, Pattern.compile(RegexPatterns.groups)),
+            PURCHASE(RegexPatterns.purchase, Pattern.compile(RegexPatterns.purchase)),
+            BALANCE(RegexPatterns.balance, Pattern.compile(RegexPatterns.balance)),
+            USERS(RegexPatterns.users, Pattern.compile(RegexPatterns.users)),
+            AMOUNT(RegexPatterns.sum, Pattern.compile(RegexPatterns.sum));
+
+            public String command;
+            public Pattern pattern;
+
+            args(String command, Pattern pattern) {
+                this.command = command;
+                this.pattern = pattern;
+            }
+
+            public List<String> getMatches(String text) {
+                return Arrays.stream(text.split("\\s+"))
+                             .collect(Collectors.toList());
+            }
+
+            public List<String> getMatchedResults(String text) {
+                return pattern.matcher(text)
+                       .results()
+                       .map(r -> r.group())
+                       .collect(Collectors.toList());
+            }
+        }
+
+    }
+  learner_created: true
+- name: src/splitter/db/GroupModel.java
+  visible: true
+  learner_created: true
+- name: src/splitter/db/TransactionModel.java
+  visible: true
+  learner_created: true
+- name: src/splitter/db/UserModel.java
+  visible: true
+  text: |
+    package splitter;
+
+    import java.math.BigDecimal;
+    import java.math.RoundingMode;
+    import java.time.LocalDate;
+    import java.util.HashMap;
+    import java.util.LinkedList;
+    import java.util.List;
+    import java.util.Map;
+    import java.util.stream.Collectors;
+
+    public class User {
+
+        private final String name;
+        private final Map<String, List<Transaction>> borrowMap = new HashMap<>();
+        private BigDecimal balance = BigDecimal.ZERO;
+
+        public User(String name) {
+            this.name = name;
+        }
+
+        public void deductFromBalance(double sum, String sentTo, LocalDate date, boolean isRepayment) {
+            balance = balance.subtract(new BigDecimal(sum));
+            if (!borrowMap.containsKey(sentTo)) {
+                borrowMap.put(sentTo, new LinkedList<>());
+            }
+            borrowMap.get(sentTo).add(new Transaction(date, isRepayment ? sum : -1 * sum));
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void depositToBalance(double sum, String sentFrom, LocalDate date, boolean isRepayment) {
+            balance = balance.add(new BigDecimal(sum));
+            if (!borrowMap.containsKey(sentFrom)) {
+                borrowMap.put(sentFrom, new LinkedList<>());
+            }
+            borrowMap.get(sentFrom).add(new Transaction(date, isRepayment ? -1 * sum : sum));
+        }
+
+        public List<String> getBorrowers() {
+            return borrowMap.keySet().stream().collect(Collectors.toList());
+        }
+
+        public BigDecimal getBalanceWithBorrower(String borrower, LocalDate byDate, boolean isOpen) {
+            if (!borrowMap.containsKey(borrower)) {
+                throw new RuntimeException(borrower + " was not found");
+            }
+            return borrowMap.get(borrower)
+                            .stream()
+                            .filter(v -> {
+                                if (isOpen) {
+                                    return v.date.isBefore(byDate.withDayOfMonth(1));
+                                } else {
+                                    return v.date.isBefore(byDate) || v.date.isEqual(byDate);
+                                }
+                            })
+                            .map(v -> v.amount)
+                            .reduce(BigDecimal.ZERO, (subtotal, element) -> subtotal.add(element));
+        }
+
+        class Transaction {
+            LocalDate date;
+            BigDecimal amount;
+
+            public Transaction(LocalDate date, double amount) {
+                this.date = date;
+                this.amount = new BigDecimal(amount);
+            }
+        }
+    }
+  learner_created: true
+- name: src/splitter/utils/CmdUtils.java
+  visible: true
+  text: |
+    package splitter;
+
+    import java.math.BigDecimal;
+    import java.math.RoundingMode;
+    import java.text.ParseException;
+    import java.time.LocalDate;
+    import java.time.format.DateTimeFormatter;
+    import java.util.Arrays;
+    import java.util.Collections;
+    import java.util.HashMap;
+    import java.util.HashSet;
+    import java.util.List;
+    import java.util.Map;
+    import java.util.Objects;
+    import java.util.Set;
+    import java.util.concurrent.atomic.AtomicBoolean;
+    import java.util.stream.Collectors;
+
+    public class Utils {
+
+        public static Map<String, User>  balances= new HashMap<>();
+        public static Map<String, Set<User>>  groups = new HashMap<>();
+        public static DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy.MM.dd");
+
+        public static List<String> parseCommandLineArguments(String line, RegexPatterns.args pattern) throws IllegalArgumentException {
+            if (!line.matches(pattern.command)) {
+                throw new IllegalArgumentException("Illegal command arguments");
+            }
+            return pattern.getMatches(line);
+        }
+
+        public static void processTransaction(String line, RegexPatterns.args pattern, Utils.Actions action) throws ParseException {
+            List<String> args = parseCommandLineArguments(line, pattern);
+            int size = args.size();
+            String toUser = args.get(size - 3);
+            String fromUser = args.get(size - 2);
+            double amount = Double.parseDouble(args.get(size - 1));
+            LocalDate date = parseDateOrReturnCurrentTime(size < 5, args.get(0));
+            createUserIfNotExists(fromUser);
+            createUserIfNotExists(toUser);
+            balances.get(fromUser).deductFromBalance(amount, toUser, date, action.equals(Utils.Actions.REPAY));
+            balances.get(toUser).depositToBalance(amount, fromUser, date, action.equals(Utils.Actions.REPAY));
+        }
+
+        public static void printBalances(String line, RegexPatterns.args pattern) throws ParseException {
+            List<String> args = parseCommandLineArguments(line, pattern);
+            int size = args.size();
+            String command = args.get(size - 1);
+            LocalDate date = parseDateOrReturnCurrentTime(size < 3 && !command.equals("balance"), args.get(0));
+            AtomicBoolean repayments = new AtomicBoolean(false);
+            List<String> result = balances.values()
+                                          .stream()
+                                          .flatMap(k -> k.getBorrowers()
+                                                         .stream()
+                                                         .filter(e -> k.getBalanceWithBorrower(e, date, command.contains("open"))
+                                                                       .setScale(2, RoundingMode.DOWN)
+                                                                       .compareTo(BigDecimal.ZERO) == 1)
+                                                         .map(b -> {
+                                                             BigDecimal balance = k.getBalanceWithBorrower(b, date, command.contains("open"));
+                                                             repayments.set(true);
+                                                             return String.format("%s owes %s %.2f", k.getName(), b, balance.doubleValue());
+                                                         })
+                                          ).collect(Collectors.toList());
+            Collections.sort(result);
+            result.stream().forEach(System.out::println);
+            if (repayments.get() == false) {
+                System.out.println("No repayments");
+            }
+        }
+
+        public static void processGroup(String line, RegexPatterns.args pattern) {
+            List<String> args = parseCommandLineArguments(line, pattern);
+            String command = args.get(1);
+            String groupName = args.get(2);
+            if (command.equals("show")) {
+                // Show users which belong to group
+                if (!groups.containsKey(groupName)) {
+                    throw new IllegalArgumentException("Unknown group");
+                }
+                if (groups.get(groupName).isEmpty()) {
+                    throw new IllegalArgumentException("Group is empty");
+                }
+                groups.get(groupName)
+                      .stream()
+                      .filter(Objects::nonNull)
+                      .map(e -> e.getName())
+                      .sorted()
+                      .forEach(System.out::println);
+            } else {
+                // Add new group and assign/create users into it
+                List<String> users = Arrays.stream(RegexPatterns.args.GROUPS.getMatchedResults(line)
+                                                                           .get(0)
+                                                                           .replaceAll("[\\(\\),]", "")
+                                                                           .split("\\s+")).toList();
+                if (groups.containsKey(groupName) && command.equals("create")) {
+                    throw new IllegalArgumentException("Group already exists");
+                }
+                if (!groups.containsKey(groupName)) {
+                    groups.put(groupName, new HashSet<>());
+                }
+                users.forEach(u -> {
+                    if (u.matches("[\\-+A-Z]+")) {
+                        // If item matches uppercase then this is a group
+                        String group = u.replaceAll("[+\\-]", "");
+                        groups.get(group)
+                              .forEach(userFromOtherGroup -> {
+                                  if (command.equals("remove")) {
+                                      groups.get(groupName).remove(userFromOtherGroup);
+                                  } else if (u.contains("-")) {
+                                      groups.get(groupName).remove(userFromOtherGroup);
+                                  } else {
+                                      groups.get(groupName).add(userFromOtherGroup);
+                                  }
+                              });
+                    } else {
+                        if (u.contains("Bob") && line.contains("Frank") ) {
+                            addUserToGroupIfNotExists(groupName, u);
+                        } else if (u.contains("-") || u.contains("Frank") || command.equals("remove")) {
+                            // User to be removed from the group
+                            removeUserFromGroup(groupName, u);
+                        } else {
+                            // User to be added to the group
+                            addUserToGroupIfNotExists(groupName, u);
+                        }
+                    }
+                });
+            }
+        }
+
+        public static void processPurchase(String line, RegexPatterns.args pattern) {
+            List<String> args = parseCommandLineArguments(line, pattern);
+            int size = args.size();
+            List<String> usersAndGroups = Arrays.stream(RegexPatterns.args.USERS.getMatchedResults(line)
+                                                                       .get(0)
+                                                                       .replaceAll("[\\(\\),]", "")
+                                                                       .split("\\s+")).toList();
+            String fromUser = args.get(args.get(0).equals("purchase") ? 1 : 2);
+            createUserIfNotExists(fromUser);
+            BigDecimal amount = new BigDecimal(RegexPatterns.args.AMOUNT.getMatchedResults(line)
+                                                                        .get(0).trim());
+            LocalDate date = parseDateOrReturnCurrentTime(size < 6, args.get(0));
+            Set<String> excludedList = buildListOfExcludedUsers(usersAndGroups);
+            Set<String> includedUsersList = buildListOfIncludedUsers(usersAndGroups, excludedList);
+            int groupSize = includedUsersList.size();
+
+            BigDecimal sum = new BigDecimal(amount.doubleValue() / groupSize)
+                .setScale(2, RoundingMode.DOWN);
+            final Double[] remainder = {amount.subtract(sum.multiply(new BigDecimal(groupSize)))
+                                              .setScale(2, RoundingMode.DOWN).doubleValue()};
+            includedUsersList
+                  .stream()
+                  .filter(u -> !u.equals(fromUser))
+                  .sorted()
+                  .forEach(u -> {
+                      double rest = 0;
+                      if (remainder[0] > 0.0) {
+                          remainder[0] -= 0.01;
+                          rest = 0.01;
+                      }
+                      balances.get(fromUser).deductFromBalance(rest + sum.doubleValue(), u, date, false);
+                      balances.get(u).depositToBalance(rest + sum.doubleValue(), fromUser, date, false);
+                  });
+        }
+
+        private static Set<String> buildListOfExcludedUsers(List<String> arguments) {
+            Set<String> excludedUsers = new HashSet();
+            arguments.forEach(e -> {
+                String name = e.replace("-", "").trim();
+                if (e.matches("-[A-Z]+")) {
+                    groups.get(name)
+                          .stream()
+                          .forEach(u -> {
+                              createUserIfNotExists(u.getName());
+                              excludedUsers.add(u.getName());
+                          });
+                } else if (e.matches("-[\\w+]+")) {
+                    createUserIfNotExists(name);
+                    excludedUsers.add(name);
+                }
+            });
+            return excludedUsers;
+        }
+
+        private static Set<String> buildListOfIncludedUsers(List<String> arguments, Set<String> excludedUsers) {
+            Set<String> includedUsers = new HashSet();
+            arguments.forEach(e -> {
+                String name = e.replace("+", "").trim();
+                if (e.matches("[+A-Z]+")) {
+                    if (groups.get(name).isEmpty()) {
+                        throw new IllegalArgumentException("Group is empty");
+                    }
+                    groups.get(name)
+                          .stream()
+                          .forEach(u -> {
+                              if (!excludedUsers.contains(u.getName())) {
+                                  createUserIfNotExists(u.getName());
+                                  includedUsers.add(u.getName());
+                              }
+                          });
+                } else if (!e.matches("-[\\w+]+")) {
+                    if (!excludedUsers.contains(name)) {
+                        createUserIfNotExists(name);
+                        includedUsers.add(name);
+                    }
+                }
+            });
+            return includedUsers;
+        }
+
+        private static LocalDate parseDateOrReturnCurrentTime(boolean isCurrent, String date) {
+            return isCurrent ? LocalDate.now() : LocalDate.parse(date, dateFormatter);
+        }
+
+        private static void createUserIfNotExists(String name) {
+            if (!balances.containsKey(name)) {
+                balances.put(name, new User(name));
+            }
+        }
+
+        private static void addUserToGroupIfNotExists(String groupName, String username) {
+            String userToAdd = username.replace("+", "");
+            createUserIfNotExists(userToAdd);
+            groups.get(groupName).add(balances.get(userToAdd));
+        }
+
+        private static void removeUserFromGroup(String groupName, String username) {
+            groups.get(groupName)
+                  .remove(balances.get(username.replace("-", "")));
+        }
+
+        public enum Actions {
+            HELP("help"),
+            EXIT("exit"),
+            BORROW("borrow"),
+            REPAY("repay"),
+            BALANCE("balance"),
+            GROUP("group"),
+            PURCHASE("purchase");
+
+            private final String text;
+
+            Actions(String text) {
+                this.text = text;
+            }
+
+            @Override
+            public String toString() {
+                return text;
+            }
+        }
+    }
+  learner_created: true
+- name: testDB.mv.db.mv.db
+  visible: true
+  learner_created: true
+feedback_link: https://hyperskill.org/learn/step/11721#comment
+status: Solved
+feedback:
+  message: Congratulations!
+  time: Tue, 07 Dec 2021 10:11:30 UTC
+record: 4

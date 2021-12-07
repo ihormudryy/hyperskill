@@ -1,0 +1,70 @@
+<h5>Description</h5>
+
+<p>You have come so far and managed to significantly simplify shared bill splitting even in complex situations. However, the result you get is often a long and complicated list of small  between different groups and people: not so simple, after all! Besides, some banks might have commission fees on bank operations, so it's practical to try to reduce the number of . This is exactly what we are going to do in this stage!</p>
+
+<p>This task could be treated as postprocessing for shared bill splitting. Assume that you have already calculated all the debts and have the data on who owes whom how much.</p>
+
+<p>Consider bill splitting as a directed graph:</p>
+
+<ul>
+	<li>Each vertex corresponds to a person;</li>
+	<li>An edge connects two nodes (two people) when PersonOne owes PersonTwo some money;</li>
+	<li>The direction of each edge reflects the financial relationship (who owes whom). That is, an edge from PersonOne to PesonTwo means that PersonOne owes PersonTwo.</li>
+	<li>The edge's weight corresponds to the amount of money owed.</li>
+</ul>
+
+<p>What we're trying to do is reduce and simplify the transaction scheme between the people, which translates to reducing the number of edges in the graph.</p>
+
+<p>In a common case, this problem is NP-complete, so we'll have some restrictions. No new edges should be created in the process: it's only possible to remove the existing edges. In practice, it means that if PersonOne never owed or borrowed from PersonTen, we should not bind them with any financial ties. Our task is just rebalancing the amounts in the existing pairs.</p>
+
+<p>To bring down the number of edges, you can use one of the maximum flow algorithms, for example, <a target="_blank" href="https://en.wikipedia.org/wiki/Dinic%27s_algorithm" rel="noopener noreferrer nofollow">Dinitz's algorithm</a>.</p>
+
+<h5>Objectives</h5>
+
+<p>In this stage, your program should be able to:</p>
+
+<ol>
+	<li>Work with Spring boot console application.</li>
+	<li>Process additional commands:<br>
+	<code class="java">[date] <strong>balancePerfect</strong><strong> </strong>[open|close]</code> where <em>open/close</em> is optional (the default value is <em>close</em>).</li>
+	<li>Build a weighted oriented graph based on the <code class="java"><strong>balance</strong></code> output.</li>
+	<li>Minimize the total amount of payments by reducing the edges in a graph.</li>
+	<li>Determine the optimal list of repayments to make sure everyone is paid off and justice is restored.</li>
+</ol>
+
+<p>Use database name <code class="java">spring.datasource.url=jdbc:h2:file:../testDB.mv.db</code> for testing.</p>
+
+<h5>Examples</h5>
+
+<p>The greater-than symbol followed by a space (<code class="java">&gt; </code>) represents the user input. <br>
+The program should print a list of commands: </p>
+
+<pre><code class="language-no-highlight">&gt; help
+balance
+balancePerfect
+borrow
+cashBack
+exit
+group
+help
+purchase
+repay
+secretSanta
+writeOff</code></pre>
+
+<p>Here is an example of the <code class="java">balancePerfect</code> command. The <code class="java">balance</code> command would output three repayments while <code class="java">balancePerfect</code> will output two repayments or even just one: "Chuck owes Bob 30". Since graph edge reduction is non-deterministic, both answers will be correct.</p>
+
+<p>It is important for the tests that as a result of the <code class="java">balancePerfect</code> command, the total repayment count is less than the repayment count after the <code class="java">balance</code> command. Of course, both balances should lead to the same happy ending: everyone is paid off and happy.</p>
+
+<pre><code class="language-no-highlight">&gt; writeOff
+&gt; borrow Bob Chuck 100
+&gt; borrow Chuck Diana 100
+&gt; borrow Chuck Bob 30
+&gt; borrow Diana Bob 100
+&gt; balance close
+Bob owes Chuck 70.00
+Chuck owes Diana 100.00
+Diana owes Bob 100.00
+&gt; balancePerfect close
+Chuck owes Diana 30.00
+Diana owes Bob 30.00</code></pre>

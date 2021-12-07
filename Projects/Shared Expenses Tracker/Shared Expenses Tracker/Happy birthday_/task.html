@@ -1,0 +1,98 @@
+<h5>Description</h5>
+
+<p>It's very exciting to have a birthday person in a friend group! You might want to get together with the rest of your
+    friends and figure out a good gift they can chip in for, which means that the birthday person should be excluded
+    from the bill. You can work with this in your program by excluding certain members from the calculation groups.</p>
+
+<p>First, let's deal with group operations. Remember that a group is basically a list of names. Here is the general
+    syntax: <code class="java">(list of [+|-] persons | GROUPS)</code>, and here is how it works:</p>
+
+<ol>
+    <li>Collect all the names in groups without the <code class="java">-</code> sign (<code class="java">+</code> is optional);</li>
+    <li>Add persons without the<strong> </strong><code class="java">-</code> sign (<code class="java">+</code> is optional);</li>
+    <li>Remove from the result all the names marked with a <code class="java">-</code> sign;</li>
+    <li>Remove duplicates from the resulting collection.</li>
+</ol>
+
+<p>Note that enumeration order should be ignored: first adding, then removing. </p>
+
+<h5>Objectives</h5>
+
+<p>In this stage, your program should be able to:</p>
+
+<ol>
+    <li>Process the following commands:<br>
+        <code class="java"><strong>group </strong>[create|add|remove|show]<strong> </strong>GROUPNAME<strong> </strong>[(list of
+            [+|-] persons | GROUPS)]</code><br>
+        <code class="java">[date] <strong>purchase </strong>Person<strong> </strong>itemName amount [(list of [+|-] persons
+            | GROUPS)]</code></li>
+    <li>Add and subtract sets of GROUPS and persons.</li>
+    <li>Properly handle empty groups on the show and purchase commands. Your program should print "Group is empty" in such cases</li>
+    <li>Properly handle duplicate groups by printing the message "Group already exists" if an attempt is made to create
+        a group that already exists.
+    </li>
+    <li>Process the input numbers as money and correctly handle division.</li>
+    <li>Calculate and display the list of repayments with names and amounts to be repaid.</li>
+</ol>
+
+<h5>Examples</h5>
+
+<p>The greater-than symbol followed by a space (<code class="java">&gt; </code>) represents the user input. <br>
+    The program should print a list of commands: </p>
+
+<pre><code class="language-no-highlight">&gt; help
+balance
+borrow
+exit
+group
+help
+purchase
+repay</code></pre>
+
+<p>Group command:</p>
+
+<pre><code class="language-no-highlight">&gt; group create GIRLS (Ann, Diana)
+&gt; group create TEAM (+Bob, GIRLS, -Frank, Chuck)
+&gt; group show TEAM
+Ann
+Bob
+Chuck
+Diana</code></pre>
+
+<p>Group add command:</p>
+
+<pre><code class="language-no-highlight">&gt; group create GIRLS (Ann, Diana)
+&gt; group create TEAM (+Bob, -Frank, Chuck)
+&gt; group add TEAM (+GIRLS, -Diana)
+&gt; group show TEAM
+Ann
+Bob
+Chuck
+</code></pre>
+
+<p>Group remove command:</p>
+
+<pre><code class="language-no-highlight">&gt; group create GIRLS (Ann, Diana)
+&gt; group create BOYS (+Bob, Chuck)
+&gt; group create SQUAD (BOYS, GIRLS)
+&gt; group show SQUAD
+Ann
+Bob
+Chuck
+Diana
+&gt; group remove SQUAD (-BOYS, -Ann)
+&gt; group show SQUAD
+Diana</code></pre>
+
+<p>Group purchases:</p>
+
+<pre><code class="language-no-highlight">&gt; group create GIRLS (Ann, Diana)
+&gt; group create TEAM (+Bob, GIRLS, -Frank, Chuck)
+&gt; 2020.10.20 purchase Diana flowers 15.65 (TEAM, Elon, -GIRLS)
+&gt; 2020.10.21 purchase Elon ChuckBirthdayGift 20.99 (TEAM, -Chuck)
+&gt; balance close
+Ann owes Elon 7.00
+Bob owes Diana 5.22
+Bob owes Elon 7.00
+Chuck owes Diana 5.22
+Diana owes Elon 1.78</code></pre>

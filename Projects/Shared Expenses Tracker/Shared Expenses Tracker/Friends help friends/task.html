@@ -1,0 +1,90 @@
+<h5>Description</h5>
+
+<p>Money tends to circulate in friend groups, which is absolutely normal: sharing is caring! However, it gets hard to keep track of that money, and you could easily forget how much you owe your friends or how much they owe you. Let's deal with this problem and create a program that will help the user know who owes whom and how much exactly.</p>
+
+<p>In this stage, you should implement a simple text user interface. Command syntax is the following: <code class="java">[date] command [arguments]</code>. The date parameter formatted as <samp><code class="java">yyyy.mm.dd</code></samp> is optional (the default value should be the current day).</p>
+
+<p>The <code class="java">help</code> command should print the list of commands in natural sorted order. Each command description should be on a separate line and consist of lowercase letters.</p>
+
+<p><code class="java">[date] <strong>borrow </strong>PersonOne PersonTwo amount</code> would mean that <em>PersonTwo</em><strong><em> </em></strong>lent some <em>amount</em><strong><em> </em></strong>to <em>PersonOne</em><strong><em> </em></strong>on the specified date. This implies that <em>PersonOne</em><strong><em> </em></strong>owes <em>PersonTwo</em> this <em>amount</em><strong><em>. </em></strong>The<em> amount</em><strong><em> </em></strong>is an integer.</p>
+
+<p><code class="java">[date] <strong>repay </strong>PersonOne PersonTwo amount</code> would mean that <em>PersonOne</em><strong><em> </em></strong>repaid the <em>amount</em> to <em>PersonTwo </em>on the <em>date.</em> <em>PersonOne</em>'s debt could be paid off partially, fully, or even overpaid, in which case <em>PersonTwo</em> would now owe the difference to <em>PersonOne</em>.  </p>
+
+<p>Your program is supposed to help track each person's balance. A person's balance is the difference between all the funds that the person receives and the funds that they spend over a particular period of time.</p>
+
+<p>Let's see an example. Say Elon lent Diana 20 dollars. Their balances are:<br>
+Diana <samp>+20</samp> (owes <samp>20</samp>)<br>
+Elon <samp>-20</samp> (lent <samp>20</samp>, pending repay)<br>
+The total sum of balances is zero.</p>
+
+<p>Then, Diana repaid part of the sum (<samp>15</samp>) to Elon. Elon then had to borrow 10 from Diana. Their balances are:<br>
+Diana <samp>+20 -15 -10 = -5 </samp>(pending repay, 5) <br>
+Elon <samp>-20 + 15 +10 = 5 </samp>(owes 5)<br>
+The total sum of balances is once again zero.</p>
+
+<p>In real life, there will probably be more than just two people to keep track of. You should group all  by pairs and display the balance of just one side, provided that the sum of balances in the pair is zero, just like in the case with Diana-Elon and Elon-Diana. This way, you can avoid redundancy.</p>
+
+<p>Keeping track of balances without dates is sure to be a hot mess. So, we are going to take dates into account and work with close and open balance. The closing balance on a specific date is calculated based on all the operations till that date inclusively. Opening month balance is based on all the operations before that month exclusively. Technically, opening month balance is equal to closing balance on the last day of the previous month.</p>
+
+<p>In this project, you will use daily closing balance and monthly open balance: <code class="java">[date] <strong>balance</strong><strong> </strong>[open|close]</code>, where <em>open</em> refers to the opening balance on the first day of the month and <em>close</em> refers to the closing balance on that specific date.</p>
+
+<h5>Objectives</h5>
+
+<p>In this stage, you will develop a program that can:</p>
+
+<ol>
+	<li>Process the following commands:<br>
+	<code class="java"><samp><strong>help<br>
+	exit</strong></samp></code><br>
+	<code class="java">[date] <strong>borrow </strong>PersonOne PersonTwo amount</code> <strong><em> </em></strong><br>
+	<code class="java">[date] <strong>repay </strong>PersonOne PersonTwo amount</code> <br>
+	<code class="java">[date] <strong>balance</strong><strong> </strong>[open|close]</code> (<em>open/close</em> is optional, the default value is<em> close</em>)</li>
+	<li>Calculate and display the list of repayments with names and amounts to be repaid in the natural sorted order.</li>
+	<li>Keep processing input commands until the <code class="java"><samp><strong>exit</strong></samp></code> command has been entered.</li>
+</ol>
+
+<p>Owes should be sorted firstly by person who owes and secondly by person whom they owe.</p>
+
+<p>If an unknown command if entered you should print <code class="java">Unknown command</code>  and if the command itself exist, but the following arguments are in an incorrect format, output <code class="java">Illegal command arguments</code>.</p>
+
+<h5>Examples</h5>
+
+<p>The greater-than symbol followed by a space (<code class="java">&gt; </code>) represents the user input. <br>
+The program should print a list of commands: </p>
+
+<pre><code class="language-no-highlight">&gt; help
+balance
+borrow
+exit
+help
+repay
+&gt; exit</code></pre>
+
+<p>The program should handle exceptions and output readable descriptions. Namely, the program should handle the cases when the command could not be found:</p>
+
+<pre><code class="language-no-highlight">&gt; someRandomText
+Unknown command. Print help to show commands list
+&gt; exit</code></pre>
+
+<p>If command argument could not be parsed correctly, the program should report it:</p>
+
+<pre><code class="language-no-highlight">&gt; repay Ann
+Illegal command arguments
+&gt; exit</code></pre>
+
+<p>Here is an example of calculation:</p>
+
+<pre><code class="language-no-highlight">&gt; 2020.09.30 borrow Ann Bob 20
+&gt; 2020.10.01 repay Ann Bob 10
+&gt; 2020.10.10 borrow Bob Ann 7
+&gt; 2020.10.15 repay Ann Bob 8
+&gt; repay Bob Ann 5
+&gt; 2020.09.25 balance
+No repayments
+&gt; 2020.10.30 balance open
+Ann owes Bob 20
+&gt; 2020.10.20 balance close
+Bob owes Ann 5
+&gt; balance close
+No repayments
+&gt; exit</code></pre>
