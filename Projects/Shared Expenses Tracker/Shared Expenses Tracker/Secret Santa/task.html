@@ -1,0 +1,127 @@
+<h5>Description</h5>
+
+<p>Our program can also help with other festive occasions. For example, around Christmas, many people take part in Secret Santa: it's especially popular in workplaces. The idea is that everyone gets someone a gift and receives a gift from someone with no repetitions. Choosing gifts can sometimes take a long time, so it's a good idea to store payments in a database. Also, let's add cashback functionality to encourage banks and companies to get in the Christmas spirit and offer cashback on gift purchases!</p>
+
+<p>So, the SecretSanta command is in fact a non-deterministic shuffle with some special rules:</p>
+
+<ul>
+	<li>Pairs should be printed line by line sorted by the first person in ascending order;</li>
+	<li>No-one should be assigned to get a gift for themselves in groups larger than 1 person;</li>
+	<li>Gift pairs cannot be reciprocal in groups larger than 2 people: in other words, you can't get a gift from a person and give a gift to the same person.</li>
+</ul>
+
+<p>'Non-deterministic' means that you get different results every time you run it. So, our tests will check for compliance with the described rules and not expect a complete match.</p>
+
+<p>Your program should store groups and money operations in a database so that we can use the data that has been saved previously. This way, no data will be lost between program launches! In addition to storing data by default, your program should process the <code class="java">writeOff</code> command to clear money operations after a certain date. It may be useful to run the H2 database with the Spring console application. Note: to pass the tests, you should turn off the Spring banner and increase the log level.</p>
+
+<pre><code class="language-no-highlight">spring.main.banner-mode=off
+spring.main.web-application-type=NONE
+logging.level.root=error</code></pre>
+
+<p>Cashback here is a commitment to repay. The fact of actual repayment should be processed by the <code class="java">repay</code> command. Hint: cashback can be considered a purchase with a negative value.</p>
+
+<h5>Objectives</h5>
+
+<p>In this stage, your program should be able to:</p>
+
+<ol>
+	<li>Work with the Spring boot console application.</li>
+	<li>Process the following additional commands:<br>
+	<code class="java"><strong>secretSanta </strong>GROUPNAME<br>
+	[date] <strong>cashback </strong>Person<strong> </strong>itemName amount [(list of [+|-] persons | GROUPS)]<br>
+	[date] <strong>writeOff</strong></code></li>
+	<li>Establish random pairs in groups.</li>
+	<li>Process cashback.</li>
+	<li>Store group members and money operations in a database.</li>
+	<li>Clear old money operations from database storage after a certain date.</li>
+	<li>Calculate and display the list of repayments with names and amounts to be repaid.</li>
+</ol>
+
+<p>To setup Spring Boot in the right way, you need to:</p>
+
+<ol>
+	<li>Create file named <code class="java">build.gradle</code> in the same folder where your <code class="java">src</code> folder lies.</li>
+	<li>Create a file named <code class="java">src/resources/application.properties</code>. It will be your resource file according to the gradle setup below.</li>
+	<li>Use <code class="java">CommandLineRunner</code>. If you're unsure how to use it please <a target="_blank" href="https://www.baeldung.com/spring-boot-console-app" rel="noopener noreferrer nofollow">follow this tutorial</a>.</li>
+</ol>
+
+<p>Fill your <code class="java">build.gradle</code> with the following content:</p>
+
+<pre><code class="java">plugins {
+    id 'org.springframework.boot' version '2.3.3.RELEASE'
+    id 'java'
+}
+
+apply plugin: 'io.spring.dependency-management'
+
+sourceCompatibility = '11'
+
+repositories {
+    mavenCentral()
+}
+
+sourceSets.main.resources.srcDirs = ["src/resources"]
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    runtimeOnly 'com.h2database:h2'
+}</code></pre>
+
+<p>Use database name <code class="java">spring.datasource.url=jdbc:h2:file:../testDB.mv.db</code> for testing.</p>
+
+<h5>Examples</h5>
+
+<p>The greater-than symbol followed by a space (<code class="java">&gt; </code>) represents the user input. <br>
+The program should print a list of commands: </p>
+
+<pre><code class="language-no-highlight">&gt; help
+balance
+borrow
+cashBack
+exit
+group
+help
+purchase
+repay
+secretSanta
+writeOff</code></pre>
+
+<p>SecretSanta example:</p>
+
+<pre><code class="language-no-highlight">&gt; group create SOMESANTAGROUP (Gordon, Bob, Ann, Chuck, Elon, Diana, Foxy)
+&gt; secretSanta SOMESANTAGROUP
+Ann gift to Gordon
+Bob gift to Foxy
+Chuck gift to Diana
+Diana gift to Ann
+Elon gift to Bob
+Foxy gift to Elon
+Gordon gift to Chuck</code></pre>
+
+<p>writeOff example:</p>
+
+<pre><code class="language-no-highlight">&gt; borrow Ann Bob 1.00
+&gt; 3030.03.30 purchase Bob coffee 3.50 (Bob, Ann)
+&gt; writeOff
+&gt; balance close
+No repayments need
+&gt; 3030.03.30 balance close
+Ann owes Bob 1.75
+&gt; 3030.03.30 writeOff
+&gt; 3030.03.30 balance close
+No repayments need</code></pre>
+
+<p>cashBack example:</p>
+
+<pre><code class="language-no-highlight">&gt; 2020.12.25 writeOff
+&gt; group create TEAM (Bob, Ann, Frank, Chuck, Elon, Diana)
+&gt; 2020.12.25 cashBack YourCompany secretSantaGift 24.00 (TEAM)
+&gt; 2020.12.25 balance close
+YourCompany owes Ann 4.00
+YourCompany owes Bob 4.00
+YourCompany owes Chuck 4.00
+YourCompany owes Diana 4.00
+YourCompany owes Elon 4.00
+YourCompany owes Frank 4.00
+</code></pre>

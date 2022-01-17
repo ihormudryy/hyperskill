@@ -1,0 +1,13 @@
+type: hyperskill
+title: Shared Expenses Tracker
+language: English
+summary: Sharing a meal in a cafe or a few drinks in a bar is a great way to spend
+  quality time with friends, though all the fun disappears when it's time to split
+  the bill... Calculating who pays what and making sure it's fair and precise is just
+  daunting. In this project, you will write a program that will solve this problem
+  once and for all.<br/><br/>Learn more at <a href="https://hyperskill.org/projects/142?utm_source=ide&utm_medium=ide&utm_campaign=ide&utm_content=project-card">https://hyperskill.org/projects/142</a>
+programming_language: Java
+programming_language_version: 11
+content:
+- Shared Expenses Tracker
+mode: Study

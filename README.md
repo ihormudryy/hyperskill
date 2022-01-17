@@ -15,6 +15,5 @@ You can find solitions of here many JetBrains Hyperskill Academy challenging pro
 ### Problem -> contains solved propblems for particular problems combined all together in one folder.<br/>
 ### Topics -> contains also solved problems split by the topic they belong to.<br/>
 
+[My profile page on hyperskill](https://hyperskill.org/profile/59720519)
 
-
-[My profile page](https://hyperskill.org/profile/59720519)

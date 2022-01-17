@@ -1,0 +1,110 @@
+<h5>Description</h5>
+
+<p>Gifts don't have to be big and expensive: it's the thought that counts. However, it's a good idea to chip in for a
+    really nice gift with a group of people. For example, it could be a good tradition to chip in with some family
+    members to get gifts for Mother's and Father's day. In this stage, you will make it possible to split a certain sum
+    between people in predefined groups.</p>
+
+<p>We will think of the lists of names as groups of people. You should implement some basic operations on these groups:
+    <strong>create </strong>and <strong>show </strong>to print out the people that the group consists of. Note: group
+    names must be UPPERCASE to distinguish them from persons.</p>
+
+<p>If you really think of it, splitting the price of a gift can be thought of as people lending and borrowing
+    money among themselves. For example, Ann and Bob went to a cafe and spent 10 bucks there:<br>
+    Ann: <samp>+5</samp> (coffee) <samp>-5,</samp> owes to the future payer;<br>
+    Bob: <samp>+5</samp> (coffee) <samp>-5,</samp> owes to the future payer.</p>
+
+<p>Then, Bob paid 10.00 dollars with a credit card:<br>
+    Ann <samp>+5</samp> (coffee)  <samp>-5</samp> owes Bob;<br>
+    Bob <samp>+5</samp> (coffee) <samp>-10</samp> (paid bill) <samp>+5 </samp>(expecting a repay from Ann).</p>
+
+<p>The transaction above will look something like this: <code class="java">purchase Bob coffee 10.00 (Bob, Ann)</code></p>
+
+<p>Ann repaid Bob 5 dollars to cover her part of the bill:<br>
+    Ann <samp>+5</samp> (coffee) <samp>-5</samp> (repaid Bob);<br>
+    Bob <samp>+5</samp> (coffee) <samp>-10</samp> (paid the bill) <samp>+5</samp> (from Ann).</p>
+
+<p>The transaction above will look something like this: <code class="java">repay Ann Bob 5.00</code></p>
+
+
+<p>Note that money won't always be easily or equally divisible. For example, if three people have a shared bill of
+    12.50, that would be 4.16 each and 0.02 in the remainder. You should spread the difference between the first
+    <em>N</em> persons in the list ordered by name; each person pays an extra 0.01, which is the minimum amount of money
+    in real life. As a result, the sum will be split as follows: 4.17, 4.17, 4.16. To make it work, choose an
+    appropriate RoundingMode for BigDecimal division.</p>
+
+<h5>Objectives</h5>
+
+<p>In this stage, your program should be able to:</p>
+
+<ol>
+    <li>Process additional commands:<br>
+        <code class="java"><strong>group </strong>[create|show]<strong> </strong>GROUPNAME<strong> </strong>[(list of
+            names)]</code><br>
+        <code class="java">[date] <strong>purchase </strong>Person<strong> </strong>itemName amount (GROUP)</code></li>
+    <li>Process the input amount as money and correctly handle division;<br>
+        read decimal input as money for any command (for example, 4.99);<br>
+        output the sum with two decimal places (for example, 12.00).
+    </li>
+    <li>Calculate and display the list of repayments with names and amounts to be repaid.</li>
+</ol>
+
+<h5>Examples</h5>
+
+<p>The greater-than symbol followed by a space (<code class="java">&gt; </code>) represents the user input. <br>
+    The program should print a list of commands: </p>
+
+<pre><code class="language-no-highlight">&gt; help
+balance
+borrow
+exit
+group
+help
+purchase
+repay</code></pre>
+
+<p>Group command:</p>
+
+<pre><code class="language-no-highlight">&gt; group create lowerCaseText
+Illegal command arguments
+&gt; group show NOTCREATEDGROUP
+Unknown group
+&gt; group create BOYS (Elon, Bob, Chuck)
+&gt; group show BOYS
+Bob
+Chuck
+Elon</code></pre>
+
+<p>Simple splitting:</p>
+
+<pre><code class="language-no-highlight">&gt; group create COFFEETEAM (Ann, Bob)
+&gt; purchase Bob coffee 10 (COFFEETEAM)
+&gt; balance close
+Ann owes Bob 5.00
+&gt; repay Ann Bob 5.00
+&gt; balance close
+No repayments</code></pre>
+
+<p>Splitting the bill and spreading the division remainder:</p>
+
+<pre><code class="language-no-highlight">&gt; group create FRIENDS (Ann, Bob, Chuck)
+&gt; purchase Elon chocolate 12.50 (FRIENDS)
+&gt; balance close
+Ann owes Elon 4.17
+Bob owes Elon 4.17
+Chuck owes Elon 4.16</code></pre>
+
+<p>Group purchases:</p>
+
+<pre><code class="language-no-highlight">&gt; group create BOYS (Elon, Bob, Chuck)
+&gt; group create GIRLS (Ann, Diana)
+&gt; 2020.10.20 purchase Diana flowers 15.65 (BOYS)
+&gt; 2020.10.21 purchase Chuck pizza 6.30 (BOYS)
+&gt; 2020.10.22 purchase Bob icecream 3.99 (GIRLS)
+&gt; balance close
+Ann owes Bob 2.00
+Bob owes Chuck 2.10
+Bob owes Diana 3.23
+Chuck owes Diana 5.22
+Elon owes Chuck 2.10
+Elon owes Diana 5.21</code></pre>
